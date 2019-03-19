@@ -4,7 +4,8 @@ $basic-padding: 24px;
 $font-size-content: 16px;
 $font-size-title: 24px;
 
-$color-primary: rgb(245, 188, 0);
+// $color-primary: rgb(245, 188, 0);
+$color-primary: #e6a23c;
 $color-background: #303133;
 $color-background-card: #606266;
 $color-grey-1: #ebeef5;
@@ -17,6 +18,7 @@ $shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.15);
 
 // $max-width: 1440px;
 $max-width: 1000px;
+$xs: 440px;
 $sm: 768px;
 $md: 992px;
 $lg: 1200px;

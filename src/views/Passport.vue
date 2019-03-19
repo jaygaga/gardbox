@@ -30,7 +30,7 @@ export default {};
 
 <style lang="scss" scoped>
 .passport-container {
-  width: 400px;
+  width: $xs;
   padding: 16px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   text-align: center;

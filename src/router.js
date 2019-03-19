@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Passport from './views/Passport.vue';
+import Create from './views/Create/index.vue';
+
 import Blocks from './views/Blocks.vue';
 import BlockDetail from './views/BlockDetail.vue';
 import Transactions from './views/Transactions.vue';
@@ -24,6 +26,11 @@ export default new Router({
       path: '/passport',
       name: 'passport',
       component: Passport
+    },
+    {
+      path: '/create',
+      name: 'create',
+      component: Create
     },
     {
       path: '/block',

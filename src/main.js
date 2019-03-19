@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import '@/styles/element-variables.scss';
 import App from './App.vue';
 import router from './router';
 import * as filters from '@/utils/filters.js';
 import rootStore from './store/index.js';
 
 import Card from '@/components/Card';
+
 import Link from '@/components/Link';
 import DataItem from '@/components/DataArea/item.vue';
 
@@ -23,7 +24,8 @@ const store = new Vuex.Store(rootStore);
 store.dispatch('basic/fetch');
 
 // 注册全局组件
-Vue.component('Card', Card);
+Vue.component('s-card', Card);
+
 Vue.component('hg-link', Link);
 Vue.component('data-item', DataItem);
 
