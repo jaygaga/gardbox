@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
+import Passport from './views/Passport.vue';
 import Blocks from './views/Blocks.vue';
 import BlockDetail from './views/BlockDetail.vue';
 import Transactions from './views/Transactions.vue';
@@ -9,7 +9,6 @@ import AddressDetail from './views/AddressDetail.vue';
 import Validators from './views/Validators.vue';
 import ValidatorDetail from './views/ValidatorDetail.vue';
 import NotFound from './views/NotFound.vue';
-import View from '@/components/View';
 
 Vue.use(Router);
 
@@ -19,16 +18,15 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/home'
+      redirect: '/passport'
     },
     {
-      path: '/home',
-      name: 'home',
-      component: Home
+      path: '/passport',
+      name: 'passport',
+      component: Passport
     },
     {
       path: '/block',
-      component: View,
       children: [
         {
           path: '',
@@ -44,7 +42,6 @@ export default new Router({
     },
     {
       path: '/tx',
-      component: View,
       children: [
         {
           path: '',
@@ -65,7 +62,6 @@ export default new Router({
     },
     {
       path: '/validator',
-      component: View,
       children: [
         {
           path: '',

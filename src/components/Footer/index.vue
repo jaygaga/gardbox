@@ -22,8 +22,12 @@ export default {};
 
   .logo {
     img {
-      width: 40px;
-      margin-right: $basic-margin;
+      width: 32px;
+      margin-right: 8px;
+    }
+    span {
+      position: relative;
+      top: -8px;
     }
   }
 }

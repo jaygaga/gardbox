@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header :netName="netName" />
+    <Header />
     <div class="main">
       <RouterView />
     </div>
@@ -15,12 +15,7 @@ import Footer from "@/components/Footer/index.vue";
 import { mapState } from "vuex";
 
 export default {
-  components: { Header, Footer },
-  computed: {
-    ...mapState({
-      netName: store => store.basic.name
-    })
-  }
+  components: { Header, Footer }
 };
 </script>
 
