@@ -1,23 +1,21 @@
 <template>
-  <s-card>
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="top"
-    >
-      <el-form-item label="Account Name">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
+  <el-form
+    ref="form"
+    :model="form"
+    label-position="top"
+  >
+    <el-form-item label="Account Name">
+      <el-input v-model="form.name"></el-input>
+    </el-form-item>
 
-      <el-form-item label="Password">
-        <el-input v-model="form.password"></el-input>
-      </el-form-item>
+    <el-form-item label="Password">
+      <el-input v-model="form.password"></el-input>
+    </el-form-item>
 
-      <el-form-item label="Confirm Password">
-        <el-input v-model="form.password2"></el-input>
-      </el-form-item>
-    </el-form>
-  </s-card>
+    <el-form-item label="Confirm Password">
+      <el-input v-model="form.password2"></el-input>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
