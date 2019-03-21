@@ -2,6 +2,9 @@
 node_modules
 /dist
 
+# other repos
+/src/util/crypto
+
 # local env files
 .env.local
 .env.*.local

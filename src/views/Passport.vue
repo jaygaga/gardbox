@@ -1,26 +1,26 @@
 <template>
   <div class="passport-container">
     <img src="~@/assets/logo.svg" />
-    <card>
+    <s-card>
       <router-link to="create">
         <el-button
           type="primary"
           class="btn"
-        >Create Wallet</el-button>
+        >{{$t('passport.create')}}</el-button>
       </router-link>
       <router-link to="login">
         <el-button
           type="primary"
           class="btn"
-        >LogIn</el-button>
+        >{{$t('passport.login')}}</el-button>
       </router-link>
       <router-link to="recover">
         <el-button
           type="primary"
           class="btn"
-        >Recover Wallet</el-button>
+        >{{$t('passport.recover')}}</el-button>
       </router-link>
-    </card>
+    </s-card>
   </div>
 </template>
 

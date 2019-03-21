@@ -1,16 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import NotFound from './views/NotFound.vue';
 import Passport from './views/Passport.vue';
 import Create from './views/Create/index.vue';
-
-import Blocks from './views/Blocks.vue';
-import BlockDetail from './views/BlockDetail.vue';
-import Transactions from './views/Transactions.vue';
-import TransactionDetail from './views/TransactionDetail.vue';
-import AddressDetail from './views/AddressDetail.vue';
-import Validators from './views/Validators.vue';
-import ValidatorDetail from './views/ValidatorDetail.vue';
-import NotFound from './views/NotFound.vue';
+import Home from './views/Home.vue';
 
 Vue.use(Router);
 
@@ -33,54 +26,9 @@ export default new Router({
       component: Create
     },
     {
-      path: '/block',
-      children: [
-        {
-          path: '',
-          name: 'blocks',
-          component: Blocks
-        },
-        {
-          path: '/block/:id',
-          name: 'blockDetail',
-          component: BlockDetail
-        }
-      ]
-    },
-    {
-      path: '/tx',
-      children: [
-        {
-          path: '',
-          name: 'transactions',
-          component: Transactions
-        },
-        {
-          path: ':hash',
-          name: 'transactionDetail',
-          component: TransactionDetail
-        }
-      ]
-    },
-    {
-      path: '/address/:address',
-      name: 'addressDetail',
-      component: AddressDetail
-    },
-    {
-      path: '/validator',
-      children: [
-        {
-          path: '',
-          name: 'validators',
-          component: Validators
-        },
-        {
-          path: ':address',
-          name: 'validatorDetail',
-          component: ValidatorDetail
-        }
-      ]
+      path: '/home',
+      name: 'home',
+      component: Home
     },
     {
       path: '*',

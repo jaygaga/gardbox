@@ -11,6 +11,17 @@
         </a>
       </div>
 
+      <el-select
+        @change="changeLang"
+        :value="$i18n.locale"
+      >
+        <el-option
+          v-for="(lang, i) in langs"
+          :key="`Lang${i}`"
+          :value="lang"
+        >{{ lang }}</el-option>
+      </el-select>
+
       <el-dropdown
         class="dropdown-menu"
         trigger="click"
@@ -45,6 +56,7 @@ import { menu } from "@/constants";
 export default {
   data() {
     return {
+      langs: ["zh", "en"],
       value: "",
       menu
     };
@@ -55,6 +67,10 @@ export default {
   methods: {
     handleCommand(v) {
       this.$router.push(v);
+    },
+    changeLang(v) {
+      this.$i18n.locale = v;
+      localStorage.setItem("lang", v);
     }
   }
 };

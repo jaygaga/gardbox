@@ -11,14 +11,18 @@
     </el-steps>
 
     <s-card>
-      <Password v-if="step === 0" />
-      <Mnemonic v-if="step === 1" />
-      <Mnemonic v-if="step === 2" />
-      <el-button
-        type="primary"
-        class="btn"
-        @click="onSubmit"
-      >{{ step === 2 ? "Finish" : "Next" }}</el-button>
+      <Password
+        v-if="step === 0"
+        :onNext="onSubmit"
+      />
+      <Mnemonic
+        v-if="step === 1"
+        :onNext="onSubmit"
+      />
+      <Mnemonic
+        v-if="step === 2"
+        :onNext="onSubmit"
+      />
     </s-card>
   </div>
 </template>
@@ -35,20 +39,16 @@ export default {
   components: { Password, Mnemonic },
   data() {
     return {
-      step: 0,
-      form: {
-        name: "",
-        password: "",
-        password2: ""
-      }
+      step: 0
     };
   },
   methods: {
     onSubmit() {
       if (this.step < 2) {
         this.step++;
+      } else {
+        this.$router.push("/home");
       }
-      console.log("submit!");
     }
   }
 };
@@ -59,10 +59,6 @@ export default {
   color: white(0.85);
   padding: 16px 0;
   width: $sm;
-
-  .btn {
-    width: 100%;
-  }
 
   .el-steps--simple {
     background: $color-background-card;
