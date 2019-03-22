@@ -31,7 +31,7 @@ export default {
 <style lang="scss" scoped>
 .card-container {
   border-radius: 2px;
-  color: rgba(0, 0, 0, 0.65);
+  color: rgba(255, 255, 255, 0.65);
   box-shadow: $shadow;
   // border: 1px solid rgba(0, 0, 0, 0.03);
   background: $color-background-card;

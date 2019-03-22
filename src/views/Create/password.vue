@@ -6,29 +6,29 @@
     label-position="top"
   >
     <el-form-item
-      :label="$t('passport.name')"
+      :label="$t('passport.create.name')"
       prop="name"
     >
       <el-input v-model="form.name"></el-input>
     </el-form-item>
 
     <el-form-item
-      :label="$t('passport.pass')"
+      :label="$t('passport.create.pass')"
       prop="pass"
     >
       <el-input
-        :placeholder="$t('passport.pass')"
+        :placeholder="$t('passport.create.pass')"
         v-model="form.pass"
         type="password"
       ></el-input>
     </el-form-item>
 
     <el-form-item
-      :label="$t('passport.name')"
+      :label="$t('passport.create.name')"
       prop="checkPass"
     >
       <el-input
-        :placeholder="$t('passport.passCheck')"
+        :placeholder="$t('passport.create.passCheck')"
         v-model="form.checkPass"
         type="password"
       ></el-input>
@@ -38,7 +38,7 @@
       type="primary"
       class="btn"
       @click="onSubmit"
-    >Next</el-button>
+    >{{$t('global.next')}}</el-button>
   </el-form>
 </template>
 
@@ -49,7 +49,7 @@ import { get } from "lodash";
 export default {
   name: "Password",
   props: {
-    onNext: { type: Function, required: true }
+    onStepChange: { type: Function, required: true }
   },
   data() {
     const validatePass = (rule, value, callback) => {
@@ -92,17 +92,20 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          // create account
-          this.$store.dispatch("account/create", this.form);
+      const {
+        form,
+        $store: { dispatch },
+        onStepChange
+      } = this;
+      this.$refs["form"].validate(async function(valid) {
+        if (!valid) return false;
 
-          // this.onNext();
-          console.log("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
+        // create account
+        const created = await dispatch("account/create", form);
+        if (!created) return false;
+
+        // next step
+        onStepChange(1);
       });
     }
   }

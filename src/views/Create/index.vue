@@ -3,6 +3,7 @@
 
     <el-steps
       :active="step"
+      v-if="step < 3"
       simple
     >
       <el-step title="Create"></el-step>
@@ -13,15 +14,15 @@
     <s-card>
       <Password
         v-if="step === 0"
-        :onNext="onSubmit"
+        :onStepChange="onStepChange"
       />
       <Mnemonic
         v-if="step === 1"
-        :onNext="onSubmit"
+        :onStepChange="onStepChange"
       />
-      <Mnemonic
+      <Confirm
         v-if="step === 2"
-        :onNext="onSubmit"
+        :onStepChange="onStepChange"
       />
     </s-card>
   </div>
@@ -33,22 +34,24 @@ import { get } from "lodash";
 
 import Password from "./password";
 import Mnemonic from "./mnemonic";
+import Confirm from "./confirm";
 
 export default {
   name: "Create",
-  components: { Password, Mnemonic },
+  components: { Password, Mnemonic, Confirm },
   data() {
     return {
       step: 0
     };
   },
   methods: {
-    onSubmit() {
-      if (this.step < 2) {
-        this.step++;
-      } else {
-        this.$router.push("/home");
-      }
+    onStepChange(i) {
+      this.step = i;
+      // if (this.step < 2) {
+      //   this.step++;
+      // } else {
+      //   this.$router.push("/home");
+      // }
     }
   }
 };

@@ -29,7 +29,7 @@ body {
   line-height: 1.571428;
   font-family: "PingFangSC", Microsoft YaHei, "Helvetica Neue", Helvetica, Arial,
     STHeiTi, sans-serif;
-  color: white(0.85);
+  color: rgba(255, 255, 255, 0.85);
   background: $color-background;
 }
 

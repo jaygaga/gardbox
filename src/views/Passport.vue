@@ -6,7 +6,7 @@
         <el-button
           type="primary"
           class="btn"
-        >{{$t('passport.create')}}</el-button>
+        >{{$t('passport.create.title')}}</el-button>
       </router-link>
       <router-link to="login">
         <el-button

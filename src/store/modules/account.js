@@ -1,54 +1,71 @@
-import Irisnet from '@/utils/crypto';
-const crypto = Irisnet.getCrypto('cosmos');
+import { Message } from 'element-ui';
 
-let userMap = {};
-const wallet_users = localStorage.getItem('gard_wallet_users');
-if (wallet_users) {
-  userMap = JSON.parse(wallet_users);
-}
+import webc from '@/utils/webc';
+
+const wallet_users = localStorage.getItem('gard_wallet_users') || {};
 
 export default {
   namespaced: true,
 
   state: {
-    currentUser: ''
+    userName: '',
+    account: {},
+    keyStore: {},
+    userMap: JSON.parse(wallet_users)
   },
 
   getters: {},
 
   mutations: {
-    setCurrentUser: function(state, currentUser) {
-      state.currentUser = currentUser;
+    setUserName: function(state, userName) {
+      state.userName = userName;
+    },
+    setAccount: function(state, account) {
+      state.account = account;
+    },
+    setKeyStore: function(state, keyStore) {
+      state.keyStore = keyStore;
     },
     setUserMap: function(state, userMap) {
-      state.userMap = Object.assign({}, userMap, state.userMap);
+      state.userMap = Object.assign({}, state.userMap, userMap);
     }
   },
 
   actions: {
-    getUsers: function(context, name) {
-      context.commit('setInfo', {});
-      return Promise.resolve();
-    },
-    create: function(context, { name, pass }) {
+    create: async function(context, { name, pass }) {
+      // reject if name exist
+      if (context.state.userMap[name]) {
+        Message({
+          type: 'error',
+          message: 'Account Name Exist!',
+          center: true
+        });
+        return Promise.resolve(false);
+      }
+
       // create account
-      const account = crypto.create();
-      context.commit('setCurrentUser', name);
+      const account = webc.create();
+      context.commit('setUserName', name);
+      context.commit('setAccount', account);
 
       // generate keyStore with password
       console.log(pass);
-      const keyStore = crypto.toV3KeyStore(account.privateKey, pass);
+      const keyStore = webc.toV3KeyStore(account.privateKey, pass);
+      context.commit('setKeyStore', keyStore);
       console.log(keyStore);
 
+      return Promise.resolve(true);
+    },
+    finishCreate: async function(context) {
+      context.commit('setUserMap', { [context.state.userName]: context.state.keyStore });
       // save keyStore to localStorage
-      console.log(userMap);
-      userMap = Object.assign({}, userMap, { [name]: keyStore });
-      localStorage.setItem('gard_wallet_users', JSON.stringify(userMap));
+      localStorage.setItem('gard_wallet_users', JSON.stringify(context.state.userMap));
+      // clear account mnemonic
+      context.commit('setAccount', {});
 
-      // const res = crypto.fromV3KeyStore(keyStore, pass);
+      // const res = webc.fromV3KeyStore(keyStore, pass);
       // console.log(res);
-
-      return Promise.resolve();
+      return Promise.resolve(true);
     },
     recover: function(context, address) {
       context.commit('setInfo', {});
