@@ -20,6 +20,7 @@
         </el-form-item>
         <el-form-item :label="$t('create.pass')">
           <el-input
+            type="password"
             v-model="form.pass"
             :placeholder="$t('create.pass')"
           ></el-input>

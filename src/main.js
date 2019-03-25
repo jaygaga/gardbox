@@ -28,7 +28,7 @@ Object.keys(filters).forEach(key => Vue.filter(key, filters[key]));
 const store = new Vuex.Store(rootStore);
 
 // get blockchain basic info
-// store.dispatch('basic/fetch');
+store.dispatch('basic/fetch');
 
 // 注册全局组件
 Vue.component('s-card', Card);

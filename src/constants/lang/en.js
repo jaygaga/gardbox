@@ -27,6 +27,13 @@ const en = {
       'Click [Ok] to backup your keyStore now, or click [Cancel] to open your wallet, your can backup your keyStore anytime in the settings menu.',
     success: 'Wallet Created Successfully!'
   },
-  login: {}
+  recover: {
+    key: 'Import KeyStore',
+    phrase: 'Import Mnemonic'
+  },
+  home: {
+    receive: 'Receive',
+    send: 'Send'
+  }
 };
 export default en;
