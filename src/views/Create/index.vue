@@ -6,9 +6,9 @@
       v-if="step < 3"
       simple
     >
-      <el-step title="Create"></el-step>
-      <el-step title="Mnemonic"></el-step>
-      <el-step title="Confirm"></el-step>
+      <el-step :title="$t('create.step1')"></el-step>
+      <el-step :title="$t('create.step2')"></el-step>
+      <el-step :title="$t('create.step3')"></el-step>
     </el-steps>
 
     <s-card>

@@ -35,11 +35,6 @@ export default {
     create: async function(context, { name, pass }) {
       // reject if name exist
       if (context.state.userMap[name]) {
-        Message({
-          type: 'error',
-          message: 'Account Name Exist!',
-          center: true
-        });
         return Promise.resolve(false);
       }
 
@@ -62,17 +57,27 @@ export default {
       localStorage.setItem('gard_wallet_users', JSON.stringify(context.state.userMap));
       // clear account mnemonic
       context.commit('setAccount', {});
-
-      // const res = webc.fromV3KeyStore(keyStore, pass);
-      // console.log(res);
       return Promise.resolve(true);
     },
     recover: function(context, address) {
       context.commit('setInfo', {});
       return Promise.resolve();
     },
-    login: function(context, address) {
-      context.commit('setInfo', {});
+    login: async function(context, { name, pass }) {
+      const { userMap } = context.state;
+      try {
+        const account = webc.fromV3KeyStore(userMap[name], pass);
+        context.commit('setUserName', name);
+        context.commit('setKeyStore', userMap[name]);
+        // context.commit('setKeyStore', keyStore);
+        return Promise.resolve(account);
+      } catch (e) {
+        return Promise.resolve();
+      }
+    },
+    logout: function(context) {
+      context.commit('setUserName', '');
+      context.commit('setKeyStore', {});
       return Promise.resolve();
     }
   }

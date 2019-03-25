@@ -6,7 +6,7 @@
         <el-button
           type="primary"
           class="btn"
-        >{{$t('passport.create.title')}}</el-button>
+        >{{$t('passport.create')}}</el-button>
       </router-link>
       <router-link to="login">
         <el-button
@@ -31,6 +31,7 @@ export default {};
 <style lang="scss" scoped>
 .passport-container {
   width: $xs;
+  margin: 0 auto;
   padding: 16px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   text-align: center;

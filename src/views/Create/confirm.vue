@@ -12,7 +12,7 @@
       <a
         class="btn-reset"
         @click="reset"
-      >{{$t('passport.create.reset')}}</a>
+      >{{$t('create.reset')}}</a>
     </div>
 
     <el-input
@@ -24,7 +24,7 @@
     </el-input>
 
     <div class="label">
-      {{$t('passport.create.confirm')}}
+      {{$t('create.confirm')}}
     </div>
 
     <el-row :gutter="16">

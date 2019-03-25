@@ -6,29 +6,29 @@
     label-position="top"
   >
     <el-form-item
-      :label="$t('passport.create.name')"
+      :label="$t('create.name')"
       prop="name"
     >
       <el-input v-model="form.name"></el-input>
     </el-form-item>
 
     <el-form-item
-      :label="$t('passport.create.pass')"
+      :label="$t('create.pass')"
       prop="pass"
     >
       <el-input
-        :placeholder="$t('passport.create.pass')"
+        :placeholder="$t('create.pass')"
         v-model="form.pass"
         type="password"
       ></el-input>
     </el-form-item>
 
     <el-form-item
-      :label="$t('passport.create.name')"
+      :label="$t('create.passCheck')"
       prop="checkPass"
     >
       <el-input
-        :placeholder="$t('passport.create.passCheck')"
+        :placeholder="$t('create.passCheck')"
         v-model="form.checkPass"
         type="password"
       ></el-input>
@@ -102,7 +102,14 @@ export default {
 
         // create account
         const created = await dispatch("account/create", form);
-        if (!created) return false;
+        if (!created) {
+          this.$message({
+            type: "error",
+            message: "Account Name Exist!",
+            center: true
+          });
+          return false;
+        }
 
         // next step
         onStepChange(1);

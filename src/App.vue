@@ -40,7 +40,8 @@ body {
 
   .main {
     flex: 1;
-    max-width: $max-width;
+    width: 100%;
+    max-width: $sm;
     padding: 0 24px;
     margin: 0 auto;
   }

@@ -1,6 +1,6 @@
 <template>
   <el-form label-position="top">
-    <el-form-item :label="$t('passport.create.mnemonic')">
+    <el-form-item :label="$t('create.mnemonic')">
       <el-input
         type="textarea"
         :autosize="{ minRows: 8, maxRows: 12}"
