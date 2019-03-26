@@ -8,6 +8,7 @@ import Recover from './views/Recover/index.vue';
 import ImportKeyStore from './views/Recover/ImportKeyStore.vue';
 import ImportPhrase from './views/Recover/ImportPhrase.vue';
 import Home from './views/Home.vue';
+import Send from './views/Send.vue';
 
 Vue.use(Router);
 
@@ -53,6 +54,11 @@ export default new Router({
       path: '/home',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/send',
+      name: 'send',
+      component: Send
     },
     {
       path: '*',

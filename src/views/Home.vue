@@ -1,26 +1,30 @@
 <template>
   <div class="home-container">
-    <div>
-      <div class="home-top">
-        <div class="balance">
-          <img
-            alt="logo"
-            src="~@/assets/gard-logo.svg"
-          />
-          <span>{{balance}}</span>
-        </div>
+    <div class="home-top">
+      <div class="balance">
+        <img
+          alt="logo"
+          src="~@/assets/gard-logo.svg"
+        />
+        <span>{{balance}}</span>
+      </div>
+      <el-button
+        type="primary"
+        @click="qrCodeVisible = true"
+      >{{$t('home.receive')}}</el-button>
+      <router-link to="send">
         <el-button
           type="primary"
-          @click="qrCodeVisible = true"
-        >{{$t('home.receive')}}</el-button>
-        <router-link to="tx">
-          <el-button
-            type="primary"
-            class="btn"
-          >{{$t('home.send')}}</el-button>
-        </router-link>
-      </div>
+          class="btn"
+        >{{$t('home.send')}}</el-button>
+      </router-link>
     </div>
+
+    <TransactionList
+      :fields="fields.filter(i => !i.hideInTable)"
+      :load="load"
+      :list="txs"
+    />
   </div>
 </template>
 
@@ -28,23 +32,32 @@
 import { mapState, mapGetters } from "vuex";
 import { get, isEmpty } from "lodash";
 
+import { txFieldsMap } from "@/constants";
+import TransactionList from "@/components/TransactionList";
+
 export default {
   name: "Home",
+  components: { TransactionList },
   data() {
-    return {};
+    return {
+      fields: txFieldsMap.send,
+      load: false
+    };
   },
   computed: {
     ...mapGetters("blocks", { blocksLastList: "lastList" }),
-    ...mapState("account", ["userName", "keyStore", "balance"])
+    ...mapState("account", ["userName", "keyStore", "balance", "txs"])
   },
   methods: {
-    fetchData: function() {
-      this.$store.dispatch("blocks/fetchList");
-      this.$store.dispatch("transactions/fetchLastList");
+    fetchData: async function() {
+      this.load = true;
+      await this.$store.dispatch("account/fetchBalance");
+      await this.$store.dispatch("account/fetchTxs");
+      this.load = false;
     }
   },
   mounted() {
-    this.$store.dispatch("account/fetchBalance", this.userName);
+    this.fetchData();
   }
 };
 </script>

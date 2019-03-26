@@ -41,7 +41,7 @@ import { mapState, mapGetters } from "vuex";
 import { get } from "lodash";
 
 export default {
-  name: "Mnemonic",
+  name: "Login",
   data() {
     return {
       form: {

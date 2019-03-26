@@ -10,6 +10,7 @@
         <el-form-item
           :label="$t('create.mnemonic')"
           prop="phrase"
+          required
         >
           <el-input
             class="input"
@@ -23,6 +24,7 @@
         <el-form-item
           :label="$t('create.name')"
           prop="name"
+          required
         >
           <el-input
             v-model="form.name"
@@ -32,6 +34,7 @@
         <el-form-item
           :label="$t('create.pass')"
           prop="pass"
+          required
         >
           <el-input
             v-model="form.pass"
@@ -57,12 +60,6 @@ import { get } from "lodash";
 export default {
   name: "ImportPhrase",
   data() {
-    const validateName = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("Please enter username!"));
-      }
-      callback();
-    };
     const validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("Please enter password!"));
@@ -97,7 +94,6 @@ export default {
         pass: ""
       },
       rules: {
-        name: [{ validator: validateName, trigger: "blur" }],
         pass: [{ validator: validatePass, trigger: "blur" }],
         phrase: [{ validator: validatePhrase, trigger: "blur" }]
       }

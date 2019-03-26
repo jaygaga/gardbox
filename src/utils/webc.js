@@ -1,4 +1,5 @@
 import Irisnet from '@/utils/crypto';
-const crypto = Irisnet.getCrypto('cosmos');
+const account = Irisnet.getCrypto('cosmos');
+const tx = Irisnet.getBuilder('cosmos');
 
-export default crypto;
+export default { account, tx };

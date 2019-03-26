@@ -8,6 +8,7 @@
     <el-form-item
       :label="$t('create.name')"
       prop="name"
+      required
     >
       <el-input v-model="form.name"></el-input>
     </el-form-item>
@@ -15,6 +16,7 @@
     <el-form-item
       :label="$t('create.pass')"
       prop="pass"
+      required
     >
       <el-input
         :placeholder="$t('create.pass')"
@@ -26,6 +28,7 @@
     <el-form-item
       :label="$t('create.passCheck')"
       prop="checkPass"
+      required
     >
       <el-input
         :placeholder="$t('create.passCheck')"

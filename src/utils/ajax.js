@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
+import { baseURL } from '@/constants';
 
-const baseURL = 'https://www.gardplorer.io/testnet';
 const $ajax = axios.create({ baseURL });
 
 $ajax.interceptors.response.use(

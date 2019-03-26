@@ -10,6 +10,7 @@ import { en, zh } from '@/constants';
 import * as filters from '@/utils/filters.js';
 import rootStore from './store/index.js';
 
+import Link from '@/components/Link';
 import Card from '@/components/Card';
 
 Vue.config.productionTip = false;
@@ -28,10 +29,11 @@ Object.keys(filters).forEach(key => Vue.filter(key, filters[key]));
 const store = new Vuex.Store(rootStore);
 
 // get blockchain basic info
-store.dispatch('basic/fetch');
+store.dispatch('account/getNodeInfo');
 
 // 注册全局组件
 Vue.component('s-card', Card);
+Vue.component('s-link', Link);
 
 new Vue({
   i18n,

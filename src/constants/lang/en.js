@@ -34,6 +34,11 @@ const en = {
   home: {
     receive: 'Receive',
     send: 'Send'
+  },
+  send: {
+    amount: 'Amount',
+    address: 'Address',
+    fee: 'Fee'
   }
 };
 export default en;
