@@ -98,6 +98,7 @@ export default {
       const {
         form,
         $store: { dispatch },
+        $message,
         onStepChange
       } = this;
       this.$refs["form"].validate(async function(valid) {
@@ -106,7 +107,7 @@ export default {
         // create account
         const created = await dispatch("account/create", form);
         if (!created) {
-          this.$message({
+          $message({
             type: "error",
             message: "Account Name Exist!",
             center: true

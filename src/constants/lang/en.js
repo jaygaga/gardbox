@@ -9,6 +9,8 @@ const en = {
     cancel: 'Cancel'
   },
   passport: {
+    title: 'Hashgard Web Wallet',
+    banner: 'gard钱包是一个免费的、开源的网页钱包，用户可以使用gard钱包创建或导入钱包，使用gard代币完成例如转账等一系列操作.',
     create: 'Create Wallet',
     login: 'Log In',
     recover: 'Recover'
@@ -39,6 +41,17 @@ const en = {
     amount: 'Amount',
     address: 'Address',
     fee: 'Fee'
+  },
+  footer: {
+    community: 'Community',
+    resources: 'Resources',
+    plorer: 'Blockchain Explorer',
+    help: 'Help',
+    announce: 'Announcements',
+    contact: 'Contact Us',
+    about: 'About Us',
+    website: 'Hashgard Official Website',
+    collaborate: 'Collaborations'
   }
 };
 export default en;

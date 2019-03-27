@@ -25,12 +25,12 @@ export default {
 
 html,
 body {
-  font-size: 14px;
-  line-height: 1.571428;
+  font-size: 16px;
+  line-height: 1.5;
   font-family: "PingFangSC", Microsoft YaHei, "Helvetica Neue", Helvetica, Arial,
     STHeiTi, sans-serif;
-  color: rgba(255, 255, 255, 0.85);
   background: $color-background;
+  color: $color-font;
 }
 
 #app {
@@ -41,17 +41,8 @@ body {
   .main {
     flex: 1;
     width: 100%;
-    max-width: $sm;
-    padding: 0 24px;
+    max-width: $max-width;
     margin: 0 auto;
-  }
-}
-
-@include responsive($sm) {
-  #app {
-    .main {
-      padding: 0 16px;
-    }
   }
 }
 </style>

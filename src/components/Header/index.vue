@@ -1,28 +1,27 @@
 <template>
   <div class="header-container">
     <div class="header">
-      <div class="logo">
-        <a href="/">
-          <img
-            alt="logo"
-            src="~@/assets/logo.svg"
-          />
-          <span>SHIELD</span>
-        </a>
-      </div>
+      <a
+        href="/"
+        class="logo"
+      >
+        <img
+          alt="logo"
+          src="~@/assets/logo.svg"
+        />
+      </a>
 
-      <el-select
-        @change="changeLang"
+      <span
+        class="lang-change"
+        @click="changeLang"
         :value="$i18n.locale"
       >
-        <el-option
-          v-for="(lang, i) in langs"
-          :key="`Lang${i}`"
-          :value="lang"
-        >{{ lang }}</el-option>
-      </el-select>
+        <i class="el-icon-sort"></i>
+        {{$i18n.locale === 'en' ? '中文':'English'}}
+      </span>
 
       <el-dropdown
+        v-if="userName"
         class="dropdown-menu"
         trigger="click"
         @command="handleCommand"
@@ -50,13 +49,14 @@
 </template>
 
 <script>
-import { getMapper } from "vuex";
+import { mapState } from "vuex";
 import { menu } from "@/constants";
 
 export default {
   data() {
     return {
       langs: ["zh", "en"],
+      lang: this.$i18n.locale,
       value: "",
       menu
     };
@@ -64,13 +64,27 @@ export default {
   props: {
     netName: String
   },
+  computed: {
+    ...mapState("account", ["userName"])
+  },
   methods: {
     handleCommand(v) {
       this.$router.push(v);
     },
-    changeLang(v) {
-      this.$i18n.locale = v;
-      localStorage.setItem("lang", v);
+    changeLang() {
+      let target = "en";
+      if (this.$i18n.locale === "en") {
+        target = "zh";
+      } else {
+        target = "en";
+      }
+      this.$i18n.locale = target;
+      localStorage.setItem("lang", target);
+    }
+  },
+  mounted() {
+    if (this.userName) {
+      // this.$router.push("/home");
     }
   }
 };
@@ -79,28 +93,31 @@ export default {
 <style lang="scss" scoped>
 .header-container {
   width: 100%;
-  background: $color-background-card;
+  background: $color-primary;
+  box-shadow: $shadow;
+  color: white;
 }
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 16px $basic-padding;
+  align-items: center;
+  padding: 16px $padding-large;
   max-width: $max-width;
   margin: 0 auto;
+
   .logo {
-    flex-basis: 150px;
-    flex-shrink: 0;
-    font-size: $font-size-title;
-    font-weight: bolder;
-    a {
-      color: $color-primary;
-    }
+    flex: 1;
+    display: inline-block;
+    line-height: 1;
     img {
-      width: 40px;
+      width: 100px;
     }
-    span {
-      position: relative;
-      top: -8px;
+  }
+  .lang-change {
+    margin-right: $padding-basic;
+    cursor: pointer;
+    .el-icon-sort {
+      transform: rotate(90deg);
     }
   }
 }
@@ -108,8 +125,6 @@ export default {
 .dropdown-menu {
   font-size: $font-size-title;
   i {
-    position: relative;
-    top: 8px;
     color: white;
   }
 }
