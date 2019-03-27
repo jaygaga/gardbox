@@ -31,11 +31,12 @@ export default {
 <style lang="scss" scoped>
 .card-container {
   border-radius: 2px;
-  color: rgba(255, 255, 255, 0.65);
   box-shadow: $shadow;
+  background: white;
+  border-radius: 4px;
+  max-width: $sm;
   // border: 1px solid rgba(0, 0, 0, 0.03);
-  background: $color-background-card;
-  margin: 24px 0;
+  margin: 0 auto;
 }
 
 .header {
@@ -46,9 +47,8 @@ export default {
   height: 64px;
   justify-content: space-between;
   align-items: center;
-  font-size: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-  color: white;
+  font-size: 20px;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.15);
   font-weight: bold;
 
   .link {

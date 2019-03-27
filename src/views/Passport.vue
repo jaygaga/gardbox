@@ -117,7 +117,6 @@ export default {
   padding: $padding-large;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   text-align: center;
-  box-shadow: $shadow;
   background: url("~@/assets/home-bg.svg") no-repeat;
   background-size: cover;
   text-align: left;

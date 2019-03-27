@@ -24,23 +24,14 @@
         v-if="userName"
         class="dropdown-menu"
         trigger="click"
-        @command="handleCommand"
       >
         <i class="el-icon-more"></i>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item
-            v-for="(item,index) in menu"
-            :key="index"
-            :command="item.link"
-          >
-            {{item.name}}
+          <el-dropdown-item @click="backup">
+            {{$t('passport.backup')}}
           </el-dropdown-item>
-          <el-dropdown-item>
-            <a
-              href="https://www.hashgard.pro"
-              target="_blank"
-              style="color:#606266"
-            >Faucet</a>
+          <el-dropdown-item @click="logout">
+            {{$t('passport.logout')}}
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -50,15 +41,13 @@
 
 <script>
 import { mapState } from "vuex";
-import { menu } from "@/constants";
 
 export default {
   data() {
     return {
       langs: ["zh", "en"],
       lang: this.$i18n.locale,
-      value: "",
-      menu
+      value: ""
     };
   },
   props: {
@@ -68,9 +57,6 @@ export default {
     ...mapState("account", ["userName"])
   },
   methods: {
-    handleCommand(v) {
-      this.$router.push(v);
-    },
     changeLang() {
       let target = "en";
       if (this.$i18n.locale === "en") {
@@ -80,6 +66,13 @@ export default {
       }
       this.$i18n.locale = target;
       localStorage.setItem("lang", target);
+    },
+    backup() {
+      console.log("backup");
+      // this.$router.push('/backup');
+    },
+    logout() {
+      console.log("logout");
     }
   },
   mounted() {
@@ -123,6 +116,7 @@ export default {
 }
 
 .dropdown-menu {
+  cursor: pointer;
   font-size: $font-size-title;
   i {
     color: white;

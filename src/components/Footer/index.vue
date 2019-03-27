@@ -1,6 +1,6 @@
 <template>
   <div class="footer-container">
-    <div class="footer">
+    <el-row class="footer">
       <el-col
         :xs="12"
         :sm="8"
@@ -68,7 +68,7 @@
         <p><a href="https://www.hashgard.io">{{$t('footer.website')}}</a></p>
         <p><a href="mailto:contact@hashgard.io">{{$t('footer.collaborate')}}</a></p>
       </el-col>
-    </div>
+    </el-row>
   </div>
 </template>
 
@@ -80,11 +80,10 @@ export default {};
 .footer-container {
   width: 100%;
   background: $color-primary;
-  padding: $basic-padding;
   color: white;
 
   .footer {
-    padding: 16px $padding-large;
+    padding: 8px $padding-large $padding-large;
     max-width: $max-width;
     margin: 0 auto;
 

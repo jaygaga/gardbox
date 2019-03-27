@@ -9,11 +9,15 @@
       </el-input>
     </el-form-item>
 
-    <el-button
-      type="primary"
-      class="btn"
-      @click="onSubmit"
-    >{{$t('global.next')}}</el-button>
+    <div class="form-footer">
+      <el-button @click="onStepChange(0)">{{$t('global.back')}}</el-button>
+      <el-button
+        type="primary"
+        class="btn-next"
+        @click="onSubmit"
+      >{{$t('global.next')}}</el-button>
+    </div>
+
   </el-form>
 </template>
 
@@ -38,7 +42,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn {
-  width: 100%;
+.form-footer {
+  margin-top: $padding-basic * 2;
+}
+.btn-next {
+  float: right;
 }
 </style>

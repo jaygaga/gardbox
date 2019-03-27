@@ -1,26 +1,31 @@
 <template>
   <div class="create-container">
 
-    <el-steps
-      :active="step"
-      v-if="step < 3"
-      simple
-    >
-      <el-step :title="$t('create.step1')"></el-step>
-      <el-step :title="$t('create.step2')"></el-step>
-      <el-step :title="$t('create.step3')"></el-step>
-    </el-steps>
+    <s-card :title="$t('passport.create')">
 
-    <s-card>
+      <el-steps
+        class="steps"
+        :active="step"
+        v-if="step < 3"
+        align-center
+      >
+        <el-step :title="$t('create.step1')"></el-step>
+        <el-step :title="$t('create.step2')"></el-step>
+        <el-step :title="$t('create.step3')"></el-step>
+      </el-steps>
+
       <Password
-        v-if="step === 0"
+        class="create-form"
+        v-show="step === 0"
         :onStepChange="onStepChange"
       />
       <Mnemonic
-        v-if="step === 1"
+        class="create-form"
+        v-show="step === 1"
         :onStepChange="onStepChange"
       />
       <Confirm
+        class="create-form"
         v-if="step === 2"
         :onStepChange="onStepChange"
       />
@@ -59,12 +64,11 @@ export default {
 
 <style lang="scss" scoped>
 .create-container {
-  color: white(0.85);
-  padding: 16px 0;
-  width: $sm;
+  padding: $padding-large;
+  width: 100%;
 
-  .el-steps--simple {
-    background: $color-background-card;
+  .steps {
+    padding: $padding-basic 0;
   }
 }
 </style>

@@ -43,6 +43,7 @@ body {
     width: 100%;
     max-width: $max-width;
     margin: 0 auto;
+    box-shadow: $shadow;
   }
 }
 </style>

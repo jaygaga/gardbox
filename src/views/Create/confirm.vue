@@ -5,9 +5,9 @@
   >
     <div class="label">
       <a
-        class="btn-prev"
+        class="btn-back"
         @click="onPrev"
-      >{{$t('global.prev')}}</a>
+      >{{$t('global.back')}}</a>
 
       <a
         class="btn-reset"
@@ -94,7 +94,7 @@ export default {
         //   return;
         // }
 
-        this.$store.dispatch("account/finishCreate");
+        // this.$store.dispatch("account/finishCreate");
         this.onFinish();
       }
     },
@@ -105,19 +105,17 @@ export default {
       this.onStepChange(1);
     },
     onFinish() {
-      this.$confirm(
-        this.$t("passport.create.backup"),
-        this.$t("passport.create.success"),
-        {
-          confirmButtonText: this.$t("global.ok"),
-          cancelButtonText: this.$t("global.cancel")
-        }
-      )
+      this.$confirm(this.$t("create.backup"), this.$t("create.success"), {
+        confirmButtonText: this.$t("global.ok"),
+        cancelButtonText: this.$t("global.cancel")
+      })
         .then(() => {
-          // go to backup keyStore page
+          // go to home page
+          this.$router.push("/home");
         })
         .catch(() => {
-          // go to home page
+          // go to backup keyStore page
+          this.$router.push("/backup");
         });
     }
   }

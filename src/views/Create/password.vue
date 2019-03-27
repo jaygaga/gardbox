@@ -3,6 +3,7 @@
     ref="form"
     :model="form"
     :rules="rules"
+    v-loading="loading"
     label-position="top"
   >
     <el-form-item
@@ -37,11 +38,14 @@
       ></el-input>
     </el-form-item>
 
-    <el-button
-      type="primary"
-      class="btn"
-      @click="onSubmit"
-    >{{$t('global.next')}}</el-button>
+    <div class="form-footer">
+      <el-button @click="$router.back()">{{$t('global.back')}}</el-button>
+      <el-button
+        type="primary"
+        class="btn-next"
+        @click="onSubmit"
+      >{{$t('global.next')}}</el-button>
+    </div>
   </el-form>
 </template>
 
@@ -90,7 +94,8 @@ export default {
       rules: {
         pass: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }]
-      }
+      },
+      loading: false
     };
   },
   methods: {
@@ -101,11 +106,14 @@ export default {
         $message,
         onStepChange
       } = this;
+      let loading = this.loading;
       this.$refs["form"].validate(async function(valid) {
         if (!valid) return false;
 
         // create account
+        loading = true;
         const created = await dispatch("account/create", form);
+        loading = false;
         if (!created) {
           $message({
             type: "error",
@@ -124,8 +132,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn {
-  width: 100%;
+.form-footer {
+  margin-top: $padding-basic * 2;
+}
+.btn-next {
+  float: right;
 }
 </style>
 
