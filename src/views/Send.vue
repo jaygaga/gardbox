@@ -1,6 +1,6 @@
 <template>
   <div class="send-container">
-    <s-card>
+    <s-card :title="$t('home.send')">
       <el-form
         ref="form"
         label-position="top"
@@ -31,11 +31,14 @@
         <div class="fee"><span>{{$t('send.fee')}}</span>0 GARD</div>
       </el-form>
 
-      <el-button
-        type="primary"
-        class="btn"
-        @click="onSubmit"
-      >{{$t('home.send')}}</el-button>
+      <div class="form-footer">
+        <el-button @click="$router.back()">{{$t('global.back')}}</el-button>
+        <el-button
+          type="primary"
+          class="btn"
+          @click="onSubmit"
+        >{{$t('home.send')}}</el-button>
+      </div>
 
       <el-dialog
         :title="$t('create.pass')"
@@ -147,10 +150,8 @@ export default {
 
 <style lang="scss" scoped>
 .send-container {
-  width: $xs;
-  margin: 0 auto;
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  max-width: $xs;
+  margin: $padding-large auto;
 
   .fee {
     span {
@@ -158,9 +159,11 @@ export default {
     }
   }
 
-  .btn {
-    width: 100%;
-    margin: 24px 0;
+  .form-footer {
+    margin-top: $padding-basic * 2;
+    .btn {
+      float: right;
+    }
   }
 
   .ellipsis {

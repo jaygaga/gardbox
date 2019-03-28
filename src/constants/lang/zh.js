@@ -39,6 +39,7 @@ const zh = {
   },
   home: {
     receive: '收 款',
+    qrcode: '二维码',
     send: '发 送',
     copy: '已复制到剪切板',
     txs: '交易记录',

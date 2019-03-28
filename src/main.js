@@ -14,6 +14,7 @@ import rootStore from './store/index.js';
 import Link from '@/components/Link';
 import Card from '@/components/Card';
 import IconPanel from '@/components/Panel/IconPanel.vue';
+import AddressCopy from '@/components/AddressCopy';
 
 Vue.config.productionTip = false;
 
@@ -38,6 +39,7 @@ store.dispatch('account/getNodeInfo');
 Vue.component('s-card', Card);
 Vue.component('s-link', Link);
 Vue.component('s-btn-card', IconPanel);
+Vue.component('s-address', AddressCopy);
 
 new Vue({
   i18n,

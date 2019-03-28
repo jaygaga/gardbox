@@ -4,14 +4,7 @@
       <span :style="{background: avatarColor}">{{name.slice(0,1).toUpperCase()}}</span>
     </div>
     <h1 class="name">{{name}}</h1>
-    <div class="address">{{address | gardAddr}}
-      <img
-        class="copy-icon"
-        src="~@/assets/icon-copy.svg"
-        v-clipboard:copy="address"
-        v-clipboard:success="onCopy"
-      />
-    </div>
+    <s-address :address="address" />
   </div>
 </template>
 
@@ -28,14 +21,6 @@ export default {
       const factor = code > 122 ? 73 : code;
       const Hue = 360 * (factor / 122);
       return "hsla(" + Hue + ",60%,65%,1)";
-    }
-  },
-  methods: {
-    onCopy() {
-      this.$message({
-        type: "success",
-        message: this.$t("home.copy")
-      });
     }
   }
 };
