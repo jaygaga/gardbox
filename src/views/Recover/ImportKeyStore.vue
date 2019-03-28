@@ -1,6 +1,6 @@
 <template>
   <div class="recover-container">
-    <s-card>
+    <s-card :title="$t('recover.key')">
       <el-form
         ref="form"
         label-position="top"
@@ -44,11 +44,14 @@
         </el-form-item>
       </el-form>
 
-      <el-button
-        type="primary"
-        class="btn"
-        @click="onSubmit"
-      >{{$t('passport.recover')}}</el-button>
+      <div class="form-footer">
+        <el-button @click="$router.back()">{{$t('global.back')}}</el-button>
+        <el-button
+          type="primary"
+          class="btn"
+          @click="onSubmit"
+        >{{$t('passport.recover')}}</el-button>
+      </div>
     </s-card>
   </div>
 </template>
@@ -121,18 +124,19 @@ export default {
 
 <style lang="scss" scoped>
 .recover-container {
-  width: $xs;
-  margin: 0 auto;
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  // max-width: $xs;
+  padding: $padding-large;
+  margin: $padding-large auto;
 
   .user-select {
     width: 100%;
   }
 
-  .btn {
-    width: 100%;
-    margin: 24px 0;
+  .form-footer {
+    margin-top: $padding-basic * 2;
+    .btn {
+      float: right;
+    }
   }
 }
 </style>
