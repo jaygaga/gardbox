@@ -37,7 +37,10 @@ const zh = {
   },
   home: {
     receive: '收 款',
-    send: '发 送'
+    send: '发 送',
+    copy: '已复制到剪切板',
+    txs: '交易记录',
+    allTxs: '查看全部'
   },
   send: {
     amount: '数量',

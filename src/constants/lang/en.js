@@ -37,7 +37,10 @@ const en = {
   },
   home: {
     receive: 'Receive',
-    send: 'Send'
+    send: 'Send',
+    copy: 'Copied to ClipBoard',
+    txs: 'Transactions',
+    allTxs: 'View All'
   },
   send: {
     amount: 'Amount',

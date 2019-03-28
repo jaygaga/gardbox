@@ -1,38 +1,29 @@
 <template>
+  <div class="list-container">
 
-  <el-table
-    class="table"
-    :data="list"
-    v-loading="load"
-    style="width: 100%"
-  >
-    <el-table-column
-      v-for="item in fields"
-      :key="item.name"
-      :label="item.name"
+    <div
+      v-for="item in list"
+      :key="item.txhash"
+      class="tx-row"
     >
-      <template slot-scope="scope">
+      <div class="type">{{get(item, 'tags.0.value')}}</div>
+      <div class="txhash">
+
         <s-link
-          v-if="item.linkType"
-          :type="item.linkType"
-          :content="get(scope.row, item.field)"
+          type="tx"
+          :content="item.txhash"
         />
-        <span v-if="!item.linkType">
-          {{ item.field instanceof Array ? item.field.map(i => get(scope.row, i)).join(' ') : get(scope.row, item.field) || '-' }}
-        </span>
-      </template>
-    </el-table-column>
+        <div>
+          {{ get(blocks, [item.height, 'block', 'header', 'time']) | formatTime }}
+        </div>
+      </div>
+      <div :class="`amount ${get(item, 'tags.0.value')}`">
+        {{get(item, 'tags.0.value') === 'send' ? '- ':'+ '}}
+        {{get(item, 'tx.value.msg.0.value.amount.0.amount')}} GARD
+      </div>
+    </div>
+  </div>
 
-    <el-table-column
-      prop="header.num_txs"
-      label="TIME"
-    >
-      <template slot-scope="scope">
-        {{ get(blocks, [scope.row.height, 'block', 'header', 'time']) | formatTime }}
-      </template>
-    </el-table-column>
-
-  </el-table>
 </template>
 
 <script>
@@ -62,3 +53,46 @@ export default {
 };
 </script>
 
+<style lang="scss" scoped>
+.list-container {
+  .tx-row {
+    display: flex;
+    align-items: center;
+    border-bottom: $border;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    .type {
+      flex-basis: 160px;
+      font-size: 20px;
+    }
+    .txhash {
+      flex-grow: 1;
+    }
+    .amount {
+      font-size: 20px;
+
+      &.send {
+        color: $color-warning;
+      }
+      &.receive {
+        color: $color-success;
+      }
+    }
+  }
+  .tx-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+@include responsive($sm) {
+  .list-container {
+    .tx-row {
+      .type {
+        display: none;
+      }
+    }
+  }
+}
+</style>

@@ -4,12 +4,13 @@
       class="header"
       v-if="title"
     >
-      <p>{{ title.toUpperCase() }}</p>
-      <RouterLink
-        :to="link"
+      <p>{{ title }}</p>
+      <a
+        :href="link"
+        target="_blank"
         class="link"
         v-if="link"
-      >VIEW ALL</RouterLink>
+      >{{linkName}}</a>
     </div>
     <div class="content">
       <slot />
@@ -22,8 +23,8 @@ export default {
   name: "card",
   props: {
     title: String,
-    link: String,
-    data: Array
+    linkName: String,
+    link: String
   }
 };
 </script>
@@ -34,7 +35,7 @@ export default {
   box-shadow: $shadow;
   background: white;
   border-radius: 4px;
-  max-width: $sm;
+  // max-width: $sm;
   // border: 1px solid rgba(0, 0, 0, 0.03);
   margin: 0 auto;
 }
@@ -48,10 +49,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   font-size: 20px;
-  border-bottom: 0.5px solid rgba(0, 0, 0, 0.15);
+  border-bottom: $border;
   font-weight: bold;
 
   .link {
+    font-size: 16px;
     text-decoration: none;
     color: $blue;
   }

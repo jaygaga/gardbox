@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import ElementUI from 'element-ui';
 import VueI18n from 'vue-i18n';
+import VueClipboard from 'vue-clipboard2';
 import '@/styles/element-variables.scss';
 import App from './App.vue';
 import router from './router';
@@ -24,6 +25,7 @@ const i18n = new VueI18n({
 
 Vue.use(ElementUI);
 Vue.use(Vuex);
+Vue.use(VueClipboard);
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]));
 
 const store = new Vuex.Store(rootStore);

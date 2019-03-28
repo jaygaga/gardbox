@@ -27,12 +27,14 @@ export const txFieldsMap = {
     {
       name: 'From',
       field: 'tx.value.msg.0.value.from_address',
-      linkType: 'address'
+      linkType: 'address',
+      hideInTable: true
     },
     {
       name: 'To',
       field: 'tx.value.msg.0.value.to_address',
-      linkType: 'address'
+      linkType: 'address',
+      hideInTable: true
     },
     {
       name: 'Amount',

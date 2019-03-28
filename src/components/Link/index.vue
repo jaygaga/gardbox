@@ -1,25 +1,25 @@
 <template>
   <a
     target="_blank"
-    :href="`${gardplorerDomain}/tx/${content}`"
+    :href="`${gardplorerDomain}tx/${content}`"
     :class="`${ellipsis ? 'ellipsis' : ''}`"
     v-if="type === 'tx'"
   >{{ content }}</a>
   <a
     target="_blank"
-    :href="`${gardplorerDomain}/address/${content}`"
+    :href="`${gardplorerDomain}address/${content}`"
     :class="`${ellipsis ? 'ellipsis' : ''}`"
     v-else-if="type === 'address'"
   >{{ content }}</a>
   <a
     target="_blank"
-    :href="`${gardplorerDomain}/block/${content}`"
+    :href="`${gardplorerDomain}block/${content}`"
     :class="`${ellipsis ? 'ellipsis' : ''}`"
     v-else-if="type === 'block'"
   >{{ content }}</a>
   <a
     target="_blank"
-    :href="`${gardplorerDomain}/validator/${content}`"
+    :href="`${gardplorerDomain}validator/${content}`"
     :class="`${ellipsis ? 'ellipsis' : ''}`"
     v-else-if="type === 'validator'"
   >{{ content }}</a>
@@ -45,7 +45,7 @@ export default {
 <style lang="scss" scoped>
 .ellipsis {
   display: inline-block;
-  max-width: 200px;
+  max-width: 180px;
   vertical-align: top;
   text-overflow: ellipsis;
   overflow: hidden;
