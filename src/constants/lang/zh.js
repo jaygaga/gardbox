@@ -12,10 +12,13 @@ const zh = {
     title: 'Hashgard 钱包网页版',
     banner: 'gard钱包是一个免费的、开源的网页钱包，用户可以使用gard钱包创建或导入钱包，使用gard代币完成例如转账等一系列操作.',
     create: '创建钱包',
+    createBreif: '创建一个新的 GARD 钱包。',
     login: '登录钱包',
+    loginBreif: '直接使用密码登录已经存在的 GARD 钱包。',
     logout: '登 出',
     backup: '导出 KeyStore',
-    recover: '恢复钱包'
+    recover: '恢复钱包',
+    recoverBreif: '使用私钥或助记词恢复来恢复 GARD 钱包。'
   },
   create: {
     step1: '创建',

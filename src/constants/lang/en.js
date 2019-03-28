@@ -10,12 +10,16 @@ const en = {
   },
   passport: {
     title: 'Hashgard Web Wallet',
-    banner: 'gard钱包是一个免费的、开源的网页钱包，用户可以使用gard钱包创建或导入钱包，使用gard代币完成例如转账等一系列操作.',
+    banner:
+      'GARDBOX is a free, open source web wallet. Users can use gard wallet to create or import wallet, and use gard token to complete a series of operations on Hashgard Blockchain.',
     create: 'Create Wallet',
+    createBreif: "Create a new GARD wallet if you don't have one.",
     login: 'Log In',
+    loginBreif: 'Log In with your password if you already have a wallet.',
     logout: 'Log Out',
     backup: 'Export KeyStore',
-    recover: 'Recover'
+    recover: 'Recover',
+    recoverBreif: 'Recover your GARD wallet on this browser if you already have one from other place.'
   },
   create: {
     step1: 'Create',

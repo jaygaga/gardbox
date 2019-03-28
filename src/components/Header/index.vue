@@ -94,19 +94,16 @@ export default {
       commands[type]();
     },
     backup() {
-      console.log("backup");
       this.exportDialogVisible = true;
-      // this.$router.push('/backup');
     },
     logout() {
-      console.log("logout");
       this.$store.dispatch("account/logout");
       this.$router.push("/passport");
     }
   },
   mounted() {
     if (this.userName) {
-      // this.$router.push("/home");
+      this.$router.push("/home");
     }
   }
 };
