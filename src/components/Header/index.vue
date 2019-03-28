@@ -36,26 +36,47 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+
+      <el-dialog
+        class="backup-dialog"
+        :title="$t('passport.backup')"
+        :visible.sync="exportDialogVisible"
+      >
+        <el-input
+          class="input"
+          type="textarea"
+          :autosize="{ minRows: 6, maxRows: 8}"
+          :value="JSON.stringify(keyStore)"
+        >
+        </el-input>
+        <s-btn-card
+          title="KeyStore"
+          :breif="$t('home.keyWarn')"
+          :src="btnIcon"
+        />
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import btnIcon from "@/assets/btn-icon-4.svg";
 
 export default {
   data() {
     return {
+      btnIcon,
       langs: ["zh", "en"],
       lang: this.$i18n.locale,
-      value: ""
+      exportDialogVisible: false
     };
   },
   props: {
     netName: String
   },
   computed: {
-    ...mapState("account", ["userName"])
+    ...mapState("account", ["userName", "keyStore"])
   },
   methods: {
     changeLang() {
@@ -74,6 +95,7 @@ export default {
     },
     backup() {
       console.log("backup");
+      this.exportDialogVisible = true;
       // this.$router.push('/backup');
     },
     logout() {
@@ -127,6 +149,12 @@ export default {
   font-size: $font-size-title;
   i {
     color: white;
+  }
+}
+
+.backup-dialog {
+  .input {
+    margin-bottom: $padding-large;
   }
 }
 </style>

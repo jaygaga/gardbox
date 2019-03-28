@@ -43,7 +43,8 @@ const zh = {
     send: '发 送',
     copy: '已复制到剪切板',
     txs: '交易记录',
-    allTxs: '查看全部'
+    allTxs: '查看全部',
+    keyWarn: 'KeyStore 是用你的私钥和密码加密后的 JSON 文件, 可以用密码取回私钥，请妥善保管。'
   },
   send: {
     amount: '数量',

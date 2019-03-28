@@ -67,7 +67,6 @@
 import { mapState, mapGetters } from "vuex";
 import { get, isEmpty } from "lodash";
 import QRCode from "@/utils/qrcode";
-console.log(QRCode);
 
 import { txFieldsMap } from "@/constants";
 
