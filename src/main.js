@@ -13,6 +13,7 @@ import rootStore from './store/index.js';
 
 import Link from '@/components/Link';
 import Card from '@/components/Card';
+import IconPanel from '@/components/Panel/IconPanel.vue';
 
 Vue.config.productionTip = false;
 
@@ -36,6 +37,7 @@ store.dispatch('account/getNodeInfo');
 // 注册全局组件
 Vue.component('s-card', Card);
 Vue.component('s-link', Link);
+Vue.component('s-btn-card', IconPanel);
 
 new Vue({
   i18n,

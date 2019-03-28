@@ -18,7 +18,7 @@
     <el-input
       class="input"
       type="textarea"
-      :autosize="{ minRows: 8, maxRows: 12}"
+      :autosize="{ minRows: 6, maxRows: 8}"
       :value="phraseValue"
     >
     </el-input>
@@ -29,7 +29,7 @@
 
     <el-row :gutter="16">
       <el-col
-        :xs="6"
+        :xs="8"
         :sm="4"
         class="item"
         v-for="i in buttonList"

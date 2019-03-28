@@ -18,7 +18,7 @@ export default {
     account: {},
     keyStore: keyStore,
     userMap: JSON.parse(wallet_users),
-    balance: 0,
+    balance: '0',
     txs: [],
     blocks: {}
   },
@@ -189,7 +189,7 @@ export default {
         return i;
       });
       const list = [...senderData.data.txs, ...recipientList];
-      list.sort((a, b) => a.height - b.height);
+      list.sort((a, b) => b.height - a.height);
       context.commit('setTxList', list);
       return Promise.resolve(list);
     },

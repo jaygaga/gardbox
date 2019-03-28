@@ -25,6 +25,8 @@ const zh = {
     pass: '密码',
     passCheck: '确认密码',
     mnemonic: '您的助记词',
+    safety: '请妥善保管',
+    mnemonicBreif: '钱包不会存储您的助记词，请立即备份！如果丢失助记词，将无法找回钱包内的资产',
     reset: '重 置',
     confirm: '确认您的助记词',
     backup:

@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <s-card>
+    <s-card :title="$t('passport.login')">
       <el-form
         ref="form"
         label-position="top"
@@ -27,11 +27,14 @@
         </el-form-item>
       </el-form>
 
-      <el-button
-        type="primary"
-        class="btn"
-        @click="onSubmit"
-      >{{$t('passport.login')}}</el-button>
+      <div class="form-footer">
+        <el-button @click="$router.back()">{{$t('global.back')}}</el-button>
+        <el-button
+          type="primary"
+          class="btn-login"
+          @click="onSubmit"
+        >{{$t('passport.login')}}</el-button>
+      </div>
     </s-card>
   </div>
 </template>
@@ -75,10 +78,9 @@ export default {
 
 <style lang="scss" scoped>
 .login-container {
-  width: $xs;
+  max-width: $xs;
   margin: 0 auto;
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: $padding-large;
 
   .user-select {
     width: 100%;
@@ -88,6 +90,12 @@ export default {
     width: 100%;
     margin: 24px 0;
   }
+}
+.form-footer {
+  margin-top: $padding-basic * 2;
+}
+.btn-login {
+  float: right;
 }
 </style>
 

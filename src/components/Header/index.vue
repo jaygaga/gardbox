@@ -24,13 +24,14 @@
         v-if="userName"
         class="dropdown-menu"
         trigger="click"
+        @command="handleCommand"
       >
         <i class="el-icon-more"></i>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click="backup">
+          <el-dropdown-item command="backup">
             {{$t('passport.backup')}}
           </el-dropdown-item>
-          <el-dropdown-item @click="logout">
+          <el-dropdown-item command="logout">
             {{$t('passport.logout')}}
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -67,12 +68,18 @@ export default {
       this.$i18n.locale = target;
       localStorage.setItem("lang", target);
     },
+    handleCommand(type) {
+      const commands = { backup: this.backup, logout: this.logout };
+      commands[type]();
+    },
     backup() {
       console.log("backup");
       // this.$router.push('/backup');
     },
     logout() {
       console.log("logout");
+      this.$store.dispatch("account/logout");
+      this.$router.push("/passport");
     }
   },
   mounted() {

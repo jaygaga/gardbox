@@ -23,87 +23,62 @@
       </el-col>
     </el-row>
 
-    <el-row class="btn-card btn-card-r">
-      <el-col
-        :span="10"
-        class="card-l"
-      >
-        <img
-          :alt="$t('passport.create')"
-          src="~@/assets/btn-icon-1.svg"
-        />
-      </el-col>
-      <el-col
-        :span="14"
-        class="card-r"
-      >
-        <h4>{{$t('passport.create')}}</h4>
-        <p>{{$t('passport.create')}}</p>
-        <router-link to="create">
-          <el-button
-            type="primary"
-            class="btn"
-          >{{$t('passport.create')}}</el-button>
-        </router-link>
-      </el-col>
-    </el-row>
-    <el-row class="btn-card">
-      <el-col
-        :span="10"
-        class="card-l"
-      >
-        <img
-          :alt="$t('passport.login')"
-          src="~@/assets/btn-icon-2.svg"
-        />
-      </el-col>
-      <el-col
-        :span="14"
-        class="card-r"
-      >
-        <h4>{{$t('passport.login')}}</h4>
-        <p>{{$t('passport.login')}}</p>
-        <router-link to="login">
-          <el-button
-            type="primary"
-            class="btn"
-          >{{$t('passport.login')}}</el-button>
-        </router-link>
-      </el-col>
-    </el-row>
-    <el-row class="btn-card btn-card-r">
-      <el-col
-        :span="10"
-        class="card-l"
-      >
-        <img
-          :alt="$t('passport.recover')"
-          src="~@/assets/btn-icon-3.svg"
-        />
-      </el-col>
-      <el-col
-        :span="14"
-        class="card-r"
-      >
-        <h4>{{$t('passport.recover')}}</h4>
-        <p>{{$t('passport.recover')}}</p>
-        <router-link to="recover">
-          <el-button
-            type="primary"
-            class="btn"
-          >{{$t('passport.recover')}}</el-button>
-        </router-link>
-      </el-col>
-    </el-row>
+    <s-btn-card
+      class="btn-card btn-card-r"
+      :title="$t('passport.create')"
+      :src="btnIcon1"
+      :breif="$t('passport.create')"
+    >
+      <router-link to="create">
+        <el-button
+          type="primary"
+          class="btn"
+        >{{$t('passport.create')}}</el-button>
+      </router-link>
+    </s-btn-card>
+    <s-btn-card
+      class="btn-card"
+      :title="$t('passport.login')"
+      :src="btnIcon2"
+      :breif="$t('passport.login')"
+    >
+      <router-link to="login">
+        <el-button
+          type="primary"
+          class="btn"
+        >{{$t('passport.login')}}</el-button>
+      </router-link>
+    </s-btn-card>
+    <s-btn-card
+      class="btn-card btn-card-r"
+      :title="$t('passport.recover')"
+      :src="btnIcon3"
+      :breif="$t('passport.recover')"
+    >
+      <router-link to="recover">
+        <el-button
+          type="primary"
+          class="btn"
+        >{{$t('passport.recover')}}</el-button>
+      </router-link>
+    </s-btn-card>
 
     <p class="sub-title">{{$t('passport.title')}}</p>
   </div>
 </template>
 
 <script>
+import btnIcon1 from "@/assets/btn-icon-1.svg";
+import btnIcon2 from "@/assets/btn-icon-2.svg";
+import btnIcon3 from "@/assets/btn-icon-3.svg";
+
 export default {
   data() {
-    return {};
+    return {
+      btnIcon1,
+      btnIcon2,
+      btnIcon3
+    };
   }
 };
 </script>
@@ -120,6 +95,19 @@ export default {
   background: url("~@/assets/home-bg.svg") no-repeat;
   background-size: cover;
   text-align: left;
+
+  .btn-card {
+    margin: $padding-large * 2 auto;
+    margin-left: 15%;
+    max-width: 400px;
+  }
+  .btn-card-r {
+    margin-left: auto;
+    margin-right: 15%;
+  }
+  .btn {
+    width: 100%;
+  }
 }
 
 .banner {
@@ -151,32 +139,6 @@ export default {
   }
 }
 
-.btn-card {
-  margin: $padding-large * 2 auto;
-  margin-left: 15%;
-  padding: $padding-basic;
-  background: white;
-  max-width: 400px;
-  border-radius: 16px;
-  box-shadow: $shadow;
-
-  .card-r {
-    padding: 0 16px 0 $padding-large;
-
-    h4 {
-      height: 70px;
-      overflow: ellipsis;
-    }
-    .btn {
-      width: 100%;
-    }
-  }
-}
-.btn-card-r {
-  margin-left: auto;
-  margin-right: 15%;
-}
-
 .sub-title {
   text-align: center;
 }
@@ -197,11 +159,6 @@ export default {
         margin-left: 24%;
       }
     }
-  }
-  .btn-card {
-    margin-top: $padding-large;
-    margin-left: auto;
-    margin-right: auto;
   }
 }
 </style>

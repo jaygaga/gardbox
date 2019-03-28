@@ -21,7 +21,7 @@
       />
       <Mnemonic
         class="create-form"
-        v-show="step === 1"
+        v-if="step === 1"
         :onStepChange="onStepChange"
       />
       <Confirm
@@ -69,6 +69,11 @@ export default {
 
   .steps {
     padding: $padding-basic 0;
+  }
+}
+@include responsive($sm) {
+  .create-container {
+    padding: $padding-large / 2;
   }
 }
 </style>

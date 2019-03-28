@@ -25,6 +25,8 @@ const en = {
     pass: 'Password',
     passCheck: 'Confirm Password',
     mnemonic: 'Your Mnemonic',
+    safety: 'Backup Your Mnemonic',
+    mnemonicBreif: 'Make a Backup of the Mnemonic or you will never get your wallet back if you forget your password.',
     reset: 'Reset',
     confirm: 'Confirm your Mnemonic',
     backup:

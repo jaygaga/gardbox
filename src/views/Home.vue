@@ -3,7 +3,7 @@
     <div class="home-sider">
       <AvatarPanel
         :name="userName"
-        :address="keyStore.address"
+        :address="keyStore.address || ''"
       />
       <div class="line"></div>
       <BalancePanel :amount="balance" />
@@ -90,6 +90,11 @@ export default {
         type: "success",
         message: this.$t("home.copy")
       });
+    }
+  },
+  beforeMount() {
+    if (!this.userName) {
+      this.$router.push("/passport");
     }
   },
   mounted() {
