@@ -163,32 +163,53 @@ export default {
       }
       return Promise.resolve(data);
     },
+    fetchTxsTotalCount: async function(context, params) {
+      const { data } = await ajax.get('/api/txs', { params });
+      if (isEmpty(data)) {
+        return Promise.resolve();
+      }
+      return Promise.resolve(data);
+    },
+    fetchTxsLatest: async function(context, params) {
+      // 1. query txs as sender
+      // 1.1. first query to get total count
+      const sendData1 = await context.dispatch('fetchTxsTotalCount', params);
+      if (!isEmpty(sendData1)) {
+        if (sendData1.totalCount > params.limit) {
+          // 1.2 query last page
+          const lastPage = Math.ceil(sendData1.totalCount / params.limit) || 1;
+          const sendData = await context.dispatch('fetchTxsTotalCount', { ...params, page: lastPage });
+          return Promise.resolve(sendData.txs);
+        }
+        // 1.2 else use data of first query
+        return Promise.resolve(sendData1.txs);
+      }
+      return Promise.resolve([]);
+    },
     fetchTxs: async function(context) {
+      const limit = 10;
       const { address } = context.state.keyStore;
       const params = {
-        limit: 10,
+        limit,
+        action: 'send',
         sender: address
       };
 
       // 1. query txs as sender
-      const senderData = await ajax.get('/api/txs', { params });
-      if (isEmpty(senderData.data)) {
-        return Promise.resolve();
-      }
-
+      const sendList = await context.dispatch('fetchTxsLatest', params);
+      console.log(sendList);
       // 2. query txs as recipient
       params.recipient = params.sender;
       delete params.sender;
-      const recipientData = await ajax.get('/api/txs', { params });
-      if (isEmpty(recipientData.data)) {
-        return Promise.resolve();
-      }
+      const receiveList = await context.dispatch('fetchTxsLatest', params);
+      console.log(receiveList);
+
       // show action as receive
-      const recipientList = recipientData.data.txs.map(i => {
+      const receiveListMaped = receiveList.map(i => {
         set(i, 'tags.0.value', 'receive');
         return i;
       });
-      const list = [...senderData.data.txs, ...recipientList];
+      const list = [...sendList, ...receiveListMaped];
       list.sort((a, b) => b.height - a.height);
       context.commit('setTxList', list);
       return Promise.resolve(list);
