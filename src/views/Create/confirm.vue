@@ -70,6 +70,7 @@ export default {
   computed: {
     ...mapState("account", ["account"]),
     buttonList: function() {
+      if (!this.account.phrase) return [];
       const origin = this.account.phrase.split(" ");
       // const {phraseList} = this;
       if (this.phraseList.length) {
@@ -94,7 +95,7 @@ export default {
         //   return;
         // }
 
-        // this.$store.dispatch("account/finishCreate");
+        this.$store.dispatch("account/finishCreate");
         this.onFinish();
       }
     },
@@ -105,18 +106,12 @@ export default {
       this.onStepChange(1);
     },
     onFinish() {
-      this.$confirm(this.$t("create.backup"), this.$t("create.success"), {
+      this.$alert(this.$t("create.backup"), this.$t("create.success"), {
         confirmButtonText: this.$t("global.ok"),
-        cancelButtonText: this.$t("global.cancel")
-      })
-        .then(() => {
-          // go to home page
-          this.$router.push("/home");
-        })
-        .catch(() => {
-          // go to backup keyStore page
-          this.$router.push("/backup");
-        });
+        callback: action => {
+          this.$router.push("home");
+        }
+      });
     }
   }
 };

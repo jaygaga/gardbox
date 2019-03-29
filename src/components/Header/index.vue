@@ -153,5 +153,12 @@ export default {
   .input {
     margin-bottom: $padding-large;
   }
+  .btn-card {
+    .card-r {
+      p {
+        height: auto;
+      }
+    }
+  }
 }
 </style>

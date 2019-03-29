@@ -45,15 +45,17 @@ export default {
   }
   .card-r {
     padding: 0 16px 0 $padding-large;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 
     h4 {
       font-size: 20px;
       font-weight: bold;
     }
     p {
-      height: 70px;
-      overflow: hidden;
       text-overflow: ellipsis;
+      margin-bottom: 8px;
     }
   }
 }

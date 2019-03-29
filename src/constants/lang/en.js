@@ -13,13 +13,13 @@ const en = {
     banner:
       'GARDBOX is a free, open source web wallet. Users can use gard wallet to create or import wallet, and use gard token to complete a series of operations on Hashgard Blockchain.',
     create: 'Create Wallet',
-    createBreif: "Create a new GARD wallet if you don't have one.",
-    login: 'Log In',
-    loginBreif: 'Log In with your password if you already have a wallet.',
+    createBreif: "Create a new GARD wallet in this browser if you don't have one.",
+    login: 'Wallet Switch',
+    loginBreif: 'Use wallet with your password if you already have one in this browser.',
     logout: 'Log Out',
     backup: 'Export KeyStore',
     recover: 'Recover',
-    recoverBreif: 'Recover your GARD wallet on this browser if you already have one from other place.'
+    recoverBreif: 'Recover your wallet in this browser if you already have one from other place.'
   },
   create: {
     step1: 'Create',
@@ -33,8 +33,7 @@ const en = {
     mnemonicBreif: 'Make a Backup of the Mnemonic or you will never get your wallet back if you forget your password.',
     reset: 'Reset',
     confirm: 'Confirm your Mnemonic',
-    backup:
-      'Click [Ok] to backup your keyStore now, or click [Cancel] to open your wallet, your can backup your keyStore anytime in the settings menu.',
+    backup: 'Click [Ok] to to open your wallet, your can backup your keyStore anytime in the settings menu.',
     success: 'Wallet Created Successfully!'
   },
   recover: {
@@ -43,6 +42,7 @@ const en = {
   },
   home: {
     receive: 'Receive',
+    qrcode: 'QRCode',
     send: 'Send',
     copy: 'Copied to ClipBoard',
     txs: 'Transactions',

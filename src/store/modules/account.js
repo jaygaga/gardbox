@@ -4,7 +4,7 @@ import { get, set, isEmpty } from 'lodash';
 
 import { Message } from 'element-ui';
 
-const wallet_users = localStorage.getItem('gard_wallet_users');
+const wallet_users = localStorage.getItem('gard_wallet_users') || '{}';
 const wallet_username = localStorage.getItem('gard_wallet_username') || '';
 const userMap = JSON.parse(wallet_users) || {};
 const keyStore = userMap[wallet_username] || {};

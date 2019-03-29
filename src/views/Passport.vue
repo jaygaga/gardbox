@@ -27,7 +27,7 @@
       class="btn-card btn-card-r"
       :title="$t('passport.create')"
       :src="btnIcon1"
-      :breif="$t('passport.create')"
+      :breif="$t('passport.createBreif')"
     >
       <router-link to="create">
         <el-button
@@ -40,7 +40,7 @@
       class="btn-card"
       :title="$t('passport.login')"
       :src="btnIcon2"
-      :breif="$t('passport.login')"
+      :breif="$t('passport.loginBreif')"
     >
       <router-link to="login">
         <el-button
@@ -53,7 +53,7 @@
       class="btn-card btn-card-r"
       :title="$t('passport.recover')"
       :src="btnIcon3"
-      :breif="$t('passport.recover')"
+      :breif="$t('passport.recoverBreif')"
     >
       <router-link to="recover">
         <el-button
@@ -99,7 +99,7 @@ export default {
   .btn-card {
     margin: $padding-large * 2 auto;
     margin-left: 15%;
-    max-width: 400px;
+    max-width: 460px;
   }
   .btn-card-r {
     margin-left: auto;
@@ -144,6 +144,12 @@ export default {
 }
 
 @include responsive($sm) {
+  .passport-container {
+    .btn-card {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
   .banner {
     .banner-l {
       h1 {
