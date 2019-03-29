@@ -86,14 +86,14 @@ export default {
     onClick(i) {
       this.phraseList.push(i);
       if (this.buttonList.length === 0) {
-        // if (this.phraseList.join(" ") !== this.account.phrase) {
-        //   this.$message({
-        //     type: "error",
-        //     message: "Wrong Mnemonic!"
-        //   });
-        //   reset();
-        //   return;
-        // }
+        if (this.phraseList.join(" ") !== this.account.phrase) {
+          this.$message({
+            type: "error",
+            message: "Wrong Mnemonic!"
+          });
+          reset();
+          return;
+        }
 
         this.$store.dispatch("account/finishCreate");
         this.onFinish();

@@ -7,17 +7,6 @@
         :model="form"
       >
         <el-form-item
-          :label="`${$t('send.amount')} (Balance: ${balance})`"
-          prop="amount"
-          required
-        >
-          <el-input
-            v-model="form.amount"
-            :placeholder="$t('send.amount')"
-            clearable
-          ></el-input>
-        </el-form-item>
-        <el-form-item
           :label="$t('send.address')"
           prop="address"
           required
@@ -25,6 +14,17 @@
           <el-input
             v-model="form.address"
             :placeholder="$t('send.address')"
+            clearable
+          ></el-input>
+        </el-form-item>
+        <el-form-item
+          :label="`${$t('send.amount')} (Balance: ${balance})`"
+          prop="amount"
+          required
+        >
+          <el-input
+            v-model="form.amount"
+            :placeholder="$t('send.amount')"
             clearable
           ></el-input>
         </el-form-item>

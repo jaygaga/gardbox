@@ -63,13 +63,13 @@ export default {
       if (value === "") {
         callback(new Error("Please enter password!"));
       } else {
-        // if (!value.match("^(?=.*[a-zA-Z])(?=.*\\d)[^\\s]{8,18}$")) {
-        //   callback(
-        //     new Error(
-        //       "Password must contain numbers and letters and at least 8 characters!"
-        //     )
-        //   );
-        // }
+        if (!value.match("^(?=.*[a-zA-Z])(?=.*\\d)[^\\s]{8,18}$")) {
+          callback(
+            new Error(
+              "Password must contain numbers and letters and at least 8 characters!"
+            )
+          );
+        }
         if (this.form.checkPass !== "") {
           this.$refs.form.validateField("checkPass");
         }

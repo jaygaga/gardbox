@@ -197,12 +197,11 @@ export default {
 
       // 1. query txs as sender
       const sendList = await context.dispatch('fetchTxsLatest', params);
-      console.log(sendList);
+
       // 2. query txs as recipient
       params.recipient = params.sender;
       delete params.sender;
       const receiveList = await context.dispatch('fetchTxsLatest', params);
-      console.log(receiveList);
 
       // show action as receive
       const receiveListMaped = receiveList.map(i => {
@@ -224,13 +223,13 @@ export default {
         return Promise.resolve(data);
       }
     },
-    send: async function(context, { amount, address, memo }) {
+    send: async function(context, { amount, address, memo, pass }) {
       const isValidAddress = webc.account.isValidAddress(address);
       const from = context.state.keyStore.address;
       // 1. get account state (account_number & sequence)
       const { data } = await ajax.get(`api/auth/accounts/${from}`);
       // 2. get privateKey from keyStore
-      const account = webc.account.fromV3KeyStore(context.state.keyStore, 'a111111');
+      const account = webc.account.fromV3KeyStore(context.state.keyStore, pass);
       // 3. build tx and sign
       const para = {
         chain_id: context.state.nodeInfo.network,
@@ -254,7 +253,6 @@ export default {
       const req = webc.tx.buildAndSignTx(para, account.privateKey).GetData();
       // 4. post to lcd api
       const res = await ajax.post(`api/tx/broadcast`, req);
-      console.log(res);
       return Promise.resolve(res);
     }
   }
