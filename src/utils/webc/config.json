@@ -1,0 +1,64 @@
+{
+    "cosmos": {
+        "tx": {
+            "transfer": {
+                "type": "transfer",
+                "prefix": "cosmos-sdk/Send"
+            },
+            "delegate": {
+                "type": "delegate",
+                "prefix": "cosmos-sdk/Delegate"
+            },
+            "undelegate": {
+                "type": "undelegate",
+                "prefix": "cosmos-sdk/Undelegate"
+            },
+            "beginRedelegate": {
+                "type": "begin_redelegate",
+                "prefix": "cosmos-sdk/BeginRedelegate"
+            },
+            "setWithdrawAddress": {
+                "type": "set_withdraw_address",
+                "prefix": "cosmos-sdk/ModifyWithdrawAddress"
+            },
+            "withdrawDelegatorReward": {
+                "type": "withdraw_delegation_reward",
+                "prefix": "cosmos-sdk/WithdrawDelegationReward"
+            },
+            "withdrawValidatorCommission": {
+                "type": "withdraw_validator_commission",
+                "prefix": "cosmos-sdk/WithdrawValidatorCommission"
+            },
+            "stdTx": {
+                "type": "stdTx",
+                "prefix": "auth/StdTx"
+            }
+        },
+        "bech32": {
+            "accAddr": "gard",
+            "valAddr": "gardvaloper",
+            "accPub": "gardpub"
+        },
+        "defaultCoding": "bech32",
+        "coding": {
+            "bech32": "bech32",
+            "hex": "hex"
+        },
+        "maxGas": 20000000,
+        "amino": {
+            "signature": "tendermint/SignatureSecp256k1",
+            "pubKey": "tendermint/PubKeySecp256k1"
+        },
+        "bip39Path": "44'/118'/0'/0/0"
+    },
+    "language": {
+        "cn": "chinese_simplified",
+        "jp": "japanese",
+        "sp": "spanish",
+        "en": "english"
+    },
+    "chain": {
+        "ethermint": "ethermint",
+        "cosmos": "cosmos"
+    }
+}

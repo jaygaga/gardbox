@@ -1,5 +1,5 @@
-import Irisnet from '@/utils/crypto';
-const account = Irisnet.getCrypto('cosmos');
-const tx = Irisnet.getBuilder('cosmos');
+import Webc from '@/utils/webc/index';
+const account = Webc.getCrypto('cosmos');
+const tx = Webc.getBuilder('cosmos');
 
 export default { account, tx };
