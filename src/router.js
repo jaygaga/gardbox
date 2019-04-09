@@ -19,7 +19,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/passport'
+      redirect: '/home'
     },
     {
       path: '/passport',

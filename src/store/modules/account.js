@@ -150,10 +150,10 @@ export default {
       }
     },
     logout: function(context) {
-      context.commit('setUserName', '');
-      context.commit('setKeyStore', {});
-      localStorage.setItem('gard_wallet_username', '');
-      return Promise.resolve();
+      // context.commit('setUserName', '');
+      // context.commit('setKeyStore', {});
+      // localStorage.setItem('gard_wallet_username', '');
+      // return Promise.resolve();
     },
     fetchBalance: async function(context) {
       const { address } = context.state.keyStore;

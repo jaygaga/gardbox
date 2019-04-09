@@ -16,7 +16,8 @@ const zh = {
     itemTitle2: '安全 高效',
     itemText2: '所有的数据(包括导入生成助记词)都存储在本地，采用行业最高级24助记词进行账户加密。',
     itemTitle3: '可靠 权威',
-    itemText3: '由Hashgard官方团队打造，为您提供专业的可靠的资产管理工具。'
+    itemText3: '由Hashgard官方团队打造，为您提供专业的可靠的资产管理工具。',
+    account: '账户'
   },
   passport: {
     title: 'Hashgard 钱包网页版',

@@ -16,7 +16,8 @@ const en = {
     itemTitle2: 'The power of privacy',
     itemText2: 'All user data, including imported or generated private keys are stored locally and private.',
     itemTitle3: 'Easy to use, Reliable',
-    itemText3: 'Made by Hashgard official team. We’ve done the complicated stuff so you won’t have to.'
+    itemText3: 'Made by Hashgard official team. We’ve done the complicated stuff so you won’t have to.',
+    account: 'Account'
   },
   passport: {
     title: 'Hashgard Web Wallet',

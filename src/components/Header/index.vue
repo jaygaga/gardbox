@@ -20,7 +20,15 @@
         {{$i18n.locale === 'en' ? '中文':'English'}}
       </span>
 
-      <el-dropdown
+      <span
+        class="account"
+        @click="useAccount"
+      >
+        <i class="el-icon-account"></i>
+        {{$t('home.account')}}
+      </span>
+
+      <!-- <el-dropdown
         v-if="userName"
         class="dropdown-menu"
         trigger="click"
@@ -35,7 +43,7 @@
             {{$t('passport.logout')}}
           </el-dropdown-item>
         </el-dropdown-menu>
-      </el-dropdown>
+      </el-dropdown> -->
 
       <el-dialog
         class="backup-dialog"
@@ -89,6 +97,12 @@ export default {
       this.$i18n.locale = target;
       localStorage.setItem("lang", target);
     },
+    useAccount() {
+      console.log("account");
+      if (this.userName) {
+        this.$router.push("/main");
+      }
+    },
     handleCommand(type) {
       const commands = { backup: this.backup, logout: this.logout };
       commands[type]();
@@ -97,14 +111,14 @@ export default {
       this.exportDialogVisible = true;
     },
     logout() {
-      this.$store.dispatch("account/logout");
-      this.$router.push("/passport");
+      // this.$store.dispatch("account/logout");
+      // this.$router.push("/passport");
     }
   },
   mounted() {
-    if (this.userName) {
-      this.$router.push("/main");
-    }
+    // if (this.userName) {
+    //   this.$router.push("/main");
+    // }
   }
 };
 </script>
@@ -142,6 +156,9 @@ export default {
     .el-icon-sort {
       transform: rotate(90deg);
     }
+  }
+  .account {
+    cursor: pointer;
   }
 }
 
