@@ -55,7 +55,7 @@ export default {
       // if (this.step < 2) {
       //   this.step++;
       // } else {
-      //   this.$router.push("/home");
+      //   this.$router.push("/main");
       // }
     }
   }

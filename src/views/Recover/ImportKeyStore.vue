@@ -114,7 +114,7 @@ export default {
         if (!valid) return false;
         const account = await $store.dispatch("account/importKeyStore", form);
         if (account) {
-          $router.push("/home");
+          $router.push("/main");
         }
       });
     }

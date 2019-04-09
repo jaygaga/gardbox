@@ -7,6 +7,19 @@ import '@/styles/element-variables.scss';
 import App from './App.vue';
 import router from './router';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+  faTelegramPlane,
+  faTwitter,
+  faMedium,
+  faRedditAlien,
+  faLinkedin,
+  faFacebook,
+  faWeibo,
+  faWeixin
+} from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
 import { en, zh } from '@/constants';
 import * as filters from '@/utils/filters.js';
 import rootStore from './store/index.js';
@@ -36,6 +49,9 @@ const store = new Vuex.Store(rootStore);
 store.dispatch('account/getNodeInfo');
 
 // 注册全局组件
+library.add(faTelegramPlane, faTwitter, faMedium, faRedditAlien, faLinkedin, faFacebook, faWeibo, faWeixin);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+
 Vue.component('s-card', Card);
 Vue.component('s-link', Link);
 Vue.component('s-btn-card', IconPanel);

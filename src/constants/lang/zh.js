@@ -8,6 +8,16 @@ const zh = {
     ok: '确 认',
     cancel: '取 消'
   },
+  home: {
+    title: '欢迎使用 GARDBOX',
+    banner: 'GARDBOX 是新一代数字金融公有链 Hashgard 的网页钱包',
+    itemTitle1: '随时 随地',
+    itemText1: 'GARDBOX钱包是移动端友好的，因此您可以随处访问您的钱包。网页版适用于桌面和移动浏览器。',
+    itemTitle2: '安全 高效',
+    itemText2: '所有的数据(包括导入生成助记词)都存储在本地，采用行业最高级24助记词进行账户加密。',
+    itemTitle3: '可靠 权威',
+    itemText3: '由Hashgard官方团队打造，为您提供专业的可靠的资产管理工具。'
+  },
   passport: {
     title: 'Hashgard 钱包网页版',
     banner: 'gard钱包是一个免费的、开源的网页钱包，用户可以使用gard钱包创建或导入钱包，使用gard代币完成例如转账等一系列操作.',
@@ -39,7 +49,7 @@ const zh = {
     key: '导入 KeyStore',
     phrase: '导入助记词'
   },
-  home: {
+  main: {
     receive: '收 款',
     qrcode: '二维码',
     send: '发 送',
@@ -54,15 +64,7 @@ const zh = {
     fee: '手续费'
   },
   footer: {
-    community: '社区',
-    resources: '资源',
-    plorer: '区块链浏览器',
-    help: '帮助',
-    announce: '公告',
-    contact: '联系我们',
-    about: '关于我们',
-    website: 'Hashgard 官方网站',
-    collaborate: '商务合作'
+    copyright: '© 2019, Hashgard Team. All Rights Reserved.'
   }
 };
 export default zh;

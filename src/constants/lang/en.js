@@ -8,6 +8,16 @@ const en = {
     ok: 'Ok',
     cancel: 'Cancel'
   },
+  home: {
+    title: 'Welcome to GARDBOX',
+    banner: 'GARDBOX is a web wallet for Hashgard Blockchain.',
+    itemTitle1: 'Anywhere, anytime',
+    itemText1: 'GARDBOX is mobile friendly, so you can access it everywhere you go. The web-version works on desktop and mobile browsers.',
+    itemTitle2: 'The power of privacy',
+    itemText2: 'All user data, including imported or generated private keys are stored locally and private.',
+    itemTitle3: 'Easy to use, Reliable',
+    itemText3: 'Made by Hashgard official team. We’ve done the complicated stuff so you won’t have to.'
+  },
   passport: {
     title: 'Hashgard Web Wallet',
     banner:
@@ -40,7 +50,7 @@ const en = {
     key: 'Import KeyStore',
     phrase: 'Import Mnemonic'
   },
-  home: {
+  main: {
     receive: 'Receive',
     qrcode: 'QRCode',
     send: 'Send',
@@ -55,15 +65,7 @@ const en = {
     fee: 'Fee'
   },
   footer: {
-    community: 'Community',
-    resources: 'Resources',
-    plorer: 'Blockchain Explorer',
-    help: 'Help',
-    announce: 'Announcements',
-    contact: 'Contact Us',
-    about: 'About Us',
-    website: 'Hashgard Official Website',
-    collaborate: 'Collaborations'
+    copyright: '© 2019, Hashgard Team. All Rights Reserved.'
   }
 };
 export default en;

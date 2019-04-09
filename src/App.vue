@@ -35,15 +35,10 @@ body {
 
 #app {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 
   .main {
-    flex: 1;
     width: 100%;
-    max-width: $max-width;
-    margin: 0 auto;
-    box-shadow: $shadow;
+    margin-top: 86px;
   }
 }
 </style>

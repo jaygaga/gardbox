@@ -109,7 +109,7 @@ export default {
       this.$alert(this.$t("create.backup"), this.$t("create.success"), {
         confirmButtonText: this.$t("global.ok"),
         callback: action => {
-          this.$router.push("home");
+          this.$router.push("main");
         }
       });
     }

@@ -1,190 +1,221 @@
 <template>
   <div class="home-container">
-    <div class="home-sider">
-      <AvatarPanel
-        :name="userName"
-        :address="keyStore.address || ''"
-      />
-      <div class="line"></div>
-      <BalancePanel :amount="balance" />
+    <div class="banner">
+      <h1>
+        {{$t('home.title')}}
+      </h1>
+      <h4>
+        {{$t('home.banner')}}
+      </h4>
+      <img src="~@/assets/banner-img.png" />
     </div>
 
-    <div class="home-main">
-      <div class="home-top">
-
-        <BalancePanel
-          class="top-balance"
-          :amount="balance"
-        />
-
-        <el-popover
-          placement="bottom"
-          width="400"
-          trigger="click"
-        >
-          <div class="pop-content">
-            <h4>{{$t('home.qrcode')}}</h4>
-            <div id="qrcode"></div>
-            <h4>{{$t('send.address')}}</h4>
-            <s-address :address="keyStore.address || ''" />
-          </div>
-
-          <el-button
-            plain
-            class="top-btn"
-            type="primary"
-            slot="reference"
-          >{{$t('home.receive')}}</el-button>
-        </el-popover>
-
-        <router-link
-          class="top-btn"
-          to="send"
-        >
-          <el-button
-            plain
-            type="primary"
-          >{{$t('home.send')}}</el-button>
-        </router-link>
+    <div class="home-items">
+      <div class="items">
+        <div class="item">
+          <img :src="btnIcon1" />
+          <h4>{{$t('home.itemTitle1')}}</h4>
+          <div>{{$t('home.itemText1')}}</div>
+        </div>
+        <div class="item">
+          <img :src="btnIcon2" />
+          <h4>{{$t('home.itemTitle2')}}</h4>
+          <div>{{$t('home.itemText2')}}</div>
+        </div>
+        <div class="item">
+          <img :src="btnIcon3" />
+          <h4>{{$t('home.itemTitle3')}}</h4>
+          <div>{{$t('home.itemText3')}}</div>
+        </div>
       </div>
-
-      <s-card
-        :title="$t('home.txs')"
-        :linkName="$t('home.allTxs')"
-        :link="`address/${keyStore.address}` | explorerUrl"
-      >
-        <TransactionList
-          :fields="fields.filter(i => !i.hideInTable)"
-          :load="load"
-          :list="txs"
-        />
-      </s-card>
     </div>
+
+    <div class="home-links">
+      <a
+        class="link"
+        href="https://t.me/hashgardeng"
+        target="_blank"
+      >
+        <font-awesome-icon
+          :icon="['fab', 'telegram-plane']"
+          size="2x"
+        />
+      </a>
+      <a
+        class="link"
+        href="https://twitter.com/Hashgard1"
+        target="_blank"
+      >
+        <font-awesome-icon
+          :icon="['fab', 'twitter']"
+          size="2x"
+        />
+      </a>
+      <a
+        class="link"
+        href="https://medium.com/@hashgard"
+        target="_blank"
+      >
+        <font-awesome-icon
+          :icon="['fab', 'medium']"
+          size="2x"
+        />
+      </a>
+      <a
+        class="link"
+        href="https://www.reddit.com/r/Hashgard/"
+        target="_blank"
+      >
+        <font-awesome-icon
+          :icon="['fab', 'reddit-alien']"
+          size="2x"
+        />
+      </a>
+      <a
+        class="link"
+        href="https://www.linkedin.com/company/hashgard/"
+        target="_blank"
+      >
+        <font-awesome-icon
+          :icon="['fab', 'linkedin']"
+          size="2x"
+        />
+      </a>
+      <a
+        class="link"
+        href="https://www.facebook.com/gard.hash.5"
+        target="_blank"
+      >
+        <font-awesome-icon
+          :icon="['fab', 'facebook']"
+          size="2x"
+        />
+      </a>
+      <a
+        class="link"
+        href="http://weibo.com/p/1005056511186474/home?from=page_100505&mod=TAB&is_all=1#place"
+        target="_blank"
+      >
+        <font-awesome-icon
+          :icon="['fab', 'weibo']"
+          size="2x"
+        />
+      </a>
+      <a
+        class="link"
+        v-popover:popover
+        href="javascript:;"
+      >
+        <font-awesome-icon
+          :icon="['fab', 'weixin']"
+          size="2x"
+        />
+      </a>
+      <el-popover
+        placement="top"
+        ref="popover"
+        trigger="hover"
+      >
+        <img
+          src="@/assets/wx.jpeg"
+          width='200'
+          height='200'
+        />
+      </el-popover>
+    </div>
+
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
-import { get, isEmpty } from "lodash";
-import QRCode from "@/utils/qrcode";
-
-import { txFieldsMap } from "@/constants";
-
-import AvatarPanel from "@/components/Panel/AvatarPanel.vue";
-import BalancePanel from "@/components/Panel/BalancePanel";
-import TransactionList from "@/components/TransactionList";
+import btnIcon1 from "@/assets/btn-icon-1.svg";
+import btnIcon2 from "@/assets/btn-icon-2.svg";
+import btnIcon3 from "@/assets/btn-icon-3.svg";
 
 export default {
-  name: "Home",
-  components: { AvatarPanel, BalancePanel, TransactionList },
   data() {
     return {
-      fields: txFieldsMap.send,
-      load: false
+      btnIcon1,
+      btnIcon2,
+      btnIcon3
     };
-  },
-  computed: {
-    ...mapGetters("blocks", { blocksLastList: "lastList" }),
-    ...mapState("account", ["userName", "keyStore", "balance", "txs"]),
-    avatarColor() {
-      const code = this.userName.slice(0, 1).charCodeAt();
-      const factor = code > 122 ? 73 : code;
-      const Hue = 360 * (factor / 122);
-      return "hsla(" + Hue + ",60%,65%,1)";
-    }
-  },
-  methods: {
-    fetchData: async function() {
-      this.load = true;
-      await this.$store.dispatch("account/fetchBalance");
-      await this.$store.dispatch("account/fetchTxs");
-      new QRCode(
-        document.getElementById("qrcode"),
-        "http://jindo.dev.naver.com/collie"
-      );
-      this.load = false;
-    },
-    onCopy() {
-      this.$message({
-        type: "success",
-        message: this.$t("home.copy")
-      });
-    }
-  },
-  beforeMount() {
-    if (!this.userName) {
-      this.$router.push("/passport");
-    }
-  },
-  mounted() {
-    this.fetchData();
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .home-container {
-  display: flex;
-  padding: $padding-basic;
-
-  .home-sider {
-    flex-basis: 300px;
-    background: white;
-    margin-right: 16px;
-    box-shadow: $shadow;
-    border-radius: 4px;
-    text-align: center;
-  }
-  .home-main {
-    flex-grow: 1;
-  }
-
-  .home-top {
-    display: flex;
-    align-items: center;
-    padding: 24px;
-    background: white;
-    box-shadow: $shadow;
-    border-radius: 4px;
-    margin-bottom: 16px;
-
-    .top-balance {
-      flex-grow: 1;
-    }
-    .top-btn {
-      flex-grow: 0;
-      height: 40px;
-      margin-left: 16px;
-    }
-  }
-}
-.line {
-  border-top: $border;
-  margin: $padding-basic;
-}
-
-.pop-content {
   text-align: center;
-  padding: 16px;
-  h4 {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 16px;
+  .banner {
+    padding: $padding-large;
+    margin-top: 80px;
+    max-width: $max-width;
+    margin: 0 auto;
+    h1 {
+      font-size: 32px;
+      margin-top: 120px;
+    }
+    img {
+      width: 100%;
+      margin-top: 56px;
+      margin-bottom: -180px;
+    }
   }
-  #qrcode {
-    width: 256px;
-    margin: 16px auto;
+
+  .home-items {
+    background: white;
+    .items {
+      display: flex;
+      max-width: $max-width;
+      padding: 160px $padding-large;
+      margin: 0 auto;
+      justify-content: space-between;
+      .item {
+        flex-basis: 360px;
+        background: white;
+        box-shadow: 1px 1px 16px 0px rgba(0, 0, 0, 0.06);
+        border-radius: 16px;
+        padding: $padding-large;
+        margin: 16px;
+        color: gray;
+        font-size: 14px;
+        img {
+          width: 80px;
+        }
+        h4 {
+          font-size: 18px;
+          color: rgba(0, 0, 0, 0.85);
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+
+  .home-links {
+    max-width: $max-width;
+    padding: 100px 0;
+    margin: 0 auto;
+    .link {
+      color: $color-font;
+      display: inline-block;
+      width: 64px;
+      height: 64px;
+      padding: 16px;
+      margin: 16px;
+      border-radius: 32px;
+      background: $color-primary;
+      &:hover {
+        background: $color-primary-hover;
+      }
+    }
   }
 }
 
 @include responsive($sm) {
   .home-container {
-    .home-sider {
-      display: none;
-    }
-    .home-top {
-      .top-btn {
-        margin-left: 8px;
+    .home-items {
+      .items {
+        flex-direction: column;
       }
     }
   }

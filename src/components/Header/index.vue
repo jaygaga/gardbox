@@ -103,7 +103,7 @@ export default {
   },
   mounted() {
     if (this.userName) {
-      this.$router.push("/home");
+      this.$router.push("/main");
     }
   }
 };
@@ -111,10 +111,14 @@ export default {
 
 <style lang="scss" scoped>
 .header-container {
+  position: fixed;
   width: 100%;
-  background: $color-primary;
-  box-shadow: $shadow;
+  left: 0;
+  top: 0;
+  z-index: 11;
+  padding: 0;
   color: white;
+  background: $color-primary;
 }
 .header {
   display: flex;
@@ -129,7 +133,7 @@ export default {
     display: inline-block;
     line-height: 1;
     img {
-      width: 100px;
+      height: 52px;
     }
   }
   .lang-change {

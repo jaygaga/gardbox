@@ -60,7 +60,7 @@ export default {
     onSubmit: async function() {
       const account = await this.$store.dispatch("account/login", this.form);
       if (account) {
-        this.$router.push("/home");
+        this.$router.push("/main");
       } else {
         this.$message({
           type: "error",
