@@ -19,6 +19,16 @@ const zh = {
     itemText3: '由Hashgard官方团队打造，为您提供专业的可靠的资产管理工具。',
     account: '账户'
   },
+  agree: {
+    title: '服务条款',
+    term1: '我知道我的钱包信息存放在我的个人电脑上，不会发送至 Hashgard 服务器，所有的加密都在浏览器本地完成。',
+    term2: '我知道 Hashgard 无法访问我的私人信息，也无法参与解决任何的资金损失问题。',
+    term3: '我已经阅读并同意 ',
+    use: '使用条款',
+    and: '和',
+    privacy: '隐私条款',
+    confirm: '同意并继续'
+  },
   passport: {
     title: 'Hashgard 钱包网页版',
     banner: 'gard钱包是一个免费的、开源的网页钱包，用户可以使用gard钱包创建或导入钱包，使用gard代币完成例如转账等一系列操作.',

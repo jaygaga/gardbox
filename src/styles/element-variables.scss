@@ -1,6 +1,19 @@
 /* 改变主题色变量 */
 $--color-primary: #1573e9;
 
+/* checkbox */
+$--checkbox-color: rgba(255, 255, 255, 0.65);
+$--checkbox-input-height: 20px;
+$--checkbox-input-width: 20px;
+$--checkbox-input-fill: none;
+
+$--checkbox-checked-text-color: white;
+$--checkbox-checked-input-border-color: white;
+$--checkbox-checked-input-fill: none;
+
+/* button */
+$--button-disabled-background-color: rgba(255, 255, 255, 0.25);
+
 /* 改变 icon 字体路径变量，必需 */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 

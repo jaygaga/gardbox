@@ -19,6 +19,18 @@ const en = {
     itemText3: 'Made by Hashgard official team. We’ve done the complicated stuff so you won’t have to.',
     account: 'Account'
   },
+  agree: {
+    title: 'Terms & Conditions',
+    term1:
+      'I understand that my funds are stored securely on my personal computer. No private data is sent to Hashgard servers. All encryption is done locally in browser.',
+    term2:
+      'I consent that Hashgard does not have access to my private information and could not participate in resolution of issues concerning money loss of any kind.',
+    term3: 'I have read and accepted the ',
+    use: 'Terms of Use',
+    and: 'and',
+    privacy: 'Privacy Policy',
+    confirm: 'Confirm and Continue'
+  },
   passport: {
     title: 'Hashgard Web Wallet',
     banner:

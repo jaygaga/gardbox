@@ -34,11 +34,10 @@ body {
 }
 
 #app {
-  min-height: 100vh;
-
   .main {
+    min-height: calc(100vh - 72px);
     width: 100%;
-    margin-top: 86px;
+    padding-top: 86px;
   }
 }
 </style>

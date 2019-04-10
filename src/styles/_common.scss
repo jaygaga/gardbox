@@ -3,8 +3,27 @@ a:link,
 a:visited,
 a:hover,
 a:active {
-  color: $blue;
+  color: white;
   text-decoration: none;
+}
+
+.el-checkbox__label {
+  white-space: normal;
+  width: 100%;
+}
+.el-checkbox__input:hover .el-checkbox__inner,
+.el-checkbox__input.is-focus .el-checkbox__inner,
+.el-checkbox__input.is-checked .el-checkbox__inner {
+  border-color: white;
+}
+.el-checkbox__inner::after {
+  border: 2px solid white;
+  border-left: 0;
+  border-top: 0;
+  height: 12px;
+  width: 6px;
+  left: 5px;
+  top: 0;
 }
 
 .el-input__inner {

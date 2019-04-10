@@ -98,10 +98,16 @@ export default {
       localStorage.setItem("lang", target);
     },
     useAccount() {
-      console.log("account");
+      const agree = localStorage.getItem("gard_wallet_agree");
+      if (!agree) {
+        this.$router.push("/agree");
+        return;
+      }
       if (this.userName) {
         this.$router.push("/main");
+        return;
       }
+      this.$router.push("/passport");
     },
     handleCommand(type) {
       const commands = { backup: this.backup, logout: this.logout };

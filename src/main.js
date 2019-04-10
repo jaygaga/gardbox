@@ -25,6 +25,7 @@ import * as filters from '@/utils/filters.js';
 import rootStore from './store/index.js';
 
 import Link from '@/components/Link';
+import Page from '@/components/Page';
 import Card from '@/components/Card';
 import IconPanel from '@/components/Panel/IconPanel.vue';
 import AddressCopy from '@/components/AddressCopy';
@@ -52,6 +53,7 @@ store.dispatch('account/getNodeInfo');
 library.add(faTelegramPlane, faTwitter, faMedium, faRedditAlien, faLinkedin, faFacebook, faWeibo, faWeixin);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
+Vue.component('s-page', Page);
 Vue.component('s-card', Card);
 Vue.component('s-link', Link);
 Vue.component('s-btn-card', IconPanel);

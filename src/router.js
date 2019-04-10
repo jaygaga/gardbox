@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import NotFound from './views/NotFound.vue';
+import Home from './views/Home.vue';
+import Agree from './views/Agree.vue';
 import Passport from './views/Passport.vue';
 import Create from './views/Create/index.vue';
 import Login from './views/Login.vue';
 import Recover from './views/Recover/index.vue';
 import ImportKeyStore from './views/Recover/ImportKeyStore.vue';
 import ImportPhrase from './views/Recover/ImportPhrase.vue';
-import Home from './views/Home.vue';
 import Main from './views/Main.vue';
 import Send from './views/Send.vue';
 
@@ -20,6 +21,16 @@ export default new Router({
     {
       path: '/',
       redirect: '/home'
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: Home
+    },
+    {
+      path: '/agree',
+      name: 'agree',
+      component: Agree
     },
     {
       path: '/passport',
@@ -50,11 +61,6 @@ export default new Router({
       path: '/recover/phrase',
       name: 'phrase',
       component: ImportPhrase
-    },
-    {
-      path: '/home',
-      name: 'home',
-      component: Home
     },
     {
       path: '/main',

@@ -12,7 +12,7 @@ export default {};
 .footer-container {
   text-align: center;
   color: $color-font-light;
-  margin-bottom: 64px;
+  padding-bottom: 48px;
 }
 </style>
 
