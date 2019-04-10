@@ -32,26 +32,18 @@ export default {
 
 .header {
   width: 100%;
-  height: 64px;
   font-size: 20px;
   font-weight: bold;
   text-align: center;
 
   .line {
     width: 20%;
-    margin: 16px auto;
+    margin: $padding-basic auto;
     border-bottom: $border;
   }
 }
 .content {
   min-height: 50px;
-  padding: $basic-padding;
-}
-
-@include responsive($sm) {
-  .content {
-    padding: 16px;
-  }
 }
 </style>
 

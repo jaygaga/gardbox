@@ -30,18 +30,20 @@ const zh = {
     confirm: '同意并继续'
   },
   passport: {
-    title: 'Hashgard 钱包网页版',
+    title: '创建一个新钱包或导入钱包',
     banner: 'gard钱包是一个免费的、开源的网页钱包，用户可以使用gard钱包创建或导入钱包，使用gard代币完成例如转账等一系列操作.',
-    create: '创建钱包',
+    create: '创建新钱包',
     createBreif: '在本地创建一个新的 GARD 钱包。',
     login: '钱包切换',
     loginBreif: '直接输入密码使用本地已经存在的 GARD 钱包。',
     logout: '注 销',
     backup: '导出 KeyStore',
-    recover: '恢复钱包',
+    recover: '导入钱包',
     recoverBreif: '使用私钥或助记词恢复来恢复 GARD 钱包。'
   },
   create: {
+    warn1: '请认真保存当前账户密码，该密码是您交易的唯一凭证。',
+    warn2: 'GARDBOX 钱包不存储密码，也无法帮您找回，请务必牢记!!',
     step1: '创建',
     step2: '助记词',
     step3: '确认备份',

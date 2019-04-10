@@ -27,7 +27,7 @@ import rootStore from './store/index.js';
 import Link from '@/components/Link';
 import Page from '@/components/Page';
 import Card from '@/components/Card';
-import IconPanel from '@/components/Panel/IconPanel.vue';
+import BtnPanel from '@/components/Panel/BtnPanel.vue';
 import AddressCopy from '@/components/AddressCopy';
 
 Vue.config.productionTip = false;
@@ -56,7 +56,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('s-page', Page);
 Vue.component('s-card', Card);
 Vue.component('s-link', Link);
-Vue.component('s-btn-card', IconPanel);
+Vue.component('s-btn-card', BtnPanel);
 Vue.component('s-address', AddressCopy);
 
 new Vue({

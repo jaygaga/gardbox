@@ -45,12 +45,6 @@ export default {
 .content {
   min-height: 50px;
 }
-
-@include responsive($sm) {
-  .content {
-    padding: 16px;
-  }
-}
 </style>
 
 

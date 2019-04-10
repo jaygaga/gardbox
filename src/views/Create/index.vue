@@ -1,19 +1,13 @@
 <template>
-  <div class="create-container">
+  <s-page class="create-container">
 
     <s-card :title="$t('passport.create')">
-
-      <el-steps
-        class="steps"
-        :active="step"
-        v-if="step < 3"
-        align-center
-      >
-        <el-step :title="$t('create.step1')"></el-step>
-        <el-step :title="$t('create.step2')"></el-step>
-        <el-step :title="$t('create.step3')"></el-step>
-      </el-steps>
-
+      <div class="warn">
+        <ul>
+          <li>{{$t('create.warn1')}}</li>
+          <li>{{$t('create.warn2')}}</li>
+        </ul>
+      </div>
       <Password
         class="create-form"
         v-show="step === 0"
@@ -30,7 +24,7 @@
         :onStepChange="onStepChange"
       />
     </s-card>
-  </div>
+  </s-page>
 </template>
 
 <script>
@@ -67,8 +61,13 @@ export default {
   padding: $padding-large;
   width: 100%;
 
-  .steps {
-    padding: $padding-basic 0;
+  .warn {
+    padding: $padding-basic;
+    padding-left: $padding-large;
+    background: rgba(255, 255, 255, 0.25);
+    li {
+      list-style: inherit;
+    }
   }
 }
 @include responsive($sm) {

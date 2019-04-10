@@ -205,7 +205,7 @@ export default {
       border-radius: 32px;
       background: $color-primary;
       &:hover {
-        background: $color-primary-hover;
+        background: $color-primary-light;
       }
     }
   }

@@ -32,19 +32,21 @@ const en = {
     confirm: 'Confirm and Continue'
   },
   passport: {
-    title: 'Hashgard Web Wallet',
+    title: 'Create a new key pair or import an existing wallet to get started',
     banner:
       'GARDBOX is a free, open source web wallet. Users can use gard wallet to create or import wallet, and use gard token to complete a series of operations on Hashgard Blockchain.',
-    create: 'Create Wallet',
+    create: 'Create New Wallet',
     createBreif: "Create a new GARD wallet in this browser if you don't have one.",
     login: 'Wallet Switch',
     loginBreif: 'Use wallet with your password if you already have one in this browser.',
     logout: 'Log Out',
     backup: 'Export KeyStore',
-    recover: 'Recover',
+    recover: 'Import Wallet',
     recoverBreif: 'Recover your wallet in this browser if you already have one from other place.'
   },
   create: {
+    warn1: 'Please carefully save your password, which is the only certificate for your transaction.',
+    warn2: 'GARDBOX does not store your password and cannot retrieve it for you. Keep it safe!',
     step1: 'Create',
     step2: 'Mnemonic',
     step3: 'Confirm',

@@ -5,7 +5,7 @@
   >
     <div class="recover-container">
 
-      <s-btn-card
+      <!-- <s-btn-card
         class="btn-card"
         :title="$t('recover.key')"
         :src="btnIcon1"
@@ -31,7 +31,7 @@
             class="btn"
           >{{$t('recover.phrase')}}</el-button>
         </router-link>
-      </s-btn-card>
+      </s-btn-card> -->
     </div>
 
     <div class="form-footer">
