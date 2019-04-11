@@ -6,7 +6,9 @@ const en = {
     confirm: 'Confirm',
     finish: 'Finish',
     ok: 'Ok',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    required: '{name} is required',
+    success: '{name} Success!'
   },
   home: {
     title: 'Welcome to GARDBOX',

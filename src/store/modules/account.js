@@ -41,6 +41,9 @@ export default {
     setUserMap: function(state, userMap) {
       state.userMap = Object.assign({}, state.userMap, userMap);
     },
+    resetUserMap: function(state, userMap) {
+      state.userMap = userMap;
+    },
     setBalance: function(state, balance) {
       state.balance = balance;
     },
@@ -140,6 +143,21 @@ export default {
       context.commit('setUserName', name);
       context.commit('setKeyStore', userMap[name]);
       localStorage.setItem('gard_wallet_username', name);
+      return Promise.resolve(name);
+    },
+    editName: async function(context, { user, name }) {
+      const { userMap, userName } = context.state;
+      const userMapNew = { ...userMap };
+      userMapNew[name] = userMapNew[user];
+      delete userMapNew[user];
+      context.commit('resetUserMap', userMapNew);
+      // save change to localStorage
+      localStorage.setItem('gard_wallet_users', JSON.stringify(context.state.userMap));
+
+      // change currentUser
+      if (userName === user) {
+        await context.dispatch('change', name);
+      }
       return Promise.resolve(name);
     },
     fetchBalance: async function(context) {

@@ -12,6 +12,8 @@ $--color-text-placeholder: rgba(255, 255, 255, 0.55);
 
 /* input */
 $--input-height: 48px;
+$--input-focus-border: $--color-text-secondary;
+$--input-border-color-hover: $--color-text-secondary;
 
 /* checkbox */
 $--checkbox-color: rgba(255, 255, 255, 0.65);

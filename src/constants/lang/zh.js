@@ -27,7 +27,9 @@ const zh = {
     use: '使用条款',
     and: '和',
     privacy: '隐私条款',
-    confirm: '同意并继续'
+    confirm: '同意并继续',
+    required: '请输入{name}',
+    success: '{name}成功!'
   },
   passport: {
     title: '创建一个新钱包或导入钱包',

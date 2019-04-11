@@ -57,29 +57,58 @@ export default {
   data() {
     return {
       user: "",
-      nameList: [],
       btnIcon1,
       btnIcon2,
       btnIcon3
     };
   },
   computed: {
-    ...mapState("account", ["userMap", "userName"])
+    ...mapState("account", ["userMap", "userName"]),
+    nameList() {
+      return Object.keys(this.userMap).sort((a, b) =>
+        a === this.userName ? -1 : 1
+      );
+    }
   },
   methods: {
     changeAccount(name) {
       this.$store.dispatch("account/change", name);
     },
-    handleCommand(user, v) {
-      console.log(user);
-      console.log(v);
+    handleCommand(user, cmd) {
+      const cmds = {
+        edit: this.edit,
+        backup: this.backup,
+        delete: this.delete
+      };
+      cmds[cmd](user);
+    },
+    edit(user) {
+      this.$prompt("", this.$t("passport.edit"), {
+        confirmButtonText: this.$t("global.ok"),
+        cancelButtonText: this.$t("global.cancel"),
+        inputValue: user,
+        inputValidator: v =>
+          v.trim().length > 0
+            ? true
+            : this.$t("global.required", { name: this.$t("create.name") })
+      })
+        .then(({ value }) => {
+          this.$store.dispatch("account/editName", { user, name: value });
+          this.$message({
+            type: "success",
+            message: this.$t("global.success", {
+              name: this.$t("passport.edit")
+            })
+          });
+          if (user === this.user) {
+            this.user = value;
+          }
+        })
+        .catch(() => {});
     }
   },
   mounted() {
     this.user = this.userName;
-    this.nameList = Object.keys(this.userMap).sort((a, b) =>
-      a === this.userName ? -1 : 1
-    );
   }
 };
 </script>
