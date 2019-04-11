@@ -23,7 +23,7 @@
           trigger="click"
         >
           <div class="pop-content">
-            <h4>{{$t('home.qrcode')}}</h4>
+            <h4>{{$t('main.qrcode')}}</h4>
             <div id="qrcode"></div>
             <h4>{{$t('send.address')}}</h4>
             <s-address :address="keyStore.address || ''" />
@@ -34,7 +34,7 @@
             class="top-btn"
             type="primary"
             slot="reference"
-          >{{$t('home.receive')}}</el-button>
+          >{{$t('main.receive')}}</el-button>
         </el-popover>
 
         <router-link
@@ -44,13 +44,23 @@
           <el-button
             plain
             type="primary"
-          >{{$t('home.send')}}</el-button>
+          >{{$t('main.send')}}</el-button>
+        </router-link>
+
+        <router-link
+          class="top-btn"
+          to="passport"
+        >
+          <el-button
+            plain
+            type="primary"
+          >{{$t('main.manage')}}</el-button>
         </router-link>
       </div>
 
       <s-card
-        :title="$t('home.txs')"
-        :linkName="$t('home.allTxs')"
+        :title="$t('main.txs')"
+        :linkName="$t('main.allTxs')"
         :link="`address/${keyStore.address}` | explorerUrl"
       >
         <TransactionList

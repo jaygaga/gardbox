@@ -1,52 +1,57 @@
 <template>
-  <el-form
-    ref="form"
-    :model="form"
-    :rules="rules"
-    v-loading="loading"
-    label-position="top"
-  >
-    <el-form-item
-      :label="$t('create.name')"
-      prop="name"
-      required
+  <s-card :title="$t('passport.create')">
+    <el-form
+      ref="form"
+      :model="form"
+      :rules="rules"
+      v-loading="loading"
+      label-position="top"
     >
-      <el-input v-model="form.name"></el-input>
-    </el-form-item>
+      <div class="create-warn">
+        <ul>
+          <li>{{$t('create.warn1')}}</li>
+          <li>{{$t('create.warn2')}}</li>
+        </ul>
+      </div>
 
-    <el-form-item
-      :label="$t('create.pass')"
-      prop="pass"
-      required
-    >
-      <el-input
-        :placeholder="$t('create.pass')"
-        v-model="form.pass"
-        type="password"
-      ></el-input>
-    </el-form-item>
+      <el-form-item
+        prop="name"
+        required
+      >
+        <el-input
+          :placeholder="$t('create.name')"
+          v-model="form.name"
+        ></el-input>
+      </el-form-item>
 
-    <el-form-item
-      :label="$t('create.passCheck')"
-      prop="checkPass"
-      required
-    >
-      <el-input
-        :placeholder="$t('create.passCheck')"
-        v-model="form.checkPass"
-        type="password"
-      ></el-input>
-    </el-form-item>
+      <el-form-item
+        prop="pass"
+        required
+      >
+        <el-input
+          :placeholder="$t('create.pass')"
+          v-model="form.pass"
+          type="password"
+        ></el-input>
+      </el-form-item>
 
-    <div class="form-footer">
-      <el-button @click="$router.back()">{{$t('global.back')}}</el-button>
+      <el-form-item
+        prop="checkPass"
+        required
+      >
+        <el-input
+          :placeholder="$t('create.passCheck')"
+          v-model="form.checkPass"
+          type="password"
+        ></el-input>
+      </el-form-item>
+
       <el-button
-        type="primary"
         class="btn-next"
         @click="onSubmit"
       >{{$t('global.next')}}</el-button>
-    </div>
-  </el-form>
+    </el-form>
+  </s-card>
 </template>
 
 <script>
@@ -55,9 +60,6 @@ import { get } from "lodash";
 
 export default {
   name: "Password",
-  props: {
-    onStepChange: { type: Function, required: true }
-  },
   data() {
     const validatePass = (rule, value, callback) => {
       if (value === "") {
@@ -103,8 +105,8 @@ export default {
       const {
         form,
         $store: { dispatch },
-        $message,
-        onStepChange
+        $router,
+        $message
       } = this;
       let loading = this.loading;
       this.$refs["form"].validate(async function(valid) {
@@ -124,7 +126,7 @@ export default {
         }
 
         // next step
-        onStepChange(1);
+        $router.push("mnemonic");
       });
     }
   }
@@ -132,11 +134,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form-footer {
-  margin-top: $padding-basic * 2;
+.create-warn {
+  padding: $padding-basic;
+  padding-left: $padding-large;
+  background: rgba(255, 255, 255, 0.2);
+  margin-bottom: $padding-basic;
+
+  ul,
+  li {
+    list-style: inherit;
+  }
 }
 .btn-next {
-  float: right;
+  width: 100%;
+  padding: $padding-basic;
 }
 </style>
 

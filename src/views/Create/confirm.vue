@@ -1,50 +1,44 @@
 <template>
-  <el-form
-    ref="form"
-    :model="form"
-  >
-    <div class="label">
-      <a
-        class="btn-back"
-        @click="onPrev"
-      >{{$t('global.back')}}</a>
 
-      <a
-        class="btn-reset"
-        @click="reset"
-      >{{$t('create.reset')}}</a>
-    </div>
-
-    <el-input
-      class="input"
-      type="textarea"
-      :autosize="{ minRows: 6, maxRows: 8}"
-      :value="phraseValue"
+  <s-card :title="$t('create.confirm')">
+    <el-form
+      ref="form"
+      :model="form"
     >
-    </el-input>
+      <div class="label">
+        <a
+          class="btn-reset"
+          @click="reset"
+        >{{$t('create.reset')}}</a>
+      </div>
 
-    <div class="label">
-      {{$t('create.confirm')}}
-    </div>
-
-    <el-row :gutter="16">
-      <el-col
-        :xs="8"
-        :sm="4"
-        class="item"
-        v-for="i in buttonList"
-        :key="i"
+      <el-input
+        class="input"
+        type="textarea"
+        :autosize="{ minRows: 4, maxRows: 6}"
+        :value="phraseValue"
       >
+      </el-input>
 
-        <el-button
-          type="primary"
-          class="btn"
-          @click="() => onClick(i)"
-        >{{i}}</el-button>
-      </el-col>
-    </el-row>
+      <el-row :gutter="16">
+        <el-col
+          :xs="8"
+          :sm="6"
+          class="item"
+          v-for="i in buttonList"
+          :key="i"
+        >
 
-  </el-form>
+          <el-button
+            type="primary"
+            class="btn"
+            @click="() => onClick(i)"
+          >{{i}}</el-button>
+        </el-col>
+      </el-row>
+
+    </el-form>
+  </s-card>
 </template>
 
 <script>
@@ -57,10 +51,7 @@ for (let i = 0; i < 24; i++) {
 }
 
 export default {
-  name: "Mnemonic",
-  props: {
-    onStepChange: { type: Function, required: true }
-  },
+  name: "Confirm",
   data() {
     return {
       form: { phrase: "" },
@@ -86,14 +77,14 @@ export default {
     onClick(i) {
       this.phraseList.push(i);
       if (this.buttonList.length === 0) {
-        if (this.phraseList.join(" ") !== this.account.phrase) {
-          this.$message({
-            type: "error",
-            message: "Wrong Mnemonic!"
-          });
-          reset();
-          return;
-        }
+        // if (this.phraseList.join(" ") !== this.account.phrase) {
+        //   this.$message({
+        //     type: "error",
+        //     message: "Wrong Mnemonic!"
+        //   });
+        //   this.reset();
+        //   return;
+        // }
 
         this.$store.dispatch("account/finishCreate");
         this.onFinish();
@@ -102,14 +93,11 @@ export default {
     reset() {
       this.phraseList = [];
     },
-    onPrev() {
-      this.onStepChange(1);
-    },
     onFinish() {
       this.$alert(this.$t("create.backup"), this.$t("create.success"), {
         confirmButtonText: this.$t("global.ok"),
         callback: action => {
-          this.$router.push("main");
+          this.$router.push("/main");
         }
       });
     }
@@ -122,13 +110,10 @@ export default {
   margin-bottom: 32px;
 }
 .label {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+  text-align: right;
   a {
-    color: $color-primary;
     cursor: pointer;
-  }
-  .btn-reset {
-    float: right;
   }
 }
 .item {

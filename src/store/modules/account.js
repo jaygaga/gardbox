@@ -135,25 +135,12 @@ export default {
       await context.dispatch('finishCreate');
       return Promise.resolve(account);
     },
-    login: async function(context, { name, pass, keyStore }) {
+    change: async function(context, name) {
       const { userMap } = context.state;
-      let key = keyStore || userMap[name];
-      try {
-        const account = webc.account.fromV3KeyStore(key, pass);
-        context.commit('setUserName', name);
-        context.commit('setKeyStore', key);
-        localStorage.setItem('gard_wallet_username', name);
-        return Promise.resolve(account);
-      } catch (e) {
-        console.log(e);
-        return Promise.resolve();
-      }
-    },
-    logout: function(context) {
-      // context.commit('setUserName', '');
-      // context.commit('setKeyStore', {});
-      // localStorage.setItem('gard_wallet_username', '');
-      // return Promise.resolve();
+      context.commit('setUserName', name);
+      context.commit('setKeyStore', userMap[name]);
+      localStorage.setItem('gard_wallet_username', name);
+      return Promise.resolve(name);
     },
     fetchBalance: async function(context) {
       const { address } = context.state.keyStore;

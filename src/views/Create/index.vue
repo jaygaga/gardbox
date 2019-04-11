@@ -1,29 +1,6 @@
 <template>
   <s-page class="create-container">
-
-    <s-card :title="$t('passport.create')">
-      <div class="warn">
-        <ul>
-          <li>{{$t('create.warn1')}}</li>
-          <li>{{$t('create.warn2')}}</li>
-        </ul>
-      </div>
-      <Password
-        class="create-form"
-        v-show="step === 0"
-        :onStepChange="onStepChange"
-      />
-      <Mnemonic
-        class="create-form"
-        v-if="step === 1"
-        :onStepChange="onStepChange"
-      />
-      <Confirm
-        class="create-form"
-        v-if="step === 2"
-        :onStepChange="onStepChange"
-      />
-    </s-card>
+    <RouterView />
   </s-page>
 </template>
 
@@ -60,15 +37,6 @@ export default {
 .create-container {
   padding: $padding-large;
   width: 100%;
-
-  .warn {
-    padding: $padding-basic;
-    padding-left: $padding-large;
-    background: rgba(255, 255, 255, 0.25);
-    li {
-      list-style: inherit;
-    }
-  }
 }
 @include responsive($sm) {
   .create-container {

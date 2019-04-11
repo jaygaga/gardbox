@@ -1,10 +1,7 @@
 <template>
   <div class="card-container">
-    <div
-      class="header"
-      v-if="title"
-    >
-      <p>{{ title }}</p>
+    <div class="header">
+      <p v-if="title">{{ title }}</p>
       <div class="line"></div>
     </div>
     <div class="content">
@@ -26,19 +23,17 @@ export default {
 .card-container {
   border-radius: 4px;
   max-width: $xs;
-  // border: 1px solid rgba(0, 0, 0, 0.03);
   margin: 0 auto;
 }
 
 .header {
   width: 100%;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 24px;
   text-align: center;
 
   .line {
     width: 20%;
-    margin: $padding-basic auto;
+    margin: $padding-large auto;
     border-bottom: $border;
   }
 }

@@ -1,30 +1,35 @@
 <template>
-
   <s-page class="passport-container">
-    <!-- <s-btn-card
-        class="btn-card"
-        :title="$t('passport.login')"
-        :src="btnIcon2"
-        :breif="$t('passport.loginBreif')"
+
+    <el-radio-group
+      class="user-select"
+      v-model="user"
+      @change="changeAccount"
+    >
+      <el-radio
+        class="user-item"
+        v-for="user in nameList"
+        :key="user"
+        :label="user"
       >
-        <router-link to="login">
-          <el-button
-            type="primary"
-            class="btn"
-          >{{$t('passport.login')}}</el-button>
-        </router-link>
-      </s-btn-card> -->
+        <RadioContent
+          :userMap="userMap"
+          :user="user"
+          :handleCommand="handleCommand"
+        />
+      </el-radio>
+    </el-radio-group>
 
     <s-card
       class="passport-card"
-      :title="$t('passport.title')"
+      :title="userName ? '' : $t('passport.title')"
     >
 
       <s-btn-card
         :title="$t('passport.create')"
         :src="btnIcon1"
         :breif="$t('passport.createBreif')"
-        link="create"
+        link="create/pass"
       />
 
       <s-btn-card
@@ -39,17 +44,42 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
+import RadioContent from "@/components/AccountSelect";
+
 import btnIcon1 from "@/assets/btn-icon-1.svg";
 import btnIcon2 from "@/assets/btn-icon-2.svg";
 import btnIcon3 from "@/assets/btn-icon-3.svg";
 
 export default {
+  components: { RadioContent },
   data() {
     return {
+      user: "",
+      nameList: [],
       btnIcon1,
       btnIcon2,
       btnIcon3
     };
+  },
+  computed: {
+    ...mapState("account", ["userMap", "userName"])
+  },
+  methods: {
+    changeAccount(name) {
+      this.$store.dispatch("account/change", name);
+    },
+    handleCommand(user, v) {
+      console.log(user);
+      console.log(v);
+    }
+  },
+  mounted() {
+    this.user = this.userName;
+    this.nameList = Object.keys(this.userMap).sort((a, b) =>
+      a === this.userName ? -1 : 1
+    );
   }
 };
 </script>
@@ -59,66 +89,29 @@ export default {
   margin: 0 auto;
   padding: $padding-large;
 
+  .user-select {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 560px;
+    .user-item {
+      margin: 0 0 $padding-basic;
+      padding: $padding-basic;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      // justify-content: space-between;
+      transition: background $trans;
+
+      &.is-checked,
+      &:hover {
+        background: $color-primary-light;
+      }
+    }
+  }
+
   .passport-card {
-    max-width: 600px;
-  }
-}
-
-.banner {
-  width: 100%;
-  padding: $padding-large;
-  background: url("~@/assets/banner-bg.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  border-radius: 24px;
-  margin-bottom: $padding-large * 3;
-
-  .banner-l {
-    h1 {
-      margin-top: $padding-large;
-      font-size: 32px;
-    }
-    h4 {
-      font-size: 20px;
-    }
-    img {
-      width: 100px;
-    }
-  }
-  .banner-r {
-    img {
-      margin-top: 24%;
-      width: 100%;
-    }
-  }
-}
-
-.sub-title {
-  text-align: center;
-}
-
-@include responsive($sm) {
-  .passport-container {
-    .btn-card {
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-  .banner {
-    .banner-l {
-      h1 {
-        font-size: 24px;
-      }
-      h4 {
-        font-size: 16px;
-      }
-    }
-    .banner-r {
-      img {
-        margin-top: 36px;
-        margin-left: 24%;
-      }
-    }
+    max-width: 560px;
   }
 }
 </style>

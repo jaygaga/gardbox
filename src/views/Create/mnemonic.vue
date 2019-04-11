@@ -1,33 +1,25 @@
 <template>
-  <el-form label-position="top">
 
-    <el-form-item :label="$t('create.mnemonic')">
-      <el-input
-        type="textarea"
-        :autosize="{ minRows: 6, maxRows: 8}"
-        :value="account.phrase"
-      >
-      </el-input>
-    </el-form-item>
+  <s-card :title="$t('create.mnemonic')">
 
-    <s-btn-card
-      class="warn"
-      :title="$t('create.safety')"
-      :src="btnIcon"
-      :breif="$t('create.mnemonicBreif')"
-    >
-    </s-btn-card>
-
-    <div class="form-footer">
-      <el-button @click="onStepChange(0)">{{$t('global.back')}}</el-button>
-      <el-button
-        type="primary"
-        class="btn-next"
-        @click="onSubmit"
-      >{{$t('global.next')}}</el-button>
+    <div class="create-warn">
+      {{$t('create.mnemonicBreif')}}
     </div>
 
-  </el-form>
+    <el-input
+      class="mnemonic"
+      type="textarea"
+      :autosize="{ minRows: 6, maxRows: 8}"
+      :value="account.phrase"
+    >
+    </el-input>
+
+    <el-button
+      class="btn-next"
+      @click="onSubmit"
+    >{{$t('global.next')}}</el-button>
+
+  </s-card>
 </template>
 
 <script>
@@ -37,35 +29,29 @@ import btnIcon from "@/assets/btn-icon-4.svg";
 
 export default {
   name: "Mnemonic",
-  props: {
-    onStepChange: { type: Function, required: true }
-  },
-  data() {
-    return {
-      btnIcon
-    };
-  },
   computed: {
     ...mapState("account", ["account"])
   },
   methods: {
     onSubmit() {
-      this.onStepChange(2);
+      this.$router.push("confirm");
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-// .warn {
-//   &.btn-card {
-//     box-shadow: none;
-//   }
-// }
-.form-footer {
-  margin-top: $padding-basic * 2;
+.create-warn {
+  padding: $padding-basic;
+  padding-left: $padding-large;
+  background: rgba(255, 255, 255, 0.2);
+  margin-bottom: $padding-basic;
+}
+.mnemonic {
+  margin-bottom: $padding-basic;
 }
 .btn-next {
-  float: right;
+  width: 100%;
+  padding: $padding-basic;
 }
 </style>

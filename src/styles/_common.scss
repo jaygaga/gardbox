@@ -1,4 +1,8 @@
-a,
+a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  transition: color 0.3s ease 0s;
+}
 a:link,
 a:visited,
 a:hover,
@@ -8,13 +12,22 @@ a:active {
 }
 
 .el-checkbox__label {
+  font-weight: normal;
+  color: rgba(255, 255, 255, 0.7);
   white-space: normal;
   width: 100%;
+}
+.el-checkbox__inner {
+  background: transparent;
+}
+.el-checkbox__input.is-checked + .el-checkbox__label {
+  color: white;
 }
 .el-checkbox__input:hover .el-checkbox__inner,
 .el-checkbox__input.is-focus .el-checkbox__inner,
 .el-checkbox__input.is-checked .el-checkbox__inner {
   border-color: white;
+  background: transparent;
 }
 .el-checkbox__inner::after {
   border: 2px solid white;
@@ -25,9 +38,33 @@ a:active {
   left: 5px;
   top: 0;
 }
-
 .el-input__inner {
-  height: 32px;
+  background: transparent;
+}
+.el-textarea__inner {
+  background: transparent;
+}
+.user-item .el-radio__label {
+  flex-grow: 1;
+}
+
+.el-dropdown-menu__item {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.el-message-box {
+  background-color: #0091ff;
+  border: none;
+  padding: 8px;
+  padding-bottom: 16px;
+  .el-message-box__headerbtn .el-message-box__close {
+    color: white;
+  }
+  .el-button--primary {
+    background: white;
+    color: #0091ff;
+    border: none;
+  }
 }
 
 .el-table th {

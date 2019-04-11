@@ -28,11 +28,11 @@ export default {
 <style lang="scss" scoped>
 .page-container {
   max-width: $max-width;
-  margin: 0 auto;
+  margin: 0 auto $padding-large;
   a {
     color: rgba(255, 255, 255, 0.75);
     font-size: 28px;
-    transition: color 0.3s ease 0s;
+    transition: color $trans;
     &:hover {
       color: white;
     }

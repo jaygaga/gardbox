@@ -1,17 +1,31 @@
 /* 改变主题色变量 */
 $--color-primary: #1573e9;
 
+/// color|[主要文字颜色,primary text color,primary text color]|FontColor|2
+$--color-text-primary: white;
+/// color|[常规文字颜色,regular text color,regular text color]|FontColor|2
+$--color-text-regular: rgba(255, 255, 255, 0.85);
+/// color|[次要文字颜色,secondary text color,secondary text color]|FontColor|2
+$--color-text-secondary: rgba(255, 255, 255, 0.7);
+/// color|[占位文字颜色,placeholder text color,placeholder text color]|FontColor|2
+$--color-text-placeholder: rgba(255, 255, 255, 0.55);
+
+/* input */
+$--input-height: 48px;
+
 /* checkbox */
 $--checkbox-color: rgba(255, 255, 255, 0.65);
 $--checkbox-input-height: 20px;
 $--checkbox-input-width: 20px;
-$--checkbox-input-fill: none;
+$--checkbox-input-fill: transparent;
 
-$--checkbox-checked-text-color: white;
-$--checkbox-checked-input-border-color: white;
-$--checkbox-checked-input-fill: none;
+$--radio-input-background-color: transparent;
+$--radio-checked-input-border-color: white;
+$--radio-checked-icon-color: white;
+$--radio-checked-font-color: white;
 
 /* button */
+$--button-default-font-color: $--color-primary;
 $--button-disabled-background-color: rgba(255, 255, 255, 0.25);
 
 /* 改变 icon 字体路径变量，必需 */

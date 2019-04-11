@@ -5,6 +5,9 @@ import Home from './views/Home.vue';
 import Agree from './views/Agree.vue';
 import Passport from './views/Passport.vue';
 import Create from './views/Create/index.vue';
+import CreatePass from './views/Create/password.vue';
+import CreateMnem from './views/Create/mnemonic.vue';
+import CreateConfirm from './views/Create/confirm.vue';
 import Login from './views/Login.vue';
 import Recover from './views/Recover/index.vue';
 import ImportKeyStore from './views/Recover/ImportKeyStore.vue';
@@ -40,7 +43,21 @@ export default new Router({
     {
       path: '/create',
       name: 'create',
-      component: Create
+      component: Create,
+      children: [
+        {
+          path: 'pass',
+          component: CreatePass
+        },
+        {
+          path: 'mnemonic',
+          component: CreateMnem
+        },
+        {
+          path: 'confirm',
+          component: CreateConfirm
+        }
+      ]
     },
     {
       path: '/login',

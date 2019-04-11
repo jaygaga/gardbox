@@ -29,26 +29,25 @@ export default {
 <style lang="scss" scoped>
 .btn-panel {
   padding: $padding-basic;
-  background: $color-primary-dark;
+  background: $color-background-card;
   box-shadow: $shadow;
   display: flex;
   margin-bottom: $padding-basic;
+  transition: background $trans;
 
   &:hover {
     background: $color-primary-light;
   }
 
   img {
-    height: 80px;
+    height: 72px;
     margin-right: $padding-basic;
   }
   h4 {
     font-size: 20px;
-    font-weight: bold;
   }
   p {
     text-overflow: ellipsis;
-    margin-bottom: 8px;
   }
 }
 </style>

@@ -21,6 +21,7 @@
       </span>
 
       <span
+        v-if="$route.path === '/home'"
         class="account"
         @click="useAccount"
       >
@@ -59,7 +60,7 @@
         </el-input>
         <s-btn-card
           title="KeyStore"
-          :breif="$t('home.keyWarn')"
+          :breif="$t('main.keyWarn')"
           :src="btnIcon"
         />
       </el-dialog>
@@ -157,13 +158,13 @@ export default {
     }
   }
   .lang-change {
-    margin-right: $padding-basic;
     cursor: pointer;
     .el-icon-sort {
       transform: rotate(90deg);
     }
   }
   .account {
+    margin-left: $padding-basic;
     cursor: pointer;
   }
 }

@@ -6,7 +6,6 @@ $padding-large: 32px;
 $font-size-content: 16px;
 $font-size-title: 24px;
 
-// $color-primary: rgb(245, 188, 0);
 $color-primary: #1573e9;
 $color-primary-light: #0091ff;
 $color-primary-dark: #0058d2;
@@ -14,7 +13,7 @@ $color-second: #f8c255;
 $color-background: linear-gradient(60deg, #0058d2, #00309b);
 $color-font: #ebeef5;
 $color-font-light: #cbced5;
-$color-background-card: #606266;
+$color-background-card: rgba(255, 255, 255, 0.2);
 $color-grey-1: #ebeef5;
 
 $color-warning: #e6a23c;
@@ -26,6 +25,7 @@ $grey: #dde1e8;
 
 $shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.15);
 $border: 1px solid $color-font-light;
+$trans: 0.3s ease 0s;
 
 // $max-width: 1440px;
 $max-width: 1000px;
