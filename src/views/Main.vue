@@ -94,7 +94,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("blocks", { blocksLastList: "lastList" }),
+    // ...mapGetters("blocks", { blocksLastList: "lastList" }),
     ...mapState("account", ["userName", "keyStore", "balance", "txs"]),
     avatarColor() {
       const code = this.userName.slice(0, 1).charCodeAt();

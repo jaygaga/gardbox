@@ -6,7 +6,10 @@
     </div>
 
     <el-dropdown @command="v => handleCommand(user, v)">
-      <span class="el-dropdown-link">
+      <span
+        @click="handleClick"
+        class="el-dropdown-link"
+      >
         <i class="el-icon-more"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
@@ -25,6 +28,11 @@ export default {
     userMap: Object,
     user: String,
     handleCommand: Function
+  },
+  methods: {
+    handleClick(e) {
+      e.stopPropagation();
+    }
   }
 };
 </script>
@@ -32,7 +40,6 @@ export default {
 <style lang="scss" scoped>
 .item-content {
   width: 100%;
-  padding-left: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,8 +50,12 @@ export default {
     text-overflow: ellipsis;
     overflow: hidden;
   }
-  i {
-    font-size: $padding-basic;
+  .el-dropdown-link {
+    padding: $padding-basic;
+    margin-right: -$padding-basic;
+    i {
+      font-size: $padding-basic;
+    }
   }
 }
 </style>

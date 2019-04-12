@@ -1,24 +1,20 @@
 <template>
   <s-page class="passport-container">
 
-    <el-radio-group
-      class="user-select"
-      v-model="user"
-      @change="changeAccount"
-    >
-      <el-radio
-        class="user-item"
-        v-for="user in nameList"
+    <div class="user-select">
+      <div
+        v-for="(user, i) in nameList"
         :key="user"
-        :label="user"
+        @click="e => changeAccount(e, user)"
+        :class="`user-item ${!i&&'is-checked'}`"
       >
         <RadioContent
           :userMap="userMap"
           :user="user"
           :handleCommand="handleCommand"
         />
-      </el-radio>
-    </el-radio-group>
+      </div>
+    </div>
 
     <s-card
       class="passport-card"
@@ -71,8 +67,9 @@ export default {
     }
   },
   methods: {
-    changeAccount(name) {
-      this.$store.dispatch("account/change", name);
+    changeAccount: async function(e, name) {
+      await this.$store.dispatch("account/change", name);
+      this.$router.push("main");
     },
     handleCommand(user, cmd) {
       const cmds = {
@@ -119,17 +116,15 @@ export default {
   padding: $padding-large;
 
   .user-select {
-    display: flex;
-    flex-direction: column;
     margin: 0 auto;
     max-width: 560px;
     .user-item {
       margin: 0 0 $padding-basic;
       padding: $padding-basic;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(250, 250, 255, 0.2);
       display: flex;
       align-items: center;
-      // justify-content: space-between;
+      cursor: pointer;
       transition: background $trans;
 
       &.is-checked,
