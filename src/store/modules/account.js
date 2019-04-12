@@ -160,6 +160,17 @@ export default {
       }
       return Promise.resolve(name);
     },
+    delete: async function(context, { user, pass }) {
+      const { userMap, userName } = context.state;
+      const account = webc.account.fromV3KeyStore(context.state.keyStore, pass);
+      console.log(account);
+      const userMapNew = { ...userMap };
+      delete userMapNew[user];
+      context.commit('resetUserMap', userMapNew);
+      // save change to localStorage
+      localStorage.setItem('gard_wallet_users', JSON.stringify(context.state.userMap));
+      return Promise.resolve(account);
+    },
     fetchBalance: async function(context) {
       const { address } = context.state.keyStore;
       const { data } = await ajax.get(`api/bank/balances/${address}`);

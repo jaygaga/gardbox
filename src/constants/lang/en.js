@@ -7,6 +7,7 @@ const en = {
     finish: 'Finish',
     ok: 'Ok',
     cancel: 'Cancel',
+    error: 'Error',
     required: '{name} is required',
     success: '{name} Success!'
   },
@@ -51,12 +52,10 @@ const en = {
   create: {
     warn1: 'Your password allows you to access and transfer your funds. Keep it safe!!!',
     warn2: 'GARDBOX does not store your password and cannot retrieve it for you!',
-    step1: 'Create',
-    step2: 'Mnemonic',
-    step3: 'Confirm',
     name: 'Wallet Name',
     pass: 'Password',
     passCheck: 'Confirm Password',
+    exist: 'Account Name Exist!',
     mnemonic: 'Your Mnemonic',
     safety: 'Backup Your Mnemonic',
     mnemonicBreif:

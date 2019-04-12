@@ -6,7 +6,10 @@ const zh = {
     confirm: '确 认',
     finish: '完 成',
     ok: '确 认',
-    cancel: '取 消'
+    cancel: '取 消',
+    error: '错误',
+    required: '请输入{name}',
+    success: '{name}成功!'
   },
   home: {
     title: '欢迎使用 GARDBOX',
@@ -48,12 +51,10 @@ const zh = {
   create: {
     warn1: '请认真保存当前账户密码，该密码用于操作您钱包的资产，如转账等。',
     warn2: 'GARDBOX 钱包不存储密码，也无法帮您找回，请务必牢记!!',
-    step1: '创建',
-    step2: '助记词',
-    step3: '确认备份',
     name: '钱包名称',
     pass: '密码',
     passCheck: '确认密码',
+    exist: '钱包名称已存在!',
     mnemonic: '您的助记词',
     safety: '请妥善保管',
     mnemonicBreif: '钱包不会存储您的助记词，请立即备份！如果丢失助记词，将无法找回钱包内的资产',

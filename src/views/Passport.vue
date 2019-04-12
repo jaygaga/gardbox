@@ -12,6 +12,7 @@
           :userMap="userMap"
           :user="user"
           :handleCommand="handleCommand"
+          :showDelete="user !== userName"
         />
       </div>
     </div>
@@ -41,6 +42,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { get, set, isEmpty } from "lodash";
 
 import RadioContent from "@/components/AccountSelect";
 
@@ -52,7 +54,6 @@ export default {
   components: { RadioContent },
   data() {
     return {
-      user: "",
       btnIcon1,
       btnIcon2,
       btnIcon3
@@ -80,14 +81,21 @@ export default {
       cmds[cmd](user);
     },
     edit(user) {
+      const inputValidator = v => {
+        const name = v.trim();
+        if (name.length === 0) {
+          return this.$t("global.required", { name: this.$t("create.name") });
+        }
+        if (name !== user && !isEmpty(this.userMap[name])) {
+          return this.$t("create.exist");
+        }
+        return true;
+      };
       this.$prompt("", this.$t("passport.edit"), {
         confirmButtonText: this.$t("global.ok"),
         cancelButtonText: this.$t("global.cancel"),
         inputValue: user,
-        inputValidator: v =>
-          v.trim().length > 0
-            ? true
-            : this.$t("global.required", { name: this.$t("create.name") })
+        inputValidator
       })
         .then(({ value }) => {
           this.$store.dispatch("account/editName", { user, name: value });
@@ -102,10 +110,46 @@ export default {
           }
         })
         .catch(() => {});
+    },
+    delete(user) {
+      this.$prompt(this.$t("create.pass"), this.$t("passport.delete"), {
+        confirmButtonText: this.$t("global.ok"),
+        cancelButtonText: this.$t("global.cancel"),
+        inputValidator: v =>
+          v.trim().length > 0
+            ? true
+            : this.$t("global.required", { name: this.$t("create.pass") }),
+        beforeClose: (action, ins, done) => {
+          if (action !== "confirm") {
+            return done();
+          }
+          this.$store
+            .dispatch("account/delete", {
+              user,
+              pass: ins.inputValue
+            })
+            .then(res => {
+              console.log(res);
+              done();
+            })
+            .catch(e => {
+              console.log(e);
+              this.$message.error(
+                `${this.$t("create.pass")} ${this.$t("global.error")}`
+              );
+            });
+        }
+      })
+        .then(({ value }) => {
+          // this.$message({
+          //   type: "success",
+          //   message: this.$t("global.success", {
+          //     name: this.$t("passport.edit")
+          //   })
+          // });
+        })
+        .catch(() => {});
     }
-  },
-  mounted() {
-    this.user = this.userName;
   }
 };
 </script>

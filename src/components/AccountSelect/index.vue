@@ -15,7 +15,11 @@
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="edit">{{$t('passport.edit')}}</el-dropdown-item>
         <el-dropdown-item command="backup">{{$t('passport.backup')}}</el-dropdown-item>
-        <el-dropdown-item command="delete">{{$t('passport.delete')}}</el-dropdown-item>
+        <el-dropdown-item
+          command="delete"
+          v-if="showDelete"
+          class="btn-delete"
+        >{{$t('passport.delete')}}</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
@@ -27,7 +31,8 @@ export default {
   props: {
     userMap: Object,
     user: String,
-    handleCommand: Function
+    handleCommand: Function,
+    showDelete: Boolean
   },
   methods: {
     handleClick(e) {
@@ -57,6 +62,10 @@ export default {
       font-size: $padding-basic;
     }
   }
+}
+.btn-delete,
+.btn-delete:hover {
+  color: red;
 }
 </style>
 
