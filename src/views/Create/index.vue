@@ -5,31 +5,8 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
-import { get } from "lodash";
-
-import Password from "./password";
-import Mnemonic from "./mnemonic";
-import Confirm from "./confirm";
-
 export default {
-  name: "Create",
-  components: { Password, Mnemonic, Confirm },
-  data() {
-    return {
-      step: 0
-    };
-  },
-  methods: {
-    onStepChange(i) {
-      this.step = i;
-      // if (this.step < 2) {
-      //   this.step++;
-      // } else {
-      //   this.$router.push("/main");
-      // }
-    }
-  }
+  name: "Create"
 };
 </script>
 

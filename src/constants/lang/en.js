@@ -46,6 +46,8 @@ const en = {
     backup: 'Export KeyStore',
     edit: 'Edit Name',
     delete: 'Delete Wallet',
+    deleteWarn:
+      'All user data, including imported or generated private keys, will be deleted. The only way to restore a deleted wallet is to use your backup phrase.',
     recover: 'Import Wallet',
     recoverBreif: 'Recover your wallet in this browser if you already have one from other place.'
   },
@@ -55,6 +57,7 @@ const en = {
     name: 'Wallet Name',
     pass: 'Password',
     passCheck: 'Confirm Password',
+    passWarn: 'Password must contain numbers and letters and at least 8 characters!',
     exist: 'Account Name Exist!',
     mnemonic: 'Your Mnemonic',
     safety: 'Backup Your Mnemonic',
@@ -66,8 +69,12 @@ const en = {
     success: 'Wallet Created Successfully!'
   },
   recover: {
-    key: 'Import KeyStore',
-    phrase: 'Import Mnemonic'
+    key: 'KeyStore Text',
+    keyFile: 'KeyStore File',
+    drag: 'Drag KeyStore file here, or ',
+    click: 'click to upload',
+    phrase: 'Mnemonic',
+    keyError: 'Wrong KeyStore!'
   },
   main: {
     receive: 'Receive',

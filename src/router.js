@@ -10,8 +10,12 @@ import CreateMnem from './views/Create/mnemonic.vue';
 import CreateConfirm from './views/Create/confirm.vue';
 import Login from './views/Login.vue';
 import Recover from './views/Recover/index.vue';
-import ImportKeyStore from './views/Recover/ImportKeyStore.vue';
-import ImportPhrase from './views/Recover/ImportPhrase.vue';
+import RecoverKeyText from '@/components/Recover/KeyText/KeyInput.vue';
+import RecoverKeyFile from '@/components/Recover/KeyFile/KeyUpload.vue';
+import RecoverKeySubmit from '@/components/Recover/KeyText/KeySubmit.vue';
+import RecoverPhraseText from '@/components/Recover/Phrase/PhraseInput.vue';
+import RecoverPhraseSubmit from '@/components/Recover/Phrase/PhraseSubmit.vue';
+
 import Main from './views/Main.vue';
 import Send from './views/Send.vue';
 
@@ -67,17 +71,29 @@ export default new Router({
     {
       path: '/recover',
       name: 'recover',
-      component: Recover
-    },
-    {
-      path: '/recover/key',
-      name: 'key',
-      component: ImportKeyStore
-    },
-    {
-      path: '/recover/phrase',
-      name: 'phrase',
-      component: ImportPhrase
+      component: Recover,
+      children: [
+        {
+          path: 'key/text',
+          component: RecoverKeyText
+        },
+        {
+          path: 'key/submit',
+          component: RecoverKeySubmit
+        },
+        {
+          path: 'key/file',
+          component: RecoverKeyFile
+        },
+        {
+          path: 'phrase/text',
+          component: RecoverPhraseText
+        },
+        {
+          path: 'phrase/submit',
+          component: RecoverPhraseSubmit
+        }
+      ]
     },
     {
       path: '/main',

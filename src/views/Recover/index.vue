@@ -1,78 +1,69 @@
 <template>
-  <s-card
-    class="recover-card"
-    :title="$t('passport.recover')"
-  >
-    <div class="recover-container">
-
-      <!-- <s-btn-card
-        class="btn-card"
-        :title="$t('recover.key')"
-        :src="btnIcon1"
-        :breif="$t('recover.key')"
+  <s-page class="import-container">
+    <s-card
+      class="recover-card"
+      :title="$t('passport.recover')"
+    >
+      <el-tabs
+        v-model="activeName"
+        @tab-click="handleClick"
       >
-        <router-link to="/recover/key">
-          <el-button
-            type="primary"
-            class="btn"
-          >{{$t('recover.key')}}</el-button>
-        </router-link>
-      </s-btn-card>
-
-      <s-btn-card
-        class="btn-card"
-        :title="$t('recover.phrase')"
-        :src="btnIcon2"
-        :breif="$t('recover.phrase')"
-      >
-        <router-link to="/recover/phrase">
-          <el-button
-            type="primary"
-            class="btn"
-          >{{$t('recover.phrase')}}</el-button>
-        </router-link>
-      </s-btn-card> -->
-    </div>
-
-    <div class="form-footer">
-      <el-button @click="$router.back()">{{$t('global.back')}}</el-button>
-    </div>
-  </s-card>
-
+        <el-tab-pane
+          :label="$t('recover.key')"
+          name="0"
+        >
+          <RouterView />
+        </el-tab-pane>
+        <el-tab-pane
+          :label="$t('recover.keyFile')"
+          name="1"
+        >
+          <RouterView />
+        </el-tab-pane>
+        <el-tab-pane
+          :label="$t('recover.phrase')"
+          name="2"
+        >
+          <RouterView />
+        </el-tab-pane>
+      </el-tabs>
+    </s-card>
+  </s-page>
 </template>
 
 <script>
 import btnIcon1 from "@/assets/btn-icon-4.svg";
 import btnIcon2 from "@/assets/btn-icon-3.svg";
+
+const routes = [
+  "/recover/key/text",
+  "/recover/key/file",
+  "/recover/phrase/text"
+];
+
 export default {
   data() {
     return {
+      activeName: "0",
       btnIcon1,
       btnIcon2
     };
+  },
+  methods: {
+    handleClick(tab) {
+      this.$router.push(routes[this.activeName - 0]);
+    }
+  },
+  mounted() {
+    this.activeName = routes.findIndex(i => i === this.$route.path) + "";
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.recover-card {
-  &.card-container {
-    margin: $padding-large;
-    .form-footer {
-      margin-top: $padding-basic * 2;
-    }
-  }
-}
-.recover-container {
-  max-width: $xs;
+.import-container {
   margin: 0 auto;
-
-  .btn-card {
-    margin-top: $padding-large;
-  }
-  .btn {
-    width: 100%;
-  }
+  padding: $padding-large;
 }
 </style>
 

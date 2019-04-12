@@ -45,6 +45,7 @@ const zh = {
     backup: '导出 KeyStore',
     edit: '编辑名称',
     delete: '删除钱包',
+    deleteWarn: '钱包的所有信息都会被删除，只能用该钱包的助记词或 KeyStore 恢复钱包，请确保您已做好备份。',
     recover: '导入钱包',
     recoverBreif: '使用私钥或助记词恢复来恢复 GARD 钱包。'
   },
@@ -54,6 +55,7 @@ const zh = {
     name: '钱包名称',
     pass: '密码',
     passCheck: '确认密码',
+    passWarn: '密码至少8位，且包含数字和字母!',
     exist: '钱包名称已存在!',
     mnemonic: '您的助记词',
     safety: '请妥善保管',
@@ -64,8 +66,12 @@ const zh = {
     success: '钱包创建成功!'
   },
   recover: {
-    key: '导入 KeyStore',
-    phrase: '导入助记词'
+    key: 'KeyStore 文本',
+    keyFile: 'KeyStore 文件',
+    drag: '将文件拖到此处，或',
+    click: '点击上传',
+    phrase: '助记词',
+    keyError: 'KeyStore 格式错误!'
   },
   main: {
     receive: '收 款',

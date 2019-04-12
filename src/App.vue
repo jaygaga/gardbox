@@ -35,7 +35,7 @@ body {
 
 #app {
   .main {
-    min-height: calc(100vh - 72px);
+    min-height: calc(100vh - 104px);
     width: 100%;
     padding-top: 86px;
   }

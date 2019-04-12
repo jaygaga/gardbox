@@ -17,7 +17,6 @@
         <el-dropdown-item command="backup">{{$t('passport.backup')}}</el-dropdown-item>
         <el-dropdown-item
           command="delete"
-          v-if="showDelete"
           class="btn-delete"
         >{{$t('passport.delete')}}</el-dropdown-item>
       </el-dropdown-menu>
@@ -31,8 +30,7 @@ export default {
   props: {
     userMap: Object,
     user: String,
-    handleCommand: Function,
-    showDelete: Boolean
+    handleCommand: Function
   },
   methods: {
     handleClick(e) {

@@ -1,6 +1,5 @@
 <template>
   <s-page class="passport-container">
-
     <div class="user-select">
       <div
         v-for="(user, i) in nameList"
@@ -33,7 +32,7 @@
         :title="$t('passport.recover')"
         :src="btnIcon3"
         :breif="$t('passport.recoverBreif')"
-        link="recover"
+        link="recover/key/text"
       />
 
     </s-card>
@@ -112,42 +111,60 @@ export default {
         .catch(() => {});
     },
     delete(user) {
-      this.$prompt(this.$t("create.pass"), this.$t("passport.delete"), {
-        confirmButtonText: this.$t("global.ok"),
-        cancelButtonText: this.$t("global.cancel"),
-        inputValidator: v =>
-          v.trim().length > 0
-            ? true
-            : this.$t("global.required", { name: this.$t("create.pass") }),
-        beforeClose: (action, ins, done) => {
-          if (action !== "confirm") {
-            return done();
-          }
-          this.$store
-            .dispatch("account/delete", {
-              user,
-              pass: ins.inputValue
-            })
-            .then(res => {
-              console.log(res);
-              done();
-            })
-            .catch(e => {
-              console.log(e);
-              this.$message.error(
-                `${this.$t("create.pass")} ${this.$t("global.error")}`
-              );
-            });
+      this.$confirm(
+        this.$t("passport.deleteWarn"),
+        `${this.$t("passport.delete")} ${user}`,
+        {
+          confirmButtonText: this.$t("global.ok"),
+          cancelButtonText: this.$t("global.cancel"),
+          type: "warning"
         }
-      })
-        .then(({ value }) => {
-          // this.$message({
-          //   type: "success",
-          //   message: this.$t("global.success", {
-          //     name: this.$t("passport.edit")
-          //   })
-          // });
+      )
+        .then(() => {
+          this.doDelete(user);
         })
+        .catch(() => {});
+    },
+    doDelete(user) {
+      this.$prompt(
+        this.$t("create.pass"),
+        `${this.$t("passport.delete")} ${user}`,
+        {
+          confirmButtonText: this.$t("global.ok"),
+          cancelButtonText: this.$t("global.cancel"),
+          inputType: "password",
+          inputValidator: v =>
+            v.trim().length > 0
+              ? true
+              : this.$t("global.required", { name: this.$t("create.pass") }),
+          beforeClose: (action, ins, done) => {
+            if (action !== "confirm") {
+              return done();
+            }
+            this.$store
+              .dispatch("account/delete", {
+                user,
+                pass: ins.inputValue
+              })
+              .then(res => {
+                this.$message({
+                  type: "success",
+                  message: this.$t("global.success", {
+                    name: this.$t("passport.delete")
+                  })
+                });
+                done();
+              })
+              .catch(e => {
+                console.log(e);
+                this.$message.error(
+                  `${this.$t("create.pass")} ${this.$t("global.error")}`
+                );
+              });
+          }
+        }
+      )
+        .then(({ value }) => {})
         .catch(() => {});
     }
   }

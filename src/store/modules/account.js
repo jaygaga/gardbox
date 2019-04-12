@@ -123,7 +123,7 @@ export default {
     },
     importKeyStore: async function(context, { name, pass, keyStore }) {
       const key = JSON.parse(keyStore);
-      const account = await context.dispatch('login', { pass, keyStore: key });
+      const account = webc.account.fromV3KeyStore(key, pass);
       if (isEmpty(account)) {
         Message({
           type: 'error',
@@ -141,7 +141,7 @@ export default {
     change: async function(context, name) {
       const { userMap } = context.state;
       context.commit('setUserName', name);
-      context.commit('setKeyStore', userMap[name]);
+      context.commit('setKeyStore', userMap[name] || {});
       localStorage.setItem('gard_wallet_username', name);
       return Promise.resolve(name);
     },
@@ -163,12 +163,16 @@ export default {
     delete: async function(context, { user, pass }) {
       const { userMap, userName } = context.state;
       const account = webc.account.fromV3KeyStore(context.state.keyStore, pass);
-      console.log(account);
       const userMapNew = { ...userMap };
       delete userMapNew[user];
       context.commit('resetUserMap', userMapNew);
       // save change to localStorage
       localStorage.setItem('gard_wallet_users', JSON.stringify(context.state.userMap));
+
+      // change currentUser if delete currentUser
+      if (userName === user) {
+        await context.dispatch('change', Object.keys(userMap)[0]);
+      }
       return Promise.resolve(account);
     },
     fetchBalance: async function(context) {
