@@ -18,7 +18,7 @@ export default {
     onCopy() {
       this.$message({
         type: "success",
-        message: this.$t("home.copy")
+        message: this.$t("main.copy")
       });
     }
   }

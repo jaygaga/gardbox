@@ -59,6 +59,7 @@ a:active {
 .el-message-box {
   background-color: #0058d2;
   border: none;
+  width: 375px;
   padding: 8px;
   padding-bottom: 16px;
   .el-message-box__headerbtn .el-message-box__close {
@@ -72,6 +73,25 @@ a:active {
 }
 
 /* tabs */
+.el-tabs__nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+.el-tabs--card {
+  & > .el-tabs__header {
+    border-bottom: none;
+  }
+  & > .el-tabs__header .el-tabs__nav {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 0;
+  }
+  & > .el-tabs__header .el-tabs__item {
+    border: none;
+  }
+}
 .el-tabs__nav-wrap::after {
   background-color: $color-gray;
 }
@@ -79,10 +99,12 @@ a:active {
   background-color: white;
 }
 .el-tabs__item {
+  width: 100%;
   color: $color-gray;
 }
 .el-tabs__item:hover,
 .el-tabs__item.is-active {
+  background: rgba(255, 255, 255, 0.2);
   color: white;
 }
 .el-upload {
@@ -105,10 +127,11 @@ a:active {
     }
   }
 }
-
-.el-table th {
-  height: 54px;
-  background: rgba(250, 250, 250, 1);
+.el-dialog__headerbtn .el-dialog__close {
+  color: white;
+  &:hover {
+    color: white;
+  }
 }
 
 .el-pagination button,

@@ -7,6 +7,7 @@
       <el-tabs
         v-model="activeName"
         @tab-click="handleClick"
+        type="card"
       >
         <el-tab-pane
           :label="$t('recover.key')"

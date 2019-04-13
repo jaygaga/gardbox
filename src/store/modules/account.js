@@ -160,9 +160,16 @@ export default {
       }
       return Promise.resolve(name);
     },
+    backup: async function(context, { user, pass }) {
+      const { userMap } = context.state;
+      const keyStore = userMap[user];
+      const account = webc.account.fromV3KeyStore(keyStore, pass);
+      return Promise.resolve(JSON.stringify(keyStore));
+    },
     delete: async function(context, { user, pass }) {
       const { userMap, userName } = context.state;
-      const account = webc.account.fromV3KeyStore(context.state.keyStore, pass);
+      const keyStore = userMap[user];
+      const account = webc.account.fromV3KeyStore(keyStore, pass);
       const userMapNew = { ...userMap };
       delete userMapNew[user];
       context.commit('resetUserMap', userMapNew);

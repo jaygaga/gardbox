@@ -43,6 +43,8 @@ const zh = {
     loginBreif: '直接输入密码使用本地已经存在的 GARD 钱包。',
     logout: '注 销',
     backup: '导出 KeyStore',
+    backupCopy: '复制 KeyStore 到剪贴板',
+    backupFile: '下载 KeyStore 文件',
     edit: '编辑名称',
     delete: '删除钱包',
     deleteWarn: '钱包的所有信息都会被删除，只能用该钱包的助记词或 KeyStore 恢复钱包，请确保您已做好备份。',

@@ -42,8 +42,8 @@ export default {
   name: "KeySubmit",
   data() {
     const validatePass = (rule, value, callback) => {
-      // callback();
-      // return;
+      callback();
+      return;
       if (value === "") {
         callback(new Error("Please enter password!"));
       } else {
