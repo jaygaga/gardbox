@@ -91,6 +91,7 @@ const en = {
   send: {
     amount: 'Amount',
     address: 'Address',
+    all: 'Send All',
     fee: 'Fee'
   },
   footer: {

@@ -17,25 +17,15 @@
           :amount="balance"
         />
 
-        <el-popover
-          placement="bottom"
-          width="400"
-          trigger="click"
+        <router-link
+          class="top-btn"
+          to="receive"
         >
-          <div class="pop-content">
-            <h4>{{$t('main.qrcode')}}</h4>
-            <div id="qrcode"></div>
-            <h4>{{$t('send.address')}}</h4>
-            <s-address :address="keyStore.address || ''" />
-          </div>
-
           <el-button
             plain
-            class="top-btn"
             type="primary"
-            slot="reference"
           >{{$t('main.receive')}}</el-button>
-        </el-popover>
+        </router-link>
 
         <router-link
           class="top-btn"
@@ -76,7 +66,6 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import { get, isEmpty } from "lodash";
-import QRCode from "@/utils/qrcode";
 
 import { txFieldsMap } from "@/constants";
 
@@ -108,10 +97,6 @@ export default {
       this.load = true;
       await this.$store.dispatch("account/fetchBalance");
       await this.$store.dispatch("account/fetchTxs");
-      new QRCode(
-        document.getElementById("qrcode"),
-        "http://jindo.dev.naver.com/collie"
-      );
       this.load = false;
     },
     onCopy() {
@@ -171,20 +156,6 @@ export default {
 .line {
   border-top: $border;
   margin: $padding-basic;
-}
-
-.pop-content {
-  text-align: center;
-  padding: 16px;
-  h4 {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 16px;
-  }
-  #qrcode {
-    width: 256px;
-    margin: 16px auto;
-  }
 }
 
 @include responsive($sm) {

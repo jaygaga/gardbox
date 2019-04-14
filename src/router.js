@@ -18,6 +18,7 @@ import RecoverPhraseSubmit from '@/components/Recover/Phrase/PhraseSubmit.vue';
 
 import Main from './views/Main.vue';
 import Send from './views/Send.vue';
+import Receive from './views/Receive.vue';
 
 Vue.use(Router);
 
@@ -104,6 +105,11 @@ export default new Router({
       path: '/send',
       name: 'send',
       component: Send
+    },
+    {
+      path: '/receive',
+      name: 'receive',
+      component: Receive
     },
     {
       path: '*',

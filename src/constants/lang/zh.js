@@ -88,6 +88,7 @@ const zh = {
   send: {
     amount: '数量',
     address: '地址',
+    all: '全部转出',
     fee: '手续费'
   },
   footer: {

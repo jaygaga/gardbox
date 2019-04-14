@@ -1,13 +1,12 @@
 <template>
-  <div class="send-container">
-    <s-card :title="$t('home.send')">
+  <s-page class="send-container">
+    <s-card :title="$t('main.send')">
       <el-form
         ref="form"
         label-position="top"
         :model="form"
       >
         <el-form-item
-          :label="$t('send.address')"
           prop="address"
           required
         >
@@ -17,8 +16,11 @@
             clearable
           ></el-input>
         </el-form-item>
+        <div class="row-balance">
+          Balance: {{balance}}
+          <a @click="setAmountAll">{{$t('send.all')}}</a>
+        </div>
         <el-form-item
-          :label="`${$t('send.amount')} (Balance: ${balance})`"
           prop="amount"
           required
         >
@@ -31,14 +33,10 @@
         <div class="fee"><span>{{$t('send.fee')}}</span>0 GARD</div>
       </el-form>
 
-      <div class="form-footer">
-        <el-button @click="$router.back()">{{$t('global.back')}}</el-button>
-        <el-button
-          type="primary"
-          class="btn"
-          @click="onSubmit"
-        >{{$t('home.send')}}</el-button>
-      </div>
+      <el-button
+        class="btn-send"
+        @click="onSubmit"
+      >{{$t('main.send')}}</el-button>
 
       <el-dialog
         :title="$t('create.pass')"
@@ -63,7 +61,7 @@
         </span>
       </el-dialog>
     </s-card>
-  </div>
+  </s-page>
 </template>
 
 <script>
@@ -88,6 +86,9 @@ export default {
     ...mapState("account", ["userMap", "balance"])
   },
   methods: {
+    setAmountAll() {
+      this.form.amount = this.balance;
+    },
     onSubmit: async function() {
       this.$refs["form"].validate(valid => {
         if (!valid) return false;
@@ -150,8 +151,15 @@ export default {
 
 <style lang="scss" scoped>
 .send-container {
-  max-width: $xs;
-  margin: $padding-large auto;
+  margin: 0 auto;
+  padding: $padding-large;
+
+  .row-balance {
+    a {
+      cursor: pointer;
+      float: right;
+    }
+  }
 
   .fee {
     span {
@@ -159,11 +167,10 @@ export default {
     }
   }
 
-  .form-footer {
-    margin-top: $padding-basic * 2;
-    .btn {
-      float: right;
-    }
+  .btn-send {
+    margin-top: $padding-basic;
+    width: 100%;
+    padding: $padding-basic;
   }
 
   .ellipsis {
