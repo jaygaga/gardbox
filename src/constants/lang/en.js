@@ -89,10 +89,20 @@ const en = {
     keyWarn: 'KeyStore is an encrypted JSON file with your privateKey and password, you can get your privateKey with your password from it.'
   },
   send: {
+    form: 'Transfer',
+    confirm: 'Confirm Transaction',
+    finish: 'Transaction Result',
+    denom: 'Currency',
     amount: 'Amount',
     address: 'Address',
+    sender: 'Sender',
+    txHash: 'TxHash',
     all: 'Send All',
-    fee: 'Fee'
+    fee: 'Fee',
+    again: 'Continue Transfer',
+    back: 'Back to Wallet',
+    block: 'Block',
+    time: 'Time'
   },
   footer: {
     copyright: '© 2019, Hashgard Team. All Rights Reserved.'

@@ -29,7 +29,7 @@
 
         <router-link
           class="top-btn"
-          to="send"
+          to="send/form"
         >
           <el-button
             plain
@@ -83,8 +83,8 @@ export default {
     };
   },
   computed: {
-    // ...mapGetters("blocks", { blocksLastList: "lastList" }),
     ...mapState("account", ["userName", "keyStore", "balance", "txs"]),
+    ...mapState("transactions", ["txs"]),
     avatarColor() {
       const code = this.userName.slice(0, 1).charCodeAt();
       const factor = code > 122 ? 73 : code;
@@ -96,7 +96,7 @@ export default {
     fetchData: async function() {
       this.load = true;
       await this.$store.dispatch("account/fetchBalance");
-      await this.$store.dispatch("account/fetchTxs");
+      await this.$store.dispatch("transactions/fetchTxs", this.keyStore);
       this.load = false;
     },
     onCopy() {

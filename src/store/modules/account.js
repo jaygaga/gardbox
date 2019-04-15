@@ -187,6 +187,8 @@ export default {
       const { data } = await ajax.get(`api/bank/balances/${address}`);
       if (!isEmpty(data)) {
         context.commit('setBalance', data[0].amount);
+      } else {
+        context.commit('setBalance', '0');
       }
       return Promise.resolve(data);
     },
@@ -280,7 +282,12 @@ export default {
       const req = webc.tx.buildAndSignTx(para, account.privateKey).GetData();
       // 4. post to lcd api
       const res = await ajax.post(`api/tx/broadcast`, req);
-      return Promise.resolve(res);
+      // 5. get block info when tx success
+      if (res.data) {
+        const blockData = await context.dispatch('fetchBlock', res.data.height);
+        res.data.block = blockData.block;
+      }
+      return Promise.resolve(res.data);
     }
   }
 };

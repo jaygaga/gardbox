@@ -9,7 +9,7 @@ import CreatePass from './views/Create/password.vue';
 import CreateMnem from './views/Create/mnemonic.vue';
 import CreateConfirm from './views/Create/confirm.vue';
 import Login from './views/Login.vue';
-import Recover from './views/Recover/index.vue';
+import Recover from './views/Recover.vue';
 import RecoverKeyText from '@/components/Recover/KeyText/KeyInput.vue';
 import RecoverKeyFile from '@/components/Recover/KeyFile/KeyUpload.vue';
 import RecoverKeySubmit from '@/components/Recover/KeyText/KeySubmit.vue';
@@ -18,6 +18,9 @@ import RecoverPhraseSubmit from '@/components/Recover/Phrase/PhraseSubmit.vue';
 
 import Main from './views/Main.vue';
 import Send from './views/Send.vue';
+import SendForm from '@/components/Send/SendForm.vue';
+import SendConfirm from '@/components/Send/SendConfirm.vue';
+import SendFinish from '@/components/Send/SendFinish.vue';
 import Receive from './views/Receive.vue';
 
 Vue.use(Router);
@@ -104,7 +107,21 @@ export default new Router({
     {
       path: '/send',
       name: 'send',
-      component: Send
+      component: Send,
+      children: [
+        {
+          path: 'form',
+          component: SendForm
+        },
+        {
+          path: 'confirm',
+          component: SendConfirm
+        },
+        {
+          path: 'finish',
+          component: SendFinish
+        }
+      ]
     },
     {
       path: '/receive',

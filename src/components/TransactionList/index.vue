@@ -46,7 +46,7 @@ export default {
         return false;
       }
       this.list.forEach(item => {
-        this.$store.dispatch("account/fetchBlock", get(item, "height"));
+        this.$store.dispatch("transactions/fetchBlock", get(item, "height"));
       });
     }
   }

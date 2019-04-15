@@ -7,7 +7,7 @@
         @click="e => changeAccount(e, user)"
         :class="`user-item ${!i&&'is-checked'}`"
       >
-        <RadioContent
+        <AccountSelect
           :userMap="userMap"
           :user="user"
           :showDelete="user !== userName"
@@ -42,14 +42,14 @@
 import { mapState } from "vuex";
 import { get, set, isEmpty } from "lodash";
 
-import RadioContent from "@/components/AccountSelect";
+import AccountSelect from "@/components/AccountSelect";
 
 import btnIcon1 from "@/assets/btn-icon-1.svg";
 import btnIcon2 from "@/assets/btn-icon-2.svg";
 import btnIcon3 from "@/assets/btn-icon-3.svg";
 
 export default {
-  components: { RadioContent },
+  components: { AccountSelect },
   data() {
     return {
       btnIcon1,

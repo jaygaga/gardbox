@@ -27,6 +27,7 @@ import rootStore from './store/index.js';
 import Link from '@/components/Link';
 import Page from '@/components/Page';
 import Card from '@/components/Card';
+import DataItem from '@/components/DataItem';
 import BtnPanel from '@/components/Panel/BtnPanel.vue';
 import AddressCopy from '@/components/AddressCopy';
 
@@ -47,7 +48,7 @@ Object.keys(filters).forEach(key => Vue.filter(key, filters[key]));
 const store = new Vuex.Store(rootStore);
 
 // get blockchain basic info
-store.dispatch('account/getNodeInfo');
+store.dispatch('transactions/getNodeInfo');
 
 // 注册全局组件
 library.add(faTelegramPlane, faTwitter, faMedium, faRedditAlien, faLinkedin, faFacebook, faWeibo, faWeixin);
@@ -55,6 +56,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.component('s-page', Page);
 Vue.component('s-card', Card);
+Vue.component('s-item', DataItem);
 Vue.component('s-link', Link);
 Vue.component('s-btn-card', BtnPanel);
 Vue.component('s-address', AddressCopy);

@@ -86,10 +86,20 @@ const zh = {
     keyWarn: 'KeyStore 是用你的私钥和密码加密后的 JSON 文件, 您可以用密码从 KeyStore 中取回私钥，请妥善保管。'
   },
   send: {
-    amount: '数量',
-    address: '地址',
+    form: '转账',
+    confirm: '确认转账信息',
+    finish: '转账结果',
+    denom: '转账币种',
+    amount: '转账数量',
+    address: '收款地址',
+    sender: '转出地址',
+    txHash: 'TxHash',
     all: '全部转出',
-    fee: '手续费'
+    fee: '手续费',
+    again: '继续转账',
+    back: '回到钱包',
+    block: '区块高度',
+    time: '交易时间'
   },
   footer: {
     copyright: '© 2019, Hashgard Team. All Rights Reserved.'
