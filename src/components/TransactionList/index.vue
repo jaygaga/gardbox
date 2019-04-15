@@ -9,10 +9,11 @@
       <div class="type">{{get(item, 'tags.0.value')}}</div>
       <div class="txhash">
 
-        <s-link
+        <!-- <s-link
           type="tx"
           :content="item.txhash"
-        />
+        /> -->
+        <div class="ellipsis">{{item.txhash}}</div>
         <div>
           {{ get(blocks, [item.height, 'block', 'header', 'time']) | formatTime }}
         </div>
@@ -55,12 +56,24 @@ export default {
 
 <style lang="scss" scoped>
 .list-container {
+  color: rgba(0, 0, 0, 0.85);
   .tx-row {
     display: flex;
     align-items: center;
-    border-bottom: $border;
-    padding-bottom: 16px;
-    margin-bottom: 16px;
+    padding: 16px;
+    margin: 8px;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: margin $trans;
+    transition: padding $trans;
+    box-shadow: $shadow;
+
+    &:hover {
+      margin: 4px;
+      padding: 20px 16px;
+    }
+
     .type {
       flex-basis: 160px;
       font-size: 20px;
@@ -79,10 +92,8 @@ export default {
       }
     }
   }
-  .tx-row:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-    margin-bottom: 0;
+  .tx-row:first-child {
+    margin-top: 4px;
   }
 }
 

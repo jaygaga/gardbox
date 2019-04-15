@@ -1,65 +1,64 @@
 <template>
-  <div class="home-container">
-    <div class="home-sider">
-      <AvatarPanel
-        :name="userName"
-        :address="keyStore.address || ''"
-      />
-      <div class="line"></div>
-      <BalancePanel :amount="balance" />
-    </div>
+  <div class="main-container">
+    <div class="main-top">
+      <div class="top-balance">
+        <div>{{userName}}</div>
+        <s-address :address="keyStore.address" />
+      </div>
 
-    <div class="home-main">
-      <div class="home-top">
-
-        <BalancePanel
-          class="top-balance"
-          :amount="balance"
-        />
-
+      <div class="top-btns">
         <router-link
           class="top-btn"
           to="receive"
         >
-          <el-button
-            plain
-            type="primary"
-          >{{$t('main.receive')}}</el-button>
+          {{$t('main.receive')}}
         </router-link>
 
         <router-link
           class="top-btn"
           to="send/form"
         >
-          <el-button
-            plain
-            type="primary"
-          >{{$t('main.send')}}</el-button>
+          {{$t('main.send')}}
         </router-link>
 
         <router-link
           class="top-btn"
           to="passport"
         >
-          <el-button
-            plain
-            type="primary"
-          >{{$t('main.manage')}}</el-button>
+          {{$t('main.manage')}}
         </router-link>
       </div>
-
-      <s-card
-        :title="$t('main.txs')"
-        :linkName="$t('main.allTxs')"
-        :link="`address/${keyStore.address}` | explorerUrl"
-      >
-        <TransactionList
-          :fields="fields.filter(i => !i.hideInTable)"
-          :load="load"
-          :list="txs"
-        />
-      </s-card>
     </div>
+
+    <el-tabs
+      v-model="activeName"
+      type="card"
+    >
+      <el-tab-pane
+        :label="$t('main.assets')"
+        name="0"
+      >
+        <div class="assets">
+          <BalancePanel
+            :amount="balance"
+            denom="GARD"
+          />
+        </div>
+      </el-tab-pane>
+      <el-tab-pane
+        :label="$t('main.txs')"
+        name="1"
+      >
+        <div class="txs">
+          <TransactionList
+            :fields="fields.filter(i => !i.hideInTable)"
+            :load="load"
+            :list="txs"
+          />
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+
   </div>
 </template>
 
@@ -74,12 +73,13 @@ import BalancePanel from "@/components/Panel/BalancePanel";
 import TransactionList from "@/components/TransactionList";
 
 export default {
-  name: "Home",
+  name: "Main",
   components: { AvatarPanel, BalancePanel, TransactionList },
   data() {
     return {
       fields: txFieldsMap.send,
-      load: false
+      load: false,
+      activeName: "0"
     };
   },
   computed: {
@@ -118,39 +118,46 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home-container {
-  display: flex;
-  padding: $padding-basic;
+.main-container {
+  max-width: $max-width;
+  margin: 0 auto $padding-large;
+  padding: $padding-large;
 
-  .home-sider {
-    flex-basis: 300px;
-    background: white;
-    margin-right: 16px;
-    box-shadow: $shadow;
-    border-radius: 4px;
-    text-align: center;
-  }
-  .home-main {
-    flex-grow: 1;
-  }
-
-  .home-top {
+  .main-top {
     display: flex;
-    align-items: center;
-    padding: 24px;
-    background: white;
-    box-shadow: $shadow;
-    border-radius: 4px;
-    margin-bottom: 16px;
+    align-items: stretch;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: $padding-basic;
 
     .top-balance {
-      flex-grow: 1;
+      padding: $padding-large;
+      flex-basis: 50%;
     }
-    .top-btn {
-      flex-grow: 0;
-      height: 40px;
-      margin-left: 16px;
+    .top-btns {
+      display: flex;
+      text-align: center;
+      align-items: stretch;
+      flex-basis: 50%;
+      background: rgba(255, 255, 255, 0.1);
+
+      .top-btn {
+        flex-grow: 1;
+        line-height: 114px;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.15);
+        }
+      }
     }
+  }
+  .assets {
+    display: flex;
+    min-height: 50vh;
+    align-items: flex-start;
+    padding: $padding-basic;
+  }
+  .txs {
+    padding: $padding-basic 8px;
   }
 }
 .line {
@@ -159,14 +166,17 @@ export default {
 }
 
 @include responsive($sm) {
-  .home-container {
-    .home-sider {
-      display: none;
+  .main-container {
+    padding: 16px;
+    .main-top {
+      flex-direction: column;
     }
-    .home-top {
-      .top-btn {
-        margin-left: 8px;
-      }
+    .assets {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .txs {
+      padding: $padding-basic 4px;
     }
   }
 }

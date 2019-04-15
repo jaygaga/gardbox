@@ -84,6 +84,7 @@ const en = {
     send: 'Send',
     manage: 'Manage',
     copy: 'Copied to ClipBoard',
+    assets: 'My Assets',
     txs: 'Transactions',
     allTxs: 'View All',
     keyWarn: 'KeyStore is an encrypted JSON file with your privateKey and password, you can get your privateKey with your password from it.'
