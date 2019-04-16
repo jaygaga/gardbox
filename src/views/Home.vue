@@ -13,17 +13,17 @@
     <div class="home-items">
       <div class="items">
         <div class="item">
-          <img :src="btnIcon1" />
+          <img :src="icon1" />
           <h4>{{$t('home.itemTitle1')}}</h4>
           <div>{{$t('home.itemText1')}}</div>
         </div>
         <div class="item">
-          <img :src="btnIcon2" />
+          <img :src="icon2" />
           <h4>{{$t('home.itemTitle2')}}</h4>
           <div>{{$t('home.itemText2')}}</div>
         </div>
         <div class="item">
-          <img :src="btnIcon3" />
+          <img :src="icon3" />
           <h4>{{$t('home.itemTitle3')}}</h4>
           <div>{{$t('home.itemText3')}}</div>
         </div>
@@ -128,16 +128,16 @@
 </template>
 
 <script>
-import btnIcon1 from "@/assets/btn-icon-1.svg";
-import btnIcon2 from "@/assets/btn-icon-2.svg";
-import btnIcon3 from "@/assets/btn-icon-3.svg";
+import icon1 from "@/assets/icon-home-1.svg";
+import icon2 from "@/assets/icon-home-2.svg";
+import icon3 from "@/assets/icon-home-3.svg";
 
 export default {
   data() {
     return {
-      btnIcon1,
-      btnIcon2,
-      btnIcon3
+      icon1,
+      icon2,
+      icon3
     };
   }
 };

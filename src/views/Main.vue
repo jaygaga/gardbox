@@ -31,12 +31,13 @@
     </div>
 
     <el-tabs
-      v-model="activeName"
+      v-model="$route.query.tab"
+      :before-leave="onTabChange"
       type="card"
     >
       <el-tab-pane
         :label="$t('main.assets')"
-        name="0"
+        name="assets"
       >
         <div class="assets">
           <BalancePanel
@@ -47,7 +48,7 @@
       </el-tab-pane>
       <el-tab-pane
         :label="$t('main.txs')"
-        name="1"
+        name="txs"
       >
         <div class="txs">
           <TransactionList
@@ -78,8 +79,7 @@ export default {
   data() {
     return {
       fields: txFieldsMap.send,
-      load: false,
-      activeName: "0"
+      load: false
     };
   },
   computed: {
@@ -93,6 +93,9 @@ export default {
     }
   },
   methods: {
+    onTabChange(tab) {
+      this.$router.push(`/main?tab=${tab}`);
+    },
     fetchData: async function() {
       this.load = true;
       await this.$store.dispatch("account/fetchBalance");

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>随时</title>
+    <desc>Created with Sketch.</desc>
+    <g id="随时" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M43,62 L43,160 L105,160 L105,62 L43,62 Z M39,58 L109,58 L109,164 L39,164 L39,58 Z" id="矩形" fill="#0838AF" fill-rule="nonzero"></path>
+        <polygon id="矩形" fill-opacity="0.1" fill="#0838AF" points="89.1787109 92.8779297 109 82.5633191 109 139 39 139"></polygon>
+        <polygon id="矩形" fill="#FFFFFF" fill-rule="nonzero" points="104.609058 82 158 82 158 40 93 40 93 89.7555463"></polygon>
+        <path d="M104.609058,82 L158,82 L158,40 L93,40 L93,89.7555463 L104.609058,82 Z M89,36 L162,36 L162,86 L105.822266,86 L89,97.2382812 L89,36 Z" id="矩形" fill="#0838AF" fill-rule="nonzero"></path>
+        <polygon id="路径" fill="#0838AF" fill-rule="nonzero" points="39 141.5 39 137.5 109 137.5 109 141.5"></polygon>
+        <polygon id="路径" fill="#0838AF" fill-rule="nonzero" points="65 153.5 65 149.5 83 149.5 83 153.5"></polygon>
+        <polygon id="路径-2" fill-opacity="0.1" fill="#0838AF" points="116.587402 52 110 58.5874023 125.759766 74.347168 141.519531 58.5874023 134.932129 52 125.759766 61.1723633"></polygon>
+    </g>
+</svg>

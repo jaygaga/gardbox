@@ -17,6 +17,7 @@ import RecoverPhraseText from '@/components/Recover/Phrase/PhraseInput.vue';
 import RecoverPhraseSubmit from '@/components/Recover/Phrase/PhraseSubmit.vue';
 
 import Main from './views/Main.vue';
+import TxInfo from '@/components/TransactionInfo/index.vue';
 import Send from './views/Send.vue';
 import SendForm from '@/components/Send/SendForm.vue';
 import SendConfirm from '@/components/Send/SendConfirm.vue';
@@ -103,6 +104,11 @@ export default new Router({
       path: '/main',
       name: 'main',
       component: Main
+    },
+    {
+      path: '/tx/:id',
+      name: 'tx',
+      component: TxInfo
     },
     {
       path: '/send',

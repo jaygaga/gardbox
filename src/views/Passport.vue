@@ -68,7 +68,7 @@ export default {
   methods: {
     changeAccount: async function(e, name) {
       await this.$store.dispatch("account/change", name);
-      this.$router.push("main");
+      this.$router.push("main?tab=assets");
     }
   }
 };

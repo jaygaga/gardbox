@@ -9,6 +9,7 @@ export default {
     nodeInfo: {},
     txs: [],
     blocks: {},
+    txInfo: {},
     form: {},
     result: {}
   },
@@ -24,6 +25,9 @@ export default {
     },
     setBlocks: function(state, data) {
       state.blocks = Object.assign({}, data, state.blocks);
+    },
+    setTxInfo: function(state, txInfo) {
+      state.txInfo = Object.assign({}, txInfo, state.txInfo);
     },
     setForm: function(state, form) {
       state.form = form;
@@ -99,8 +103,21 @@ export default {
       const { data } = await ajax.get(`/api/blocks/${height}`);
       if (!isEmpty(data)) {
         context.commit('setBlocks', { [height]: data });
-        return Promise.resolve(data);
       }
+      return Promise.resolve(data);
+    },
+    fetchTxInfo: async function(context, txhash) {
+      if (!isEmpty(context.state.txInfo[txhash])) {
+        return Promise.resolve(context.state.txInfo[txhash]);
+      }
+      const { data } = await ajax.get(`/api/txs/${txhash}`);
+      if (!isEmpty(data)) {
+        context.commit('setTxInfo', { [txhash]: data });
+        if (!context.state.blocks[data.height]) {
+          context.dispatch('fetchBlock', data.height);
+        }
+      }
+      return Promise.resolve(data);
     },
     input: async function(context, form) {
       context.commit('setForm', form);

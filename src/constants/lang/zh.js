@@ -83,6 +83,7 @@ const zh = {
     copy: '已复制到剪切板',
     assets: '我的资产',
     txs: '交易记录',
+    txInfo: '交易详情',
     allTxs: '查看全部',
     keyWarn: 'KeyStore 是用你的私钥和密码加密后的 JSON 文件, 您可以用密码从 KeyStore 中取回私钥，请妥善保管。'
   },

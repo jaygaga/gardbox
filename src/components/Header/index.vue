@@ -1,15 +1,14 @@
 <template>
   <div class="header-container">
     <div class="header">
-      <a
-        href="/"
-        class="logo"
-      >
-        <img
-          alt="logo"
-          src="~@/assets/logo.svg"
-        />
-      </a>
+      <div class="logo">
+        <a href="/">
+          <img
+            alt="logo"
+            src="~@/assets/logo.svg"
+          />
+        </a>
+      </div>
 
       <span
         class="lang-change"
@@ -28,42 +27,6 @@
         <i class="el-icon-account"></i>
         {{$t('home.account')}}
       </span>
-
-      <!-- <el-dropdown
-        v-if="userName"
-        class="dropdown-menu"
-        trigger="click"
-        @command="handleCommand"
-      >
-        <i class="el-icon-more"></i>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="backup">
-            {{$t('passport.backup')}}
-          </el-dropdown-item>
-          <el-dropdown-item command="logout">
-            {{$t('passport.logout')}}
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown> -->
-
-      <el-dialog
-        class="backup-dialog"
-        :title="$t('passport.backup')"
-        :visible.sync="exportDialogVisible"
-      >
-        <el-input
-          class="input"
-          type="textarea"
-          :autosize="{ minRows: 6, maxRows: 8}"
-          :value="JSON.stringify(keyStore)"
-        >
-        </el-input>
-        <s-btn-card
-          title="KeyStore"
-          :breif="$t('main.keyWarn')"
-          :src="btnIcon"
-        />
-      </el-dialog>
     </div>
   </div>
 </template>
@@ -85,7 +48,7 @@ export default {
     netName: String
   },
   computed: {
-    ...mapState("account", ["userName", "keyStore"])
+    ...mapState("account", ["userName"])
   },
   methods: {
     changeLang() {
@@ -105,7 +68,7 @@ export default {
         return;
       }
       if (this.userName) {
-        this.$router.push("/main");
+        this.$router.push("/main?tab=assets");
         return;
       }
       this.$router.push("/passport");
@@ -116,16 +79,7 @@ export default {
     },
     backup() {
       this.exportDialogVisible = true;
-    },
-    logout() {
-      // this.$store.dispatch("account/logout");
-      // this.$router.push("/passport");
     }
-  },
-  mounted() {
-    // if (this.userName) {
-    //   this.$router.push("/main");
-    // }
   }
 };
 </script>
@@ -166,27 +120,6 @@ export default {
   .account {
     margin-left: $padding-basic;
     cursor: pointer;
-  }
-}
-
-.dropdown-menu {
-  cursor: pointer;
-  font-size: $font-size-title;
-  i {
-    color: white;
-  }
-}
-
-.backup-dialog {
-  .input {
-    margin-bottom: $padding-large;
-  }
-  .btn-card {
-    .card-r {
-      p {
-        height: auto;
-      }
-    }
   }
 }
 </style>

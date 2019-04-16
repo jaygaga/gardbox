@@ -1,9 +1,9 @@
 <template>
   <div class="list-container">
-
-    <div
+    <router-link
       v-for="item in list"
       :key="item.txhash"
+      :to="`/tx/${item.txhash}`"
       class="tx-row"
     >
       <div class="type">{{get(item, 'tags.0.value')}}</div>
@@ -22,9 +22,8 @@
         {{get(item, 'tags.0.value') === 'send' ? '- ':'+ '}}
         {{get(item, 'tx.value.msg.0.value.amount.0.amount')}} GARD
       </div>
-    </div>
+    </router-link>
   </div>
-
 </template>
 
 <script>
@@ -56,22 +55,18 @@ export default {
 
 <style lang="scss" scoped>
 .list-container {
-  color: rgba(0, 0, 0, 0.85);
   .tx-row {
+    color: rgba(0, 0, 0, 0.85);
     display: flex;
     align-items: center;
     padding: 16px;
-    margin: 8px;
+    margin: 8px 8px 0;
     background: white;
     border-radius: 4px;
     cursor: pointer;
-    transition: margin $trans;
-    transition: padding $trans;
-    box-shadow: $shadow;
 
     &:hover {
-      margin: 4px;
-      padding: 20px 16px;
+      box-shadow: $shadow;
     }
 
     .type {
