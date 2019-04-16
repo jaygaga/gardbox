@@ -10,6 +10,19 @@
         </a>
       </div>
 
+      <el-dropdown
+        v-if="$route.path === '/home'"
+        class="network"
+        trigger="click"
+      >
+        <span>
+          <i class="el-icon-arrow-down"></i> {{nodeInfo.network}}
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>{{nodeInfo.network}}</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+
       <span
         class="lang-change"
         @click="changeLang"
@@ -46,7 +59,8 @@ export default {
     netName: String
   },
   computed: {
-    ...mapState("account", ["userName"])
+    ...mapState("account", ["userName"]),
+    ...mapState("transactions", ["nodeInfo"])
   },
   methods: {
     changeLang() {
@@ -109,8 +123,16 @@ export default {
       height: 52px;
     }
   }
+  .network {
+    font-size: 16px;
+    span {
+      color: white;
+      cursor: pointer;
+    }
+  }
   .lang-change {
     cursor: pointer;
+    margin-left: $padding-basic;
     .el-icon-sort {
       transform: rotate(90deg);
     }
