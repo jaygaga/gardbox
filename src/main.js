@@ -30,6 +30,7 @@ import Card from '@/components/Card';
 import DataItem from '@/components/DataItem';
 import BtnPanel from '@/components/Panel/BtnPanel.vue';
 import AddressCopy from '@/components/AddressCopy';
+import PhraseInput from '@/components/PhraseInput';
 
 Vue.config.productionTip = false;
 
@@ -60,6 +61,7 @@ Vue.component('s-item', DataItem);
 Vue.component('s-link', Link);
 Vue.component('s-btn-card', BtnPanel);
 Vue.component('s-address', AddressCopy);
+Vue.component('s-phrase-input', PhraseInput);
 
 new Vue({
   i18n,

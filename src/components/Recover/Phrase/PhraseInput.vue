@@ -1,25 +1,7 @@
 <template>
   <div class="recover-container">
-    <el-form
-      ref="form"
-      label-position="top"
-      :model="form"
-      :rules="rules"
-    >
-      <el-form-item
-        prop="phrase"
-        required
-      >
-        <el-input
-          class="input"
-          type="textarea"
-          :placeholder="$t('recover.phrase')"
-          :autosize="{ minRows: 8, maxRows: 12}"
-          v-model="form.phrase"
-        >
-        </el-input>
-      </el-form-item>
-    </el-form>
+
+    <s-phrase-input :onChange="handleChange" />
 
     <el-button
       class="btn"
@@ -35,37 +17,35 @@ import { get } from "lodash";
 export default {
   name: "PhraseInput",
   data() {
-    const validatePhrase = (rule, value, callback) => {
-      if (value === "") {
-        callback(
-          new Error(
-            this.$t("global.required", { name: this.$t("recover.phrase") })
-          )
-        );
-      } else {
-        if (value.split(" ").length !== 24) {
-          callback(new Error(this.$t("create.mnemonicWarn")));
-        }
-        callback();
-      }
-    };
     return {
-      form: {
-        phrase: ""
-      },
-      rules: {
-        phrase: [{ validator: validatePhrase, trigger: "blur" }]
-      }
+      phrase: {}
     };
   },
   methods: {
+    handleChange(v) {
+      console.log(v);
+      this.phrase = v;
+    },
     onSubmit() {
-      const { form, $router, $store } = this;
-      this.$refs["form"].validate(async function(valid) {
-        if (!valid) return false;
-        $store.dispatch("recover/inputPhrase", form);
-        $router.push("/recover/phrase/submit");
-      });
+      const validatePhrase = value => {
+        if (value === "") {
+          return this.$t("global.required", {
+            name: this.$t("recover.phrase")
+          });
+        } else {
+          if (value.split(" ").length !== 24) {
+            return this.$t("create.mnemonicWarn");
+          }
+          return false;
+        }
+      };
+      const errorMsg = validatePhrase(this.phrase);
+      if (errorMsg) {
+        console.log(errorMsg);
+        return;
+      }
+      this.$store.dispatch("recover/inputPhrase", { phrase: this.phrase });
+      this.$router.push("/recover/phrase/submit");
     }
   }
 };

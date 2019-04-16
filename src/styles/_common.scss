@@ -1,4 +1,4 @@
-$input-background: rgba(0, 0, 0, 0.1);
+$input-background: rgba(0, 0, 0, 0.08);
 $card-background: rgba(255, 255, 255, 0.2);
 $color-gray: rgba(255, 255, 255, 0.6);
 
@@ -26,6 +26,7 @@ a:active {
 
 .el-input__inner {
   background: $input-background;
+  border-color: rgba(255, 255, 255, 0.4);
   // background: transparent;
 }
 .el-textarea__inner {
@@ -118,6 +119,7 @@ a:active {
       background: rgba(255, 255, 255, 0.1);
     }
     .el-tabs__item {
+      padding: 0;
       width: 100%;
     }
   }
