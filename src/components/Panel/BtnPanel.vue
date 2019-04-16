@@ -32,6 +32,7 @@ export default {
   background: $color-background-card;
   box-shadow: $shadow;
   display: flex;
+  align-items: center;
   margin-bottom: $padding-basic;
   transition: background $trans;
 
@@ -40,13 +41,14 @@ export default {
   }
 
   img {
-    height: 72px;
+    height: 40px;
     margin-right: $padding-basic;
   }
   h4 {
     font-size: 20px;
   }
   p {
+    margin-top: 8px;
     text-overflow: ellipsis;
   }
 }

@@ -25,7 +25,6 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import { get } from "lodash";
-import btnIcon from "@/assets/btn-icon-4.svg";
 
 export default {
   name: "Mnemonic",

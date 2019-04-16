@@ -1,7 +1,7 @@
 <template>
   <div class="item-content">
-    <div class="name">
-      <div>{{user}}</div>
+    <div>
+      <div class="name"><img :src="icon" />{{user}}</div>
       <p>{{userMap[user].address}}</p>
     </div>
 
@@ -45,6 +45,7 @@
 
 <script>
 import { get, set, isEmpty } from "lodash";
+import icon from "@/assets/icon-wallet.svg";
 
 export default {
   name: "selectContent",
@@ -53,7 +54,7 @@ export default {
     user: String
   },
   data() {
-    return { dialogVisible: false, fileLink: "" };
+    return { dialogVisible: false, fileLink: "", icon };
   },
   methods: {
     handleClick(e) {
@@ -207,8 +208,18 @@ export default {
   align-items: center;
   justify-content: space-between;
 
+  .name {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    img {
+      height: 24px;
+      margin-right: 8px;
+    }
+  }
+
   p {
-    margin-top: 16px;
+    margin-top: 8px;
     max-width: 200px;
     text-overflow: ellipsis;
     overflow: hidden;

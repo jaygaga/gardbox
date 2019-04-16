@@ -33,12 +33,10 @@
 
 <script>
 import { mapState } from "vuex";
-import btnIcon from "@/assets/btn-icon-4.svg";
 
 export default {
   data() {
     return {
-      btnIcon,
       langs: ["zh", "en"],
       lang: this.$i18n.locale,
       exportDialogVisible: false

@@ -22,14 +22,14 @@
 
       <s-btn-card
         :title="$t('passport.create')"
-        :src="btnIcon1"
+        :src="icon1"
         :breif="$t('passport.createBreif')"
         link="create/pass"
       />
 
       <s-btn-card
         :title="$t('passport.recover')"
-        :src="btnIcon3"
+        :src="icon2"
         :breif="$t('passport.recoverBreif')"
         link="recover/key/text"
       />
@@ -44,17 +44,15 @@ import { get, set, isEmpty } from "lodash";
 
 import AccountSelect from "@/components/AccountSelect";
 
-import btnIcon1 from "@/assets/btn-icon-1.svg";
-import btnIcon2 from "@/assets/btn-icon-2.svg";
-import btnIcon3 from "@/assets/btn-icon-3.svg";
+import icon1 from "@/assets/icon-create.svg";
+import icon2 from "@/assets/icon-import.svg";
 
 export default {
   components: { AccountSelect },
   data() {
     return {
-      btnIcon1,
-      btnIcon2,
-      btnIcon3
+      icon1,
+      icon2
     };
   },
   computed: {

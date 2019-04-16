@@ -39,7 +39,7 @@ const en = {
     banner:
       'GARDBOX is a free, open source web wallet. Users can use gard wallet to create or import wallet, and use gard token to complete a series of operations on Hashgard Blockchain.',
     create: 'Create New Wallet',
-    createBreif: "Create a new GARD wallet in this browser if you don't have one.",
+    createBreif: "Create a new wallet in this browser if you don't have one.",
     login: 'Wallet Switch',
     loginBreif: 'Use wallet with your password if you already have one in this browser.',
     logout: 'Log Out',
@@ -62,12 +62,13 @@ const en = {
     passWarn: 'Password must contain numbers and letters and at least 8 characters!',
     exist: 'Account Name Exist!',
     mnemonic: 'Your Mnemonic',
+    mnemonicWarn: 'Wrong Mnemonic!',
     safety: 'Backup Your Mnemonic',
     mnemonicBreif:
       'This is your secret recovery text. It is the only way to restore access to your funds. Keep it safe and never share it with anyone you don’t trust!',
     reset: 'Reset',
     confirm: 'Confirm your Mnemonic',
-    backup: 'Click [Ok] to to open your wallet, your can backup your keyStore anytime in the settings menu.',
+    backup: 'Create wallet success! you can backup your keyStore anytime in the settings menu.',
     success: 'Wallet Created Successfully!'
   },
   recover: {
@@ -88,6 +89,7 @@ const en = {
     txs: 'Transactions',
     txInfo: 'Transaction Detail',
     allTxs: 'View All',
+    empty: 'No Data',
     keyWarn: 'KeyStore is an encrypted JSON file with your privateKey and password, you can get your privateKey with your password from it.'
   },
   send: {
@@ -101,6 +103,7 @@ const en = {
     txHash: 'TxHash',
     all: 'Send All',
     fee: 'Fee',
+    error: 'Send Error!',
     again: 'Continue Transfer',
     back: 'Back to Wallet',
     block: 'Block',

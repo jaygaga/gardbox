@@ -36,7 +36,6 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-import { get } from "lodash";
 
 export default {
   name: "Agree",
@@ -59,9 +58,6 @@ export default {
       localStorage.setItem("gard_wallet_agree", true);
       this.$router.push("passport");
     }
-  },
-  mounted() {
-    // this.form.name = Object.keys(this.userMap)[0];
   }
 };
 </script>

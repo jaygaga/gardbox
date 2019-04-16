@@ -5,7 +5,11 @@
         <h4>{{$t('main.qrcode')}}</h4>
         <div id="qrcode"></div>
         <h4>{{$t('send.address')}}</h4>
-        <s-address :address="keyStore.address || ''" />
+        <s-address
+          class="addr"
+          :address="keyStore.address || ''"
+          :brightBackground="true"
+        />
       </div>
     </s-card>
   </s-page>
@@ -46,6 +50,9 @@ export default {
     #qrcode {
       width: 256px;
       margin: 16px auto;
+    }
+    .addr {
+      justify-content: center;
     }
   }
 }

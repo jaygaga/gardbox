@@ -80,7 +80,7 @@ export default {
         // if (this.phraseList.join(" ") !== this.account.phrase) {
         //   this.$message({
         //     type: "error",
-        //     message: "Wrong Mnemonic!"
+        //     message: this.$t('create.mnemonicWarn')
         //   });
         //   this.reset();
         //   return;
@@ -97,7 +97,7 @@ export default {
       this.$alert(this.$t("create.backup"), this.$t("create.success"), {
         confirmButtonText: this.$t("global.ok"),
         callback: action => {
-          this.$router.push("/main");
+          this.$router.push("/main?tab=assets");
         }
       });
     }

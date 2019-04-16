@@ -6,13 +6,8 @@
       :to="`/tx/${item.txhash}`"
       class="tx-row"
     >
-      <div class="type">{{get(item, 'tags.0.value')}}</div>
+      <img :src="types[get(item, 'tags.0.value')]" />
       <div class="txhash">
-
-        <!-- <s-link
-          type="tx"
-          :content="item.txhash"
-        /> -->
         <div class="ellipsis">{{item.txhash}}</div>
         <div>
           {{ get(blocks, [item.height, 'block', 'header', 'time']) | formatTime }}
@@ -30,11 +25,22 @@
 import { isEmpty, get } from "lodash";
 import { mapGetters, mapState } from "vuex";
 
+import iconIn from "@/assets/icon-in.svg";
+import iconOut from "@/assets/icon-out.svg";
+
 export default {
   props: {
     list: Array,
     fields: Array,
     load: { type: Boolean, default: false }
+  },
+  data() {
+    return {
+      types: {
+        send: iconOut,
+        receive: iconIn
+      }
+    };
   },
   methods: { get },
   computed: {
@@ -56,7 +62,7 @@ export default {
 <style lang="scss" scoped>
 .list-container {
   .tx-row {
-    color: rgba(0, 0, 0, 0.85);
+    color: rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
     padding: 16px;
@@ -69,21 +75,26 @@ export default {
       box-shadow: $shadow;
     }
 
-    .type {
-      flex-basis: 160px;
-      font-size: 20px;
+    .ellipsis {
+      color: rgba(0, 0, 0, 0.75);
+    }
+
+    img {
+      width: 28px;
+      margin-right: 16px;
     }
     .txhash {
       flex-grow: 1;
     }
     .amount {
       font-size: 20px;
+      text-align: right;
 
       &.send {
-        color: $color-warning;
+        color: $color-error;
       }
       &.receive {
-        color: $color-success;
+        color: $color-primary;
       }
     }
   }

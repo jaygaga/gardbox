@@ -37,10 +37,14 @@ export default {
   data() {
     const validatePhrase = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("Please enter phrase!"));
+        callback(
+          new Error(
+            this.$t("global.required", { name: this.$t("recover.phrase") })
+          )
+        );
       } else {
         if (value.split(" ").length !== 24) {
-          callback(new Error("Wrong mnemonic!"));
+          callback(new Error(this.$t("create.mnemonicWarn")));
         }
         callback();
       }

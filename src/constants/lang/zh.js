@@ -60,11 +60,12 @@ const zh = {
     passWarn: '密码至少8位，且包含数字和字母!',
     exist: '钱包名称已存在!',
     mnemonic: '您的助记词',
+    mnemonicWarn: '助记词错误',
     safety: '请妥善保管',
     mnemonicBreif: '钱包不会存储您的助记词，请立即备份！如果丢失助记词，将无法找回钱包内的资产',
     reset: '重 置',
     confirm: '确认您的助记词',
-    backup: '点击【确认】打开钱包，您可以在设置菜单中随时【备份 KeyStore】.',
+    backup: '您的钱包已经成功创建！您可以在设置菜单中随时【备份 KeyStore】.',
     success: '钱包创建成功!'
   },
   recover: {
@@ -85,6 +86,7 @@ const zh = {
     txs: '交易记录',
     txInfo: '交易详情',
     allTxs: '查看全部',
+    empty: '暂无交易记录',
     keyWarn: 'KeyStore 是用你的私钥和密码加密后的 JSON 文件, 您可以用密码从 KeyStore 中取回私钥，请妥善保管。'
   },
   send: {
@@ -98,6 +100,7 @@ const zh = {
     txHash: 'TxHash',
     all: '全部转出',
     fee: '手续费',
+    error: '发送失败',
     again: '继续转账',
     back: '回到钱包',
     block: '区块高度',

@@ -8,7 +8,6 @@ import Create from './views/Create/index.vue';
 import CreatePass from './views/Create/password.vue';
 import CreateMnem from './views/Create/mnemonic.vue';
 import CreateConfirm from './views/Create/confirm.vue';
-import Login from './views/Login.vue';
 import Recover from './views/Recover.vue';
 import RecoverKeyText from '@/components/Recover/KeyText/KeyInput.vue';
 import RecoverKeyFile from '@/components/Recover/KeyFile/KeyUpload.vue';
@@ -67,11 +66,6 @@ export default new Router({
           component: CreateConfirm
         }
       ]
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login
     },
     {
       path: '/recover',

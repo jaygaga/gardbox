@@ -37,16 +37,16 @@ export default {
   data() {
     const validateKeyStore = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("Please enter keyStore!"));
+        callback(new Error(this.$t("global.required", { name: "KeyStore" })));
       } else {
         try {
           const key = JSON.parse(value);
           if (!key.address || !key.address.match(/^gard/)) {
-            callback(new Error("Wrong keyStore!"));
+            callback(new Error(this.$t("recover.keyError")));
           }
           callback();
         } catch (e) {
-          callback(new Error("Wrong keyStore!"));
+          callback(new Error(this.$t("recover.keyError")));
         }
       }
     };

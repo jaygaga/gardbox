@@ -76,12 +76,11 @@ export default {
         this.dialogVisible = false;
         this.$store.dispatch("transactions/result", res);
         this.$router.push("/send/finish");
-        // this.showSuccess(res.data.txhash);
       } else {
         this.$store.dispatch("transactions/result", {});
         this.$message({
           type: "error",
-          message: "Wrong parameter!",
+          message: this.$t("send.error"),
           center: true
         });
       }

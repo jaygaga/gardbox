@@ -115,7 +115,7 @@ export default {
         if (!created) {
           $message({
             type: "error",
-            message: "Account Name Exist!",
+            message: this.$t("create.exist"),
             center: true
           });
           return false;

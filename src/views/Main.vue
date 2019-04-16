@@ -2,8 +2,11 @@
   <div class="main-container">
     <div class="main-top">
       <div class="top-balance">
-        <div>{{userName}}</div>
-        <s-address :address="keyStore.address" />
+        <div class="name"><img :src="icon" />{{userName}}</div>
+        <s-address
+          :address="keyStore.address"
+          :ellipsis="true"
+        />
       </div>
 
       <div class="top-btns">
@@ -11,6 +14,7 @@
           class="top-btn"
           to="receive"
         >
+          <img :src="icon2" />
           {{$t('main.receive')}}
         </router-link>
 
@@ -18,6 +22,7 @@
           class="top-btn"
           to="send/form"
         >
+          <img :src="icon1" />
           {{$t('main.send')}}
         </router-link>
 
@@ -25,6 +30,7 @@
           class="top-btn"
           to="passport"
         >
+          <img :src="icon3" />
           {{$t('main.manage')}}
         </router-link>
       </div>
@@ -51,6 +57,10 @@
         name="txs"
       >
         <div class="txs">
+          <div
+            class="empty"
+            v-if="txs.length === 0"
+          >{{$t('main.empty')}}</div>
           <TransactionList
             :fields="fields.filter(i => !i.hideInTable)"
             :load="load"
@@ -69,6 +79,10 @@ import { get, isEmpty } from "lodash";
 
 import { txFieldsMap } from "@/constants";
 
+import icon from "@/assets/icon-wallet.svg";
+import icon1 from "@/assets/icon-to.svg";
+import icon2 from "@/assets/icon-from.svg";
+import icon3 from "@/assets/icon-setting.svg";
 import AvatarPanel from "@/components/Panel/AvatarPanel.vue";
 import BalancePanel from "@/components/Panel/BalancePanel";
 import TransactionList from "@/components/TransactionList";
@@ -78,6 +92,10 @@ export default {
   components: { AvatarPanel, BalancePanel, TransactionList },
   data() {
     return {
+      icon,
+      icon1,
+      icon2,
+      icon3,
       fields: txFieldsMap.send,
       load: false
     };
@@ -135,20 +153,40 @@ export default {
     .top-balance {
       padding: $padding-large;
       flex-basis: 50%;
+
+      .name {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        margin-bottom: 8px;
+        img {
+          height: 24px;
+          margin-right: 8px;
+        }
+      }
     }
     .top-btns {
       display: flex;
       text-align: center;
       align-items: stretch;
       flex-basis: 50%;
+      height: 130px;
       background: rgba(255, 255, 255, 0.1);
 
       .top-btn {
         flex-grow: 1;
-        line-height: 114px;
+        line-height: 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
         &:hover {
           background: rgba(255, 255, 255, 0.15);
+        }
+
+        img {
+          width: 32px;
         }
       }
     }
@@ -160,7 +198,14 @@ export default {
     padding: $padding-basic;
   }
   .txs {
+    min-height: 50vh;
     padding: $padding-basic 8px;
+
+    .empty {
+      margin: $padding-large;
+      text-align: center;
+      color: rgba(0, 0, 0, 0.5);
+    }
   }
 }
 .line {

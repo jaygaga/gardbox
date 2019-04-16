@@ -33,9 +33,6 @@
 </template>
 
 <script>
-import btnIcon1 from "@/assets/btn-icon-4.svg";
-import btnIcon2 from "@/assets/btn-icon-3.svg";
-
 const routes = [
   "/recover/key/text",
   "/recover/key/file",
@@ -45,9 +42,7 @@ const routes = [
 export default {
   data() {
     return {
-      activeName: "0",
-      btnIcon1,
-      btnIcon2
+      activeName: "0"
     };
   },
   methods: {

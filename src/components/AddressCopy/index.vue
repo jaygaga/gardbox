@@ -1,7 +1,13 @@
 <template>
-  <div class="address">{{address | gardAddr}}
+  <div class="address">
+    <div v-if="ellipsis">
+      {{address | gardAddr}}
+    </div>
+    <div v-else>
+      {{address}}
+    </div>
     <img
-      class="copy-icon"
+      :class="`copy-icon ${brightBackground && 'invert'}`"
       src="~@/assets/icon-copy.svg"
       v-clipboard:copy="address"
       v-clipboard:success="onCopy"
@@ -12,7 +18,9 @@
 <script>
 export default {
   props: {
-    address: { type: String, default: true }
+    address: { type: String, default: true },
+    ellipsis: Boolean,
+    brightBackground: Boolean
   },
   methods: {
     onCopy() {
@@ -26,10 +34,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.copy-icon {
-  width: 20px;
-  position: relative;
-  top: 4px;
-  left: 8px;
+.address {
+  display: flex;
+  align-items: center;
+  img {
+    margin-left: 8px;
+    width: 28px;
+    cursor: pointer;
+
+    &.invert {
+      filter: invert(10);
+    }
+  }
 }
 </style>

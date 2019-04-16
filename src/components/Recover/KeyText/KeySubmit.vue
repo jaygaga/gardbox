@@ -45,7 +45,11 @@ export default {
       callback();
       return;
       if (value === "") {
-        callback(new Error("Please enter password!"));
+        callback(
+          new Error(
+            this.$t("global.required", { name: this.$t("create.pass") })
+          )
+        );
       } else {
         if (!value.match("^(?=.*[a-zA-Z])(?=.*\\d)[^\\s]{8,18}$")) {
           callback(new Error(this.$t("create.passWarn")));
