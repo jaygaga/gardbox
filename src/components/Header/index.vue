@@ -1,5 +1,5 @@
 <template>
-  <div class="header-container">
+  <div :class="`header-container ${bgColor}`">
     <div class="header">
       <div class="logo">
         <a href="/">
@@ -52,7 +52,7 @@ export default {
     return {
       langs: ["zh", "en"],
       lang: this.$i18n.locale,
-      exportDialogVisible: false
+      bgColor: ""
     };
   },
   props: {
@@ -89,9 +89,16 @@ export default {
       const commands = { backup: this.backup, logout: this.logout };
       commands[type]();
     },
-    backup() {
-      this.exportDialogVisible = true;
+    handleScroll(e) {
+      if (window.scrollY > 20) {
+        this.bgColor = "primary";
+      } else {
+        this.bgColor = "";
+      }
     }
+  },
+  mounted() {
+    window.onscroll = this.handleScroll;
   }
 };
 </script>
@@ -105,7 +112,13 @@ export default {
   z-index: 11;
   padding: 0;
   color: white;
-  background: $color-primary;
+  background: transparent;
+  transition: background-color 0.6s ease 0s;
+
+  &.primary {
+    background: $color-primary;
+    box-shadow: $shadow;
+  }
 }
 .header {
   display: flex;
