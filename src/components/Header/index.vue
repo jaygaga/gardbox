@@ -142,4 +142,17 @@ export default {
     cursor: pointer;
   }
 }
+
+@include responsive($sm) {
+  .header {
+    padding: 16px;
+
+    .lang-change {
+      margin-left: 12px;
+    }
+    .account {
+      margin-left: 12px;
+    }
+  }
+}
 </style>
