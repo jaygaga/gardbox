@@ -100,5 +100,10 @@ export default {
     max-width: 560px;
   }
 }
+@include responsive($sm) {
+  .passport-container {
+    padding: 16px;
+  }
+}
 </style>
 

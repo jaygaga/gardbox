@@ -60,6 +60,14 @@ export default {
 .import-container {
   margin: 0 auto;
   padding: $padding-large;
+  .recover-card {
+    max-width: 460px;
+  }
+}
+@include responsive($sm) {
+  .import-container {
+    padding: 16px;
+  }
 }
 </style>
 

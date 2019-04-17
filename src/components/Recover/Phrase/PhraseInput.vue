@@ -1,7 +1,30 @@
 <template>
   <div class="recover-container">
 
-    <s-phrase-input :onChange="handleChange" />
+    <el-form
+      ref="form"
+      :model="phrase"
+      :rules="rules"
+      label-position="top"
+      class="phrase-container"
+    >
+      <el-form-item
+        v-for="i in Object.keys(phrase)"
+        :key="i"
+        :prop="i"
+        class="word-input"
+      >
+        <el-autocomplete
+          v-model="phrase[i]"
+          :fetch-suggestions="(query, callback) => querySearch(i, query, callback)"
+          :placeholder="i"
+          :trigger-on-focus="false"
+          @change="v => handleChange(i, v)"
+          @select="v => handleSelect(i, v)"
+          clearable
+        ></el-autocomplete>
+      </el-form-item>
+    </el-form>
 
     <el-button
       class="btn"
@@ -13,39 +36,68 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import { get } from "lodash";
+import { wordList } from "@/constants/wordList";
+
+const phrase = {};
+for (let i = 1; i < 25; i++) {
+  phrase[`${i}`] = "";
+}
 
 export default {
   name: "PhraseInput",
   data() {
+    const validator = (rule, value, callback) => {
+      if (value.trim().split(" ").length > 1) {
+        callback();
+        return;
+      }
+      if (!wordList.find(i => i === value)) {
+        callback(new Error(this.$t("create.mnemonicWarn")));
+      }
+      callback();
+    };
+    const rules = {};
+    Object.keys(phrase).forEach(k => {
+      rules[k] = [{ validator: validator, trigger: "change" }];
+    });
     return {
-      phrase: {}
+      wordList,
+      phrase,
+      rules
     };
   },
   methods: {
-    handleChange(v) {
-      console.log(v);
-      this.phrase = v;
+    handleChange(i, v) {
+      const ls = v.trim().split(" ");
+      if (ls.length > 1) {
+        this.splitInput(i, ls);
+      }
+    },
+    querySearch(i, query, callback) {
+      this.handleChange(i, query);
+
+      const words = query
+        ? this.wordList.filter(w => w.indexOf(query) === 0)
+        : this.wordList;
+      callback(words.map(w => ({ value: w })));
+    },
+    handleSelect(i, e) {
+      this.handleChange(i, e.value);
+    },
+    splitInput(i, ls) {
+      ls.forEach((word, index) => {
+        this.phrase[`${i - 0 + index}`] = word;
+      });
     },
     onSubmit() {
-      const validatePhrase = value => {
-        if (value === "") {
-          return this.$t("global.required", {
-            name: this.$t("recover.phrase")
-          });
-        } else {
-          if (value.split(" ").length !== 24) {
-            return this.$t("create.mnemonicWarn");
-          }
-          return false;
-        }
-      };
-      const errorMsg = validatePhrase(this.phrase);
-      if (errorMsg) {
-        console.log(errorMsg);
-        return;
-      }
-      this.$store.dispatch("recover/inputPhrase", { phrase: this.phrase });
-      this.$router.push("/recover/phrase/submit");
+      const { phrase, $router, $store } = this;
+      this.$refs["form"].validate(async function(valid) {
+        if (!valid) return false;
+        $store.dispatch("recover/inputPhrase", {
+          phrase: Object.values(phrase).join(" ")
+        });
+        $router.push("/recover/phrase/submit");
+      });
     }
   }
 };
@@ -53,7 +105,24 @@ export default {
 
 <style lang="scss" scoped>
 .recover-container {
-  margin: 16px auto;
+  margin: 12px auto;
+
+  .phrase-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-left: -4px;
+    margin-right: -4px;
+    .word-input {
+      flex-basis: 100px;
+      flex-grow: 1;
+      margin: 4px;
+      margin-bottom: 16px;
+      input.el-input__inner {
+        padding-left: 8px;
+      }
+    }
+  }
 
   .btn {
     width: 100%;

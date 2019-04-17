@@ -81,7 +81,7 @@ export default {
         const params = { ...form, phrase };
         const account = await $store.dispatch("account/importPhrase", params);
         if (account) {
-          $router.push("/main");
+          $router.push("/main?tab=assets");
         }
         // clear phrase after import
         $store.dispatch("recover/clearKey");
