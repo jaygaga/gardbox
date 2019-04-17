@@ -85,7 +85,7 @@ export default new Router({
           component: RecoverKeyFile
         },
         {
-          path: 'phrase/text',
+          path: 'phrase/input',
           component: RecoverPhraseText
         },
         {

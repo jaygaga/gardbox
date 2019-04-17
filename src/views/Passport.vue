@@ -87,7 +87,7 @@ export default {
       display: flex;
       align-items: center;
       cursor: pointer;
-      transition: background $trans;
+      transition: background-color $trans;
 
       &.is-checked,
       &:hover {

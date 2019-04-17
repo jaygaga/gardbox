@@ -147,11 +147,12 @@ export default {
   .main-top {
     display: flex;
     align-items: stretch;
-    background: rgba(255, 255, 255, 0.1);
-    margin-bottom: $padding-basic;
+    margin: -4px -4px $padding-basic;
 
     .top-balance {
+      background: $color-primary;
       padding: $padding-large;
+      margin: 4px;
       flex-basis: 50%;
 
       .name {
@@ -169,9 +170,10 @@ export default {
       display: flex;
       text-align: center;
       align-items: stretch;
+      margin: 4px;
       flex-basis: 50%;
       height: 130px;
-      background: rgba(255, 255, 255, 0.1);
+      background: $color-primary;
 
       .top-btn {
         flex-grow: 1;
@@ -182,7 +184,7 @@ export default {
         justify-content: center;
 
         &:hover {
-          background: rgba(255, 255, 255, 0.15);
+          background: $color-primary-light;
         }
 
         img {
@@ -195,11 +197,11 @@ export default {
     display: flex;
     min-height: 50vh;
     align-items: flex-start;
-    padding: $padding-basic;
+    padding: $padding-basic 0;
   }
   .txs {
     min-height: 50vh;
-    padding: $padding-basic 8px;
+    padding: $padding-basic 0;
 
     .empty {
       margin: $padding-large;

@@ -66,7 +66,7 @@ export default {
     display: flex;
     align-items: center;
     padding: 16px;
-    margin: 8px 8px 0;
+    margin: 8px 0;
     background: white;
     border-radius: 4px;
     cursor: pointer;
@@ -99,7 +99,7 @@ export default {
     }
   }
   .tx-row:first-child {
-    margin-top: 4px;
+    margin-top: 0;
   }
 }
 

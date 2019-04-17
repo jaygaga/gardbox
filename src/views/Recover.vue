@@ -4,30 +4,31 @@
       class="recover-card"
       :title="$t('passport.recover')"
     >
-      <el-tabs
-        v-model="activeName"
-        @tab-click="handleClick"
-        type="card"
-      >
-        <el-tab-pane
-          :label="$t('recover.key')"
-          name="0"
-        >
-          <RouterView />
-        </el-tab-pane>
-        <el-tab-pane
-          :label="$t('recover.keyFile')"
-          name="1"
-        >
-          <RouterView />
-        </el-tab-pane>
-        <el-tab-pane
-          :label="$t('recover.phrase')"
-          name="2"
-        >
-          <RouterView />
-        </el-tab-pane>
-      </el-tabs>
+      <div class="tabs">
+        <router-link :to="routes[0]">
+          <el-button
+            :class="$route.path === routes[0] && 'active'"
+            plain
+            round
+          >{{$t('recover.key')}}</el-button>
+        </router-link>
+        <router-link :to="routes[1]">
+          <el-button
+            :class="$route.path === routes[1] && 'active'"
+            plain
+            round
+          >{{$t('recover.keyFile')}}</el-button>
+        </router-link>
+        <router-link :to="routes[2]">
+          <el-button
+            :class="$route.path === routes[2] && 'active'"
+            plain
+            round
+          >{{$t('recover.phrase')}}</el-button>
+        </router-link>
+      </div>
+
+      <RouterView />
     </s-card>
   </s-page>
 </template>
@@ -36,22 +37,14 @@
 const routes = [
   "/recover/key/text",
   "/recover/key/file",
-  "/recover/phrase/text"
+  "/recover/phrase/input"
 ];
 
 export default {
   data() {
     return {
-      activeName: "0"
+      routes
     };
-  },
-  methods: {
-    handleClick(tab) {
-      this.$router.push(routes[this.activeName - 0]);
-    }
-  },
-  mounted() {
-    this.activeName = routes.findIndex(i => i === this.$route.path) + "";
   }
 };
 </script>
@@ -62,6 +55,24 @@ export default {
   padding: $padding-large;
   .recover-card {
     max-width: 460px;
+
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+
+      button {
+        background: rgba(255, 255, 255, 0.15);
+        color: rgba(255, 255, 255, 0.65);
+        border-color: transparent;
+        transition: background-color $trans;
+        &.active,
+        &:hover {
+          color: white;
+          background: $color-primary-light;
+          border-color: $color-primary-light;
+        }
+      }
+    }
   }
 }
 @include responsive($sm) {

@@ -34,7 +34,7 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: $padding-basic;
-  transition: background $trans;
+  transition: background-color $trans;
 
   &:hover {
     background: $color-primary-light;
