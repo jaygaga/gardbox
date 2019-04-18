@@ -37,7 +37,7 @@ export default {
   transition: background-color $trans;
 
   &:hover {
-    background: $color-primary-light;
+    background: rgba(250, 250, 255, 0.4);
   }
 
   img {

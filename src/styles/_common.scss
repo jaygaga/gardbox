@@ -1,6 +1,8 @@
 $input-background: rgba(0, 0, 0, 0.08);
 $card-background: rgba(255, 255, 255, 0.2);
 $color-gray: rgba(255, 255, 255, 0.6);
+$color-primary: #4c4afe;
+$color-primary-dark: #2c2ade;
 
 a {
   color: rgba(255, 255, 255, 0.85);
@@ -67,7 +69,7 @@ a:active {
 
 /* message-box */
 .el-message-box {
-  background-color: #0058d2;
+  background-color: $color-primary-dark;
   border: none;
   width: 375px;
   padding: 8px;
@@ -75,10 +77,21 @@ a:active {
   .el-message-box__headerbtn .el-message-box__close {
     color: white;
   }
+  .el-button--default {
+    color: $color-gray;
+    background-color: $card-background;
+    border: none;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.35);
+    }
+  }
   .el-button--primary {
     background: white;
-    color: #0091ff;
+    color: $color-primary;
     border: none;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
   }
 }
 
@@ -134,8 +147,8 @@ a:active {
       margin-right: 24px;
       &:hover,
       &.is-active {
-        background: #0091ff;
-        color: white;
+        background: rgba(255, 255, 255, 0.9);
+        color: $color-primary;
       }
     }
   }

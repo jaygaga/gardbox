@@ -25,11 +25,7 @@
         slot="footer"
         class="dialog-footer"
       >
-        <el-button @click="dialogVisible = false">{{$t('global.cancel')}}</el-button>
-        <el-button
-          type="primary"
-          @click="onSend"
-        >{{$t('global.ok')}}</el-button>
+        <el-button @click="onSend">{{$t('global.ok')}}</el-button>
       </span>
     </el-dialog>
   </s-card>

@@ -150,7 +150,8 @@ export default {
     margin: -4px -4px $padding-basic;
 
     .top-balance {
-      background: $color-primary;
+      background: $color-primary-light;
+      box-shadow: $shadow;
       padding: $padding-large;
       margin: 4px;
       flex-basis: 50%;
@@ -173,7 +174,8 @@ export default {
       margin: 4px;
       flex-basis: 50%;
       height: 130px;
-      background: $color-primary;
+      background: $color-primary-light;
+      box-shadow: $shadow;
 
       .top-btn {
         flex-grow: 1;
@@ -206,7 +208,7 @@ export default {
     .empty {
       margin: $padding-large;
       text-align: center;
-      color: rgba(0, 0, 0, 0.5);
+      color: rgba(255, 255, 255, 0.5);
     }
   }
 }

@@ -34,7 +34,6 @@ export default {
 <style lang="scss" scoped>
 .receive-container {
   margin: 0 auto;
-  padding: $padding-large;
   text-align: center;
 
   .card-content {
@@ -53,6 +52,8 @@ export default {
     }
     .addr {
       justify-content: center;
+      padding: 0 $padding-basic;
+      word-break: break-all;
     }
   }
 }

@@ -6,14 +6,14 @@ $padding-large: 32px;
 $font-size-content: 16px;
 $font-size-title: 24px;
 
-$color-primary: #1573e9;
-$color-primary-light: #0091ff;
-$color-primary-dark: #0058d2;
+$color-primary: #4c4afe;
+$color-primary-light: rgba(255, 255, 255, 0.2);
+$color-primary-dark: #2c2ade;
 $color-second: #f8c255;
-$color-background: linear-gradient(60deg, #0058d2, #00309b);
+$color-background: linear-gradient(60deg, #4c4afe, #3333f8);
 $color-font: #ebeef5;
 $color-font-light: #cbced5;
-$color-background-card: rgba(255, 255, 255, 0.2);
+$color-background-card: rgba(255, 255, 255, 0.15);
 $color-grey-1: #ebeef5;
 
 $color-error: #ff3366;
@@ -35,7 +35,7 @@ $sm: 768px;
 $md: 992px;
 $lg: 1200px;
 
-/*
+/* 4c4afe 3333f8
 Mixin
 */
 @mixin responsive($screen) {

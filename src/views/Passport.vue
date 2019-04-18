@@ -75,7 +75,6 @@ export default {
 <style lang="scss" scoped>
 .passport-container {
   margin: 0 auto;
-  padding: $padding-large;
 
   .user-select {
     margin: 0 auto;
@@ -83,7 +82,7 @@ export default {
     .user-item {
       margin: 0 0 $padding-basic;
       padding: $padding-basic;
-      background: rgba(250, 250, 255, 0.2);
+      background: rgba(250, 250, 255, 0.15);
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -91,18 +90,13 @@ export default {
 
       &.is-checked,
       &:hover {
-        background: $color-primary-light;
+        background: rgba(250, 250, 255, 0.4);
       }
     }
   }
 
   .passport-card {
     max-width: 560px;
-  }
-}
-@include responsive($sm) {
-  .passport-container {
-    padding: 16px;
   }
 }
 </style>

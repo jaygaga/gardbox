@@ -153,11 +153,11 @@ export default {
     margin: 0 auto;
     h1 {
       font-size: 32px;
-      margin-top: 120px;
+      margin-top: 40px;
     }
     img {
       width: 100%;
-      margin-top: 56px;
+      margin-top: 16px;
       margin-bottom: -180px;
     }
   }
@@ -192,9 +192,9 @@ export default {
   }
 
   .home-links {
-    max-width: $max-width;
-    padding: 100px 0;
-    margin: 0 auto;
+    padding: 100px 0 160px;
+    margin: 0 auto -72px;
+    background-color: #3d3b58;
     .link {
       color: $color-font;
       display: inline-block;
@@ -203,7 +203,7 @@ export default {
       padding: 16px;
       margin: 16px;
       border-radius: 32px;
-      background: $color-primary;
+      background: $color-background-card;
       &:hover {
         background: $color-primary-light;
       }

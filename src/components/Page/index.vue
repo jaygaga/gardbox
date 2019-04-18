@@ -29,6 +29,7 @@ export default {
 .page-container {
   max-width: $max-width;
   margin: 0 auto $padding-large;
+  padding: $padding-large;
   a {
     color: rgba(255, 255, 255, 0.75);
     font-size: 28px;
@@ -44,6 +45,12 @@ export default {
 }
 .content {
   min-height: 50px;
+}
+
+@include responsive($sm) {
+  .page-container {
+    padding: 16px;
+  }
 }
 </style>
 

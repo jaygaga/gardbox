@@ -102,7 +102,8 @@ export default {
         form,
         $store: { dispatch },
         $router,
-        $message
+        $message,
+        $t
       } = this;
       let loading = this.loading;
       this.$refs["form"].validate(async function(valid) {
@@ -115,7 +116,7 @@ export default {
         if (!created) {
           $message({
             type: "error",
-            message: this.$t("create.exist"),
+            message: $t("create.exist"),
             center: true
           });
           return false;

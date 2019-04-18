@@ -65,7 +65,6 @@ export default {
 <style lang="scss" scoped>
 .agree-container {
   margin: 0 auto;
-  padding: $padding-large;
 
   .term {
     display: flex;

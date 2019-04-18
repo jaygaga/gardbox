@@ -52,7 +52,6 @@ export default {
 <style lang="scss" scoped>
 .import-container {
   margin: 0 auto;
-  padding: $padding-large;
   .recover-card {
     max-width: 460px;
 
@@ -68,16 +67,10 @@ export default {
         &.active,
         &:hover {
           color: white;
-          background: $color-primary-light;
-          border-color: $color-primary-light;
+          background: rgba(255, 255, 255, 0.4);
         }
       }
     }
-  }
-}
-@include responsive($sm) {
-  .import-container {
-    padding: 16px;
   }
 }
 </style>

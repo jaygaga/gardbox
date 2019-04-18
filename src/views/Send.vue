@@ -13,7 +13,6 @@ export default {
 <style lang="scss" scoped>
 .send-container {
   margin: 0 auto;
-  padding: $padding-large;
 }
 </style>
 
