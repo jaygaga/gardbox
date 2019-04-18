@@ -15,9 +15,10 @@
           :placeholder="$t('send.denom')"
         >
           <el-option
-            key="gard"
-            label="GARD"
-            value="gard"
+            v-for="i in balance"
+            :key="i.denom"
+            :label="i.denom | upper"
+            :value="i.denom"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -32,7 +33,7 @@
         ></el-input>
       </el-form-item>
       <div class="row-balance">
-        Balance: {{balance}}
+        Balance: {{selectedBalance.amount}}
         <a @click="setAmountAll">{{$t('send.all')}}</a>
       </div>
       <el-form-item
@@ -59,7 +60,6 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import { get } from "lodash";
-import { gardplorerDomain } from "@/constants";
 
 export default {
   name: "SendForm",
@@ -74,7 +74,11 @@ export default {
     };
   },
   computed: {
-    ...mapState("account", ["balance"])
+    ...mapState("account", ["balance"]),
+    selectedBalance() {
+      const gard = { amount: "0", denom: "gard" };
+      return this.balance.find(i => i.denom === this.form.denom) || gard;
+    }
   },
   methods: {
     setAmountAll() {

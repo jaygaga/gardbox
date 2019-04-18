@@ -15,6 +15,7 @@
       :visible.sync="dialogVisible"
       width="360px"
       v-loading="loading"
+      :close-on-click-modal="false"
     >
       <el-input
         type="password"
@@ -34,7 +35,6 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import { get } from "lodash";
-import { gardplorerDomain } from "@/constants";
 
 export default {
   name: "Send",
@@ -68,7 +68,7 @@ export default {
       this.loading = true;
       const params = { ...this.form, pass: this.pass, keyStore: this.keyStore };
       const res = await this.$store.dispatch("transactions/send", params);
-      if (res) {
+      if (res.txhash) {
         this.dialogVisible = false;
         this.$store.dispatch("transactions/result", res);
         this.$router.push("/send/finish");
@@ -76,7 +76,7 @@ export default {
         this.$store.dispatch("transactions/result", {});
         this.$message({
           type: "error",
-          message: this.$t("send.error"),
+          message: this.$t(`send.${res}`),
           center: true
         });
       }

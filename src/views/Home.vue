@@ -7,7 +7,7 @@
       <h4>
         {{$t('home.banner')}}
       </h4>
-      <img src="~@/assets/banner-img.png" />
+      <img src="~@/assets/img-home.png" />
     </div>
 
     <div class="home-items">
@@ -156,9 +156,9 @@ export default {
       margin-top: 40px;
     }
     img {
-      width: 100%;
-      margin-top: 16px;
-      margin-bottom: -180px;
+      width: 90%;
+      margin-top: 56px;
+      margin-bottom: -140px;
     }
   }
 
@@ -167,7 +167,7 @@ export default {
     .items {
       display: flex;
       max-width: $max-width;
-      padding: 160px $padding-large;
+      padding: 180px $padding-large 160px;
       margin: 0 auto;
       justify-content: space-between;
       .item {

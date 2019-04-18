@@ -7,12 +7,9 @@
 </template>
 
 <script>
-import { gardplorerDomain } from "@/constants";
-
 export default {
   props: {
-    label: String,
-    data: String
+    label: String
   }
 };
 </script>

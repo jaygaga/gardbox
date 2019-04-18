@@ -39,7 +39,7 @@ export default {
 
   actions: {
     getNodeInfo: async function(context) {
-      const { data } = await ajax.get('/api/node_info');
+      const { data } = await ajax.get('/node_info');
       if (isEmpty(data)) {
         return Promise.reject();
       }
@@ -47,7 +47,7 @@ export default {
       return Promise.resolve();
     },
     fetchTxsTotalCount: async function(context, params) {
-      const { data } = await ajax.get('/api/txs', { params });
+      const { data } = await ajax.get('/txs', { params });
       if (isEmpty(data)) {
         return Promise.resolve();
       }
@@ -100,7 +100,7 @@ export default {
       if (!isEmpty(context.state.blocks[height])) {
         return Promise.resolve(context.state.blocks[height]);
       }
-      const { data } = await ajax.get(`/api/blocks/${height}`);
+      const { data } = await ajax.get(`/blocks/${height}`);
       if (!isEmpty(data)) {
         context.commit('setBlocks', { [height]: data });
       }
@@ -110,7 +110,7 @@ export default {
       if (!isEmpty(context.state.txInfo[txhash])) {
         return Promise.resolve(context.state.txInfo[txhash]);
       }
-      const { data } = await ajax.get(`/api/txs/${txhash}`);
+      const { data } = await ajax.get(`/txs/${txhash}`);
       if (!isEmpty(data)) {
         context.commit('setTxInfo', { [txhash]: data });
         if (!context.state.blocks[data.height]) {
@@ -131,9 +131,14 @@ export default {
       const isValidAddress = webc.account.isValidAddress(address);
       const from = keyStore.address;
       // 1. get account state (account_number & sequence)
-      const { data } = await ajax.get(`api/auth/accounts/${from}`);
+      const { data } = await ajax.get(`/auth/accounts/${from}`);
       // 2. get privateKey from keyStore
-      const account = webc.account.fromV3KeyStore(keyStore, pass);
+      let account = {};
+      try {
+        account = webc.account.fromV3KeyStore(keyStore, pass);
+      } catch (e) {
+        return Promise.resolve('passError');
+      }
       // 3. build tx and sign
       const para = {
         chain_id: context.state.nodeInfo.network,
@@ -156,7 +161,7 @@ export default {
       };
       const req = webc.tx.buildAndSignTx(para, account.privateKey).GetData();
       // 4. post to lcd api
-      const res = await ajax.post(`api/tx/broadcast`, req);
+      const res = await ajax.post(`/txs`, req);
       // 5. get block info when tx success
       if (res.data) {
         const blockData = await context.dispatch('fetchBlock', res.data.height);

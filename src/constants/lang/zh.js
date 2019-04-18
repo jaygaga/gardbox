@@ -92,6 +92,7 @@ const zh = {
   send: {
     form: '转账',
     confirm: '确认转账信息',
+    passError: '密码错误',
     finish: '转账结果',
     denom: '转账币种',
     amount: '转账数量',

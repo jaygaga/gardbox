@@ -47,8 +47,8 @@
       >
         <div class="assets">
           <BalancePanel
-            :amount="balance"
-            denom="GARD"
+            :amount="gardBalance.amount"
+            :denom="gardBalance.denom | upper"
           />
         </div>
       </el-tab-pane>
@@ -108,6 +108,10 @@ export default {
       const factor = code > 122 ? 73 : code;
       const Hue = 360 * (factor / 122);
       return "hsla(" + Hue + ",60%,65%,1)";
+    },
+    gardBalance() {
+      const gard = { amount: "0", denom: "gard" };
+      return this.balance.find(i => i.denom === "gard") || gard;
     }
   },
   methods: {

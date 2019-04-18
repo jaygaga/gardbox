@@ -17,7 +17,7 @@ export default {
     account: {},
     keyStore: keyStore,
     userMap: JSON.parse(wallet_users),
-    balance: '0'
+    balance: []
   },
 
   getters: {},
@@ -164,11 +164,11 @@ export default {
     },
     fetchBalance: async function(context) {
       const { address } = context.state.keyStore;
-      const { data } = await ajax.get(`api/bank/balances/${address}`);
+      const { data } = await ajax.get(`bank/balances/${address}`);
       if (!isEmpty(data)) {
-        context.commit('setBalance', data[0].amount);
+        context.commit('setBalance', data);
       } else {
-        context.commit('setBalance', '0');
+        context.commit('setBalance', []);
       }
       return Promise.resolve(data);
     }

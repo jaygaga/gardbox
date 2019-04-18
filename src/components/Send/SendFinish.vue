@@ -17,7 +17,7 @@
       </router-link>
       <router-link
         class="btn-back"
-        to="/main"
+        to="/main?tab=txs"
       >
         <el-button>{{$t('send.back')}}</el-button>
       </router-link>
@@ -29,7 +29,6 @@
 import { mapState, mapGetters } from "vuex";
 import { get } from "lodash";
 import moment from "dayjs";
-import { gardplorerDomain } from "@/constants";
 
 export default {
   name: "Send",

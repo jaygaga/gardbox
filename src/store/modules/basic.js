@@ -18,7 +18,7 @@ export default {
 
   actions: {
     fetch: async function(context) {
-      const { data } = await ajax.get('/api/node_info');
+      const { data } = await ajax.get('/node_info');
       if (isEmpty(data)) {
         return Promise.reject();
       }

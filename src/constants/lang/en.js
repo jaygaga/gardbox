@@ -95,6 +95,7 @@ const en = {
   send: {
     form: 'Transfer',
     confirm: 'Confirm Transaction',
+    passError: 'Wrong Password!',
     finish: 'Transaction Result',
     denom: 'Currency',
     amount: 'Amount',
