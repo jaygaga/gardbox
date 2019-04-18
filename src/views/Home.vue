@@ -192,7 +192,7 @@ export default {
   }
 
   .home-links {
-    padding: 100px 0 160px;
+    padding: 100px 16px 160px;
     margin: 0 auto -72px;
     background-color: #3d3b58;
     .link {
@@ -213,9 +213,21 @@ export default {
 
 @include responsive($sm) {
   .home-container {
+    .banner {
+      img {
+        width: 100%;
+        margin-bottom: -80px;
+      }
+    }
     .home-items {
       .items {
+        padding: 100px $padding-large 80px;
         flex-direction: column;
+      }
+    }
+    .home-links {
+      .link {
+        margin: 8px;
       }
     }
   }
