@@ -1,9 +1,19 @@
 import moment from 'dayjs';
+import { get } from 'lodash';
 import { gardplorerDomain } from '@/constants';
 
 export const upper = s => s.toUpperCase();
 
 export const gardAddr = s => s.slice(0, 8) + '......' + s.slice(s.length - 8);
+
+export const amountGard = tx => {
+  const coins = get(tx, 'tx.value.msg.0.value.amount');
+  let GARD = { denom: 'gard', amount: '0' };
+  if (coins) {
+    GARD = coins.find(coin => coin.denom === GARD.denom) || GARD;
+  }
+  return GARD.amount;
+};
 
 export const explorerUrl = s => `${gardplorerDomain}${s}`;
 

@@ -15,7 +15,7 @@
       </div>
       <div :class="`amount ${get(item, 'tags.0.value')}`">
         {{get(item, 'tags.0.value') === 'send' ? '- ':'+ '}}
-        {{getGardAmount(item).amount}} GARD
+        {{item | amountGard}} GARD
       </div>
     </router-link>
   </div>
@@ -42,15 +42,7 @@ export default {
     };
   },
   methods: {
-    get,
-    getGardAmount(item) {
-      const coins = get(item, "tx.value.msg.0.value.amount");
-      const GARD = { denom: "gard", amount: "0" };
-      if (coins) {
-        return coins.find(coin => coin.denom === GARD.denom) || GARD;
-      }
-      return GARD;
-    }
+    get
   },
   computed: {
     ...mapState("account", ["blocks"])
