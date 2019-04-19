@@ -81,7 +81,7 @@ export default {
         const params = { ...form, keyStore: keyText };
         const account = await $store.dispatch("account/importKeyStore", params);
         if (account) {
-          $router.push("/main");
+          $router.push("/main?tab=assets");
         }
         // clear Key after import
         $store.dispatch("recover/clearKey");
