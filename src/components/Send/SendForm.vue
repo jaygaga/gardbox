@@ -14,11 +14,16 @@
           v-model="form.denom"
           :placeholder="$t('send.denom')"
         >
-          <el-option
+          <!-- <el-option
             v-for="i in balance"
             :key="i.denom"
             :label="i.denom | upper"
             :value="i.denom"
+          ></el-option> -->
+          <el-option
+            :key="selectedBalance.denom"
+            :label="selectedBalance.denom | upper"
+            :value="selectedBalance.denom"
           ></el-option>
         </el-select>
       </el-form-item>

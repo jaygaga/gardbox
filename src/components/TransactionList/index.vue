@@ -15,7 +15,7 @@
       </div>
       <div :class="`amount ${get(item, 'tags.0.value')}`">
         {{get(item, 'tags.0.value') === 'send' ? '- ':'+ '}}
-        {{get(item, 'tx.value.msg.0.value.amount.0.amount')}} GARD
+        {{getGardAmount(item).amount}} GARD
       </div>
     </router-link>
   </div>
@@ -31,7 +31,6 @@ import iconOut from "@/assets/icon-out.svg";
 export default {
   props: {
     list: Array,
-    fields: Array,
     load: { type: Boolean, default: false }
   },
   data() {
@@ -42,7 +41,17 @@ export default {
       }
     };
   },
-  methods: { get },
+  methods: {
+    get,
+    getGardAmount(item) {
+      const coins = get(item, "tx.value.msg.0.value.amount");
+      const GARD = { denom: "gard", amount: "0" };
+      if (coins) {
+        return coins.find(coin => coin.denom === GARD.denom) || GARD;
+      }
+      return GARD;
+    }
+  },
   computed: {
     ...mapState("account", ["blocks"])
   },

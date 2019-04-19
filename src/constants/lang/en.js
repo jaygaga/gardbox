@@ -88,7 +88,7 @@ const en = {
     assets: 'My Assets',
     txs: 'Transactions',
     txInfo: 'Transaction Detail',
-    allTxs: 'View All',
+    allTxs: 'Expolor All Txs',
     empty: 'No Data',
     keyWarn: 'KeyStore is an encrypted JSON file with your privateKey and password, you can get your privateKey with your password from it.'
   },

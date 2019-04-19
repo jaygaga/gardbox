@@ -62,10 +62,13 @@
             v-if="txs.length === 0"
           >{{$t('main.empty')}}</div>
           <TransactionList
-            :fields="fields.filter(i => !i.hideInTable)"
             :load="load"
             :list="txs"
           />
+          <p><a
+              target="_blank"
+              :href="`${domain}address/${keyStore.address}`"
+            >{{$t('main.allTxs')}}</a></p>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -77,7 +80,7 @@
 import { mapState, mapGetters } from "vuex";
 import { get, isEmpty } from "lodash";
 
-import { txFieldsMap } from "@/constants";
+import { gardplorerDomain } from "@/constants";
 
 import icon from "@/assets/icon-wallet.svg";
 import icon1 from "@/assets/icon-to.svg";
@@ -96,8 +99,8 @@ export default {
       icon1,
       icon2,
       icon3,
-      fields: txFieldsMap.send,
-      load: false
+      load: false,
+      domain: gardplorerDomain
     };
   },
   computed: {
@@ -213,6 +216,10 @@ export default {
       margin: $padding-large;
       text-align: center;
       color: rgba(255, 255, 255, 0.5);
+    }
+    p {
+      margin-top: 16px;
+      text-align: center;
     }
   }
 }
