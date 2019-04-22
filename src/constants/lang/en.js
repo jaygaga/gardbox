@@ -99,6 +99,7 @@ const en = {
     finish: 'Transaction Result',
     denom: 'Currency',
     amount: 'Amount',
+    amountWarn: 'Insufficient Quantity',
     address: 'Address',
     sender: 'Sender',
     txHash: 'TxHash',

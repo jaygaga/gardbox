@@ -96,6 +96,7 @@ const zh = {
     finish: '转账结果',
     denom: '转账币种',
     amount: '转账数量',
+    amountWarn: '数量不足',
     address: '收款地址',
     sender: '转出地址',
     txHash: 'TxHash',

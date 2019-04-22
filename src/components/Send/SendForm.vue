@@ -4,6 +4,7 @@
       ref="form"
       label-position="top"
       :model="form"
+      :rules="rules"
     >
       <el-form-item
         prop="denom"
@@ -69,12 +70,21 @@ import { get } from "lodash";
 export default {
   name: "SendForm",
   data() {
+    const validateAmount = (rule, value, callback) => {
+      if (value > this.selectedBalance.amount) {
+        callback(new Error(this.$t("send.amountWarn")));
+      }
+      callback();
+    };
     return {
       form: {
         denom: "gard",
         amount: "",
         address: "",
         fee: 0
+      },
+      rules: {
+        amount: [{ validator: validateAmount, trigger: "blur" }]
       }
     };
   },
@@ -87,7 +97,7 @@ export default {
   },
   methods: {
     setAmountAll() {
-      this.form.amount = this.balance;
+      this.form.amount = this.selectedBalance.amount;
     },
     onSubmit() {
       this.$refs["form"].validate(valid => {
