@@ -6,19 +6,13 @@
       :model="form"
       :rules="rules"
     >
-      <el-form-item
-        prop="name"
-        required
-      >
+      <el-form-item prop="name">
         <el-input
           v-model="form.name"
           :placeholder="$t('create.name')"
         ></el-input>
       </el-form-item>
-      <el-form-item
-        prop="pass"
-        required
-      >
+      <el-form-item prop="pass">
         <el-input
           v-model="form.pass"
           type="password"
@@ -41,24 +35,21 @@ import { get } from "lodash";
 export default {
   name: "KeySubmit",
   data() {
-    const validatePass = (rule, value, callback) => {
-      callback();
-      return;
-      if (value === "") {
-        callback(
-          new Error(
-            this.$t("global.required", { name: this.$t("create.pass") })
-          )
-        );
-      } else {
-        if (!value.match("^(?=.*[a-zA-Z])(?=.*\\d)[^\\s]{8,18}$")) {
-          callback(new Error(this.$t("create.passWarn")));
-        }
-        if (this.form.checkPass !== "") {
-          this.$refs.form.validateField("checkPass");
-        }
-        callback();
+    const requireError = name =>
+      new Error(this.$t("global.required", { name }));
+    const validateName = (rule, value, callback) => {
+      if (value.trim() === "") {
+        callback(requireError(this.$t("create.name")));
       }
+      callback();
+    };
+    const validatePass = (rule, value, callback) => {
+      // callback();
+      // return;
+      if (value === "") {
+        callback(requireError(this.$t("create.pass")));
+      }
+      callback();
     };
     return {
       form: {
@@ -66,6 +57,7 @@ export default {
         pass: ""
       },
       rules: {
+        name: [{ validator: validateName, trigger: "blur" }],
         pass: [{ validator: validatePass, trigger: "blur" }]
       }
     };

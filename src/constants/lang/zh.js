@@ -58,6 +58,7 @@ const zh = {
     pass: '密码',
     passCheck: '确认密码',
     passWarn: '密码至少8位，且包含数字和字母!',
+    passCheckWarn: '密码不一致!',
     exist: '钱包名称已存在!',
     mnemonic: '您的助记词',
     mnemonicWarn: '助记词错误',
@@ -79,7 +80,7 @@ const zh = {
   main: {
     receive: '收 款',
     qrcode: '二维码',
-    send: '发 送',
+    send: '转 账',
     manage: '管 理',
     copy: '已复制到剪切板',
     assets: '我的资产',
@@ -90,7 +91,7 @@ const zh = {
     keyWarn: 'KeyStore 是用你的私钥和密码加密后的 JSON 文件, 您可以用密码从 KeyStore 中取回私钥，请妥善保管。'
   },
   send: {
-    form: '转账',
+    form: '转 账',
     confirm: '确认转账信息',
     passError: '密码错误',
     finish: '转账结果',
@@ -98,6 +99,7 @@ const zh = {
     amount: '转账数量',
     amountWarn: '数量不足',
     address: '收款地址',
+    addressWarn: '地址格式有误',
     sender: '转出地址',
     txHash: 'TxHash',
     all: '全部转出',

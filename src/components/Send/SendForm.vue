@@ -6,10 +6,7 @@
       :model="form"
       :rules="rules"
     >
-      <el-form-item
-        prop="denom"
-        required
-      >
+      <el-form-item prop="denom">
         <el-select
           style="width: 100%"
           v-model="form.denom"
@@ -28,10 +25,7 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item
-        prop="address"
-        required
-      >
+      <el-form-item prop="address">
         <el-input
           v-model="form.address"
           :placeholder="$t('send.address')"
@@ -42,12 +36,10 @@
         Balance: {{selectedBalance.amount}}
         <a @click="setAmountAll">{{$t('send.all')}}</a>
       </div>
-      <el-form-item
-        prop="amount"
-        required
-      >
+      <el-form-item prop="amount">
         <el-input
           v-model="form.amount"
+          type="number"
           :placeholder="$t('send.amount')"
           clearable
         ></el-input>
@@ -67,9 +59,22 @@
 import { mapState, mapGetters } from "vuex";
 import { get } from "lodash";
 
+import webc from "@/utils/webc";
+
 export default {
   name: "SendForm",
   data() {
+    const requireError = name =>
+      new Error(this.$t("global.required", { name }));
+    const validateAddr = (rule, value, callback) => {
+      if (value.trim() === "") {
+        callback(requireError(this.$t("send.address")));
+      }
+      if (!webc.account.isValidAddress(value)) {
+        callback(this.$t("send.addressWarn"));
+      }
+      callback();
+    };
     const validateAmount = (rule, value, callback) => {
       if (value > this.selectedBalance.amount) {
         callback(new Error(this.$t("send.amountWarn")));
@@ -84,6 +89,7 @@ export default {
         fee: 0
       },
       rules: {
+        address: [{ validator: validateAddr, trigger: "blur" }],
         amount: [{ validator: validateAmount, trigger: "blur" }]
       }
     };

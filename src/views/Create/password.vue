@@ -14,20 +14,14 @@
         </ul>
       </div>
 
-      <el-form-item
-        prop="name"
-        required
-      >
+      <el-form-item prop="name">
         <el-input
           :placeholder="$t('create.name')"
           v-model="form.name"
         ></el-input>
       </el-form-item>
 
-      <el-form-item
-        prop="pass"
-        required
-      >
+      <el-form-item prop="pass">
         <el-input
           :placeholder="$t('create.pass')"
           v-model="form.pass"
@@ -35,10 +29,7 @@
         ></el-input>
       </el-form-item>
 
-      <el-form-item
-        prop="checkPass"
-        required
-      >
+      <el-form-item prop="checkPass">
         <el-input
           :placeholder="$t('create.passCheck')"
           v-model="form.checkPass"
@@ -61,9 +52,17 @@ import { get } from "lodash";
 export default {
   name: "Password",
   data() {
+    const requireError = name =>
+      new Error(this.$t("global.required", { name }));
+    const validateName = (rule, value, callback) => {
+      if (value.trim() === "") {
+        callback(requireError(this.$t("create.name")));
+      }
+      callback();
+    };
     const validatePass = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("Please enter password!"));
+        callback(requireError(this.$t("create.pass")));
       } else {
         if (!value.match("^(?=.*[a-zA-Z])(?=.*\\d)[^\\s]{8,18}$")) {
           callback(new Error(this.$t("create.passWarn")));
@@ -76,9 +75,9 @@ export default {
     };
     const validatePass2 = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("Please enter password again!"));
+        callback(requireError(this.$t("create.pass")));
       } else if (value !== this.form.pass) {
-        callback(new Error("Inconsistent password!"));
+        callback(new Error(this.$t("create.passCheckWarn")));
       } else {
         callback();
       }
@@ -90,6 +89,7 @@ export default {
         checkPass: ""
       },
       rules: {
+        name: [{ validator: validateName, trigger: "blur" }],
         pass: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }]
       },

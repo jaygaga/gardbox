@@ -65,7 +65,7 @@
             :load="load"
             :list="txs"
           />
-          <p><a
+          <p v-if="txs.length > 0"><a
               target="_blank"
               :href="`${domain}address/${keyStore.address}`"
             >{{$t('main.allTxs')}}</a></p>
