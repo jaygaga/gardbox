@@ -82,6 +82,7 @@ export default {
       this.$prompt("", this.$t("passport.edit"), {
         confirmButtonText: this.$t("global.ok"),
         cancelButtonText: this.$t("global.cancel"),
+        closeOnClickModal: false,
         inputValue: user,
         inputValidator
       })
