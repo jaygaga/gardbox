@@ -53,6 +53,7 @@ export default {
       }
       if (!wordList.find(i => i === value)) {
         callback(new Error(this.$t("create.mnemonicWarn")));
+        return;
       }
       callback();
     };

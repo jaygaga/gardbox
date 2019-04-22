@@ -40,6 +40,7 @@ export default {
     const validateName = (rule, value, callback) => {
       if (value.trim() === "") {
         callback(requireError(this.$t("create.name")));
+        return;
       }
       callback();
     };
@@ -48,6 +49,7 @@ export default {
       // return;
       if (value === "") {
         callback(requireError(this.$t("create.pass")));
+        return;
       }
       callback();
     };

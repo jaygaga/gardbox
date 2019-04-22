@@ -40,6 +40,8 @@
         <el-input
           v-model="form.amount"
           type="number"
+          min="1"
+          step="1"
           :placeholder="$t('send.amount')"
           clearable
         ></el-input>
@@ -69,15 +71,22 @@ export default {
     const validateAddr = (rule, value, callback) => {
       if (value.trim() === "") {
         callback(requireError(this.$t("send.address")));
+        return;
       }
       if (!webc.account.isValidAddress(value)) {
         callback(this.$t("send.addressWarn"));
+        return;
       }
       callback();
     };
     const validateAmount = (rule, value, callback) => {
+      if (value <= 0 || value % 1 !== 0) {
+        callback(new Error(this.$t("send.amountWarnZero")));
+        return;
+      }
       if (value > this.selectedBalance.amount) {
         callback(new Error(this.$t("send.amountWarn")));
+        return;
       }
       callback();
     };

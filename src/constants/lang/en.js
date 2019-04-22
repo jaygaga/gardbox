@@ -101,6 +101,7 @@ const en = {
     denom: 'Currency',
     amount: 'Amount',
     amountWarn: 'Insufficient Quantity',
+    amountWarnZero: 'A Positive Number is required',
     address: 'Address',
     addressWarn: 'Wrong Address Format!',
     sender: 'Sender',

@@ -100,6 +100,7 @@ const zh = {
     amountWarn: '数量不足',
     address: '收款地址',
     addressWarn: '地址格式有误',
+    amountWarnZero: '数量必须为正整数',
     sender: '转出地址',
     txHash: 'TxHash',
     all: '全部转出',

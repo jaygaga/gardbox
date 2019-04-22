@@ -43,6 +43,7 @@ export default {
           const key = JSON.parse(value);
           if (!key.address || !key.address.match(/^gard/)) {
             callback(new Error(this.$t("recover.keyError")));
+            return;
           }
           callback();
         } catch (e) {

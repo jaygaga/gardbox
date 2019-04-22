@@ -131,7 +131,16 @@ export default {
       const isValidAddress = webc.account.isValidAddress(address);
       const from = keyStore.address;
       // 1. get account state (account_number & sequence)
-      const { data } = await ajax.get(`/auth/accounts/${from}`);
+      let accState = {
+        account_number: '0',
+        sequence: '0'
+      };
+      try {
+        const { data } = await ajax.get(`/auth/accounts/${from}`);
+        accState = data.value;
+      } catch (e) {
+        console.log(e);
+      }
       // 2. get privateKey from keyStore
       let account = {};
       try {
@@ -143,8 +152,8 @@ export default {
       const para = {
         chain_id: context.state.nodeInfo.network,
         from,
-        account_number: data.value.account_number,
-        sequence: data.value.sequence,
+        account_number: accState.account_number,
+        sequence: accState.sequence,
         memo,
         fees: { denom: 'gard', amount: '0' },
         gas: 200000,
