@@ -1,4 +1,4 @@
-# Shield
+# GARDBOX
 
 Hashgard Official Web Wallet.
 
