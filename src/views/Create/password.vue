@@ -57,6 +57,7 @@ export default {
     const validateName = (rule, value, callback) => {
       if (value.trim() === "") {
         callback(requireError(this.$t("create.name")));
+        return;
       }
       callback();
     };
@@ -66,6 +67,7 @@ export default {
       } else {
         if (!value.match("^(?=.*[a-zA-Z])(?=.*\\d)[^\\s]{8,18}$")) {
           callback(new Error(this.$t("create.passWarn")));
+          return;
         }
         if (this.form.checkPass !== "") {
           this.$refs.form.validateField("checkPass");
