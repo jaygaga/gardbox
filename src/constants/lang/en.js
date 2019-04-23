@@ -32,6 +32,8 @@ const en = {
     use: 'Terms of Use',
     and: 'and',
     privacy: 'Privacy Policy',
+    termUrl: 'http://hashgard-io.oss-cn-hongkong.aliyuncs.com/terms/HashgardTermsofService.pdf',
+    privacyUrl: 'http://hashgard-io.oss-cn-hongkong.aliyuncs.com/terms/GardBoxPrivacyPolicy.pdf',
     confirm: 'Confirm and Continue'
   },
   passport: {

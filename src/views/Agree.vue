@@ -21,9 +21,15 @@
       ></el-checkbox>
       <div class="links">
         {{$t('agree.term3')}}
-        <a>{{$t('agree.use')}}</a>
+        <a
+          target="_blank"
+          :href="$t('agree.termUrl')"
+        >{{$t('agree.use')}}</a>
         {{$t('agree.and')}}
-        <a>{{$t('agree.privacy')}}</a>
+        <a
+          target="_blank"
+          :href="$t('agree.privacyUrl')"
+        >{{$t('agree.privacy')}}</a>
       </div>
 
       <el-button
