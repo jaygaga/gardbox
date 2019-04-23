@@ -1,6 +1,7 @@
 <template>
   <div class="home-container">
     <div class="banner">
+      <BgEffect />
       <h1>
         {{$t('home.title')}}
       </h1>
@@ -132,7 +133,10 @@ import icon1 from "@/assets/icon-home-1.svg";
 import icon2 from "@/assets/icon-home-2.svg";
 import icon3 from "@/assets/icon-home-3.svg";
 
+import BgEffect from "@/components/BackgroundEffect";
+
 export default {
+  components: { BgEffect },
   data() {
     return {
       icon1,
