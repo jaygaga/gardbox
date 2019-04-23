@@ -31,8 +31,8 @@ const zh = {
     and: '和',
     privacy: '隐私条款',
     confirm: '同意并继续',
-    required: '请输入{name}',
-    success: '{name}成功!'
+    termUrl: 'http://hashgard-io.oss-cn-hongkong.aliyuncs.com/terms/HashgardTermsofService_CN.pdf',
+    privacyUrl: 'http://hashgard-io.oss-cn-hongkong.aliyuncs.com/terms/GardBoxPrivacyPolicy_CN.pdf'
   },
   passport: {
     title: '创建一个新钱包或导入钱包',
