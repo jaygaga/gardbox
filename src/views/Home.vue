@@ -8,6 +8,8 @@
       <h4>
         {{$t('home.banner')}}
       </h4>
+    </div>
+    <div class="banner-img">
       <img src="~@/assets/img-home.png" />
     </div>
 
@@ -166,6 +168,17 @@ export default {
     }
   }
 
+  .banner-img {
+    max-width: $max-width;
+    margin: 0 auto -100px;
+    padding: $padding-large;
+    background: transparent;
+    position: relative;
+    z-index: 9;
+    & > img {
+      width: 100%;
+    }
+  }
   .home-items {
     background: white;
     .items {
@@ -222,6 +235,10 @@ export default {
         width: 100%;
         margin-bottom: -80px;
       }
+    }
+    .banner-img {
+      padding: 0;
+      margin-bottom: -40px;
     }
     .home-items {
       .items {
