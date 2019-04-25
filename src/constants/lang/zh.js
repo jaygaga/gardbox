@@ -112,7 +112,7 @@ const zh = {
     time: '交易时间'
   },
   footer: {
-    copyright: '© 2019, Hashgard Team. All Rights Reserved.'
+    copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'
   }
 };
 export default zh;

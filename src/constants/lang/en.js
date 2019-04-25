@@ -117,7 +117,7 @@ const en = {
     time: 'Time'
   },
   footer: {
-    copyright: '© 2019, Hashgard Team. All Rights Reserved.'
+    copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'
   }
 };
 export default en;

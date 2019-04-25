@@ -120,6 +120,7 @@ export default {
   methods: {
     onTabChange(tab) {
       this.$router.push(`/main?tab=${tab}`);
+      this.fetchData();
     },
     fetchData: async function() {
       this.load = true;

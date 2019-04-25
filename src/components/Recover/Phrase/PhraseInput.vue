@@ -38,11 +38,6 @@ import { mapState, mapGetters } from "vuex";
 import { get } from "lodash";
 import { wordList } from "@/constants/wordList";
 
-const phrase = {};
-for (let i = 1; i < 25; i++) {
-  phrase[`${i}`] = "";
-}
-
 export default {
   name: "PhraseInput",
   data() {
@@ -57,6 +52,11 @@ export default {
       }
       callback();
     };
+
+    const phrase = {};
+    for (let i = 1; i < 25; i++) {
+      phrase[`${i}`] = "";
+    }
     const rules = {};
     Object.keys(phrase).forEach(k => {
       rules[k] = [{ validator: validator, trigger: "change" }];

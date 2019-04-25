@@ -45,13 +45,15 @@ export default {
       callback();
     };
     const validatePass = (rule, value, callback) => {
-      // callback();
-      // return;
       if (value === "") {
         callback(requireError(this.$t("create.pass")));
-        return;
+      } else {
+        if (!value.match("^(?=.*[a-zA-Z])(?=.*\\d)[^\\s]{8,18}$")) {
+          callback(new Error(this.$t("create.passWarn")));
+          return;
+        }
+        callback();
       }
-      callback();
     };
     return {
       form: {
@@ -77,10 +79,12 @@ export default {
         if (account) {
           $router.push("/main?tab=assets");
         }
-        // clear phrase after import
-        $store.dispatch("recover/clearKey");
       });
     }
+  },
+  beforeDestroy() {
+    // clear phrase
+    this.$store.dispatch("recover/clearKey");
   }
 };
 </script>
