@@ -80,11 +80,13 @@ export default {
       callback();
     };
     const validateAmount = (rule, value, callback) => {
-      if (value <= 0 || value % 1 !== 0) {
+      const input = value - 0;
+      const balance = this.selectedBalance.amount - 0;
+      if (input <= 0 || input % 1 !== 0) {
         callback(new Error(this.$t("send.amountWarnZero")));
         return;
       }
-      if (value > this.selectedBalance.amount) {
+      if (input > balance) {
         callback(new Error(this.$t("send.amountWarn")));
         return;
       }
