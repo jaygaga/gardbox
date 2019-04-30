@@ -21,6 +21,7 @@
         type="password"
         v-model="pass"
         :placeholder="$t('create.pass')"
+        @keyup.enter.native="onSend"
       ></el-input>
       <span
         slot="footer"
