@@ -1,31 +1,32 @@
 <template>
-  <div class="recover-container">
-    <el-form
-      ref="form"
-      label-position="top"
-      :model="form"
-      :rules="rules"
-    >
-      <el-form-item prop="name">
-        <el-input
-          v-model="form.name"
-          :placeholder="$t('create.name')"
-        ></el-input>
-      </el-form-item>
-      <el-form-item prop="pass">
-        <el-input
-          v-model="form.pass"
-          type="password"
-          :placeholder="$t('create.pass')"
-        ></el-input>
-      </el-form-item>
-    </el-form>
+  <el-form
+    class="recover-container"
+    ref="form"
+    label-position="top"
+    :model="form"
+    :rules="rules"
+    @submit="onSubmit"
+  >
+    <el-form-item prop="name">
+      <el-input
+        v-model="form.name"
+        :placeholder="$t('create.name')"
+      ></el-input>
+    </el-form-item>
+    <el-form-item prop="pass">
+      <el-input
+        v-model="form.pass"
+        type="password"
+        :placeholder="$t('create.pass')"
+      ></el-input>
+    </el-form-item>
 
     <el-button
       class="btn"
+      native-type=“submit”
       @click="onSubmit"
     >{{$t('passport.recover')}}</el-button>
-  </div>
+  </el-form>
 </template>
 
 <script>
@@ -70,7 +71,8 @@ export default {
     ...mapState("recover", ["phrase"])
   },
   methods: {
-    onSubmit: async function() {
+    onSubmit: async function(e) {
+      e.preventDefault();
       const { form, $router, $store, phrase } = this;
       this.$refs["form"].validate(async function(valid) {
         if (!valid) return false;

@@ -5,31 +5,35 @@
       ref="form"
       :model="phrase"
       :rules="rules"
+      @submit="onSubmit"
       label-position="top"
-      class="phrase-container"
     >
-      <el-form-item
-        v-for="i in Object.keys(phrase)"
-        :key="i"
-        :prop="i"
-        class="word-input"
-      >
-        <el-autocomplete
-          v-model="phrase[i]"
-          :fetch-suggestions="(query, callback) => querySearch(i, query, callback)"
-          :placeholder="i"
-          :trigger-on-focus="false"
-          @change="v => handleChange(i, v)"
-          @select="v => handleSelect(i, v)"
-          clearable
-        ></el-autocomplete>
-      </el-form-item>
+      <div class="phrase-container">
+        <el-form-item
+          v-for="i in Object.keys(phrase)"
+          :key="i"
+          :prop="i"
+          class="word-input"
+        >
+          <el-autocomplete
+            v-model="phrase[i]"
+            :fetch-suggestions="(query, callback) => querySearch(i, query, callback)"
+            :placeholder="i"
+            :trigger-on-focus="false"
+            @change="v => handleChange(i, v)"
+            @select="v => handleSelect(i, v)"
+            clearable
+          ></el-autocomplete>
+        </el-form-item>
+      </div>
+
+      <el-button
+        class="btn"
+        native-type=“submit”
+        @click="onSubmit"
+      >{{$t('global.next')}}</el-button>
     </el-form>
 
-    <el-button
-      class="btn"
-      @click="onSubmit"
-    >{{$t('global.next')}}</el-button>
   </div>
 </template>
 
@@ -90,7 +94,8 @@ export default {
         this.phrase[`${i - 0 + index}`] = word;
       });
     },
-    onSubmit() {
+    onSubmit(e) {
+      e.preventDefault();
       const { phrase, $router, $store } = this;
       this.$refs["form"].validate(async function(valid) {
         if (!valid) return false;
