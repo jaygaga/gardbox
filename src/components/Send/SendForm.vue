@@ -5,6 +5,7 @@
       label-position="top"
       :model="form"
       :rules="rules"
+      @submit="onSubmit"
     >
       <el-form-item prop="denom">
         <el-select
@@ -47,13 +48,13 @@
         ></el-input>
       </el-form-item>
       <div class="fee"><span>{{$t('send.fee')}}</span>0 GARD</div>
+
+      <el-button
+        class="btn-send"
+        native-type=“submit”
+        @click="onSubmit"
+      >{{$t('main.send')}}</el-button>
     </el-form>
-
-    <el-button
-      class="btn-send"
-      @click="onSubmit"
-    >{{$t('main.send')}}</el-button>
-
   </s-card>
 </template>
 
@@ -116,7 +117,8 @@ export default {
     setAmountAll() {
       this.form.amount = this.selectedBalance.amount;
     },
-    onSubmit() {
+    onSubmit(e) {
+      e.preventDefault();
       this.$refs["form"].validate(valid => {
         if (!valid) return false;
         this.$store.dispatch("transactions/input", this.form);
