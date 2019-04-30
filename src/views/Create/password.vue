@@ -4,6 +4,7 @@
       ref="form"
       :model="form"
       :rules="rules"
+      @submit="onSubmit"
       v-loading="loading"
       label-position="top"
     >
@@ -39,6 +40,7 @@
 
       <el-button
         class="btn-next"
+        native-type=“submit”
         @click="onSubmit"
       >{{$t('global.next')}}</el-button>
     </el-form>
@@ -99,7 +101,8 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
+    onSubmit(e) {
+      e.preventDefault();
       const {
         form,
         $store: { dispatch },
