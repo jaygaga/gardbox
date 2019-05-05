@@ -2,20 +2,48 @@
   <div class="balance-container">
     <img src="~@/assets/gard-logo.svg" />
     <div class="denom">
-      {{denom}}
+      {{viewToken.denom}}
     </div>
     <div class="amount">
-      {{amount}}
+      {{viewToken.amount}}
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+import BigNumber from "bignumber.js";
+
 export default {
   name: "BalancePanel",
   props: {
-    amount: { type: String, required: true },
-    denom: { type: String, required: true }
+    token: { type: Object, required: true }
+  },
+  computed: {
+    ...mapState("account", ["tokenMap"]),
+    viewToken() {
+      const token = { ...this.token };
+      if (token.denom.match(/^coin.{10}$/)) {
+        const detail = this.tokenMap[token.denom];
+        if (!isEmpty(detail)) {
+          token.denom = detail.symbol;
+          token.amount = BigNumber(detail.total_supply).dividedBy(
+            Math.pow(10, detail.decimals)
+          );
+          if (detail.description) {
+            try {
+              const desc = JSON.parse(detail.description);
+              token.img = desc.logo;
+            } catch (e) {
+              console.log(e);
+            }
+          }
+        }
+      } else {
+        token.denom = token.denom.toUpperCase();
+      }
+      return token;
+    }
   }
 };
 </script>

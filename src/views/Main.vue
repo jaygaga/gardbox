@@ -47,8 +47,10 @@
       >
         <div class="assets">
           <BalancePanel
-            :amount="gardBalance.amount"
-            :denom="gardBalance.denom | upper"
+            class="asset-item"
+            v-for="token in balance"
+            :key="token.denom"
+            :token="token"
           />
         </div>
       </el-tab-pane>
@@ -106,12 +108,6 @@ export default {
   computed: {
     ...mapState("account", ["userName", "keyStore", "balance", "txs"]),
     ...mapState("transactions", ["txs"]),
-    avatarColor() {
-      const code = this.userName.slice(0, 1).charCodeAt();
-      const factor = code > 122 ? 73 : code;
-      const Hue = 360 * (factor / 122);
-      return "hsla(" + Hue + ",60%,65%,1)";
-    },
     gardBalance() {
       const gard = { amount: "0", denom: "gard" };
       return this.balance.find(i => i.denom === "gard") || gard;
@@ -208,6 +204,10 @@ export default {
     min-height: 50vh;
     align-items: flex-start;
     padding: $padding-basic 0;
+    margin-left: -24px;
+    .asset-item {
+      margin-left: 24px;
+    }
   }
   .txs {
     min-height: 50vh;
