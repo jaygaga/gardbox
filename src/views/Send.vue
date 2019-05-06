@@ -6,7 +6,10 @@
 
 <script>
 export default {
-  name: "Send"
+  name: "Send",
+  beforeDestroy() {
+    this.$store.dispatch("transactions/input", { denom: "gard", fee: 0 });
+  }
 };
 </script>
 

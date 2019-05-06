@@ -13,17 +13,17 @@
           v-model="form.denom"
           :placeholder="$t('send.denom')"
         >
-          <!-- <el-option
-            v-for="i in balance"
-            :key="i.denom"
-            :label="i.denom | upper"
-            :value="i.denom"
-          ></el-option> -->
           <el-option
+            v-for="i in viewBalance"
+            :key="i.denom"
+            :label="i.label"
+            :value="i.denom"
+          ></el-option>
+          <!-- <el-option
             :key="selectedBalance.denom"
             :label="selectedBalance.denom | upper"
             :value="selectedBalance.denom"
-          ></el-option>
+          ></el-option> -->
         </el-select>
       </el-form-item>
       <el-form-item prop="address">
@@ -34,14 +34,14 @@
         ></el-input>
       </el-form-item>
       <div class="row-balance">
-        Balance: {{selectedBalance.amount}}
+        Balance: {{ selectedBalance.amount | formatNumber }}
         <a @click="setAmountAll">{{$t('send.all')}}</a>
       </div>
       <el-form-item prop="amount">
         <el-input
           v-model="form.amount"
           type="number"
-          min="1"
+          min="0"
           step="1"
           :placeholder="$t('send.amount')"
           clearable
@@ -60,7 +60,8 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-import { get } from "lodash";
+import BigNumber from "bignumber.js";
+import { get, isEmpty } from "lodash";
 
 import webc from "@/utils/webc";
 
@@ -83,23 +84,31 @@ export default {
     const validateAmount = (rule, value, callback) => {
       const input = value - 0;
       const balance = this.selectedBalance.amount - 0;
-      if (input <= 0 || input % 1 !== 0) {
-        callback(new Error(this.$t("send.amountWarnZero")));
+      if (input <= 0) {
+        callback(new Error(this.$t("send.amountWarnPositive")));
         return;
       }
       if (input > balance) {
         callback(new Error(this.$t("send.amountWarn")));
         return;
       }
+
+      let decimal = 1;
+      const token = this.tokenMap[this.form.denom];
+      if (!isEmpty(token)) {
+        decimal = BigNumber(0.1).pow(token.decimals);
+      }
+      if (
+        BigNumber(input)
+          .modulo(decimal)
+          .toNumber() !== 0
+      ) {
+        callback(new Error(this.$t("send.amountWarnInvalid")));
+        return;
+      }
       callback();
     };
     return {
-      form: {
-        denom: "gard",
-        amount: "",
-        address: "",
-        fee: 0
-      },
       rules: {
         address: [{ validator: validateAddr, trigger: "blur" }],
         amount: [{ validator: validateAmount, trigger: "blur" }]
@@ -107,10 +116,28 @@ export default {
     };
   },
   computed: {
-    ...mapState("account", ["balance"]),
+    ...mapState("account", ["balance", "tokenMap"]),
+    ...mapState("transactions", ["form"]),
+    viewBalance() {
+      return this.balance.map(i => {
+        const token = { ...i };
+        if (token.denom.match(/^coin.{10}$/)) {
+          const detail = this.tokenMap[token.denom];
+          if (!isEmpty(detail)) {
+            token.label = detail.symbol;
+            token.amount = BigNumber(detail.total_supply)
+              .dividedBy(Math.pow(10, detail.decimals))
+              .toString();
+          }
+        } else {
+          token.label = token.denom.toUpperCase();
+        }
+        return token;
+      });
+    },
     selectedBalance() {
       const gard = { amount: "0", denom: "gard" };
-      return this.balance.find(i => i.denom === this.form.denom) || gard;
+      return this.viewBalance.find(i => i.denom === this.form.denom) || gard;
     }
   },
   methods: {

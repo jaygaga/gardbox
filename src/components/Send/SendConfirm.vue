@@ -2,8 +2,8 @@
   <s-card :title="$t('send.confirm')">
     <s-item :label="$t('send.denom')">{{denom}}</s-item>
     <s-item :label="$t('send.address')">{{form.address}}</s-item>
-    <s-item :label="$t('send.amount')">{{form.amount}}</s-item>
-    <s-item :label="$t('send.fee')">{{form.fee}} {{denom}}</s-item>
+    <s-item :label="$t('send.amount')">{{form.amount | formatNumber}}</s-item>
+    <s-item :label="$t('send.fee')">{{form.fee}} GARD</s-item>
 
     <el-button
       class="btn-send"
@@ -35,6 +35,7 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
+import BigNumber from "bignumber.js";
 import { get } from "lodash";
 
 export default {
@@ -47,10 +48,20 @@ export default {
     };
   },
   computed: {
-    ...mapState("account", ["keyStore"]),
+    ...mapState("account", ["keyStore", "tokenMap"]),
     ...mapState("transactions", ["form"]),
+    token() {
+      const { denom } = this.form;
+      if (denom.match(/^coin.{10}$/)) {
+        return this.tokenMap[denom];
+      }
+      return false;
+    },
     denom() {
-      return this.form.denom && this.form.denom.toUpperCase();
+      if (this.token) {
+        return this.token.symbol;
+      }
+      return this.form.denom.toUpperCase();
     }
   },
   methods: {
@@ -68,7 +79,23 @@ export default {
       }
       this.loading = true;
       const params = { ...this.form, pass: this.pass, keyStore: this.keyStore };
-      const res = await this.$store.dispatch("transactions/send", params);
+      // fix token amount by token decimals
+      if (this.token) {
+        params.amount = BigNumber(params.amount).times(
+          BigNumber(10).pow(this.token.decimals)
+        );
+      }
+      let res = "";
+      try {
+        res = await this.$store.dispatch("transactions/send", params);
+      } catch (e) {
+        this.$store.dispatch("transactions/result", {});
+        this.$message({
+          type: "error",
+          message: this.$t(`send.error`),
+          center: true
+        });
+      }
       if (res.txhash) {
         this.dialogVisible = false;
         this.$store.dispatch("transactions/result", res);

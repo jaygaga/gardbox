@@ -9,10 +9,10 @@
       class="logo-none"
     ></div>
     <div class="denom">
-      {{viewToken.denom}}
+      {{ viewToken.denom }}
     </div>
     <div class="amount">
-      {{viewToken.amount}}
+      {{ viewToken.amount | formatNumber }}
     </div>
   </div>
 </template>
@@ -37,7 +37,7 @@ export default {
         const detail = this.tokenMap[token.denom];
         if (!isEmpty(detail)) {
           token.denom = detail.symbol;
-          token.amount = BigNumber(detail.total_supply).dividedBy(
+          token.amount = BigNumber(token.amount).dividedBy(
             Math.pow(10, detail.decimals)
           );
           if (detail.description) {

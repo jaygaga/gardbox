@@ -11,7 +11,10 @@ export default {
     txs: [],
     blocks: {},
     txInfo: {},
-    form: {},
+    form: {
+      denom: 'gard',
+      fee: 0
+    },
     result: {}
   },
 
@@ -133,7 +136,7 @@ export default {
       context.commit('setResult', result);
       return Promise.resolve(result);
     },
-    send: async function(context, { amount, address, memo, pass, keyStore }) {
+    send: async function(context, { denom, amount, address, memo, pass, keyStore }) {
       const isValidAddress = webc.account.isValidAddress(address);
       const from = keyStore.address;
       // 1. get account state (account_number & sequence)
@@ -168,8 +171,8 @@ export default {
           to: address,
           coins: [
             {
-              denom: 'gard',
-              amount: amount
+              denom,
+              amount
             }
           ]
         }
