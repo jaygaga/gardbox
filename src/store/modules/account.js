@@ -13,6 +13,7 @@ export default {
   namespaced: true,
 
   state: {
+    loading: false,
     userName: wallet_username,
     account: {},
     keyStore: keyStore,
@@ -24,6 +25,9 @@ export default {
   getters: {},
 
   mutations: {
+    setLoading: function(state, loading) {
+      state.loading = loading;
+    },
     setUserName: function(state, userName) {
       state.userName = userName;
     },
@@ -168,6 +172,7 @@ export default {
     },
     fetchBalance: async function(context) {
       const { address } = context.state.keyStore;
+      context.commit('setLoading', true);
       const { data } = await ajax.get(`bank/balances/${address}`);
       if (!isEmpty(data)) {
         data.sort(i => (i.denom === 'gard' ? -1 : 1));
@@ -180,6 +185,7 @@ export default {
       } else {
         context.commit('setBalance', []);
       }
+      context.commit('setLoading', false);
       return Promise.resolve(data);
     },
     fetchTokenDetail: async function(context, id) {
@@ -187,9 +193,9 @@ export default {
       if (!isEmpty(context.state.tokenMap[id])) {
         return Promise.resolve();
       }
-      context.commit('setLoad', true);
-      const { data } = await $ajax.get(`/api/issue/query/${id}`);
-      context.commit('setLoad', false);
+      context.commit('setLoading', true);
+      const { data } = await ajax.get(`/issue/query/${id}`);
+      context.commit('setLoading', false);
       if (isEmpty(data)) {
         return Promise.reject();
       }

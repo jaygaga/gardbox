@@ -6,6 +6,7 @@ export default {
   namespaced: true,
 
   state: {
+    loading: false,
     nodeInfo: {},
     txs: [],
     blocks: {},
@@ -17,6 +18,9 @@ export default {
   getters: {},
 
   mutations: {
+    setLoading: function(state, loading) {
+      state.loading = loading;
+    },
     setNodeInfo: function(state, nodeInfo) {
       state.nodeInfo = nodeInfo;
     },
@@ -77,6 +81,7 @@ export default {
         action: 'send',
         sender: address
       };
+      context.commit('setLoading', true);
 
       // 1. query txs as sender
       const sendList = await context.dispatch('fetchTxsLatest', params);
@@ -94,6 +99,7 @@ export default {
       const list = [...sendList, ...receiveListMaped];
       list.sort((a, b) => b.height - a.height);
       context.commit('setTxList', list);
+      context.commit('setLoading', false);
       return Promise.resolve(list);
     },
     fetchBlock: async function(context, height) {

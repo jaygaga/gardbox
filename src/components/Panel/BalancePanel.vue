@@ -1,6 +1,13 @@
 <template>
   <div class="balance-container">
-    <img src="~@/assets/gard-logo.svg" />
+    <img
+      v-if="viewToken.img"
+      :src="viewToken.img"
+    />
+    <div
+      v-else
+      class="logo-none"
+    ></div>
     <div class="denom">
       {{viewToken.denom}}
     </div>
@@ -13,6 +20,9 @@
 <script>
 import { mapState } from "vuex";
 import BigNumber from "bignumber.js";
+import { isEmpty } from "lodash";
+
+import gardLogo from "@/assets/gard-logo.svg";
 
 export default {
   name: "BalancePanel",
@@ -40,6 +50,9 @@ export default {
           }
         }
       } else {
+        if (token.denom === "gard") {
+          token.img = gardLogo;
+        }
         token.denom = token.denom.toUpperCase();
       }
       return token;
@@ -66,6 +79,16 @@ export default {
     margin-bottom: 16px;
     position: relative;
     top: 2px;
+  }
+  .logo-none {
+    width: 48px;
+    height: 48px;
+    margin-top: -4px;
+    margin-bottom: 12px;
+    position: relative;
+    top: 2px;
+    background: #eee;
+    border-radius: 24px;
   }
   .denom {
     font-size: 18px;

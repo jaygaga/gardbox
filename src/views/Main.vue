@@ -45,7 +45,11 @@
         :label="$t('main.assets')"
         name="assets"
       >
-        <div class="assets">
+        <div
+          v-loading="loading"
+          element-loading-background="rgba(255, 255, 255, 0)"
+          class="assets"
+        >
           <BalancePanel
             class="asset-item"
             v-for="token in balance"
@@ -58,7 +62,11 @@
         :label="$t('main.txs')"
         name="txs"
       >
-        <div class="txs">
+        <div
+          v-loading="txLoading"
+          element-loading-background="rgba(255, 255, 255, 0)"
+          class="txs"
+        >
           <div
             class="empty"
             v-if="txs.length === 0"
@@ -106,8 +114,14 @@ export default {
     };
   },
   computed: {
-    ...mapState("account", ["userName", "keyStore", "balance", "txs"]),
-    ...mapState("transactions", ["txs"]),
+    ...mapState("account", [
+      "userName",
+      "keyStore",
+      "balance",
+      "txs",
+      "loading"
+    ]),
+    ...mapState("transactions", { txLoading: "loading", txs: "txs" }),
     gardBalance() {
       const gard = { amount: "0", denom: "gard" };
       return this.balance.find(i => i.denom === "gard") || gard;
@@ -201,7 +215,6 @@ export default {
   }
   .assets {
     display: flex;
-    min-height: 50vh;
     align-items: flex-start;
     padding: $padding-basic 0;
     margin-left: -24px;
@@ -210,7 +223,6 @@ export default {
     }
   }
   .txs {
-    min-height: 50vh;
     padding: $padding-basic 0;
 
     .empty {
