@@ -13,16 +13,21 @@ export default {
   namespaced: true,
 
   state: {
+    loading: false,
     userName: wallet_username,
     account: {},
     keyStore: keyStore,
     userMap: JSON.parse(wallet_users),
-    balance: []
+    balance: [],
+    tokenMap: {}
   },
 
   getters: {},
 
   mutations: {
+    setLoading: function(state, loading) {
+      state.loading = loading;
+    },
     setUserName: function(state, userName) {
       state.userName = userName;
     },
@@ -40,6 +45,9 @@ export default {
     },
     setBalance: function(state, balance) {
       state.balance = balance;
+    },
+    setTokenMap: function(state, data) {
+      state.tokenMap = Object.assign({}, state.tokenMap, data);
     }
   },
 
@@ -164,12 +172,34 @@ export default {
     },
     fetchBalance: async function(context) {
       const { address } = context.state.keyStore;
+      context.commit('setLoading', true);
       const { data } = await ajax.get(`bank/balances/${address}`);
       if (!isEmpty(data)) {
+        data.sort(i => (i.denom === 'gard' ? -1 : 1));
         context.commit('setBalance', data);
+        data.forEach(i => {
+          if (i.denom.match(/^coin.{10}$/)) {
+            context.dispatch('fetchTokenDetail', i.denom);
+          }
+        });
       } else {
         context.commit('setBalance', []);
       }
+      context.commit('setLoading', false);
+      return Promise.resolve(data);
+    },
+    fetchTokenDetail: async function(context, id) {
+      // check if existed;
+      if (!isEmpty(context.state.tokenMap[id])) {
+        return Promise.resolve();
+      }
+      context.commit('setLoading', true);
+      const { data } = await ajax.get(`/issue/query/${id}`);
+      context.commit('setLoading', false);
+      if (isEmpty(data)) {
+        return Promise.reject();
+      }
+      context.commit('setTokenMap', { [id]: data.value });
       return Promise.resolve(data);
     }
   }

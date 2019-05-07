@@ -1,21 +1,36 @@
 <template>
   <div class="balance-container">
-    <img src="~@/assets/gard-logo.svg" />
+    <img
+      v-if="viewToken.img"
+      :src="viewToken.img"
+    />
+    <div
+      v-else
+      class="logo-none"
+    ></div>
     <div class="denom">
-      {{denom}}
+      {{ viewToken.denom }}
     </div>
     <div class="amount">
-      {{amount}}
+      {{ viewToken.amount | formatNumber }}
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+import { getViewToken } from "@/utils/helpers";
+
 export default {
   name: "BalancePanel",
   props: {
-    amount: { type: String, required: true },
-    denom: { type: String, required: true }
+    token: { type: Object, required: true }
+  },
+  computed: {
+    ...mapState("account", ["tokenMap"]),
+    viewToken() {
+      return getViewToken(this.token, this.tokenMap);
+    }
   }
 };
 </script>
@@ -38,6 +53,16 @@ export default {
     margin-bottom: 16px;
     position: relative;
     top: 2px;
+  }
+  .logo-none {
+    width: 48px;
+    height: 48px;
+    margin-top: -4px;
+    margin-bottom: 12px;
+    position: relative;
+    top: 2px;
+    background: #eee;
+    border-radius: 24px;
   }
   .denom {
     font-size: 18px;

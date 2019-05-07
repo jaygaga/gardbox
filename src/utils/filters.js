@@ -1,5 +1,6 @@
 import moment from 'dayjs';
 import { get } from 'lodash';
+import numeral from 'numeral';
 import { gardplorerDomain } from '@/constants';
 
 export const upper = s => s.toUpperCase();
@@ -18,3 +19,5 @@ export const amountGard = tx => {
 export const explorerUrl = s => `${gardplorerDomain}${s}`;
 
 export const formatTime = time => moment(time).format('YYYY-MM-DD HH:mm:ss');
+
+export const formatNumber = v => numeral(v.toString()).format('0,0.[00]');
