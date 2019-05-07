@@ -61,20 +61,21 @@ export default {
       return Promise.resolve(data);
     },
     fetchTxsLatest: async function(context, params) {
-      // 1. query txs as sender
-      // 1.1. first query to get total count
+      let txs = [];
+      // 1. first query to get total count
       const sendData1 = await context.dispatch('fetchTxsTotalCount', params);
       if (!isEmpty(sendData1)) {
         if (sendData1.totalCount > params.limit) {
-          // 1.2 query last page
+          // 2. query last page
           const lastPage = Math.ceil(sendData1.totalCount / params.limit) || 1;
           const sendData = await context.dispatch('fetchTxsTotalCount', { ...params, page: lastPage });
-          return Promise.resolve(sendData.txs);
+          txs = sendData.txs;
+        } else {
+          // 3. else use data of first query
+          txs = sendData1.txs;
         }
-        // 1.2 else use data of first query
-        return Promise.resolve(sendData1.txs);
       }
-      return Promise.resolve([]);
+      return Promise.resolve(txs);
     },
     fetchTxs: async function(context, keyStore) {
       const limit = 10;
@@ -137,7 +138,6 @@ export default {
       return Promise.resolve(result);
     },
     send: async function(context, { denom, amount, address, memo, pass, keyStore }) {
-      const isValidAddress = webc.account.isValidAddress(address);
       const from = keyStore.address;
       // 1. get account state (account_number & sequence)
       let accState = {

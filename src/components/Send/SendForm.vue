@@ -71,7 +71,7 @@ export default {
     const requireError = name =>
       new Error(this.$t("global.required", { name }));
     const validateAddr = (rule, value, callback) => {
-      if (value.trim() === "") {
+      if (!value || value.trim() === "") {
         callback(requireError(this.$t("send.address")));
         return;
       }

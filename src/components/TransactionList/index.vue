@@ -15,15 +15,16 @@
       </div>
       <div :class="`amount ${get(item, 'tags.0.value')}`">
         {{get(item, 'tags.0.value') === 'send' ? '- ':'+ '}}
-        {{item | amountGard}} GARD
+        {{getViewTokens(get(item, 'tx.value.msg.0.value.amount'))}}
       </div>
     </router-link>
   </div>
 </template>
 
 <script>
-import { isEmpty, get } from "lodash";
+import { isEmpty, get, cloneDeep } from "lodash";
 import { mapGetters, mapState } from "vuex";
+import { getViewToken } from "@/utils/helpers";
 
 import iconIn from "@/assets/icon-in.svg";
 import iconOut from "@/assets/icon-out.svg";
@@ -42,10 +43,20 @@ export default {
     };
   },
   methods: {
-    get
+    get,
+    getViewTokens(coins) {
+      const tokens = cloneDeep(coins);
+      if (tokens.length > 1) {
+        tokens.sort(i => (i.denom === "gard" ? -1 : 1));
+        const token = getViewToken(tokens[0], this.tokenMap);
+        return `${token.amount} ${token.denom} ···`;
+      }
+      const token = getViewToken(tokens[0], this.tokenMap);
+      return `${token.amount} ${token.denom}`;
+    }
   },
   computed: {
-    ...mapState("account", ["blocks"])
+    ...mapState("account", ["blocks", "tokenMap"])
   },
   watch: {
     list: function() {
@@ -53,7 +64,16 @@ export default {
         return false;
       }
       this.list.forEach(item => {
+        // 1. fetch block detail for tx time
         this.$store.dispatch("transactions/fetchBlock", get(item, "height"));
+
+        // 2. fetch token detail
+        const coins = get(item, "tx.value.msg.0.value.amount");
+        coins.forEach(i => {
+          if (i.denom.match(/^coin.{10}$/)) {
+            this.$store.dispatch("account/fetchTokenDetail", i.denom);
+          }
+        });
       });
     }
   }

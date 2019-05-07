@@ -30,7 +30,6 @@ export default {
     moment
   },
   beforeMount() {
-    console.log("mont");
     this.$store.dispatch("transactions/fetchTxInfo", this.$route.params.id);
   }
 };

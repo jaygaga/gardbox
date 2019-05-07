@@ -19,10 +19,7 @@
 
 <script>
 import { mapState } from "vuex";
-import BigNumber from "bignumber.js";
-import { isEmpty } from "lodash";
-
-import gardLogo from "@/assets/gard-logo.svg";
+import { getViewToken } from "@/utils/helpers";
 
 export default {
   name: "BalancePanel",
@@ -32,30 +29,7 @@ export default {
   computed: {
     ...mapState("account", ["tokenMap"]),
     viewToken() {
-      const token = { ...this.token };
-      if (token.denom.match(/^coin.{10}$/)) {
-        const detail = this.tokenMap[token.denom];
-        if (!isEmpty(detail)) {
-          token.denom = detail.symbol;
-          token.amount = BigNumber(token.amount).dividedBy(
-            Math.pow(10, detail.decimals)
-          );
-          if (detail.description) {
-            try {
-              const desc = JSON.parse(detail.description);
-              token.img = desc.logo;
-            } catch (e) {
-              console.log(e);
-            }
-          }
-        }
-      } else {
-        if (token.denom === "gard") {
-          token.img = gardLogo;
-        }
-        token.denom = token.denom.toUpperCase();
-      }
-      return token;
+      return getViewToken(this.token, this.tokenMap);
     }
   }
 };
