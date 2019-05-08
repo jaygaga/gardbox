@@ -89,6 +89,7 @@ const en = {
     manage: 'Manage',
     copy: 'Copied to ClipBoard',
     assets: 'My Assets',
+    staking: 'My Staking',
     txs: 'Transactions',
     txInfo: 'Transaction Detail',
     allTxs: 'Expolor All Txs',
@@ -111,11 +112,22 @@ const en = {
     txHash: 'TxHash',
     all: 'Send All',
     fee: 'Fee',
-    error: 'Send Error!',
+    error: 'Transaction Error!',
     again: 'Continue Transfer',
     back: 'Back to Wallet',
     block: 'Block',
     time: 'Time'
+  },
+  staking: {
+    delegate: 'Delegate GARD',
+    fromValidator: 'From Validator Node',
+    toValidator: 'To Validator Node',
+    validators: 'Validator Candidates',
+    detail: 'Detail',
+    tokens: 'Tokens',
+    commission: 'Commission',
+    max: 'Max',
+    all: 'Delegate All'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'

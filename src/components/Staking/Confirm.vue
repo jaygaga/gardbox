@@ -1,9 +1,16 @@
 <template>
   <s-card :title="$t('send.confirm')">
-    <s-item :label="$t('send.denom')">{{denom}}</s-item>
-    <s-item :label="$t('send.address')">{{form.address}}</s-item>
+    <s-item
+      v-if="!isEmpty(fromValidator)"
+      :label="$t('staking.fromValidator')"
+    >{{ get(fromValidator, 'description.moniker') }}</s-item>
+    <s-item
+      v-if="!isEmpty(toValidator)"
+      :label="$t('staking.toValidator')"
+    >{{ get(toValidator, 'description.moniker') }}</s-item>
+    <s-item :label="$t('staking.commission')">{{ numeral(get(toValidator, 'commission.rate')).format('(0.[00]%)') }}</s-item>
     <s-item :label="$t('send.amount')">{{form.amount | formatNumber}}</s-item>
-    <s-item :label="$t('send.fee')">{{form.fee}} GARD</s-item>
+    <s-item :label="$t('send.fee')">0 GARD</s-item>
 
     <el-button
       class="btn-send"
@@ -35,11 +42,11 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-import BigNumber from "bignumber.js";
-import { get } from "lodash";
+import numeral from "numeral";
+import { get, isEmpty } from "lodash";
 
 export default {
-  name: "Confirm",
+  name: "StakingConfirm",
   data() {
     return {
       dialogVisible: false,
@@ -48,23 +55,13 @@ export default {
     };
   },
   computed: {
-    ...mapState("account", ["keyStore", "tokenMap"]),
-    ...mapState("transactions", ["form"]),
-    token() {
-      const { denom } = this.form;
-      if (denom.match(/^coin.{10}$/)) {
-        return this.tokenMap[denom];
-      }
-      return false;
-    },
-    denom() {
-      if (this.token) {
-        return this.token.symbol;
-      }
-      return this.form.denom.toUpperCase();
-    }
+    ...mapState("account", ["keyStore"]),
+    ...mapState("staking", ["form", "toValidator", "fromValidator"])
   },
   methods: {
+    get,
+    isEmpty,
+    numeral,
     onSubmit: async function() {
       this.dialogVisible = true;
     },
@@ -78,18 +75,11 @@ export default {
         return false;
       }
       this.loading = true;
-      const params = { ...this.form, pass: this.pass, keyStore: this.keyStore };
-      // fix token amount by token decimals
-      if (this.token) {
-        params.amount = BigNumber(params.amount).times(
-          BigNumber(10).pow(this.token.decimals)
-        );
-      }
+      const params = { pass: this.pass, keyStore: this.keyStore };
       let res = "";
       try {
-        res = await this.$store.dispatch("transactions/send", params);
+        res = await this.$store.dispatch("staking/delegate", params);
       } catch (e) {
-        this.$store.dispatch("transactions/result", {});
         this.$message({
           type: "error",
           message: this.$t(`send.error`),
@@ -98,10 +88,10 @@ export default {
       }
       if (res.txhash) {
         this.dialogVisible = false;
-        this.$store.dispatch("transactions/result", res);
-        this.$router.push("/send/finish");
+        this.$router.push(
+          `/staking/detail/${this.toValidator.operator_address}`
+        );
       } else {
-        this.$store.dispatch("transactions/result", {});
         this.$message({
           type: "error",
           message: this.$t(`send.${res}`),
@@ -112,8 +102,8 @@ export default {
     }
   },
   beforeMount() {
-    if (!this.form.denom) {
-      this.$router.push("/send/form");
+    if (!this.form.amount) {
+      this.$router.push(`/staking/${this.$route.query.action}`);
     }
   }
 };

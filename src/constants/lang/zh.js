@@ -84,6 +84,7 @@ const zh = {
     manage: '管 理',
     copy: '已复制到剪切板',
     assets: '我的资产',
+    staking: '我的抵押',
     txs: '交易记录',
     txInfo: '交易详情',
     allTxs: '查看全部',
@@ -96,9 +97,9 @@ const zh = {
     passError: '密码错误',
     finish: '转账结果',
     denom: '转账币种',
-    amount: '转账数量',
+    amount: '数量',
     amountWarn: '数量不足',
-    amountWarnPositive: '转账数量必须大于零',
+    amountWarnPositive: '数量必须大于零',
     amountWarnInvalid: '小数位数不支持',
     address: '收款地址',
     addressWarn: '地址格式有误',
@@ -106,11 +107,22 @@ const zh = {
     txHash: 'TxHash',
     all: '全部转出',
     fee: '手续费',
-    error: '发送失败',
+    error: '交易发送失败',
     again: '继续转账',
     back: '回到钱包',
     block: '区块高度',
     time: '交易时间'
+  },
+  staking: {
+    delegate: '委托 GARD',
+    fromValidator: '解委托验证人节点',
+    toValidator: '委托验证人节点',
+    validators: '候选验证人节点',
+    detail: '详情',
+    tokens: 'Tokens',
+    commission: '佣金',
+    max: '最高',
+    all: '委托全部'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'

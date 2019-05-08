@@ -1,13 +1,6 @@
 <template>
-  <div class="balance-container">
-    <img
-      v-if="viewToken.img"
-      :src="viewToken.img"
-    />
-    <div
-      v-else
-      class="logo-none"
-    ></div>
+  <div class="delegation-container">
+    <div class="logo-none"></div>
     <div class="denom">
       {{ viewToken.denom }}
     </div>
@@ -22,7 +15,7 @@ import { mapState } from "vuex";
 import { getViewToken } from "@/utils/helpers";
 
 export default {
-  name: "BalancePanel",
+  name: "DelegationPanel",
   props: {
     token: { type: Object, required: true }
   },
@@ -36,9 +29,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.balance-container {
+.delegation-container {
   flex-basis: 200px;
-  height: 180px;
   text-align: center;
   background: white;
   color: rgba(0, 0, 0, 0.75);
@@ -48,13 +40,6 @@ export default {
   padding: $padding-basic;
   border-radius: 4px;
 
-  img {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 16px;
-    position: relative;
-    top: 2px;
-  }
   .logo-none {
     width: 48px;
     height: 48px;
