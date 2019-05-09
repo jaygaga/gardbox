@@ -84,7 +84,6 @@ const zh = {
     manage: '管 理',
     copy: '已复制到剪切板',
     assets: '我的资产',
-    staking: '我的抵押',
     txs: '交易记录',
     txInfo: '交易详情',
     allTxs: '查看全部',
@@ -114,15 +113,22 @@ const zh = {
     time: '交易时间'
   },
   staking: {
+    title: '我的委托',
+    reward: '委托收益（可取回）',
+    withdraw: '取回收益',
     delegate: '委托 GARD',
     fromValidator: '解委托验证人节点',
     toValidator: '委托验证人节点',
     validators: '候选验证人节点',
-    detail: '详情',
+    validator: '验证人节点',
+    detail: '委托详情',
     tokens: 'Tokens',
     commission: '佣金',
     max: '最高',
-    all: '委托全部'
+    all: '委托全部',
+    unbind: '赎回委托',
+    redelegate: '转移委托',
+    unbinding: '解锁中'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'

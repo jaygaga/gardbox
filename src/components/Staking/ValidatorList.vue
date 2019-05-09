@@ -52,6 +52,7 @@ export default {
   padding: 16px $padding-basic;
   border-radius: 4px;
   margin-bottom: 12px;
+  cursor: pointer;
 
   h3 {
     color: rgba(0, 0, 0, 0.8);
@@ -74,10 +75,5 @@ export default {
   .tokens {
     text-align: center;
   }
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 </style>
-

@@ -7,6 +7,9 @@ export default {
 
   state: {
     delegations: [],
+    delegationMap: {},
+    rewards: [],
+    rewardMap: {},
     validators: [],
     validatorMap: {},
     toValidator: {},
@@ -21,6 +24,15 @@ export default {
   mutations: {
     setDelegations: function(state, data) {
       state.delegations = data;
+    },
+    setDelegationMap: function(state, data) {
+      state.delegationMap = Object.assign({}, state.delegationMap, data);
+    },
+    setRewards: function(state, data) {
+      state.rewards = data;
+    },
+    setRewardMap: function(state, data) {
+      state.RewardMap = Object.assign({}, state.RewardMap, data);
     },
     setValidators: function(state, data) {
       state.validators = data;
@@ -49,10 +61,51 @@ export default {
   },
 
   actions: {
-    fetchDelegations: async function(context, address) {
+    fetchDelegations: async function(context) {
+      const { address } = context.rootState.account.keyStore;
       const { data } = await ajax.get(`/staking/delegators/${address}/delegations`);
       if (!isEmpty(data)) {
         context.commit('setDelegations', data);
+      }
+      return Promise.resolve(data);
+    },
+    fetchDelegation: async function(context, validator_addr) {
+      const { address } = context.rootState.account.keyStore;
+      const { data } = await ajax.get(`/staking/delegators/${address}/delegations/${validator_addr}`);
+      if (!isEmpty(data)) {
+        context.commit('setDelegationMap', { [validator_addr]: data });
+      }
+      return Promise.resolve(data);
+    },
+    fetchRewards: async function(context) {
+      const { address } = context.rootState.account.keyStore;
+      const { data } = await ajax.get(`/distribution/delegators/${address}/rewards`);
+      if (!isEmpty(data)) {
+        context.commit('setRewards', data);
+      }
+      return Promise.resolve(data);
+    },
+    fetchReward: async function(context, validator_addr) {
+      const { address } = context.rootState.account.keyStore;
+      const { data } = await ajax.get(`/distribution/delegators/${address}/rewards/${validator_addr}`);
+      if (!isEmpty(data)) {
+        context.commit('setRewardMap', { [validator_addr]: data });
+      }
+      return Promise.resolve(data);
+    },
+    fetchUnbindings: async function(context) {
+      const { address } = context.rootState.account.keyStore;
+      const { data } = await ajax.get(`/staking/delegators/${address}/unbonding_delegations`);
+      if (!isEmpty(data)) {
+        context.commit('setUnbindings', data);
+      }
+      return Promise.resolve(data);
+    },
+    fetchUnbinding: async function(context, validator_addr) {
+      const { address } = context.rootState.account.keyStore;
+      const { data } = await ajax.get(`/staking/delegators/${address}/unbonding_delegations/${validator_addr}`);
+      if (!isEmpty(data)) {
+        context.commit('setUnbindingMap', { [validator_addr]: data });
       }
       return Promise.resolve(data);
     },
@@ -82,7 +135,6 @@ export default {
       return Promise.resolve();
     },
     delegate: async function(context, { pass }) {
-      console.log(pass);
       const {
         account: { keyStore },
         transactions: { nodeInfo }

@@ -59,27 +59,6 @@
         </div>
       </el-tab-pane>
       <el-tab-pane
-        :label="$t('main.staking')"
-        name="staking"
-      >
-        <div
-          v-loading="loading"
-          element-loading-background="rgba(255, 255, 255, 0)"
-          class="assets"
-        >
-          <DelegationPanel
-            class="asset-item"
-            v-for="d in delegations"
-            :key="d.validator_address"
-            :delegation="d"
-          />
-          <router-link
-            to="/staking/delegate"
-            class="delegate-btn"
-          >+</router-link>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane
         :label="$t('main.txs')"
         name="txs"
       >
@@ -116,12 +95,11 @@ import icon2 from "@/assets/icon-from.svg";
 import icon3 from "@/assets/icon-setting.svg";
 import AvatarPanel from "@/components/Panel/AvatarPanel.vue";
 import BalancePanel from "@/components/Panel/BalancePanel";
-import DelegationPanel from "@/components/Panel/DelegationPanel";
 import TransactionList from "@/components/TransactionList";
 
 export default {
   name: "Main",
-  components: { AvatarPanel, BalancePanel, DelegationPanel, TransactionList },
+  components: { AvatarPanel, BalancePanel, TransactionList },
   data() {
     return {
       icon,
@@ -140,11 +118,6 @@ export default {
       "loading"
     ]),
     ...mapState("transactions", { txLoading: "loading", txs: "txs" }),
-    ...mapState("staking", {
-      stakingLoading: "loading",
-      validators: "validators",
-      delegations: "delegations"
-    }),
     gardBalance() {
       const gard = { amount: "0", denom: "gard" };
       return this.balance.find(i => i.denom === "gard") || gard;
@@ -155,10 +128,6 @@ export default {
       this.$router.push(`/main?tab=${tab}`);
       if (tab === "assets") {
         this.$store.dispatch("account/fetchBalance");
-      }
-      if (tab === "staking") {
-        this.$store.dispatch("staking/fetchValidators");
-        this.$store.dispatch("staking/fetchDelegations", this.keyStore.address);
       }
       if (tab === "txs") {
         this.$store.dispatch("transactions/fetchTxs", this.keyStore);
@@ -246,23 +215,6 @@ export default {
     margin-left: -24px;
     .asset-item {
       margin-left: 24px;
-    }
-    .delegate-btn {
-      margin-left: 24px;
-      font-size: 80px;
-      font-weight: 100;
-      line-height: 2;
-      color: rgba(255, 255, 255, 0.6);
-      background: rgba(255, 255, 255, 0.2);
-      text-align: center;
-      flex-basis: 200px;
-      height: 180px;
-      border-radius: 4px;
-      transition: all $trans;
-      &:hover {
-        color: white;
-        background: rgba(255, 255, 255, 0.3);
-      }
     }
   }
   .txs {
