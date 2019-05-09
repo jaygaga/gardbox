@@ -12,14 +12,15 @@
       {{ viewToken.denom }}
     </div>
     <div class="amount">
-      {{ viewToken.amount | formatNumber }}
+      {{ viewDelegation.amount | formatNumber }} GARD
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import { getViewToken } from "@/utils/helpers";
+import { get } from "lodash";
+import numeral from "numeral";
 
 export default {
   name: "BalancePanel",
@@ -27,10 +28,20 @@ export default {
     token: { type: Object }
   },
   computed: {
-    ...mapState("account", ["tokenMap"]),
-    viewToken() {
-      return getViewToken(this.token, this.tokenMap);
+    ...mapState("staking", ["validatorMap"]),
+    viewDelegation() {
+      const validator = this.validatorMap[
+        get(this.delegation, "validator_address")
+      ];
+      if (!validator) return {};
+      return {
+        name: get(validator, "description.moniker"),
+        amount: numeral(this.delegation.shares).format("0,0.[00]")
+      };
     }
+    // viewUnbinding() {
+    //   return getViewToken(this.token, this.tokenMap);
+    // }
   }
 };
 </script>
