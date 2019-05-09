@@ -69,9 +69,9 @@
         >
           <DelegationPanel
             class="asset-item"
-            v-for="delegation in delegations"
-            :key="delegation.denom"
-            :token="delegation"
+            v-for="d in delegations"
+            :key="d.validator_address"
+            :delegation="d"
           />
           <router-link
             to="/staking/delegate"
@@ -92,10 +92,7 @@
             class="empty"
             v-if="txs.length === 0"
           >{{$t('main.empty')}}</div>
-          <TransactionList
-            :load="load"
-            :list="txs"
-          />
+          <TransactionList :list="txs" />
           <p v-if="txs.length > 0"><a
               target="_blank"
               :href="`${domain}address/${keyStore.address}`"
@@ -131,7 +128,6 @@ export default {
       icon1,
       icon2,
       icon3,
-      load: false,
       domain: gardplorerDomain
     };
   },
@@ -146,6 +142,7 @@ export default {
     ...mapState("transactions", { txLoading: "loading", txs: "txs" }),
     ...mapState("staking", {
       stakingLoading: "loading",
+      validators: "validators",
       delegations: "delegations"
     }),
     gardBalance() {
@@ -156,18 +153,16 @@ export default {
   methods: {
     onTabChange(tab) {
       this.$router.push(`/main?tab=${tab}`);
-      this.fetchData();
-    },
-    fetchData: async function() {
-      this.load = true;
-      await this.$store.dispatch("account/fetchBalance");
-      // await this.$store.dispatch("staking/fetchValidators");
-      await this.$store.dispatch(
-        "staking/fetchDelegations",
-        this.keyStore.address
-      );
-      await this.$store.dispatch("transactions/fetchTxs", this.keyStore);
-      this.load = false;
+      if (tab === "assets") {
+        this.$store.dispatch("account/fetchBalance");
+      }
+      if (tab === "staking") {
+        this.$store.dispatch("staking/fetchValidators");
+        this.$store.dispatch("staking/fetchDelegations", this.keyStore.address);
+      }
+      if (tab === "txs") {
+        this.$store.dispatch("transactions/fetchTxs", this.keyStore);
+      }
     },
     onCopy() {
       this.$message({
@@ -182,7 +177,7 @@ export default {
     }
   },
   mounted() {
-    this.fetchData();
+    this.onTabChange(this.$route.query.tab);
   }
 };
 </script>

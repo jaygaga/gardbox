@@ -7,15 +7,15 @@
       },
       "delegate": {
         "type": "delegate",
-        "prefix": "cosmos-sdk/Delegate"
+        "prefix": "cosmos-sdk/MsgDelegate"
       },
       "undelegate": {
         "type": "undelegate",
-        "prefix": "cosmos-sdk/Undelegate"
+        "prefix": "cosmos-sdk/MsgUndelegate"
       },
       "beginRedelegate": {
         "type": "begin_redelegate",
-        "prefix": "cosmos-sdk/BeginRedelegate"
+        "prefix": "cosmos-sdk/MsgBeginRedelegate"
       },
       "setWithdrawAddress": {
         "type": "set_withdraw_address",

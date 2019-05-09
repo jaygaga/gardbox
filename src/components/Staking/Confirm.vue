@@ -15,7 +15,7 @@
     <el-button
       class="btn-send"
       @click="onSubmit"
-    >{{$t('main.send')}}</el-button>
+    >{{$t('global.confirm')}}</el-button>
 
     <el-dialog
       :title="$t('create.pass')"
@@ -55,7 +55,6 @@ export default {
     };
   },
   computed: {
-    ...mapState("account", ["keyStore"]),
     ...mapState("staking", ["form", "toValidator", "fromValidator"])
   },
   methods: {
@@ -75,10 +74,11 @@ export default {
         return false;
       }
       this.loading = true;
-      const params = { pass: this.pass, keyStore: this.keyStore };
       let res = "";
       try {
-        res = await this.$store.dispatch("staking/delegate", params);
+        res = await this.$store.dispatch("staking/delegate", {
+          pass: this.pass
+        });
       } catch (e) {
         this.$message({
           type: "error",

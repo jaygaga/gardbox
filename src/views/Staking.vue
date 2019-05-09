@@ -8,7 +8,8 @@
 export default {
   name: "Staking",
   beforeDestroy() {
-    this.$store.dispatch("staking/selectValidator", {});
+    this.$store.dispatch("staking/setToValidator", {});
+    this.$store.dispatch("staking/setFromValidator", {});
     this.$store.dispatch("staking/setForm", {});
   }
 };
