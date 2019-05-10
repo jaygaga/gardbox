@@ -124,7 +124,7 @@ export default {
         if (token.denom.match(/^coin.{10}$/)) {
           const detail = this.tokenMap[token.denom];
           if (!isEmpty(detail)) {
-            token.label = detail.symbol;
+            token.label = `${detail.symbol} (${detail.issue_id})`;
             token.amount = BigNumber(token.amount)
               .dividedBy(Math.pow(10, detail.decimals))
               .toString();

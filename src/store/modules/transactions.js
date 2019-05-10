@@ -137,7 +137,11 @@ export default {
       context.commit('setResult', result);
       return Promise.resolve(result);
     },
-    send: async function(context, { denom, amount, address, memo, pass, keyStore }) {
+    send: async function(context, { pass, amount }) {
+      const {
+        form: { denom, address }
+      } = context.state;
+      const { keyStore } = context.rootState.account;
       const from = keyStore.address;
       // 1. get account state (account_number & sequence)
       let accState = {
@@ -163,7 +167,6 @@ export default {
         from,
         account_number: accState.account_number,
         sequence: accState.sequence,
-        memo,
         fees: { denom: 'gard', amount: '0' },
         gas: 200000,
         type: 'transfer',
