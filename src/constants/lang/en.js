@@ -119,7 +119,7 @@ const en = {
   },
   staking: {
     title: 'My Delegations',
-    reward: 'Delegation Rewards (withdrawable)',
+    reward: 'Delegation Rewards',
     withdraw: 'Withdraw Rewards',
     delegate: 'Delegate GARD',
     fromValidator: 'From Validator Node',

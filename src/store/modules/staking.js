@@ -1,6 +1,7 @@
 import webc from '@/utils/webc';
 import { isEmpty, get } from 'lodash';
 import ajax from '@/utils/ajax.js';
+import { sendTx } from '@/utils/helpers';
 
 export default {
   namespaced: true,
@@ -186,10 +187,17 @@ export default {
       const res = await ajax.post(`/txs`, req);
       // 5. get block info when tx success
       if (res.data) {
-        const blockData = await context.dispatch('fetchBlock', res.data.height, { root: true });
+        const blockData = await context.dispatch('transactions/fetchBlock', res.data.height, { root: true });
         res.data.block = blockData.block;
       }
       return Promise.resolve(res.data);
+    },
+    withdrawAll: async function(context, { pass }) {
+      const msgs = context.state.delegations.map(i => {
+        return { validator_addr: i.validator_address };
+      });
+      const { data } = await sendTx(context, pass, 'withdraw_delegation_rewards_all', {}, msgs);
+      return Promise.resolve(data);
     }
   }
 };

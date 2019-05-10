@@ -20,7 +20,10 @@
         </router-link>
       </div>
     </div>
-    <p class="subtitle">{{ $t('staking.title') }}</p>
+    <p
+      v-if="validators.length"
+      class="subtitle"
+    >{{ $t('staking.title') }}</p>
     <router-link
       v-for="v in validators"
       :key="v.validator_address"
@@ -29,13 +32,31 @@
     >
       <div>
         <h3>{{ get(v.validator, 'description.moniker') }} <span :class="get(v, 'validator.jailed') ? 'jailed' : ''">{{ get(v, 'validator.jailed') ? 'Jailed' : 'Active' }}</span></h3>
-        <p>{{ $t('staking.commission') }}: {{ numeral(get(v.validator, 'commission.rate')).format('(0.[00]%)') }} / {{ $t('staking.tokens') }}: {{ numeral(v.validator.tokens).format('0,0') }}</p>
+        <p>{{ $t('staking.commission') }}: {{ numeral(get(v.validator, 'commission.rate')).format('(0.[00]%)') }} / {{ $t('staking.tokens') }}: {{ numeral(get(v, 'validator.tokens')).format('0,0') }}</p>
       </div>
       <div class="tokens">
         <h3>{{ numeral(v.shares).format('0,0') }}</h3>
         <p>{{ $t('staking.title') }}</p>
       </div>
     </router-link>
+
+    <el-dialog
+      :title="$t('create.pass')"
+      :visible.sync="dialogVisible"
+      width="360px"
+      v-loading="withdrawLoading"
+      :close-on-click-modal="false"
+    >
+      <el-input
+        type="password"
+        v-model="pass"
+        :placeholder="$t('create.pass')"
+        @keyup.enter.native="onWithdraw"
+      ></el-input>
+      <span slot="footer">
+        <el-button @click="onWithdraw">{{$t('global.ok')}}</el-button>
+      </span>
+    </el-dialog>
   </s-card>
 </template>
 
@@ -46,6 +67,13 @@ import { get, isEmpty } from "lodash";
 
 export default {
   name: "StakingMain",
+  data() {
+    return {
+      dialogVisible: false,
+      withdrawLoading: false,
+      pass: ""
+    };
+  },
   computed: {
     ...mapState("account", ["userName", "keyStore"]),
     ...mapState("staking", [
@@ -67,15 +95,53 @@ export default {
   methods: {
     get,
     numeral,
+    fetchData() {
+      this.$store.dispatch("staking/fetchValidators");
+      this.$store.dispatch("staking/fetchDelegations");
+      this.$store.dispatch("staking/fetchUnbindings");
+      this.$store.dispatch("staking/fetchRewards");
+    },
     confirmWithdraw() {
-      console.log("withdraw");
+      this.pass = "";
+      this.dialogVisible = true;
+    },
+    onWithdraw: async function() {
+      if (!this.pass) {
+        this.$message({
+          type: "error",
+          message: $t("global.required", { name: $t("create.pass") }),
+          center: true
+        });
+        return false;
+      }
+      this.withdrawLoading = true;
+      let res = "";
+      try {
+        res = await this.$store.dispatch("staking/withdrawAll", {
+          pass: this.pass
+        });
+      } catch (e) {
+        this.$message({
+          type: "error",
+          message: this.$t(`send.error`),
+          center: true
+        });
+      }
+      if (res.txhash) {
+        this.dialogVisible = false;
+        this.fetchData();
+      } else {
+        this.$message({
+          type: "error",
+          message: this.$t(`send.${res}`),
+          center: true
+        });
+      }
+      this.withdrawLoading = false;
     }
   },
   mounted() {
-    this.$store.dispatch("staking/fetchValidators");
-    this.$store.dispatch("staking/fetchDelegations");
-    this.$store.dispatch("staking/fetchUnbindings");
-    this.$store.dispatch("staking/fetchRewards");
+    this.fetchData();
   }
 };
 </script>

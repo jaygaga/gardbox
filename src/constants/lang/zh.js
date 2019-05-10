@@ -114,7 +114,7 @@ const zh = {
   },
   staking: {
     title: '我的委托',
-    reward: '委托收益（可取回）',
+    reward: '委托收益',
     withdraw: '取回收益',
     delegate: '委托 GARD',
     fromValidator: '解委托验证人节点',

@@ -30,10 +30,7 @@
         :placeholder="$t('create.pass')"
         @keyup.enter.native="onSend"
       ></el-input>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer">
         <el-button @click="onSend">{{$t('global.ok')}}</el-button>
       </span>
     </el-dialog>
