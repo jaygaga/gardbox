@@ -48,7 +48,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("account", ["keyStore", "tokenMap"]),
+    ...mapState("account", ["tokenMap"]),
     ...mapState("transactions", ["form"]),
     token() {
       const { denom } = this.form;
@@ -66,6 +66,7 @@ export default {
   },
   methods: {
     onSubmit: async function() {
+      this.pass = "";
       this.dialogVisible = true;
     },
     onSend: async function() {
@@ -78,12 +79,12 @@ export default {
         return false;
       }
       this.loading = true;
-      const params = { ...this.form, pass: this.pass, keyStore: this.keyStore };
+      const params = { ...this.form, pass: this.pass };
       // fix token amount by token decimals
       if (this.token) {
-        params.amount = BigNumber(params.amount).times(
-          BigNumber(10).pow(this.token.decimals)
-        );
+        params.amount = BigNumber(this.form.amount)
+          .times(BigNumber(10).pow(this.token.decimals))
+          .toFixed();
       }
       let res = "";
       try {
