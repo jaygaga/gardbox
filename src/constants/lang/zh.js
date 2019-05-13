@@ -127,6 +127,7 @@ const zh = {
     max: '最高',
     all: '委托全部',
     unbind: '赎回委托',
+    unbindAll: '赎回全部',
     redelegate: '转移委托',
     unbinding: '解锁中'
   },

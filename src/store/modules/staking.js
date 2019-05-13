@@ -33,7 +33,7 @@ export default {
       state.rewards = data;
     },
     setRewardMap: function(state, data) {
-      state.RewardMap = Object.assign({}, state.RewardMap, data);
+      state.rewardMap = Object.assign({}, state.rewardMap, data);
     },
     setValidators: function(state, data) {
       state.validators = data;
@@ -148,6 +148,32 @@ export default {
         }
       };
       const { data } = await sendTx(context, pass, 'delegate', msg);
+      return Promise.resolve(data);
+    },
+    unbind: async function(context, { pass }) {
+      const {
+        form: { amount },
+        fromValidator: { operator_address }
+      } = context.state;
+      const msg = {
+        validator_addr: operator_address,
+        shares_amount: amount
+      };
+      const { data } = await sendTx(context, pass, 'undelegate', msg);
+      return Promise.resolve(data);
+    },
+    redelegate: async function(context, { pass }) {
+      const {
+        form: { amount },
+        fromValidator,
+        toValidator
+      } = context.state;
+      const msg = {
+        shares_amount: amount,
+        validator_src_addr: fromValidator.operator_address,
+        validator_dst_addr: toValidator.operator_address
+      };
+      const { data } = await sendTx(context, pass, 'begin_redelegate', msg);
       return Promise.resolve(data);
     },
     withdrawAll: async function(context, { pass }) {

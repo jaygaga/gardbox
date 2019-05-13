@@ -132,6 +132,7 @@ const en = {
     max: 'Max',
     all: 'Delegate All',
     unbind: 'Unbind',
+    unbindAll: 'Unbind All',
     redelegate: 'Redelegate',
     unbinding: 'Unbinding'
   },

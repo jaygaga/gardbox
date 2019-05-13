@@ -17,23 +17,29 @@
       </div>
       <div class="data">
         <span>{{ $t('staking.reward') }}</span>
-        {{ numeral(get(v, 'delegation.shares')).format('0,0') }}
+        {{ numeral(get(v, 'reward.0.amount')).format('0,0.[000000]') }}
       </div>
-      <div class="data">
+      <div
+        v-for="i in v.unbinding"
+        :key="i.completion_time"
+        class="data"
+      >
         <span>{{ $t('staking.unbinding') }}</span>
-        {{ numeral(get(v, 'delegation.shares')).format('0,0') }}
+        {{ numeral(get(i, 'balance')).format('0,0') }} | {{ get(i, 'completion_time') | formatTime }}
       </div>
       <div class="btns">
-        <router-link to="/staking/unbind">
-          <el-button type="danger">
-            {{ $t('staking.unbind') }}
-          </el-button>
-        </router-link>
-        <router-link to="/staking/redelegate">
-          <el-button type="primary">
-            {{ $t('staking.redelegate') }}
-          </el-button>
-        </router-link>
+        <el-button
+          type="danger"
+          @click="toUnbind"
+        >
+          {{ $t('staking.unbind') }}
+        </el-button>
+        <el-button
+          type="primary"
+          @click="toRedelegate"
+        >
+          {{ $t('staking.redelegate') }}
+        </el-button>
       </div>
     </div>
   </s-card>
@@ -56,28 +62,39 @@ export default {
     v() {
       const address = this.$route.params.validator;
       const validator = get(this.validatorMap, address) || {};
+      const unbinding = get(this.unbindingMap, address);
+      const unbindingList = [];
+      if (!isEmpty(unbinding)) {
+        unbinding.entries.forEach(i => {
+          unbindingList[unbindingList.length] = i;
+        });
+      }
       return {
         ...validator,
         delegation: get(this.delegationMap, address),
-        unbinding: get(this.unbindingMap, address),
+        unbinding: unbindingList,
         reward: get(this.rewardMap, address)
       };
     }
   },
   methods: {
     get,
-    numeral
-    // onSelect(v) {
-    //   this.$store.dispatch("staking/setToValidator", v);
-    //   this.$router.back();
-    // }
+    numeral,
+    toUnbind() {
+      const { validator } = this.$route.params;
+      this.$router.push(`/staking/unbind?from=${validator}`);
+    },
+    toRedelegate() {
+      const { validator } = this.$route.params;
+      this.$router.push(`/staking/redelegate?from=${validator}`);
+    }
   },
   mounted() {
     const { validator } = this.$route.params;
     this.$store.dispatch("staking/fetchValidators");
     this.$store.dispatch("staking/fetchDelegation", validator);
     this.$store.dispatch("staking/fetchReward", validator);
-    this.$store.dispatch("staking/fetchDelegation", validator);
+    this.$store.dispatch("staking/fetchUnbinding", validator);
   }
 };
 </script>

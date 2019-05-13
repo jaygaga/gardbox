@@ -8,8 +8,11 @@
       v-if="!isEmpty(toValidator)"
       :label="$t('staking.toValidator')"
     >{{ get(toValidator, 'description.moniker') }}</s-item>
-    <s-item :label="$t('staking.commission')">{{ numeral(get(toValidator, 'commission.rate')).format('(0.[00]%)') }}</s-item>
-    <s-item :label="$t('send.amount')">{{form.amount | formatNumber}}</s-item>
+    <s-item
+      v-if="$route.query.action !== 'unbind'"
+      :label="$t('staking.commission')"
+    >{{ numeral(get(toValidator, 'commission.rate')).format('(0.[00]%)') }}</s-item>
+    <s-item :label="$t('send.amount')">{{form.amount | formatNumber}} GARD</s-item>
     <s-item :label="$t('send.fee')">0 GARD</s-item>
 
     <el-button
@@ -73,9 +76,12 @@ export default {
       this.loading = true;
       let res = "";
       try {
-        res = await this.$store.dispatch("staking/delegate", {
-          pass: this.pass
-        });
+        res = await this.$store.dispatch(
+          `staking/${this.$route.query.action}`,
+          {
+            pass: this.pass
+          }
+        );
       } catch (e) {
         this.$message({
           type: "error",
@@ -85,9 +91,15 @@ export default {
       }
       if (res.txhash) {
         this.dialogVisible = false;
-        this.$router.push(
-          `/staking/detail/${this.toValidator.operator_address}`
-        );
+        if (this.$route.query.action === "unbind") {
+          this.$router.push(
+            `/staking/detail/${this.fromValidator.operator_address}`
+          );
+        } else {
+          this.$router.push(
+            `/staking/detail/${this.toValidator.operator_address}`
+          );
+        }
       } else {
         this.$message({
           type: "error",
@@ -100,7 +112,7 @@ export default {
   },
   beforeMount() {
     if (!this.form.amount) {
-      this.$router.push(`/staking/${this.$route.query.action}`);
+      this.$router.back();
     }
   }
 };
