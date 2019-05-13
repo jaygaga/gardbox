@@ -52,6 +52,11 @@
         >
           <BalancePanel
             class="asset-item"
+            v-if="isEmpty(balance)"
+            :token="gardBalance"
+          />
+          <BalancePanel
+            class="asset-item"
             v-for="token in balance"
             :key="token.denom"
             :token="token"
@@ -128,6 +133,7 @@ export default {
     }
   },
   methods: {
+    isEmpty,
     onTabChange(tab) {
       this.$router.push(`/main?tab=${tab}`);
       this.fetchData();
