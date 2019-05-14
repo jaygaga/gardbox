@@ -30,7 +30,7 @@ import ValidatorList from '@/components/Staking/ValidatorList.vue';
 import DelegateConfirm from '@/components/Staking/Confirm.vue';
 import DelegateDetail from '@/components/Staking/DelegateDetail.vue';
 import UnbindForm from '@/components/Staking/UnbindForm.vue';
-// import RedelegateForm from '@/components/Staking/RedelegateForm.vue';
+import RedelegateForm from '@/components/Staking/RedelegateForm.vue';
 
 Vue.use(Router);
 
@@ -160,11 +160,11 @@ export default new Router({
         {
           path: 'unbind',
           component: UnbindForm
+        },
+        {
+          path: 'redelegate',
+          component: RedelegateForm
         }
-        // {
-        //   path: 'redelegate',
-        //   component: RedelegateForm
-        // }
       ]
     },
     {

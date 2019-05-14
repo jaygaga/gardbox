@@ -1,5 +1,5 @@
 <template>
-  <s-card :title="$t('staking.unbind')">
+  <s-card :title="$t('staking.redelegate')">
     <el-form
       ref="form"
       label-position="top"
@@ -7,15 +7,28 @@
       :rules="rules"
       @submit="onSubmit"
     >
-      <el-form-item prop="validator">
+      <div class="row-label">
+        {{ $t('staking.fromValidator') }}
+      </div>
+      <el-form-item prop="from">
         <el-input
           :value="get(fromValidator, 'description.moniker')"
           :placeholder="$t('staking.fromValidator')"
         ></el-input>
       </el-form-item>
-      <div class="row-balance">
+      <div class="row-label">
+        {{ $t('staking.toValidator') }}
+      </div>
+      <el-form-item prop="validator">
+        <el-input
+          :value="get(toValidator, 'description.moniker')"
+          :placeholder="$t('staking.toValidator')"
+          @focus="selectValidator"
+        ></el-input>
+      </el-form-item>
+      <div class="row-label">
         Total: {{ viewBalance.shares | formatNumber }} GARD
-        <a @click="setAmountAll">{{$t('staking.unbindAll')}}</a>
+        <a @click="setAmountAll">{{$t('staking.redelegateAll')}}</a>
       </div>
       <el-form-item prop="amount">
         <el-input
@@ -33,7 +46,7 @@
         class="btn-send"
         native-type=“submit”
         @click="onSubmit"
-      >{{$t('staking.unbind')}}</el-button>
+      >{{$t('staking.redelegate')}}</el-button>
     </el-form>
   </s-card>
 </template>
@@ -46,10 +59,17 @@ import { get, isEmpty } from "lodash";
 import webc from "@/utils/webc";
 
 export default {
-  name: "UnbindForm",
+  name: "RedelegateForm",
   data() {
     const requireError = name =>
       new Error(this.$t("global.required", { name }));
+    const validateAddr = (rule, value, callback) => {
+      if (isEmpty(this.toValidator)) {
+        callback(requireError(this.$t("staking.validator")));
+        return;
+      }
+      callback();
+    };
     const validateAmount = (rule, value, callback) => {
       if (!value || value.trim() === "") {
         callback(requireError(this.$t("send.amount")));
@@ -77,6 +97,7 @@ export default {
     };
     return {
       rules: {
+        validator: [{ validator: validateAddr, trigger: "blur" }],
         amount: [{ validator: validateAmount, trigger: "blur" }]
       }
     };
@@ -86,7 +107,8 @@ export default {
       "validatorMap",
       "delegationMap",
       "form",
-      "fromValidator"
+      "fromValidator",
+      "toValidator"
     ]),
     viewBalance() {
       const total = this.delegationMap[this.$route.query.from];
@@ -95,6 +117,9 @@ export default {
   },
   methods: {
     get,
+    selectValidator() {
+      this.$router.push("/staking/validator");
+    },
     setAmountAll() {
       this.$store.dispatch("staking/setForm", {
         ...this.form,
@@ -106,7 +131,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (!valid) return false;
         const { from } = this.$route.query;
-        this.$router.push(`/staking/confirm?action=unbind&from=${from}`);
+        this.$router.push(`/staking/confirm?action=redelegate&from=${from}`);
       });
     }
   },
@@ -115,14 +140,13 @@ export default {
     isEmpty(this.validatorMap[from]) &&
       (await this.$store.dispatch("staking/fetchValidators"));
     this.$store.dispatch("staking/setFromValidator", this.validatorMap[from]);
-    this.$store.dispatch("staking/setToValidator", {});
     this.$store.dispatch("staking/fetchDelegation", from);
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.row-balance {
+.row-label {
   a {
     cursor: pointer;
     float: right;

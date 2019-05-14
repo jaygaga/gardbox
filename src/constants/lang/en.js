@@ -134,6 +134,7 @@ const en = {
     unbind: 'Unbind',
     unbindAll: 'Unbind All',
     redelegate: 'Redelegate',
+    redelegateAll: 'Redelegate All',
     unbinding: 'Unbinding'
   },
   footer: {

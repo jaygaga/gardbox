@@ -117,8 +117,8 @@ const zh = {
     reward: '委托收益',
     withdraw: '取回收益',
     delegate: '委托 GARD',
-    fromValidator: '解委托验证人节点',
-    toValidator: '委托验证人节点',
+    fromValidator: '转出验证人节点',
+    toValidator: '转入验证人节点',
     validators: '候选验证人节点',
     validator: '验证人节点',
     detail: '委托详情',
@@ -129,6 +129,7 @@ const zh = {
     unbind: '赎回委托',
     unbindAll: '赎回全部',
     redelegate: '转移委托',
+    redelegateAll: '转移全部',
     unbinding: '解锁中'
   },
   footer: {
