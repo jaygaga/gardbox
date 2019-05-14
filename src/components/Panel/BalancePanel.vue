@@ -12,7 +12,7 @@
       {{ viewToken.denom }}
     </div>
     <div class="amount">
-      {{ viewToken.amount | formatNumber }} GARD
+      {{ viewToken.amount | formatNumber }}
     </div>
   </div>
 </template>
