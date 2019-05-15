@@ -6,17 +6,24 @@ export default {
   namespaced: true,
 
   state: {
+    loading: false,
     nodeInfo: {},
     txs: [],
     blocks: {},
     txInfo: {},
-    form: {},
+    form: {
+      denom: 'gard',
+      fee: 0
+    },
     result: {}
   },
 
   getters: {},
 
   mutations: {
+    setLoading: function(state, loading) {
+      state.loading = loading;
+    },
     setNodeInfo: function(state, nodeInfo) {
       state.nodeInfo = nodeInfo;
     },
@@ -54,20 +61,21 @@ export default {
       return Promise.resolve(data);
     },
     fetchTxsLatest: async function(context, params) {
-      // 1. query txs as sender
-      // 1.1. first query to get total count
+      let txs = [];
+      // 1. first query to get total count
       const sendData1 = await context.dispatch('fetchTxsTotalCount', params);
       if (!isEmpty(sendData1)) {
         if (sendData1.totalCount > params.limit) {
-          // 1.2 query last page
+          // 2. query last page
           const lastPage = Math.ceil(sendData1.totalCount / params.limit) || 1;
           const sendData = await context.dispatch('fetchTxsTotalCount', { ...params, page: lastPage });
-          return Promise.resolve(sendData.txs);
+          txs = sendData.txs;
+        } else {
+          // 3. else use data of first query
+          txs = sendData1.txs;
         }
-        // 1.2 else use data of first query
-        return Promise.resolve(sendData1.txs);
       }
-      return Promise.resolve([]);
+      return Promise.resolve(txs);
     },
     fetchTxs: async function(context, keyStore) {
       const limit = 10;
@@ -77,6 +85,7 @@ export default {
         action: 'send',
         sender: address
       };
+      context.commit('setLoading', true);
 
       // 1. query txs as sender
       const sendList = await context.dispatch('fetchTxsLatest', params);
@@ -94,6 +103,7 @@ export default {
       const list = [...sendList, ...receiveListMaped];
       list.sort((a, b) => b.height - a.height);
       context.commit('setTxList', list);
+      context.commit('setLoading', false);
       return Promise.resolve(list);
     },
     fetchBlock: async function(context, height) {
@@ -127,8 +137,11 @@ export default {
       context.commit('setResult', result);
       return Promise.resolve(result);
     },
-    send: async function(context, { amount, address, memo, pass, keyStore }) {
-      const isValidAddress = webc.account.isValidAddress(address);
+    send: async function(context, { pass, amount }) {
+      const {
+        form: { denom, address }
+      } = context.state;
+      const { keyStore } = context.rootState.account;
       const from = keyStore.address;
       // 1. get account state (account_number & sequence)
       let accState = {
@@ -154,7 +167,6 @@ export default {
         from,
         account_number: accState.account_number,
         sequence: accState.sequence,
-        memo,
         fees: { denom: 'gard', amount: '0' },
         gas: 200000,
         type: 'transfer',
@@ -162,8 +174,8 @@ export default {
           to: address,
           coins: [
             {
-              denom: 'gard',
-              amount: amount
+              denom,
+              amount
             }
           ]
         }

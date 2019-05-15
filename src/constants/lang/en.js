@@ -20,7 +20,8 @@ const en = {
     itemText2: 'All user data, including imported or generated private keys are stored locally and private.',
     itemTitle3: 'Easy to use, Reliable',
     itemText3: 'Made by Hashgard official team. We’ve done the complicated stuff so you won’t have to.',
-    account: 'Account'
+    account: 'Account',
+    staking: 'Staking'
   },
   agree: {
     title: 'Terms & Conditions',
@@ -103,18 +104,39 @@ const en = {
     denom: 'Currency',
     amount: 'Amount',
     amountWarn: 'Insufficient Quantity',
-    amountWarnZero: 'A Positive Number is required',
+    amountWarnPositive: 'A Positive Number is required',
+    amountWarnInvalid: 'Invalid Amount',
     address: 'Address',
     addressWarn: 'Wrong Address Format!',
     sender: 'Sender',
     txHash: 'TxHash',
     all: 'Send All',
     fee: 'Fee',
-    error: 'Send Error!',
+    error: 'Transaction Error!',
     again: 'Continue Transfer',
     back: 'Back to Wallet',
     block: 'Block',
     time: 'Time'
+  },
+  staking: {
+    title: 'My Delegations',
+    reward: 'Delegation Rewards',
+    withdraw: 'Withdraw Rewards',
+    delegate: 'Delegate GARD',
+    fromValidator: 'From Validator Node',
+    toValidator: 'To Validator Node',
+    validators: 'Validator Candidates',
+    validator: 'Validator Node',
+    detail: 'Delegation Detail',
+    tokens: 'Tokens',
+    commission: 'Commission',
+    max: 'Max',
+    all: 'Delegate All',
+    unbind: 'Unbind',
+    unbindAll: 'Unbind All',
+    redelegate: 'Redelegate',
+    redelegateAll: 'Redelegate All',
+    unbinding: 'Unbinding'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'

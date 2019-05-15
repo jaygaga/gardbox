@@ -18,41 +18,45 @@ class CosmosBuilder extends Builder {
      */
     buildTx(tx) {
         let req = super.buildParam(tx);
-        let msg;
+        let msgs = [];
         switch (req.type) {
             case Config.cosmos.tx.transfer.type: {
-                msg = Bank.create(req);
+                msgs[msgs.length] = Bank.create(req);
                 break;
             }
             case Config.cosmos.tx.delegate.type: {
-                msg = Stake.createMsgDelegate(req);
+                msgs[msgs.length] = Stake.createMsgDelegate(req);
                 break;
             }
             case Config.cosmos.tx.undelegate.type: {
-                msg = Stake.createMsgUndelegate(req);
+                msgs[msgs.length] = Stake.createMsgUndelegate(req);
                 break;
             }
             case Config.cosmos.tx.beginRedelegate.type: {
-                msg = Stake.createMsgBeginRedelegate(req);
+                msgs[msgs.length] = Stake.createMsgBeginRedelegate(req);
                 break;
             }
             case Config.cosmos.tx.setWithdrawAddress.type: {
-                msg = Distribution.CreateMsgSetWithdrawAddress(req);
+                msgs[msgs.length] = Distribution.CreateMsgSetWithdrawAddress(req);
                 break;
             }
             case Config.cosmos.tx.withdrawDelegatorReward.type: {
-                msg = Distribution.CreateMsgWithdrawDelegatorReward(req);
+                msgs[msgs.length] = Distribution.CreateMsgWithdrawDelegatorReward(req);
+                break;
+            }
+            case Config.cosmos.tx.withdrawDelegatorRewardsAll.type: {
+                msgs = Distribution.CreateMsgWithdrawDelegatorRewardsAll(req);
                 break;
             }
             case Config.cosmos.tx.withdrawValidatorCommission.type: {
-                msg = Distribution.CreateMsgWithdrawValidatorCommission(req);
+                msgs[msgs.length] = Distribution.CreateMsgWithdrawValidatorCommission(req);
                 break;
             }
             default: {
                 throw new Error('not exist tx type');
             }
         }
-        return StdTx.create(req, msg);
+        return StdTx.create(req, msgs);
     }
 
     /**
