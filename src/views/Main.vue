@@ -193,6 +193,7 @@ export default {
       margin: 4px;
       flex-basis: 50%;
       height: 130px;
+      padding: $padding-large 0;
       background: $color-primary-light;
       box-shadow: $shadow;
 
@@ -221,6 +222,7 @@ export default {
     margin-left: -24px;
     .asset-item {
       margin-left: 24px;
+      margin-bottom: 16px;
     }
   }
   .txs {

@@ -8,7 +8,7 @@
       v-else
       class="logo-none"
     ></div>
-    <div class="denom">
+    <div class="name">
       {{ viewToken.denom }}
     </div>
     <div class="amount">
