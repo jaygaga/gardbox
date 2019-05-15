@@ -20,7 +20,8 @@ const en = {
     itemText2: 'All user data, including imported or generated private keys are stored locally and private.',
     itemTitle3: 'Easy to use, Reliable',
     itemText3: 'Made by Hashgard official team. We’ve done the complicated stuff so you won’t have to.',
-    account: 'Account'
+    account: 'Account',
+    staking: 'Staking'
   },
   agree: {
     title: 'Terms & Conditions',
