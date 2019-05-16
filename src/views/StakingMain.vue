@@ -40,21 +40,35 @@
         <ValidatorPanel
           v-for="v in viewDelegations"
           :key="v.validator_address"
-          :v="v"
+          :v="v.validator"
+          :delegation="v.delegation"
           class="item"
         />
       </el-tab-pane>
       <el-tab-pane
         :label="$t('staking.validators')"
         name="validators"
-        class="delegations"
       >
-        <ValidatorPanel
-          v-for="v in validators"
-          :key="v.validator_address"
-          :v="v"
-          class="item"
-        />
+        <div class="tools">
+          <el-select v-model="filter">
+            <el-option
+              value="tokens"
+              :label="$t('staking.tokensMax')"
+            ></el-option>
+            <el-option
+              value="commission"
+              :label="$t('staking.commissionMin')"
+            ></el-option>
+          </el-select>
+        </div>
+        <div class="validators">
+          <ValidatorPanel
+            v-for="v in validators"
+            :key="v.validator_address"
+            :v="v"
+            class="item"
+          />
+        </div>
       </el-tab-pane>
     </el-tabs>
 
@@ -90,6 +104,7 @@ export default {
   components: { ValidatorPanel },
   data() {
     return {
+      filter: "tokens",
       dialogVisible: false,
       withdrawLoading: false,
       pass: ""
@@ -119,8 +134,19 @@ export default {
     },
     viewDelegations() {
       return this.delegations.map(i => {
-        return { ...i, validator: this.validatorMap[i.validator_address] };
+        return {
+          delegation: i,
+          validator: this.validatorMap[i.validator_address]
+        };
       });
+    },
+    viewValidators() {
+      if (this.filter === "tokens") {
+        return this.validators;
+      }
+      return [...this.validators].sort(
+        (a, b) => get(a, "commission.rate") - get(b, "commission.rate")
+      );
     }
   },
   methods: {
@@ -245,7 +271,11 @@ export default {
       }
     }
   }
-  .delegations {
+  .tools {
+    margin-top: $padding-basic;
+  }
+  .delegations,
+  .validators {
     display: flex;
     align-items: flex-start;
     padding: $padding-basic 0;

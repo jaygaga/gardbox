@@ -239,10 +239,6 @@ export default {
     }
   }
 }
-.line {
-  border-top: $border;
-  margin: $padding-basic;
-}
 
 @include responsive($sm) {
   .main-container {

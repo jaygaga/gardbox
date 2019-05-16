@@ -3,14 +3,20 @@
     :to="`/staking/detail/${v.operator_address}`"
     class="delegation-item"
   >
-    <div>
-      <h3>{{ get(v.validator, 'description.moniker') }} <span :class="get(v, 'validator.jailed') ? 'jailed' : ''">{{ get(v, 'validator.jailed') ? 'Jailed' : 'Active' }}</span></h3>
-      <p>{{ $t('staking.commission') }}: {{ numeral(get(v.validator, 'commission.rate')).format('(0.[00]%)') }} / {{ $t('staking.tokens') }}: {{ numeral(get(v, 'validator.tokens')).format('0,0') }}</p>
-    </div>
-    <div class="tokens">
-      <h3>{{ numeral(v.shares).format('0,0') }}</h3>
-      <p>{{ $t('staking.delegations') }}</p>
-    </div>
+    <h3>
+      <span class="index">{{ v.index }}.</span>
+      <span class="name">{{ get(v, 'description.moniker') }}</span>
+      <el-tag
+        size="small"
+        :type="get(v, 'validator.jailed') ? 'danger' : 'success'"
+      >{{ get(v, 'validator.jailed') ? 'Jailed' : 'Active' }}</el-tag>
+    </h3>
+    <p><span>{{ $t('staking.address') }}</span>{{ v.operator_address | gardAddr }}</p>
+    <p><span>{{ $t('staking.tokens') }}</span>{{ numeral(get(v, 'tokens')).format('0,0') }} GARD</p>
+    <p><span>{{ $t('staking.commission') }}</span>{{ numeral(get(v, 'commission.rate')).format('(0.[00]%)') }}</p>
+    <p><span>{{ $t('staking.max') }}</span>{{ numeral(get(v, 'commission.max_rate')).format('(0.[00]%)') }}</p>
+
+    <p v-if="get(delegation, 'shares')"><span>{{ $t('staking.delegations') }}</span>{{ numeral(get(delegation, 'shares')).format('0,0') }} GARD</p>
   </router-link>
 </template>
 
@@ -23,6 +29,7 @@ import { getViewToken } from "@/utils/helpers";
 export default {
   name: "ValidatorPanel",
   props: {
+    delegation: Object,
     v: { type: Object, required: true }
   },
   computed: {
@@ -41,39 +48,29 @@ export default {
 <style lang="scss" scoped>
 .delegation-item {
   flex-basis: 300px;
-  height: 180px;
-  text-align: center;
   background: white;
   color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: $padding-basic;
+  padding: 14px $padding-basic;
   border-radius: 4px;
 
-  img {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 16px;
-    position: relative;
-    top: 2px;
+  h3 {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .index {
+      margin-right: 4px;
+    }
+    .name {
+      flex-grow: 1;
+    }
   }
-  .logo-none {
-    width: 48px;
-    height: 48px;
-    margin-top: -4px;
-    margin-bottom: 12px;
-    position: relative;
-    top: 2px;
-    background: #eee;
-    border-radius: 24px;
-  }
-  .name {
-    font-size: 18px;
-    margin-bottom: 16px;
-  }
-  .amount {
-    font-size: 20px;
+  p {
+    display: flex;
+    justify-content: space-between;
+    span {
+      color: rgba(0, 0, 0, 0.65);
+    }
   }
 }
 </style>

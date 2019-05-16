@@ -115,7 +115,14 @@ export default {
       if (isEmpty(data)) {
         return Promise.reject();
       }
-      context.commit('setValidators', data.sort((a, b) => b.tokens - a.tokens));
+      data.sort((a, b) => b.tokens - a.tokens);
+      context.commit(
+        'setValidators',
+        data.map((i, index) => {
+          i.index = index + 1;
+          return i;
+        })
+      );
       const validatorMap = {};
       data.forEach(v => {
         validatorMap[v.operator_address] = v;
