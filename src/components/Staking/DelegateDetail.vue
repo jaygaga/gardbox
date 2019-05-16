@@ -12,7 +12,7 @@
     </div>
     <div class="my">
       <div class="data">
-        <span>{{ $t('staking.title') }}</span>
+        <span>{{ $t('staking.delegations') }}</span>
         {{ numeral(get(v, 'delegation.shares')).format('0,0') }}
       </div>
       <div class="data">

@@ -193,13 +193,13 @@ export default {
       margin: 4px;
       flex-basis: 50%;
       height: 130px;
-      padding: $padding-large 0;
       background: $color-primary-light;
       box-shadow: $shadow;
 
       .top-btn {
         flex-grow: 1;
         line-height: 32px;
+        padding: $padding-large 0;
         display: flex;
         flex-direction: column;
         align-items: center;
