@@ -64,7 +64,7 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
     account_number: accState.account_number,
     sequence: accState.sequence,
     memo: '',
-    fees: { denom: 'gard', amount: '0' },
+    fees: { denom: 'agard', amount: '0' },
     gas: 200000,
     type,
     msg,

@@ -37,6 +37,10 @@
         name="delegations"
         class="delegations"
       >
+        <div
+          class="empty"
+          v-if="viewDelegations.length === 0"
+        >{{$t('main.empty')}}</div>
         <ValidatorPanel
           v-for="v in viewDelegations"
           :key="v.validator_address"
@@ -277,17 +281,17 @@ export default {
   .tools {
     margin-top: $padding-basic;
   }
+  .empty {
+    width: 100%;
+    margin: $padding-large;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+  }
   .delegations,
   .validators {
     display: flex;
-    // align-items: flex-start;
     flex-wrap: wrap;
     padding: $padding-basic 0;
-    margin-left: -18px;
-    .item {
-      margin-left: 18px;
-      margin-bottom: 16px;
-    }
   }
 }
 @include responsive($sm) {

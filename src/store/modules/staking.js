@@ -1,4 +1,5 @@
 import webc from '@/utils/webc';
+import BigNumber from 'bignumber.js';
 import { isEmpty, get } from 'lodash';
 import ajax from '@/utils/ajax.js';
 import { sendTx } from '@/utils/helpers';
@@ -159,8 +160,10 @@ export default {
       const msg = {
         validator_addr: operator_address,
         delegation: {
-          denom: 'gard',
-          amount
+          denom: 'agard',
+          amount: BigNumber(amount)
+            .times(BigNumber(10).pow(18))
+            .toFixed()
         }
       };
       const { data } = await sendTx(context, pass, 'delegate', msg);

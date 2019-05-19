@@ -48,7 +48,8 @@ export default {
 
 <style lang="scss" scoped>
 .delegation-item {
-  flex-basis: 300px;
+  flex-basis: 31.3%;
+  margin: 8px 1%;
   background: white;
   color: rgba(0, 0, 0, 0.75);
   padding: 14px $padding-basic;
@@ -72,6 +73,12 @@ export default {
     span {
       color: rgba(0, 0, 0, 0.65);
     }
+  }
+}
+@include responsive($sm) {
+  .delegation-item {
+    flex-basis: 100%;
+    margin: 8px 0;
   }
 }
 </style>
