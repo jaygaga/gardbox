@@ -11,7 +11,7 @@
         <p>{{ $t('staking.commission') }}: {{ numeral(get(v, 'commission.rate')).format('(0.[00]%)') }} / {{ $t('staking.max') }}: {{ numeral(get(v, 'commission.max_rate')).format('(0.[00]%)') }}</p>
       </div>
       <div class="tokens">
-        <h3>{{ numeral(v.tokens).format('0,0') }}</h3>
+        <h3>{{ numeral(getViewToken({denom: 'agard', amount: v.tokens}).amount).format('0,0') }}</h3>
         <p>{{ $t('staking.tokens') }}</p>
       </div>
     </div>
@@ -23,6 +23,8 @@ import { mapState, mapGetters } from "vuex";
 import numeral from "numeral";
 import { get, isEmpty } from "lodash";
 
+import { getViewToken } from "@/utils/helpers";
+
 export default {
   name: "ValidatorList",
   computed: {
@@ -31,6 +33,7 @@ export default {
   methods: {
     get,
     numeral,
+    getViewToken,
     onSelect(v) {
       this.$store.dispatch("staking/setToValidator", v);
       this.$router.back();

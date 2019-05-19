@@ -1,6 +1,6 @@
 <template>
   <s-card :title="$t('staking.validator')">
-    <div class="top">
+    <div class="div">
       <s-item
         :label="$t('staking.name')"
         class="item"
@@ -40,40 +40,94 @@
       >{{ get(v, 'description.detail') || '-' }}</s-item>
     </div>
 
-    <p>{{ $t('staking.delegations') }}</p>
-
-    <div class="my">
-      <div class="data">
-        <span>{{ $t('staking.delegations') }}</span>
-        {{ numeral(get(v, 'delegation.shares')).format('0,0') }}
-      </div>
-      <div class="data">
-        <span>{{ $t('staking.reward') }}</span>
-        {{ numeral(get(v, 'reward.0.amount')).format('0,0.[000000]') }}
-      </div>
-      <div
-        v-for="i in v.unbinding"
-        :key="i.completion_time"
-        class="data"
+    <div class="btns">
+      <el-button
+        @click="confirmWithdraw"
+        :disabled="isEmpty(v.reward)"
+        class="btn"
       >
-        <span>{{ $t('staking.unbinding') }}</span>
-        {{ numeral(get(i, 'balance')).format('0,0') }} | {{ get(i, 'completion_time') | formatTime }}
-      </div>
-      <div class="btns">
-        <el-button
-          type="danger"
-          @click="toUnbind"
-        >
-          {{ $t('staking.unbind') }}
-        </el-button>
-        <el-button
-          type="primary"
-          @click="toRedelegate"
-        >
-          {{ $t('staking.redelegate') }}
-        </el-button>
-      </div>
+        {{ $t('staking.withdraw') }}
+      </el-button>
+
+      <el-button
+        @click="toDelegate"
+        class="btn"
+      >
+        {{ $t('staking.delegate') }}
+      </el-button>
     </div>
+
+    <p
+      class="label"
+      v-if="isDelegating"
+    >{{ $t('staking.delegations') }}</p>
+
+    <div
+      v-if="isDelegating"
+      class="div"
+    >
+      <s-item
+        v-if="!isEmpty(v.delegation)"
+        :label="$t('staking.delegated')"
+        class="item"
+      >{{ numeral(get(v, 'delegation.shares')).format('0,0') }}</s-item>
+      <s-item
+        v-if="!isEmpty(v.reward)"
+        :label="$t('staking.reward')"
+        class="item"
+      >{{ numeral(get(v, 'reward.0.amount')).format('0,0.[000000]') }}</s-item>
+      <s-item
+        v-if="!isEmpty(v.unbinding)"
+        :label="$t('staking.unbinding')"
+        class="item"
+      >
+        <div
+          v-for="i in v.unbinding"
+          :key="i.completion_time"
+          class="data"
+        >
+          <span>{{ $t('staking.unbinding') }}</span>
+          {{ numeral(get(i, 'balance')).format('0,0') }} | {{ get(i, 'completion_time') | formatTime }}
+        </div>
+      </s-item>
+    </div>
+
+    <div
+      v-if="isDelegating"
+      class="btns"
+    >
+      <el-button
+        type="danger"
+        @click="toUnbind"
+        class="btn"
+      >
+        {{ $t('staking.unbind') }}
+      </el-button>
+      <el-button
+        @click="toRedelegate"
+        class="btn"
+      >
+        {{ $t('staking.redelegate') }}
+      </el-button>
+    </div>
+
+    <el-dialog
+      :title="$t('create.pass')"
+      :visible.sync="dialogVisible"
+      width="360px"
+      v-loading="withdrawLoading"
+      :close-on-click-modal="false"
+    >
+      <el-input
+        type="password"
+        v-model="pass"
+        :placeholder="$t('create.pass')"
+        @keyup.enter.native="onWithdraw"
+      ></el-input>
+      <span slot="footer">
+        <el-button @click="onWithdraw">{{$t('global.ok')}}</el-button>
+      </span>
+    </el-dialog>
   </s-card>
 </template>
 
@@ -85,6 +139,13 @@ import { getViewToken } from "@/utils/helpers";
 
 export default {
   name: "ValidatorList",
+  data() {
+    return {
+      dialogVisible: false,
+      withdrawLoading: false,
+      pass: ""
+    };
+  },
   computed: {
     ...mapState("staking", [
       "validatorMap",
@@ -112,11 +173,57 @@ export default {
     shares() {
       const t = { denom: "agard", amount: this.v.tokens };
       return getViewToken(t);
+    },
+    isDelegating() {
+      return !isEmpty(this.v.delegation) || !isEmpty(this.v.unbinding);
     }
   },
   methods: {
     get,
+    isEmpty,
     numeral,
+    confirmWithdraw() {
+      this.pass = "";
+      this.dialogVisible = true;
+    },
+    onWithdraw: async function() {
+      if (!this.pass) {
+        this.$message({
+          type: "error",
+          message: $t("global.required", { name: $t("create.pass") }),
+          center: true
+        });
+        return false;
+      }
+      this.withdrawLoading = true;
+      let res = "";
+      try {
+        res = await this.$store.dispatch("staking/withdrawAll", {
+          pass: this.pass
+        });
+      } catch (e) {
+        this.$message({
+          type: "error",
+          message: this.$t(`send.error`),
+          center: true
+        });
+      }
+      if (res.txhash) {
+        this.dialogVisible = false;
+        this.fetchData();
+      } else {
+        this.$message({
+          type: "error",
+          message: this.$t(`send.${res}`),
+          center: true
+        });
+      }
+      this.withdrawLoading = false;
+    },
+    toDelegate() {
+      const { validator } = this.$route.params;
+      this.$router.push(`/staking/delegate?to=${validator}`);
+    },
     toUnbind() {
       const { validator } = this.$route.params;
       this.$router.push(`/staking/unbind?from=${validator}`);
@@ -143,7 +250,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.top {
+.div {
   background: $color-background-card;
   padding: 4px $padding-basic;
   margin-bottom: 16px;
@@ -151,22 +258,17 @@ export default {
     margin: 16px 0;
   }
 }
-.my {
-  color: rgba(0, 0, 0, 0.6);
-  background: white;
-  border-radius: 4px;
-  padding: $padding-basic;
+.label {
+  margin-bottom: 12px;
+}
+.btns {
+  margin-top: $padding-basic;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  .data {
-    display: flex;
-    justify-content: space-between;
-  }
-  .btns {
-    margin-top: $padding-basic;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  justify-content: space-between;
+  .btn {
+    height: 48px;
+    flex-basis: 48%;
   }
 }
 </style>

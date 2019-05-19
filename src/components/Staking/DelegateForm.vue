@@ -44,6 +44,7 @@ import { mapState, mapGetters } from "vuex";
 import BigNumber from "bignumber.js";
 import { get, isEmpty } from "lodash";
 
+import { getViewToken } from "@/utils/helpers";
 import webc from "@/utils/webc";
 
 export default {
@@ -92,12 +93,11 @@ export default {
   },
   computed: {
     ...mapState("account", ["balance"]),
-    ...mapState("staking", ["form", "toValidator"]),
+    ...mapState("staking", ["form", "toValidator", "validatorMap"]),
     viewBalance() {
-      const gard = { denom: "gard", amount: "0" };
-      return !isEmpty(this.balance)
-        ? this.balance.find(i => i.denom === "gard")
-        : gard;
+      const gard = { denom: "agard", amount: "0" };
+      const t = this.balance.find(i => i.denom === "agard");
+      return t ? getViewToken(t) : gard;
     }
   },
   methods: {
@@ -119,7 +119,14 @@ export default {
       });
     }
   },
-  mounted() {
+  mounted: async function() {
+    const { to } = this.$route.query;
+    if (to) {
+      isEmpty(this.validatorMap[to]) &&
+        (await this.$store.dispatch("staking/fetchValidators"));
+      this.$store.dispatch("staking/setToValidator", this.validatorMap[to]);
+    }
+
     this.$store.dispatch("account/fetchBalance");
   }
 };

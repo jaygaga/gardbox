@@ -162,6 +162,9 @@ export default {
       this.$router.push(`/staking?tab=${tab}`);
     },
     confirmWithdraw() {
+      if (isEmpty(this.rewards)) {
+        return false;
+      }
       this.pass = "";
       this.dialogVisible = true;
     },

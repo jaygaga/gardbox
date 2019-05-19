@@ -144,7 +144,8 @@ const zh = {
     unbindAll: '赎回全部',
     redelegate: '转移委托',
     redelegateAll: '转移全部',
-    unbinding: '解锁中'
+    unbinding: '解锁中',
+    delegated: '已委托'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'

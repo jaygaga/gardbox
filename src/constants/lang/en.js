@@ -149,7 +149,8 @@ const en = {
     unbindAll: 'Unbind All',
     redelegate: 'Redelegate',
     redelegateAll: 'Redelegate All',
-    unbinding: 'Unbinding'
+    unbinding: 'Unbinding',
+    delegated: 'Delegated'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'
