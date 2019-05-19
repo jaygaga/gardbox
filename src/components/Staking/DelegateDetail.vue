@@ -1,15 +1,47 @@
 <template>
-  <s-card :title="$t('staking.detail')">
-    <div class="item">
-      <div>
-        <h3>{{ $t('staking.validator') }}: {{ get(v, 'description.moniker') }} <span :class="v.jailed ? 'jailed' : ''">{{ v.jailed ? 'Jailed' : 'Active' }}</span></h3>
-        <p>{{ $t('staking.commission') }}: {{ numeral(get(v, 'commission.rate')).format('(0.[00]%)') }} / {{ $t('staking.max') }}: {{ numeral(get(v, 'commission.max_rate')).format('(0.[00]%)') }}</p>
-      </div>
-      <div class="tokens">
-        <h3>{{ numeral(v.tokens).format('0,0') }}</h3>
-        <p>{{ $t('staking.tokens') }}</p>
-      </div>
+  <s-card :title="$t('staking.validator')">
+    <div class="top">
+      <s-item
+        :label="$t('staking.name')"
+        class="item"
+      >{{ get(v, 'description.moniker') }}</s-item>
+      <s-item
+        :label="$t('staking.status')"
+        class="item"
+      ><span :class="v.jailed ? 'jailed' : ''">{{ v.jailed ? 'Jailed' : 'Active' }}</span></s-item>
+      <s-item
+        :label="$t('staking.tokens')"
+        class="item"
+      >{{ shares.amount | formatNumber }} GARD</s-item>
+      <s-item
+        :label="$t('staking.address')"
+        class="item"
+      >{{ get(v, 'operator_address') }}</s-item>
+      <s-item
+        :label="$t('staking.commission')"
+        class="item"
+      >{{ numeral(get(v, 'commission.rate')).format('(0.[00]%)') }}</s-item>
+      <s-item
+        :label="$t('staking.max')"
+        class="item"
+      >{{ numeral(get(v, 'commission.max_rate')).format('(0.[00]%)') }}</s-item>
+      <s-item
+        :label="$t('staking.commissionChange')"
+        class="item"
+      >{{ numeral(get(v, 'commission.max_change_rate')).format('(0.[00]%)') }}</s-item>
+
+      <s-item
+        :label="$t('staking.website')"
+        class="item"
+      >{{ get(v, 'description.website') || '-' }}</s-item>
+      <s-item
+        :label="$t('staking.description')"
+        class="item"
+      >{{ get(v, 'description.detail') || '-' }}</s-item>
     </div>
+
+    <p>{{ $t('staking.delegations') }}</p>
+
     <div class="my">
       <div class="data">
         <span>{{ $t('staking.delegations') }}</span>
@@ -49,6 +81,7 @@
 import { mapState, mapGetters } from "vuex";
 import numeral from "numeral";
 import { get, isEmpty } from "lodash";
+import { getViewToken } from "@/utils/helpers";
 
 export default {
   name: "ValidatorList",
@@ -75,6 +108,10 @@ export default {
         unbinding: unbindingList,
         reward: get(this.rewardMap, address)
       };
+    },
+    shares() {
+      const t = { denom: "agard", amount: this.v.tokens };
+      return getViewToken(t);
     }
   },
   methods: {
@@ -92,45 +129,26 @@ export default {
   mounted() {
     const { validator } = this.$route.params;
     this.$store.dispatch("staking/fetchValidators");
-    this.$store.dispatch("staking/fetchDelegation", validator);
-    this.$store.dispatch("staking/fetchReward", validator);
-    this.$store.dispatch("staking/fetchUnbinding", validator);
+
+    // rest api returns 500 if result data empty
+    // this.$store.dispatch("staking/fetchDelegation", validator);
+    // this.$store.dispatch("staking/fetchReward", validator);
+    // this.$store.dispatch("staking/fetchUnbinding", validator);
+    // so we fetch list api
+    this.$store.dispatch("staking/fetchDelegations");
+    this.$store.dispatch("staking/fetchRewards");
+    this.$store.dispatch("staking/fetchUnbindings");
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.item {
-  background: white;
-  box-shadow: $shadow;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px $padding-basic;
-  border-radius: 4px;
-  margin-bottom: 12px;
-  cursor: pointer;
-
-  h3 {
-    color: rgba(0, 0, 0, 0.8);
-    font-size: 18px;
-
-    span {
-      font-size: 14px;
-      color: $color-success;
-
-      &.jailed {
-        color: $color-error;
-      }
-    }
-  }
-  p {
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 14px;
-  }
-
-  .tokens {
-    text-align: center;
+.top {
+  background: $color-background-card;
+  padding: 4px $padding-basic;
+  margin-bottom: 16px;
+  .item {
+    margin: 16px 0;
   }
 }
 .my {

@@ -67,6 +67,9 @@ export default {
       const { data } = await ajax.get(`/staking/delegators/${address}/delegations`);
       if (!isEmpty(data)) {
         context.commit('setDelegations', data);
+        data.forEach(i => {
+          context.commit('setDelegationMap', { [i.operator_address]: i });
+        });
       }
       return Promise.resolve(data);
     },
@@ -83,6 +86,9 @@ export default {
       const { data } = await ajax.get(`/distribution/delegators/${address}/rewards`);
       if (!isEmpty(data)) {
         context.commit('setRewards', data);
+        data.forEach(i => {
+          context.commit('setRewardMap', { [i.operator_address]: i });
+        });
       }
       return Promise.resolve(data);
     },
@@ -99,6 +105,9 @@ export default {
       const { data } = await ajax.get(`/staking/delegators/${address}/unbonding_delegations`);
       if (!isEmpty(data)) {
         context.commit('setUnbindings', data);
+        data.forEach(i => {
+          context.commit('setUnbindingMap', { [i.operator_address]: i });
+        });
       }
       return Promise.resolve(data);
     },
