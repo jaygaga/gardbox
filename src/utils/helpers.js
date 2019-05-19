@@ -22,10 +22,13 @@ export const getViewToken = (coin, tokenMap) => {
       }
     }
   } else {
-    if (token.denom === 'gard') {
+    if (token.denom === 'agard') {
+      token.amount = BigNumber(token.amount).dividedBy(Math.pow(10, 18));
       token.img = gardLogo;
+      token.denom = 'GARD';
+    } else {
+      token.denom = token.denom.toUpperCase();
     }
-    token.denom = token.denom.toUpperCase();
   }
   return token;
 };

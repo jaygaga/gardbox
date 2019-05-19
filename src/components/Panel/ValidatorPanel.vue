@@ -12,7 +12,7 @@
       >{{ get(v, 'validator.jailed') ? 'Jailed' : 'Active' }}</el-tag>
     </h3>
     <p><span>{{ $t('staking.address') }}</span>{{ v.operator_address | gardAddr }}</p>
-    <p><span>{{ $t('staking.tokens') }}</span>{{ numeral(get(v, 'tokens')).format('0,0') }} GARD</p>
+    <p><span>{{ $t('staking.tokens') }}</span>{{ viewToken.amount | formatNumber }} GARD</p>
     <p><span>{{ $t('staking.commission') }}</span>{{ numeral(get(v, 'commission.rate')).format('(0.[00]%)') }}</p>
     <p><span>{{ $t('staking.max') }}</span>{{ numeral(get(v, 'commission.max_rate')).format('(0.[00]%)') }}</p>
 
@@ -35,7 +35,8 @@ export default {
   computed: {
     ...mapState("account", ["tokenMap"]),
     viewToken() {
-      return getViewToken(this.token, this.tokenMap);
+      const token = { denom: "agard", amount: this.v.tokens };
+      return getViewToken(token, this.tokenMap);
     }
   },
   methods: {

@@ -49,7 +49,7 @@
         :label="$t('staking.validators')"
         name="validators"
       >
-        <div class="tools">
+        <!-- <div class="tools">
           <el-select v-model="filter">
             <el-option
               value="tokens"
@@ -60,7 +60,7 @@
               :label="$t('staking.commissionMin')"
             ></el-option>
           </el-select>
-        </div>
+        </div> -->
         <div class="validators">
           <ValidatorPanel
             v-for="v in validators"
@@ -277,7 +277,8 @@ export default {
   .delegations,
   .validators {
     display: flex;
-    align-items: flex-start;
+    // align-items: flex-start;
+    flex-wrap: wrap;
     padding: $padding-basic 0;
     margin-left: -18px;
     .item {
