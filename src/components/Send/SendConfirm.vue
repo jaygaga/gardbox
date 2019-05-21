@@ -61,6 +61,9 @@ export default {
       if (this.token) {
         return this.token.symbol;
       }
+      if (this.form.denom === "agard") {
+        return "GARD";
+      }
       return this.form.denom.toUpperCase();
     }
   },
@@ -84,6 +87,11 @@ export default {
       if (this.token) {
         params.amount = BigNumber(this.form.amount)
           .times(BigNumber(10).pow(this.token.decimals))
+          .toFixed();
+      }
+      if (this.form.denom === "agard") {
+        params.amount = BigNumber(this.form.amount)
+          .times(BigNumber(10).pow(18))
           .toFixed();
       }
       let res = "";

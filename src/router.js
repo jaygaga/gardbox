@@ -23,8 +23,8 @@ import SendConfirm from '@/components/Send/SendConfirm.vue';
 import SendFinish from '@/components/Send/SendFinish.vue';
 import Receive from './views/Receive.vue';
 
+import StakingMain from './views/StakingMain.vue';
 import Staking from './views/Staking.vue';
-import StakingMain from '@/components/Staking/Main.vue';
 import DelegateForm from '@/components/Staking/DelegateForm.vue';
 import ValidatorList from '@/components/Staking/ValidatorList.vue';
 import DelegateConfirm from '@/components/Staking/Confirm.vue';
@@ -134,13 +134,13 @@ export default new Router({
     },
     {
       path: '/staking',
+      component: StakingMain
+    },
+    {
+      path: '/staking',
       name: 'staking',
       component: Staking,
       children: [
-        {
-          path: '/',
-          component: StakingMain
-        },
         {
           path: 'delegate',
           component: DelegateForm

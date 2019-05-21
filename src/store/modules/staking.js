@@ -1,4 +1,5 @@
 import webc from '@/utils/webc';
+import BigNumber from 'bignumber.js';
 import { isEmpty, get } from 'lodash';
 import ajax from '@/utils/ajax.js';
 import { sendTx } from '@/utils/helpers';
@@ -67,6 +68,9 @@ export default {
       const { data } = await ajax.get(`/staking/delegators/${address}/delegations`);
       if (!isEmpty(data)) {
         context.commit('setDelegations', data);
+        data.forEach(i => {
+          context.commit('setDelegationMap', { [i.validator_address]: i });
+        });
       }
       return Promise.resolve(data);
     },
@@ -83,6 +87,9 @@ export default {
       const { data } = await ajax.get(`/distribution/delegators/${address}/rewards`);
       if (!isEmpty(data)) {
         context.commit('setRewards', data);
+        data.forEach(i => {
+          context.commit('setRewardMap', { [i.operator_address]: i });
+        });
       }
       return Promise.resolve(data);
     },
@@ -99,6 +106,9 @@ export default {
       const { data } = await ajax.get(`/staking/delegators/${address}/unbonding_delegations`);
       if (!isEmpty(data)) {
         context.commit('setUnbindings', data);
+        data.forEach(i => {
+          context.commit('setUnbindingMap', { [i.validator_address]: i });
+        });
       }
       return Promise.resolve(data);
     },
@@ -115,7 +125,14 @@ export default {
       if (isEmpty(data)) {
         return Promise.reject();
       }
-      context.commit('setValidators', data.sort((a, b) => b.tokens - a.tokens));
+      data.sort((a, b) => b.tokens - a.tokens);
+      context.commit(
+        'setValidators',
+        data.map((i, index) => {
+          i.index = index + 1;
+          return i;
+        })
+      );
       const validatorMap = {};
       data.forEach(v => {
         validatorMap[v.operator_address] = v;
@@ -143,8 +160,10 @@ export default {
       const msg = {
         validator_addr: operator_address,
         delegation: {
-          denom: 'gard',
-          amount
+          denom: 'agard',
+          amount: BigNumber(amount)
+            .times(BigNumber(10).pow(18))
+            .toFixed()
         }
       };
       const { data } = await sendTx(context, pass, 'delegate', msg);
@@ -157,7 +176,12 @@ export default {
       } = context.state;
       const msg = {
         validator_addr: operator_address,
-        shares_amount: amount
+        amount: {
+          denom: 'agard',
+          amount: BigNumber(amount)
+            .times(BigNumber(10).pow(18))
+            .toFixed()
+        }
       };
       const { data } = await sendTx(context, pass, 'undelegate', msg);
       return Promise.resolve(data);
@@ -169,7 +193,12 @@ export default {
         toValidator
       } = context.state;
       const msg = {
-        shares_amount: amount,
+        amount: {
+          denom: 'agard',
+          amount: BigNumber(amount)
+            .times(BigNumber(10).pow(18))
+            .toFixed()
+        },
         validator_src_addr: fromValidator.operator_address,
         validator_dst_addr: toValidator.operator_address
       };

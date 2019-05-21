@@ -130,13 +130,20 @@ export default {
               .toString();
           }
         } else {
-          token.label = token.denom.toUpperCase();
+          if (token.denom === "agard") {
+            token.amount = BigNumber(token.amount)
+              .dividedBy(Math.pow(10, 18))
+              .toString();
+            token.label = "GARD";
+          } else {
+            token.label = token.denom.toUpperCase();
+          }
         }
         return token;
       });
     },
     selectedBalance() {
-      const gard = { amount: "0", denom: "gard" };
+      const gard = { amount: "0", denom: "agard" };
       return this.viewBalance.find(i => i.denom === this.form.denom) || gard;
     }
   },

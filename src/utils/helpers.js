@@ -11,7 +11,9 @@ export const getViewToken = (coin, tokenMap) => {
     const detail = tokenMap[token.denom];
     if (!isEmpty(detail)) {
       token.denom = detail.symbol;
-      token.amount = BigNumber(token.amount).dividedBy(Math.pow(10, detail.decimals));
+      token.amount = BigNumber(token.amount)
+        .dividedBy(Math.pow(10, detail.decimals))
+        .toFixed();
       if (detail.description) {
         try {
           const desc = JSON.parse(detail.description);
@@ -22,10 +24,15 @@ export const getViewToken = (coin, tokenMap) => {
       }
     }
   } else {
-    if (token.denom === 'gard') {
+    if (token.denom === 'agard') {
+      token.amount = BigNumber(token.amount)
+        .dividedBy(BigNumber(10).pow(18))
+        .toFixed();
       token.img = gardLogo;
+      token.denom = 'GARD';
+    } else {
+      token.denom = token.denom.toUpperCase();
     }
-    token.denom = token.denom.toUpperCase();
   }
   return token;
 };
@@ -61,7 +68,7 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
     account_number: accState.account_number,
     sequence: accState.sequence,
     memo: '',
-    fees: { denom: 'gard', amount: '0' },
+    fees: { denom: 'agard', amount: '0' },
     gas: 200000,
     type,
     msg,

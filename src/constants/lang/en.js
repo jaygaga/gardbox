@@ -20,8 +20,8 @@ const en = {
     itemText2: 'All user data, including imported or generated private keys are stored locally and private.',
     itemTitle3: 'Easy to use, Reliable',
     itemText3: 'Made by Hashgard official team. We’ve done the complicated stuff so you won’t have to.',
-    account: 'Account',
-    staking: 'Staking'
+    account: 'Wallet Account',
+    staking: 'Staking Delegation'
   },
   agree: {
     title: 'Terms & Conditions',
@@ -119,24 +119,38 @@ const en = {
     time: 'Time'
   },
   staking: {
-    title: 'My Delegations',
+    delegationTotal: 'Total Delegations',
     reward: 'Delegation Rewards',
     withdraw: 'Withdraw Rewards',
     delegate: 'Delegate GARD',
+    delegations: 'My Delegations',
+    validators: 'All Validators',
+    tokensMax: 'Max Tokens',
+    commissionMin: 'Lowest Commission',
     fromValidator: 'From Validator Node',
     toValidator: 'To Validator Node',
-    validators: 'Validator Candidates',
     validator: 'Validator Node',
+    name: 'Validator Name',
+    status: 'Status',
+    active: 'Active',
+    candidate: 'Candidate',
+    jailed: 'Jailed',
+    minSelf: 'Min Self Delegation',
+    address: 'Address',
     detail: 'Delegation Detail',
     tokens: 'Tokens',
     commission: 'Commission',
-    max: 'Max',
+    max: 'Commission Max',
+    commissionChange: 'Commission Change Rate Max',
+    website: 'Website',
+    description: 'Description',
     all: 'Delegate All',
     unbind: 'Unbind',
     unbindAll: 'Unbind All',
     redelegate: 'Redelegate',
     redelegateAll: 'Redelegate All',
-    unbinding: 'Unbinding'
+    unbinding: 'Unbindings',
+    delegated: 'Delegated'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'

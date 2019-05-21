@@ -82,7 +82,10 @@ export default {
       localStorage.setItem("lang", target);
     },
     getStarted(page) {
-      const uris = { account: "/main?tab=assets", staking: "/staking" };
+      const uris = {
+        account: "/main?tab=assets",
+        staking: "/staking?tab=delegations"
+      };
       const agree = localStorage.getItem("gard_wallet_agree");
       if (!agree) {
         this.$router.push("/agree");

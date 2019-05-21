@@ -27,7 +27,7 @@
         ></el-input>
       </el-form-item>
       <div class="row-label">
-        Total: {{ viewBalance.shares | formatNumber }} GARD
+        Total: {{ viewBalance.amount | formatNumber }} GARD
         <a @click="setAmountAll">{{$t('staking.redelegateAll')}}</a>
       </div>
       <el-form-item prop="amount">
@@ -56,6 +56,7 @@ import { mapState, mapGetters } from "vuex";
 import BigNumber from "bignumber.js";
 import { get, isEmpty } from "lodash";
 
+import { getViewToken } from "@/utils/helpers";
 import webc from "@/utils/webc";
 
 export default {
@@ -76,7 +77,7 @@ export default {
         return;
       }
       const input = value - 0;
-      const balance = this.viewBalance.shares - 0;
+      const balance = this.viewBalance.amount - 0;
       if (input <= 0) {
         callback(new Error(this.$t("send.amountWarnPositive")));
         return;
@@ -111,8 +112,9 @@ export default {
       "toValidator"
     ]),
     viewBalance() {
-      const total = this.delegationMap[this.$route.query.from];
-      return total || {};
+      const total = get(this.delegationMap, [this.$route.query.from, "shares"]);
+      const gard = { denom: "agard", amount: total || "0" };
+      return getViewToken(gard);
     }
   },
   methods: {
@@ -123,7 +125,7 @@ export default {
     setAmountAll() {
       this.$store.dispatch("staking/setForm", {
         ...this.form,
-        amount: this.viewBalance.shares - 0
+        amount: this.viewBalance.amount - 0
       });
     },
     onSubmit(e) {
