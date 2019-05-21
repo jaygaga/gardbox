@@ -107,7 +107,7 @@ export default {
       if (!isEmpty(data)) {
         context.commit('setUnbindings', data);
         data.forEach(i => {
-          context.commit('setUnbindingMap', { [i.operator_address]: i });
+          context.commit('setUnbindingMap', { [i.validator_address]: i });
         });
       }
       return Promise.resolve(data);
@@ -176,7 +176,12 @@ export default {
       } = context.state;
       const msg = {
         validator_addr: operator_address,
-        shares_amount: amount
+        amount: {
+          denom: 'agard',
+          amount: BigNumber(amount)
+            .times(BigNumber(10).pow(18))
+            .toFixed()
+        }
       };
       const { data } = await sendTx(context, pass, 'undelegate', msg);
       return Promise.resolve(data);
@@ -188,7 +193,12 @@ export default {
         toValidator
       } = context.state;
       const msg = {
-        shares_amount: amount,
+        amount: {
+          denom: 'agard',
+          amount: BigNumber(amount)
+            .times(BigNumber(10).pow(18))
+            .toFixed()
+        },
         validator_src_addr: fromValidator.operator_address,
         validator_dst_addr: toValidator.operator_address
       };

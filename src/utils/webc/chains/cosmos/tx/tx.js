@@ -743,7 +743,7 @@ $root.cosmos = (function() {
          * @interface IMsgUndelegate
          * @property {Uint8Array} DelegatorAddr MsgUndelegate DelegatorAddr
          * @property {Uint8Array} ValidatorAddr MsgUndelegate ValidatorAddr
-         * @property {string} SharesAmount MsgUndelegate SharesAmount
+         * @property {string} Amount MsgUndelegate Amount
          */
 
         /**
@@ -777,12 +777,12 @@ $root.cosmos = (function() {
         MsgUndelegate.prototype.ValidatorAddr = $util.newBuffer([]);
 
         /**
-         * MsgUndelegate SharesAmount.
-         * @member {string} SharesAmount
+         * MsgUndelegate Amount.
+         * @member {string} Amount
          * @memberof cosmos.MsgUndelegate
          * @instance
          */
-        MsgUndelegate.prototype.SharesAmount = '';
+        MsgUndelegate.prototype.Amount = '';
 
         /**
          * Creates a new MsgUndelegate instance using the specified properties.
@@ -809,7 +809,7 @@ $root.cosmos = (function() {
             if (!writer) writer = $Writer.create();
             writer.uint32(/* id 1, wireType 2 =*/ 10).bytes(message.DelegatorAddr);
             writer.uint32(/* id 2, wireType 2 =*/ 18).bytes(message.ValidatorAddr);
-            let shares = message.SharesAmount.replace('.', '');
+            let shares = message.Amount.replace('.', '');
             shares = shares.replace(/\b(0+)/gi, '');
             writer.uint32(/* id 3, wireType 2 =*/ 26).string(shares);
             return writer;
@@ -853,7 +853,7 @@ $root.cosmos = (function() {
                         message.ValidatorAddr = reader.bytes();
                         break;
                     case 3:
-                        message.SharesAmount = reader.string();
+                        message.Amount = reader.string();
                         break;
                     default:
                         reader.skipType(tag & 7);
@@ -864,8 +864,7 @@ $root.cosmos = (function() {
                 throw $util.ProtocolError("missing required 'DelegatorAddr'", { instance: message });
             if (!message.hasOwnProperty('ValidatorAddr'))
                 throw $util.ProtocolError("missing required 'ValidatorAddr'", { instance: message });
-            if (!message.hasOwnProperty('SharesAmount'))
-                throw $util.ProtocolError("missing required 'SharesAmount'", { instance: message });
+            if (!message.hasOwnProperty('Amount')) throw $util.ProtocolError("missing required 'Amount'", { instance: message });
             return message;
         };
 
@@ -898,7 +897,7 @@ $root.cosmos = (function() {
                 return 'DelegatorAddr: buffer expected';
             if (!((message.ValidatorAddr && typeof message.ValidatorAddr.length === 'number') || $util.isString(message.ValidatorAddr)))
                 return 'ValidatorAddr: buffer expected';
-            if (!$util.isString(message.SharesAmount)) return 'SharesAmount: string expected';
+            if (!$util.isString(message.Amount)) return 'Amount: string expected';
             return null;
         };
 
@@ -929,7 +928,7 @@ $root.cosmos = (function() {
                         0
                     );
                 else if (object.ValidatorAddr.length) message.ValidatorAddr = object.ValidatorAddr;
-            if (object.SharesAmount != null) message.SharesAmount = String(object.SharesAmount);
+            if (object.Amount != null) message.Amount = String(object.Amount);
             return message;
         };
 
@@ -956,7 +955,7 @@ $root.cosmos = (function() {
                     object.ValidatorAddr = [];
                     if (options.bytes !== Array) object.ValidatorAddr = $util.newBuffer(object.ValidatorAddr);
                 }
-                object.SharesAmount = '';
+                object.Amount = '';
             }
             if (message.DelegatorAddr != null && message.hasOwnProperty('DelegatorAddr'))
                 object.DelegatorAddr =
@@ -972,7 +971,7 @@ $root.cosmos = (function() {
                         : options.bytes === Array
                         ? Array.prototype.slice.call(message.ValidatorAddr)
                         : message.ValidatorAddr;
-            if (message.SharesAmount != null && message.hasOwnProperty('SharesAmount')) object.SharesAmount = message.SharesAmount;
+            if (message.Amount != null && message.hasOwnProperty('Amount')) object.Amount = message.Amount;
             return object;
         };
 
@@ -998,7 +997,7 @@ $root.cosmos = (function() {
          * @property {Uint8Array} DelegatorAddr MsgBeginRedelegate DelegatorAddr
          * @property {Uint8Array} ValidatorSrcAddr MsgBeginRedelegate ValidatorSrcAddr
          * @property {Uint8Array} ValidatorDstAddr MsgBeginRedelegate ValidatorDstAddr
-         * @property {string} SharesAmount MsgBeginRedelegate SharesAmount
+         * @property {string} Amount MsgBeginRedelegate Amount
          */
 
         /**
@@ -1040,12 +1039,12 @@ $root.cosmos = (function() {
         MsgBeginRedelegate.prototype.ValidatorDstAddr = $util.newBuffer([]);
 
         /**
-         * MsgBeginRedelegate SharesAmount.
-         * @member {string} SharesAmount
+         * MsgBeginRedelegate Amount.
+         * @member {string} Amount
          * @memberof cosmos.MsgBeginRedelegate
          * @instance
          */
-        MsgBeginRedelegate.prototype.SharesAmount = '';
+        MsgBeginRedelegate.prototype.Amount = '';
 
         /**
          * Creates a new MsgBeginRedelegate instance using the specified properties.
@@ -1073,7 +1072,7 @@ $root.cosmos = (function() {
             writer.uint32(/* id 1, wireType 2 =*/ 10).bytes(message.DelegatorAddr);
             writer.uint32(/* id 2, wireType 2 =*/ 18).bytes(message.ValidatorSrcAddr);
             writer.uint32(/* id 3, wireType 2 =*/ 26).bytes(message.ValidatorDstAddr);
-            let shares = message.SharesAmount.replace('.', '');
+            let shares = message.Amount.replace('.', '');
             shares = shares.replace(/\b(0+)/gi, '');
             writer.uint32(/* id 3, wireType 2 =*/ 34).string(shares);
             return writer;
@@ -1120,7 +1119,7 @@ $root.cosmos = (function() {
                         message.ValidatorDstAddr = reader.bytes();
                         break;
                     case 4:
-                        message.SharesAmount = reader.string();
+                        message.Amount = reader.string();
                         break;
                     default:
                         reader.skipType(tag & 7);
@@ -1133,8 +1132,7 @@ $root.cosmos = (function() {
                 throw $util.ProtocolError("missing required 'ValidatorSrcAddr'", { instance: message });
             if (!message.hasOwnProperty('ValidatorDstAddr'))
                 throw $util.ProtocolError("missing required 'ValidatorDstAddr'", { instance: message });
-            if (!message.hasOwnProperty('SharesAmount'))
-                throw $util.ProtocolError("missing required 'SharesAmount'", { instance: message });
+            if (!message.hasOwnProperty('Amount')) throw $util.ProtocolError("missing required 'Amount'", { instance: message });
             return message;
         };
 
@@ -1179,7 +1177,7 @@ $root.cosmos = (function() {
                 )
             )
                 return 'ValidatorDstAddr: buffer expected';
-            if (!$util.isString(message.SharesAmount)) return 'SharesAmount: string expected';
+            if (!$util.isString(message.Amount)) return 'Amount: string expected';
             return null;
         };
 
@@ -1218,7 +1216,7 @@ $root.cosmos = (function() {
                         0
                     );
                 else if (object.ValidatorDstAddr.length) message.ValidatorDstAddr = object.ValidatorDstAddr;
-            if (object.SharesAmount != null) message.SharesAmount = String(object.SharesAmount);
+            if (object.Amount != null) message.Amount = String(object.Amount);
             return message;
         };
 
@@ -1250,7 +1248,7 @@ $root.cosmos = (function() {
                     object.ValidatorDstAddr = [];
                     if (options.bytes !== Array) object.ValidatorDstAddr = $util.newBuffer(object.ValidatorDstAddr);
                 }
-                object.SharesAmount = '';
+                object.Amount = '';
             }
             if (message.DelegatorAddr != null && message.hasOwnProperty('DelegatorAddr'))
                 object.DelegatorAddr =
@@ -1273,7 +1271,7 @@ $root.cosmos = (function() {
                         : options.bytes === Array
                         ? Array.prototype.slice.call(message.ValidatorDstAddr)
                         : message.ValidatorDstAddr;
-            if (message.SharesAmount != null && message.hasOwnProperty('SharesAmount')) object.SharesAmount = message.SharesAmount;
+            if (message.Amount != null && message.hasOwnProperty('Amount')) object.Amount = message.Amount;
             return object;
         };
 

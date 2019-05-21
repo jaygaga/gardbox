@@ -16,7 +16,10 @@
     <p><span>{{ $t('staking.commission') }}</span>{{ numeral(get(v, 'commission.rate')).format('(0.[00]%)') }}</p>
     <p><span>{{ $t('staking.max') }}</span>{{ numeral(get(v, 'commission.max_rate')).format('(0.[00]%)') }}</p>
 
-    <p v-if="get(delegation, 'shares')"><span>{{ $t('staking.delegations') }}</span>{{ numeral(get(delegation, 'shares')).format('0,0') }} GARD</p>
+    <p v-if="get(delegation, 'shares')">
+      <span>{{ $t('staking.delegations') }}</span>
+      {{ numeral(getViewToken({denom: 'agard', amount: get(delegation, 'shares')}).amount).format('0,0') }} GARD
+    </p>
   </router-link>
 </template>
 
@@ -41,7 +44,8 @@ export default {
   },
   methods: {
     get,
-    numeral
+    numeral,
+    getViewToken
   }
 };
 </script>

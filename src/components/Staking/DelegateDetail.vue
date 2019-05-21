@@ -71,8 +71,7 @@
           :key="i.completion_time"
           class="data"
         >
-          <span>{{ $t('staking.unbinding') }}</span>
-          {{ numeral(get(i, 'balance')).format('0,0') }} | {{ get(i, 'completion_time') | formatTime }}
+          {{ numeral(getViewToken({denom: 'agard', amount: get(i, 'balance')}).amount).format('0,0') }} GARD | {{ get(i, 'completion_time') | formatTime }}
         </div>
       </s-item>
     </div>
@@ -143,6 +142,7 @@ export default {
     get,
     isEmpty,
     numeral,
+    getViewToken,
     toDelegate() {
       const { validator } = this.$route.params;
       this.$router.push(`/staking/delegate?to=${validator}`);

@@ -44,7 +44,7 @@ MsgUndelegate.prototype.GetSignBytes = function() {
     let msg = {
         delegator_address: BECH32.encode(Config.cosmos.bech32.accAddr, this.DelegatorAddr),
         validator_address: BECH32.encode(Config.cosmos.bech32.valAddr, this.ValidatorAddr),
-        shares_amount: this.SharesAmount
+        amount: this.Amount
     };
     let sortMsg = Utils.sortObjectKeys(msg);
     return Amino.MarshalJSON(this.type, sortMsg);
@@ -67,7 +67,7 @@ MsgUndelegate.prototype.GetMsg = function() {
     return {
         DelegatorAddr: delegator_addr,
         ValidatorAddr: validator_addr,
-        SharesAmount: this.SharesAmount
+        Amount: this.Amount
     };
 };
 
@@ -77,7 +77,7 @@ MsgBeginRedelegate.prototype.GetSignBytes = function() {
         delegator_address: BECH32.encode(Config.cosmos.bech32.accAddr, this.DelegatorAddr),
         validator_src_address: BECH32.encode(Config.cosmos.bech32.valAddr, this.ValidatorSrcAddr),
         validator_dst_address: BECH32.encode(Config.cosmos.bech32.valAddr, this.ValidatorDstAddr),
-        shares_amount: this.SharesAmount
+        amount: this.Amount
     };
     let sortMsg = Utils.sortObjectKeys(msg);
     return Amino.MarshalJSON(this.type, sortMsg);
@@ -93,8 +93,8 @@ MsgBeginRedelegate.prototype.ValidateBasic = function() {
     if (Utils.isEmpty(this.ValidatorDstAddr)) {
         throw new Error('validatorDstAddr is  empty');
     }
-    if (Utils.isEmpty(this.SharesAmount)) {
-        throw new Error('sharesAmount is  empty');
+    if (Utils.isEmpty(this.Amount)) {
+        throw new Error('Amount is  empty');
     }
 };
 
@@ -108,7 +108,7 @@ MsgBeginRedelegate.prototype.GetMsg = function() {
         DelegatorAddr: delegator_addr,
         ValidatorSrcAddr: validator_src_addr,
         ValidatorDstAddr: validator_dst_addr,
-        SharesAmount: this.SharesAmount
+        Amount: this.Amount
     };
 };
 
@@ -130,19 +130,23 @@ module.exports = class Stake {
     }
 
     static createMsgUndelegate(req) {
-        let shares_amount = Dec.String(req.msg.shares_amount);
+        let amount = req.msg.amount;
+        amount.amount = Utils.toString(amount.amount);
+
         let delegator_addr = BECH32.decode(req.from).words;
         let validator_addr = BECH32.decode(req.msg.validator_addr).words;
 
         return new MsgUndelegate({
             DelegatorAddr: delegator_addr,
             ValidatorAddr: validator_addr,
-            SharesAmount: shares_amount
+            Amount: amount
         });
     }
 
     static createMsgBeginRedelegate(req) {
-        let shares_amount = Dec.String(req.msg.shares_amount);
+        let amount = req.msg.amount;
+        amount.amount = Utils.toString(amount.amount);
+
         let delegator_addr = BECH32.decode(req.from).words;
         let validator_src_addr = BECH32.decode(req.msg.validator_src_addr).words;
         let validator_dst_addr = BECH32.decode(req.msg.validator_dst_addr).words;
@@ -151,7 +155,7 @@ module.exports = class Stake {
             DelegatorAddr: delegator_addr,
             ValidatorSrcAddr: validator_src_addr,
             ValidatorDstAddr: validator_dst_addr,
-            SharesAmount: shares_amount
+            Amount: amount
         });
     }
 };

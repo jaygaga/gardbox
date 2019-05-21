@@ -149,7 +149,7 @@ const en = {
     unbindAll: 'Unbind All',
     redelegate: 'Redelegate',
     redelegateAll: 'Redelegate All',
-    unbinding: 'Unbinding',
+    unbinding: 'Unbindings',
     delegated: 'Delegated'
   },
   footer: {
