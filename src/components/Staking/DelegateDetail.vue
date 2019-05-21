@@ -40,22 +40,12 @@
       >{{ get(v, 'description.detail') || '-' }}</s-item>
     </div>
 
-    <div class="btns">
-      <el-button
-        @click="confirmWithdraw"
-        :disabled="isEmpty(v.reward)"
-        class="btn"
-      >
-        {{ $t('staking.withdraw') }}
-      </el-button>
-
-      <el-button
-        @click="toDelegate"
-        class="btn"
-      >
-        {{ $t('staking.delegate') }}
-      </el-button>
-    </div>
+    <el-button
+      @click="toDelegate"
+      class="btn-delegate"
+    >
+      {{ $t('staking.delegate') }}
+    </el-button>
 
     <p
       class="label"
@@ -70,12 +60,7 @@
         v-if="!isEmpty(v.delegation)"
         :label="$t('staking.delegated')"
         class="item"
-      >{{ numeral(get(v, 'delegation.shares')).format('0,0') }}</s-item>
-      <s-item
-        v-if="!isEmpty(v.reward)"
-        :label="$t('staking.reward')"
-        class="item"
-      >{{ numeral(get(v, 'reward.0.amount')).format('0,0.[000000]') }}</s-item>
+      >{{ numeral(myDelegation.amount).format('0,0') }} GARD</s-item>
       <s-item
         v-if="!isEmpty(v.unbinding)"
         :label="$t('staking.unbinding')"
@@ -110,24 +95,6 @@
         {{ $t('staking.redelegate') }}
       </el-button>
     </div>
-
-    <el-dialog
-      :title="$t('create.pass')"
-      :visible.sync="dialogVisible"
-      width="360px"
-      v-loading="withdrawLoading"
-      :close-on-click-modal="false"
-    >
-      <el-input
-        type="password"
-        v-model="pass"
-        :placeholder="$t('create.pass')"
-        @keyup.enter.native="onWithdraw"
-      ></el-input>
-      <span slot="footer">
-        <el-button @click="onWithdraw">{{$t('global.ok')}}</el-button>
-      </span>
-    </el-dialog>
   </s-card>
 </template>
 
@@ -139,20 +106,8 @@ import { getViewToken } from "@/utils/helpers";
 
 export default {
   name: "ValidatorList",
-  data() {
-    return {
-      dialogVisible: false,
-      withdrawLoading: false,
-      pass: ""
-    };
-  },
   computed: {
-    ...mapState("staking", [
-      "validatorMap",
-      "delegationMap",
-      "unbindingMap",
-      "rewardMap"
-    ]),
+    ...mapState("staking", ["validatorMap", "delegationMap", "unbindingMap"]),
     v() {
       const address = this.$route.params.validator;
       const validator = get(this.validatorMap, address) || {};
@@ -166,8 +121,7 @@ export default {
       return {
         ...validator,
         delegation: get(this.delegationMap, address),
-        unbinding: unbindingList,
-        reward: get(this.rewardMap, address)
+        unbinding: unbindingList
       };
     },
     shares() {
@@ -176,50 +130,19 @@ export default {
     },
     isDelegating() {
       return !isEmpty(this.v.delegation) || !isEmpty(this.v.unbinding);
+    },
+    myDelegation() {
+      const t = {
+        denom: "agard",
+        amount: get(this.delegationMap, [this.v.operator_address, "shares"])
+      };
+      return getViewToken(t);
     }
   },
   methods: {
     get,
     isEmpty,
     numeral,
-    confirmWithdraw() {
-      this.pass = "";
-      this.dialogVisible = true;
-    },
-    onWithdraw: async function() {
-      if (!this.pass) {
-        this.$message({
-          type: "error",
-          message: $t("global.required", { name: $t("create.pass") }),
-          center: true
-        });
-        return false;
-      }
-      this.withdrawLoading = true;
-      let res = "";
-      try {
-        res = await this.$store.dispatch("staking/withdrawAll", {
-          pass: this.pass
-        });
-      } catch (e) {
-        this.$message({
-          type: "error",
-          message: this.$t(`send.error`),
-          center: true
-        });
-      }
-      if (res.txhash) {
-        this.dialogVisible = false;
-        this.fetchData();
-      } else {
-        this.$message({
-          type: "error",
-          message: this.$t(`send.${res}`),
-          center: true
-        });
-      }
-      this.withdrawLoading = false;
-    },
     toDelegate() {
       const { validator } = this.$route.params;
       this.$router.push(`/staking/delegate?to=${validator}`);
@@ -239,11 +162,9 @@ export default {
 
     // rest api returns 500 if result data empty
     // this.$store.dispatch("staking/fetchDelegation", validator);
-    // this.$store.dispatch("staking/fetchReward", validator);
     // this.$store.dispatch("staking/fetchUnbinding", validator);
     // so we fetch list api
     this.$store.dispatch("staking/fetchDelegations");
-    this.$store.dispatch("staking/fetchRewards");
     this.$store.dispatch("staking/fetchUnbindings");
   }
 };
@@ -259,14 +180,20 @@ export default {
   }
 }
 .label {
+  margin-top: 24px;
   margin-bottom: 12px;
 }
+.btn-delegate {
+  width: 100%;
+  height: 48px;
+}
 .btns {
-  margin-top: $padding-basic;
+  margin-top: 16px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   .btn {
+    width: 100%;
     height: 48px;
     flex-basis: 48%;
   }

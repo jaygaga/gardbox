@@ -69,7 +69,7 @@ export default {
       if (!isEmpty(data)) {
         context.commit('setDelegations', data);
         data.forEach(i => {
-          context.commit('setDelegationMap', { [i.operator_address]: i });
+          context.commit('setDelegationMap', { [i.validator_address]: i });
         });
       }
       return Promise.resolve(data);
