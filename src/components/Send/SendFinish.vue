@@ -1,8 +1,8 @@
 <template>
   <s-card :title="$t('send.finish')">
     <s-item :label="$t('send.amount')">{{form.amount}} {{denom}}</s-item>
-    <s-item :label="$t('send.sender')">{{get(result, 'tags.1.value')}}</s-item>
-    <s-item :label="$t('send.address')">{{get(result, 'tags.2.value')}}</s-item>
+    <s-item :label="$t('send.sender')">{{get(result, 'tags.2.value')}}</s-item>
+    <s-item :label="$t('send.address')">{{get(result, 'tags.3.value')}}</s-item>
     <s-item :label="$t('send.fee')">{{form.fee}} GARD</s-item>
     <s-item :label="$t('send.txHash')">{{get(result, 'txhash')}}</s-item>
     <s-item :label="$t('send.block')">{{get(result, 'height')}}</s-item>

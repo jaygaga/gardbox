@@ -8,7 +8,7 @@
 export default {
   name: "Send",
   beforeDestroy() {
-    this.$store.dispatch("transactions/input", { denom: "gard", fee: 0 });
+    this.$store.dispatch("transactions/input", { denom: "agard", fee: 0 });
   }
 };
 </script>
