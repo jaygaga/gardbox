@@ -53,7 +53,7 @@
       "signature": "tendermint/SignatureSecp256k1",
       "pubKey": "tendermint/PubKeySecp256k1"
     },
-    "bip39Path": "44'/118'/0'/0/0"
+    "bip39Path": "44'/322'/0'/0/0"
   },
   "language": {
     "cn": "chinese_simplified",
