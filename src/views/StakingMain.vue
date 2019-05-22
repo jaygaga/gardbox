@@ -4,7 +4,7 @@
       <div class="top-left">
         <div>
           <p>{{ $t('staking.delegationTotal') }}</p>
-          <h2>{{ totalDelegation }}</h2>
+          <h2>{{ numeral(totalDelegation.amount).format('0,0.[0000]') }}</h2>
           <span>GARD</span>
         </div>
         <div>
@@ -98,9 +98,11 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
+import Bignumber, { BigNumber } from "bignumber.js";
 import numeral from "numeral";
 import { get, isEmpty } from "lodash";
 
+import { getViewToken } from "@/utils/helpers";
 import ValidatorPanel from "@/components/Panel/ValidatorPanel";
 
 export default {
@@ -125,13 +127,11 @@ export default {
       "rewards"
     ]),
     totalDelegation() {
-      let res = 0;
+      let res = BigNumber(0);
       this.delegations.forEach(i => {
-        res = numeral(i.shares)
-          .add(res)
-          .format("0,0");
+        res = Bignumber(i.shares).plus(res);
       });
-      return res;
+      return getViewToken({ denom: "agard", amount: res.toFixed() });
     },
     reward() {
       return this.rewards.find(i => i.denom === "gard") || {};
