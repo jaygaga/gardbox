@@ -1,16 +1,17 @@
 /*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
-"use strict";
+'use strict';
 
-var $protobuf = require("protobufjs/minimal");
+var $protobuf = require('protobufjs/minimal');
 
 // Common aliases
-var $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
+var $Reader = $protobuf.Reader,
+    $Writer = $protobuf.Writer,
+    $util = $protobuf.util;
 
 // Exported root namespace
-var $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
+var $root = $protobuf.roots['default'] || ($protobuf.roots['default'] = {});
 
 $root.cosmos = (function() {
-
     /**
      * Namespace cosmos.
      * @exports cosmos
@@ -19,7 +20,6 @@ $root.cosmos = (function() {
     var cosmos = {};
 
     cosmos.Coin = (function() {
-
         /**
          * Properties of a Coin.
          * @memberof cosmos
@@ -39,8 +39,7 @@ $root.cosmos = (function() {
         function Coin(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -49,7 +48,7 @@ $root.cosmos = (function() {
          * @memberof cosmos.Coin
          * @instance
          */
-        Coin.prototype.denom = "";
+        Coin.prototype.denom = '';
 
         /**
          * Coin amount.
@@ -57,7 +56,7 @@ $root.cosmos = (function() {
          * @memberof cosmos.Coin
          * @instance
          */
-        Coin.prototype.amount = "";
+        Coin.prototype.amount = '';
 
         /**
          * Creates a new Coin instance using the specified properties.
@@ -81,10 +80,9 @@ $root.cosmos = (function() {
          * @returns {$protobuf.Writer} Writer
          */
         Coin.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            writer.uint32(/* id 1, wireType 2 =*/10).string(message.denom);
-            writer.uint32(/* id 2, wireType 2 =*/18).string(message.amount);
+            if (!writer) writer = $Writer.create();
+            writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.denom);
+            writer.uint32(/* id 2, wireType 2 =*/ 18).string(message.amount);
             return writer;
         };
 
@@ -113,27 +111,25 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Coin.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos.Coin();
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.cosmos.Coin();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.denom = reader.string();
-                    break;
-                case 2:
-                    message.amount = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+                    case 1:
+                        message.denom = reader.string();
+                        break;
+                    case 2:
+                        message.amount = reader.string();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
                 }
             }
-            if (!message.hasOwnProperty("denom"))
-                throw $util.ProtocolError("missing required 'denom'", { instance: message });
-            if (!message.hasOwnProperty("amount"))
-                throw $util.ProtocolError("missing required 'amount'", { instance: message });
+            if (!message.hasOwnProperty('denom')) throw $util.ProtocolError("missing required 'denom'", { instance: message });
+            if (!message.hasOwnProperty('amount')) throw $util.ProtocolError("missing required 'amount'", { instance: message });
             return message;
         };
 
@@ -148,8 +144,7 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Coin.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -162,12 +157,9 @@ $root.cosmos = (function() {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         Coin.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (!$util.isString(message.denom))
-                return "denom: string expected";
-            if (!$util.isString(message.amount))
-                return "amount: string expected";
+            if (typeof message !== 'object' || message === null) return 'object expected';
+            if (!$util.isString(message.denom)) return 'denom: string expected';
+            if (!$util.isString(message.amount)) return 'amount: string expected';
             return null;
         };
 
@@ -180,13 +172,10 @@ $root.cosmos = (function() {
          * @returns {cosmos.Coin} Coin
          */
         Coin.fromObject = function fromObject(object) {
-            if (object instanceof $root.cosmos.Coin)
-                return object;
+            if (object instanceof $root.cosmos.Coin) return object;
             var message = new $root.cosmos.Coin();
-            if (object.denom != null)
-                message.denom = String(object.denom);
-            if (object.amount != null)
-                message.amount = String(object.amount);
+            if (object.denom != null) message.denom = String(object.denom);
+            if (object.amount != null) message.amount = String(object.amount);
             return message;
         };
 
@@ -200,17 +189,14 @@ $root.cosmos = (function() {
          * @returns {Object.<string,*>} Plain object
          */
         Coin.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
+            if (!options) options = {};
             var object = {};
             if (options.defaults) {
-                object.denom = "";
-                object.amount = "";
+                object.denom = '';
+                object.amount = '';
             }
-            if (message.denom != null && message.hasOwnProperty("denom"))
-                object.denom = message.denom;
-            if (message.amount != null && message.hasOwnProperty("amount"))
-                object.amount = message.amount;
+            if (message.denom != null && message.hasOwnProperty('denom')) object.denom = message.denom;
+            if (message.amount != null && message.hasOwnProperty('amount')) object.amount = message.amount;
             return object;
         };
 
@@ -229,7 +215,6 @@ $root.cosmos = (function() {
     })();
 
     cosmos.MsgSend = (function() {
-
         /**
          * Properties of a MsgSend.
          * @memberof cosmos
@@ -251,8 +236,7 @@ $root.cosmos = (function() {
             this.Amount = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -301,13 +285,12 @@ $root.cosmos = (function() {
          * @returns {$protobuf.Writer} Writer
          */
         MsgSend.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.FromAddress);
-            writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.ToAddress);
+            if (!writer) writer = $Writer.create();
+            writer.uint32(/* id 1, wireType 2 =*/ 10).bytes(message.FromAddress);
+            writer.uint32(/* id 2, wireType 2 =*/ 18).bytes(message.ToAddress);
             if (message.Amount != null && message.Amount.length)
                 for (var i = 0; i < message.Amount.length; ++i)
-                    $root.cosmos.Coin.encode(message.Amount[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+                    $root.cosmos.Coin.encode(message.Amount[i], writer.uint32(/* id 3, wireType 2 =*/ 26).fork()).ldelim();
             return writer;
         };
 
@@ -336,32 +319,29 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgSend.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos.MsgSend();
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.cosmos.MsgSend();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.FromAddress = reader.bytes();
-                    break;
-                case 2:
-                    message.ToAddress = reader.bytes();
-                    break;
-                case 3:
-                    if (!(message.Amount && message.Amount.length))
-                        message.Amount = [];
-                    message.Amount.push($root.cosmos.Coin.decode(reader, reader.uint32()));
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+                    case 1:
+                        message.FromAddress = reader.bytes();
+                        break;
+                    case 2:
+                        message.ToAddress = reader.bytes();
+                        break;
+                    case 3:
+                        if (!(message.Amount && message.Amount.length)) message.Amount = [];
+                        message.Amount.push($root.cosmos.Coin.decode(reader, reader.uint32()));
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
                 }
             }
-            if (!message.hasOwnProperty("FromAddress"))
-                throw $util.ProtocolError("missing required 'FromAddress'", { instance: message });
-            if (!message.hasOwnProperty("ToAddress"))
-                throw $util.ProtocolError("missing required 'ToAddress'", { instance: message });
+            if (!message.hasOwnProperty('FromAddress')) throw $util.ProtocolError("missing required 'FromAddress'", { instance: message });
+            if (!message.hasOwnProperty('ToAddress')) throw $util.ProtocolError("missing required 'ToAddress'", { instance: message });
             return message;
         };
 
@@ -376,8 +356,7 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgSend.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -390,19 +369,16 @@ $root.cosmos = (function() {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         MsgSend.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (!(message.FromAddress && typeof message.FromAddress.length === "number" || $util.isString(message.FromAddress)))
-                return "FromAddress: buffer expected";
-            if (!(message.ToAddress && typeof message.ToAddress.length === "number" || $util.isString(message.ToAddress)))
-                return "ToAddress: buffer expected";
-            if (message.Amount != null && message.hasOwnProperty("Amount")) {
-                if (!Array.isArray(message.Amount))
-                    return "Amount: array expected";
+            if (typeof message !== 'object' || message === null) return 'object expected';
+            if (!((message.FromAddress && typeof message.FromAddress.length === 'number') || $util.isString(message.FromAddress)))
+                return 'FromAddress: buffer expected';
+            if (!((message.ToAddress && typeof message.ToAddress.length === 'number') || $util.isString(message.ToAddress)))
+                return 'ToAddress: buffer expected';
+            if (message.Amount != null && message.hasOwnProperty('Amount')) {
+                if (!Array.isArray(message.Amount)) return 'Amount: array expected';
                 for (var i = 0; i < message.Amount.length; ++i) {
                     var error = $root.cosmos.Coin.verify(message.Amount[i]);
-                    if (error)
-                        return "Amount." + error;
+                    if (error) return 'Amount.' + error;
                 }
             }
             return null;
@@ -417,26 +393,25 @@ $root.cosmos = (function() {
          * @returns {cosmos.MsgSend} MsgSend
          */
         MsgSend.fromObject = function fromObject(object) {
-            if (object instanceof $root.cosmos.MsgSend)
-                return object;
+            if (object instanceof $root.cosmos.MsgSend) return object;
             var message = new $root.cosmos.MsgSend();
             if (object.FromAddress != null)
-                if (typeof object.FromAddress === "string")
-                    $util.base64.decode(object.FromAddress, message.FromAddress = $util.newBuffer($util.base64.length(object.FromAddress)), 0);
-                else if (object.FromAddress.length)
-                    message.FromAddress = object.FromAddress;
+                if (typeof object.FromAddress === 'string')
+                    $util.base64.decode(
+                        object.FromAddress,
+                        (message.FromAddress = $util.newBuffer($util.base64.length(object.FromAddress))),
+                        0
+                    );
+                else if (object.FromAddress.length) message.FromAddress = object.FromAddress;
             if (object.ToAddress != null)
-                if (typeof object.ToAddress === "string")
-                    $util.base64.decode(object.ToAddress, message.ToAddress = $util.newBuffer($util.base64.length(object.ToAddress)), 0);
-                else if (object.ToAddress.length)
-                    message.ToAddress = object.ToAddress;
+                if (typeof object.ToAddress === 'string')
+                    $util.base64.decode(object.ToAddress, (message.ToAddress = $util.newBuffer($util.base64.length(object.ToAddress))), 0);
+                else if (object.ToAddress.length) message.ToAddress = object.ToAddress;
             if (object.Amount) {
-                if (!Array.isArray(object.Amount))
-                    throw TypeError(".cosmos.MsgSend.Amount: array expected");
+                if (!Array.isArray(object.Amount)) throw TypeError('.cosmos.MsgSend.Amount: array expected');
                 message.Amount = [];
                 for (var i = 0; i < object.Amount.length; ++i) {
-                    if (typeof object.Amount[i] !== "object")
-                        throw TypeError(".cosmos.MsgSend.Amount: object expected");
+                    if (typeof object.Amount[i] !== 'object') throw TypeError('.cosmos.MsgSend.Amount: object expected');
                     message.Amount[i] = $root.cosmos.Coin.fromObject(object.Amount[i]);
                 }
             }
@@ -453,35 +428,38 @@ $root.cosmos = (function() {
          * @returns {Object.<string,*>} Plain object
          */
         MsgSend.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
+            if (!options) options = {};
             var object = {};
-            if (options.arrays || options.defaults)
-                object.Amount = [];
+            if (options.arrays || options.defaults) object.Amount = [];
             if (options.defaults) {
-                if (options.bytes === String)
-                    object.FromAddress = "";
+                if (options.bytes === String) object.FromAddress = '';
                 else {
                     object.FromAddress = [];
-                    if (options.bytes !== Array)
-                        object.FromAddress = $util.newBuffer(object.FromAddress);
+                    if (options.bytes !== Array) object.FromAddress = $util.newBuffer(object.FromAddress);
                 }
-                if (options.bytes === String)
-                    object.ToAddress = "";
+                if (options.bytes === String) object.ToAddress = '';
                 else {
                     object.ToAddress = [];
-                    if (options.bytes !== Array)
-                        object.ToAddress = $util.newBuffer(object.ToAddress);
+                    if (options.bytes !== Array) object.ToAddress = $util.newBuffer(object.ToAddress);
                 }
             }
-            if (message.FromAddress != null && message.hasOwnProperty("FromAddress"))
-                object.FromAddress = options.bytes === String ? $util.base64.encode(message.FromAddress, 0, message.FromAddress.length) : options.bytes === Array ? Array.prototype.slice.call(message.FromAddress) : message.FromAddress;
-            if (message.ToAddress != null && message.hasOwnProperty("ToAddress"))
-                object.ToAddress = options.bytes === String ? $util.base64.encode(message.ToAddress, 0, message.ToAddress.length) : options.bytes === Array ? Array.prototype.slice.call(message.ToAddress) : message.ToAddress;
+            if (message.FromAddress != null && message.hasOwnProperty('FromAddress'))
+                object.FromAddress =
+                    options.bytes === String
+                        ? $util.base64.encode(message.FromAddress, 0, message.FromAddress.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.FromAddress)
+                        : message.FromAddress;
+            if (message.ToAddress != null && message.hasOwnProperty('ToAddress'))
+                object.ToAddress =
+                    options.bytes === String
+                        ? $util.base64.encode(message.ToAddress, 0, message.ToAddress.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.ToAddress)
+                        : message.ToAddress;
             if (message.Amount && message.Amount.length) {
                 object.Amount = [];
-                for (var j = 0; j < message.Amount.length; ++j)
-                    object.Amount[j] = $root.cosmos.Coin.toObject(message.Amount[j], options);
+                for (var j = 0; j < message.Amount.length; ++j) object.Amount[j] = $root.cosmos.Coin.toObject(message.Amount[j], options);
             }
             return object;
         };
@@ -501,14 +479,13 @@ $root.cosmos = (function() {
     })();
 
     cosmos.MsgDelegate = (function() {
-
         /**
          * Properties of a MsgDelegate.
          * @memberof cosmos
          * @interface IMsgDelegate
          * @property {Uint8Array} DelegatorAddr MsgDelegate DelegatorAddr
          * @property {Uint8Array} ValidatorAddr MsgDelegate ValidatorAddr
-         * @property {cosmos.ICoin} Value MsgDelegate Value
+         * @property {cosmos.ICoin} Amount MsgDelegate Amount
          */
 
         /**
@@ -522,8 +499,7 @@ $root.cosmos = (function() {
         function MsgDelegate(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -543,12 +519,12 @@ $root.cosmos = (function() {
         MsgDelegate.prototype.ValidatorAddr = $util.newBuffer([]);
 
         /**
-         * MsgDelegate Value.
-         * @member {cosmos.ICoin} Value
+         * MsgDelegate Amount.
+         * @member {cosmos.ICoin} Amount
          * @memberof cosmos.MsgDelegate
          * @instance
          */
-        MsgDelegate.prototype.Value = null;
+        MsgDelegate.prototype.Amount = null;
 
         /**
          * Creates a new MsgDelegate instance using the specified properties.
@@ -572,11 +548,10 @@ $root.cosmos = (function() {
          * @returns {$protobuf.Writer} Writer
          */
         MsgDelegate.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.DelegatorAddr);
-            writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.ValidatorAddr);
-            $root.cosmos.Coin.encode(message.Value, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (!writer) writer = $Writer.create();
+            writer.uint32(/* id 1, wireType 2 =*/ 10).bytes(message.DelegatorAddr);
+            writer.uint32(/* id 2, wireType 2 =*/ 18).bytes(message.ValidatorAddr);
+            $root.cosmos.Coin.encode(message.Amount, writer.uint32(/* id 3, wireType 2 =*/ 26).fork()).ldelim();
             return writer;
         };
 
@@ -605,32 +580,31 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgDelegate.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos.MsgDelegate();
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.cosmos.MsgDelegate();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.DelegatorAddr = reader.bytes();
-                    break;
-                case 2:
-                    message.ValidatorAddr = reader.bytes();
-                    break;
-                case 3:
-                    message.Value = $root.cosmos.Coin.decode(reader, reader.uint32());
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+                    case 1:
+                        message.DelegatorAddr = reader.bytes();
+                        break;
+                    case 2:
+                        message.ValidatorAddr = reader.bytes();
+                        break;
+                    case 3:
+                        message.Amount = $root.cosmos.Coin.decode(reader, reader.uint32());
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
                 }
             }
-            if (!message.hasOwnProperty("DelegatorAddr"))
+            if (!message.hasOwnProperty('DelegatorAddr'))
                 throw $util.ProtocolError("missing required 'DelegatorAddr'", { instance: message });
-            if (!message.hasOwnProperty("ValidatorAddr"))
+            if (!message.hasOwnProperty('ValidatorAddr'))
                 throw $util.ProtocolError("missing required 'ValidatorAddr'", { instance: message });
-            if (!message.hasOwnProperty("Value"))
-                throw $util.ProtocolError("missing required 'Value'", { instance: message });
+            if (!message.hasOwnProperty('Amount')) throw $util.ProtocolError("missing required 'Amount'", { instance: message });
             return message;
         };
 
@@ -645,8 +619,7 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgDelegate.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -659,16 +632,14 @@ $root.cosmos = (function() {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         MsgDelegate.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (!(message.DelegatorAddr && typeof message.DelegatorAddr.length === "number" || $util.isString(message.DelegatorAddr)))
-                return "DelegatorAddr: buffer expected";
-            if (!(message.ValidatorAddr && typeof message.ValidatorAddr.length === "number" || $util.isString(message.ValidatorAddr)))
-                return "ValidatorAddr: buffer expected";
+            if (typeof message !== 'object' || message === null) return 'object expected';
+            if (!((message.DelegatorAddr && typeof message.DelegatorAddr.length === 'number') || $util.isString(message.DelegatorAddr)))
+                return 'DelegatorAddr: buffer expected';
+            if (!((message.ValidatorAddr && typeof message.ValidatorAddr.length === 'number') || $util.isString(message.ValidatorAddr)))
+                return 'ValidatorAddr: buffer expected';
             {
-                var error = $root.cosmos.Coin.verify(message.Value);
-                if (error)
-                    return "Value." + error;
+                var error = $root.cosmos.Coin.verify(message.Amount);
+                if (error) return 'Amount.' + error;
             }
             return null;
         };
@@ -682,23 +653,27 @@ $root.cosmos = (function() {
          * @returns {cosmos.MsgDelegate} MsgDelegate
          */
         MsgDelegate.fromObject = function fromObject(object) {
-            if (object instanceof $root.cosmos.MsgDelegate)
-                return object;
+            if (object instanceof $root.cosmos.MsgDelegate) return object;
             var message = new $root.cosmos.MsgDelegate();
             if (object.DelegatorAddr != null)
-                if (typeof object.DelegatorAddr === "string")
-                    $util.base64.decode(object.DelegatorAddr, message.DelegatorAddr = $util.newBuffer($util.base64.length(object.DelegatorAddr)), 0);
-                else if (object.DelegatorAddr.length)
-                    message.DelegatorAddr = object.DelegatorAddr;
+                if (typeof object.DelegatorAddr === 'string')
+                    $util.base64.decode(
+                        object.DelegatorAddr,
+                        (message.DelegatorAddr = $util.newBuffer($util.base64.length(object.DelegatorAddr))),
+                        0
+                    );
+                else if (object.DelegatorAddr.length) message.DelegatorAddr = object.DelegatorAddr;
             if (object.ValidatorAddr != null)
-                if (typeof object.ValidatorAddr === "string")
-                    $util.base64.decode(object.ValidatorAddr, message.ValidatorAddr = $util.newBuffer($util.base64.length(object.ValidatorAddr)), 0);
-                else if (object.ValidatorAddr.length)
-                    message.ValidatorAddr = object.ValidatorAddr;
-            if (object.Value != null) {
-                if (typeof object.Value !== "object")
-                    throw TypeError(".cosmos.MsgDelegate.Value: object expected");
-                message.Value = $root.cosmos.Coin.fromObject(object.Value);
+                if (typeof object.ValidatorAddr === 'string')
+                    $util.base64.decode(
+                        object.ValidatorAddr,
+                        (message.ValidatorAddr = $util.newBuffer($util.base64.length(object.ValidatorAddr))),
+                        0
+                    );
+                else if (object.ValidatorAddr.length) message.ValidatorAddr = object.ValidatorAddr;
+            if (object.Amount != null) {
+                if (typeof object.Amount !== 'object') throw TypeError('.cosmos.MsgDelegate.Amount: object expected');
+                message.Amount = $root.cosmos.Coin.fromObject(object.Amount);
             }
             return message;
         };
@@ -713,32 +688,37 @@ $root.cosmos = (function() {
          * @returns {Object.<string,*>} Plain object
          */
         MsgDelegate.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
+            if (!options) options = {};
             var object = {};
             if (options.defaults) {
-                if (options.bytes === String)
-                    object.DelegatorAddr = "";
+                if (options.bytes === String) object.DelegatorAddr = '';
                 else {
                     object.DelegatorAddr = [];
-                    if (options.bytes !== Array)
-                        object.DelegatorAddr = $util.newBuffer(object.DelegatorAddr);
+                    if (options.bytes !== Array) object.DelegatorAddr = $util.newBuffer(object.DelegatorAddr);
                 }
-                if (options.bytes === String)
-                    object.ValidatorAddr = "";
+                if (options.bytes === String) object.ValidatorAddr = '';
                 else {
                     object.ValidatorAddr = [];
-                    if (options.bytes !== Array)
-                        object.ValidatorAddr = $util.newBuffer(object.ValidatorAddr);
+                    if (options.bytes !== Array) object.ValidatorAddr = $util.newBuffer(object.ValidatorAddr);
                 }
-                object.Value = null;
+                object.Amount = null;
             }
-            if (message.DelegatorAddr != null && message.hasOwnProperty("DelegatorAddr"))
-                object.DelegatorAddr = options.bytes === String ? $util.base64.encode(message.DelegatorAddr, 0, message.DelegatorAddr.length) : options.bytes === Array ? Array.prototype.slice.call(message.DelegatorAddr) : message.DelegatorAddr;
-            if (message.ValidatorAddr != null && message.hasOwnProperty("ValidatorAddr"))
-                object.ValidatorAddr = options.bytes === String ? $util.base64.encode(message.ValidatorAddr, 0, message.ValidatorAddr.length) : options.bytes === Array ? Array.prototype.slice.call(message.ValidatorAddr) : message.ValidatorAddr;
-            if (message.Value != null && message.hasOwnProperty("Value"))
-                object.Value = $root.cosmos.Coin.toObject(message.Value, options);
+            if (message.DelegatorAddr != null && message.hasOwnProperty('DelegatorAddr'))
+                object.DelegatorAddr =
+                    options.bytes === String
+                        ? $util.base64.encode(message.DelegatorAddr, 0, message.DelegatorAddr.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.DelegatorAddr)
+                        : message.DelegatorAddr;
+            if (message.ValidatorAddr != null && message.hasOwnProperty('ValidatorAddr'))
+                object.ValidatorAddr =
+                    options.bytes === String
+                        ? $util.base64.encode(message.ValidatorAddr, 0, message.ValidatorAddr.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.ValidatorAddr)
+                        : message.ValidatorAddr;
+            if (message.Amount != null && message.hasOwnProperty('Amount'))
+                object.Amount = $root.cosmos.Coin.toObject(message.Amount, options);
             return object;
         };
 
@@ -757,14 +737,13 @@ $root.cosmos = (function() {
     })();
 
     cosmos.MsgUndelegate = (function() {
-
         /**
          * Properties of a MsgUndelegate.
          * @memberof cosmos
          * @interface IMsgUndelegate
          * @property {Uint8Array} DelegatorAddr MsgUndelegate DelegatorAddr
          * @property {Uint8Array} ValidatorAddr MsgUndelegate ValidatorAddr
-         * @property {string} SharesAmount MsgUndelegate SharesAmount
+         * @property {string} Amount MsgUndelegate Amount
          */
 
         /**
@@ -778,8 +757,7 @@ $root.cosmos = (function() {
         function MsgUndelegate(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -799,12 +777,12 @@ $root.cosmos = (function() {
         MsgUndelegate.prototype.ValidatorAddr = $util.newBuffer([]);
 
         /**
-         * MsgUndelegate SharesAmount.
-         * @member {string} SharesAmount
+         * MsgUndelegate Amount.
+         * @member {string} Amount
          * @memberof cosmos.MsgUndelegate
          * @instance
          */
-        MsgUndelegate.prototype.SharesAmount = "";
+        MsgUndelegate.prototype.Amount = '';
 
         /**
          * Creates a new MsgUndelegate instance using the specified properties.
@@ -828,13 +806,12 @@ $root.cosmos = (function() {
          * @returns {$protobuf.Writer} Writer
          */
         MsgUndelegate.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.DelegatorAddr);
-            writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.ValidatorAddr);
-            let shares = message.SharesAmount.replace(".","");
-            shares = shares.replace(/\b(0+)/gi,"");
-            writer.uint32(/* id 3, wireType 2 =*/26).string(shares);
+            if (!writer) writer = $Writer.create();
+            writer.uint32(/* id 1, wireType 2 =*/ 10).bytes(message.DelegatorAddr);
+            writer.uint32(/* id 2, wireType 2 =*/ 18).bytes(message.ValidatorAddr);
+            let shares = message.Amount.replace('.', '');
+            shares = shares.replace(/\b(0+)/gi, '');
+            writer.uint32(/* id 3, wireType 2 =*/ 26).string(shares);
             return writer;
         };
 
@@ -863,32 +840,31 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgUndelegate.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos.MsgUndelegate();
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.cosmos.MsgUndelegate();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.DelegatorAddr = reader.bytes();
-                    break;
-                case 2:
-                    message.ValidatorAddr = reader.bytes();
-                    break;
-                case 3:
-                    message.SharesAmount = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+                    case 1:
+                        message.DelegatorAddr = reader.bytes();
+                        break;
+                    case 2:
+                        message.ValidatorAddr = reader.bytes();
+                        break;
+                    case 3:
+                        message.Amount = reader.string();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
                 }
             }
-            if (!message.hasOwnProperty("DelegatorAddr"))
+            if (!message.hasOwnProperty('DelegatorAddr'))
                 throw $util.ProtocolError("missing required 'DelegatorAddr'", { instance: message });
-            if (!message.hasOwnProperty("ValidatorAddr"))
+            if (!message.hasOwnProperty('ValidatorAddr'))
                 throw $util.ProtocolError("missing required 'ValidatorAddr'", { instance: message });
-            if (!message.hasOwnProperty("SharesAmount"))
-                throw $util.ProtocolError("missing required 'SharesAmount'", { instance: message });
+            if (!message.hasOwnProperty('Amount')) throw $util.ProtocolError("missing required 'Amount'", { instance: message });
             return message;
         };
 
@@ -903,8 +879,7 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgUndelegate.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -917,14 +892,12 @@ $root.cosmos = (function() {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         MsgUndelegate.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (!(message.DelegatorAddr && typeof message.DelegatorAddr.length === "number" || $util.isString(message.DelegatorAddr)))
-                return "DelegatorAddr: buffer expected";
-            if (!(message.ValidatorAddr && typeof message.ValidatorAddr.length === "number" || $util.isString(message.ValidatorAddr)))
-                return "ValidatorAddr: buffer expected";
-            if (!$util.isString(message.SharesAmount))
-                return "SharesAmount: string expected";
+            if (typeof message !== 'object' || message === null) return 'object expected';
+            if (!((message.DelegatorAddr && typeof message.DelegatorAddr.length === 'number') || $util.isString(message.DelegatorAddr)))
+                return 'DelegatorAddr: buffer expected';
+            if (!((message.ValidatorAddr && typeof message.ValidatorAddr.length === 'number') || $util.isString(message.ValidatorAddr)))
+                return 'ValidatorAddr: buffer expected';
+            if (!$util.isString(message.Amount)) return 'Amount: string expected';
             return null;
         };
 
@@ -937,21 +910,25 @@ $root.cosmos = (function() {
          * @returns {cosmos.MsgUndelegate} MsgUndelegate
          */
         MsgUndelegate.fromObject = function fromObject(object) {
-            if (object instanceof $root.cosmos.MsgUndelegate)
-                return object;
+            if (object instanceof $root.cosmos.MsgUndelegate) return object;
             var message = new $root.cosmos.MsgUndelegate();
             if (object.DelegatorAddr != null)
-                if (typeof object.DelegatorAddr === "string")
-                    $util.base64.decode(object.DelegatorAddr, message.DelegatorAddr = $util.newBuffer($util.base64.length(object.DelegatorAddr)), 0);
-                else if (object.DelegatorAddr.length)
-                    message.DelegatorAddr = object.DelegatorAddr;
+                if (typeof object.DelegatorAddr === 'string')
+                    $util.base64.decode(
+                        object.DelegatorAddr,
+                        (message.DelegatorAddr = $util.newBuffer($util.base64.length(object.DelegatorAddr))),
+                        0
+                    );
+                else if (object.DelegatorAddr.length) message.DelegatorAddr = object.DelegatorAddr;
             if (object.ValidatorAddr != null)
-                if (typeof object.ValidatorAddr === "string")
-                    $util.base64.decode(object.ValidatorAddr, message.ValidatorAddr = $util.newBuffer($util.base64.length(object.ValidatorAddr)), 0);
-                else if (object.ValidatorAddr.length)
-                    message.ValidatorAddr = object.ValidatorAddr;
-            if (object.SharesAmount != null)
-                message.SharesAmount = String(object.SharesAmount);
+                if (typeof object.ValidatorAddr === 'string')
+                    $util.base64.decode(
+                        object.ValidatorAddr,
+                        (message.ValidatorAddr = $util.newBuffer($util.base64.length(object.ValidatorAddr))),
+                        0
+                    );
+                else if (object.ValidatorAddr.length) message.ValidatorAddr = object.ValidatorAddr;
+            if (object.Amount != null) message.Amount = String(object.Amount);
             return message;
         };
 
@@ -965,32 +942,36 @@ $root.cosmos = (function() {
          * @returns {Object.<string,*>} Plain object
          */
         MsgUndelegate.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
+            if (!options) options = {};
             var object = {};
             if (options.defaults) {
-                if (options.bytes === String)
-                    object.DelegatorAddr = "";
+                if (options.bytes === String) object.DelegatorAddr = '';
                 else {
                     object.DelegatorAddr = [];
-                    if (options.bytes !== Array)
-                        object.DelegatorAddr = $util.newBuffer(object.DelegatorAddr);
+                    if (options.bytes !== Array) object.DelegatorAddr = $util.newBuffer(object.DelegatorAddr);
                 }
-                if (options.bytes === String)
-                    object.ValidatorAddr = "";
+                if (options.bytes === String) object.ValidatorAddr = '';
                 else {
                     object.ValidatorAddr = [];
-                    if (options.bytes !== Array)
-                        object.ValidatorAddr = $util.newBuffer(object.ValidatorAddr);
+                    if (options.bytes !== Array) object.ValidatorAddr = $util.newBuffer(object.ValidatorAddr);
                 }
-                object.SharesAmount = "";
+                object.Amount = '';
             }
-            if (message.DelegatorAddr != null && message.hasOwnProperty("DelegatorAddr"))
-                object.DelegatorAddr = options.bytes === String ? $util.base64.encode(message.DelegatorAddr, 0, message.DelegatorAddr.length) : options.bytes === Array ? Array.prototype.slice.call(message.DelegatorAddr) : message.DelegatorAddr;
-            if (message.ValidatorAddr != null && message.hasOwnProperty("ValidatorAddr"))
-                object.ValidatorAddr = options.bytes === String ? $util.base64.encode(message.ValidatorAddr, 0, message.ValidatorAddr.length) : options.bytes === Array ? Array.prototype.slice.call(message.ValidatorAddr) : message.ValidatorAddr;
-            if (message.SharesAmount != null && message.hasOwnProperty("SharesAmount"))
-                object.SharesAmount = message.SharesAmount;
+            if (message.DelegatorAddr != null && message.hasOwnProperty('DelegatorAddr'))
+                object.DelegatorAddr =
+                    options.bytes === String
+                        ? $util.base64.encode(message.DelegatorAddr, 0, message.DelegatorAddr.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.DelegatorAddr)
+                        : message.DelegatorAddr;
+            if (message.ValidatorAddr != null && message.hasOwnProperty('ValidatorAddr'))
+                object.ValidatorAddr =
+                    options.bytes === String
+                        ? $util.base64.encode(message.ValidatorAddr, 0, message.ValidatorAddr.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.ValidatorAddr)
+                        : message.ValidatorAddr;
+            if (message.Amount != null && message.hasOwnProperty('Amount')) object.Amount = message.Amount;
             return object;
         };
 
@@ -1009,7 +990,6 @@ $root.cosmos = (function() {
     })();
 
     cosmos.MsgBeginRedelegate = (function() {
-
         /**
          * Properties of a MsgBeginRedelegate.
          * @memberof cosmos
@@ -1017,7 +997,7 @@ $root.cosmos = (function() {
          * @property {Uint8Array} DelegatorAddr MsgBeginRedelegate DelegatorAddr
          * @property {Uint8Array} ValidatorSrcAddr MsgBeginRedelegate ValidatorSrcAddr
          * @property {Uint8Array} ValidatorDstAddr MsgBeginRedelegate ValidatorDstAddr
-         * @property {string} SharesAmount MsgBeginRedelegate SharesAmount
+         * @property {string} Amount MsgBeginRedelegate Amount
          */
 
         /**
@@ -1031,8 +1011,7 @@ $root.cosmos = (function() {
         function MsgBeginRedelegate(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -1060,12 +1039,12 @@ $root.cosmos = (function() {
         MsgBeginRedelegate.prototype.ValidatorDstAddr = $util.newBuffer([]);
 
         /**
-         * MsgBeginRedelegate SharesAmount.
-         * @member {string} SharesAmount
+         * MsgBeginRedelegate Amount.
+         * @member {string} Amount
          * @memberof cosmos.MsgBeginRedelegate
          * @instance
          */
-        MsgBeginRedelegate.prototype.SharesAmount = "";
+        MsgBeginRedelegate.prototype.Amount = '';
 
         /**
          * Creates a new MsgBeginRedelegate instance using the specified properties.
@@ -1089,14 +1068,13 @@ $root.cosmos = (function() {
          * @returns {$protobuf.Writer} Writer
          */
         MsgBeginRedelegate.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.DelegatorAddr);
-            writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.ValidatorSrcAddr);
-            writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.ValidatorDstAddr);
-            let shares = message.SharesAmount.replace(".","");
-            shares = shares.replace(/\b(0+)/gi,"");
-            writer.uint32(/* id 3, wireType 2 =*/34).string(shares);
+            if (!writer) writer = $Writer.create();
+            writer.uint32(/* id 1, wireType 2 =*/ 10).bytes(message.DelegatorAddr);
+            writer.uint32(/* id 2, wireType 2 =*/ 18).bytes(message.ValidatorSrcAddr);
+            writer.uint32(/* id 3, wireType 2 =*/ 26).bytes(message.ValidatorDstAddr);
+            let shares = message.Amount.replace('.', '');
+            shares = shares.replace(/\b(0+)/gi, '');
+            writer.uint32(/* id 3, wireType 2 =*/ 34).string(shares);
             return writer;
         };
 
@@ -1125,37 +1103,36 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgBeginRedelegate.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos.MsgBeginRedelegate();
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.cosmos.MsgBeginRedelegate();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.DelegatorAddr = reader.bytes();
-                    break;
-                case 2:
-                    message.ValidatorSrcAddr = reader.bytes();
-                    break;
-                case 3:
-                    message.ValidatorDstAddr = reader.bytes();
-                    break;
-                case 4:
-                    message.SharesAmount = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+                    case 1:
+                        message.DelegatorAddr = reader.bytes();
+                        break;
+                    case 2:
+                        message.ValidatorSrcAddr = reader.bytes();
+                        break;
+                    case 3:
+                        message.ValidatorDstAddr = reader.bytes();
+                        break;
+                    case 4:
+                        message.Amount = reader.string();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
                 }
             }
-            if (!message.hasOwnProperty("DelegatorAddr"))
+            if (!message.hasOwnProperty('DelegatorAddr'))
                 throw $util.ProtocolError("missing required 'DelegatorAddr'", { instance: message });
-            if (!message.hasOwnProperty("ValidatorSrcAddr"))
+            if (!message.hasOwnProperty('ValidatorSrcAddr'))
                 throw $util.ProtocolError("missing required 'ValidatorSrcAddr'", { instance: message });
-            if (!message.hasOwnProperty("ValidatorDstAddr"))
+            if (!message.hasOwnProperty('ValidatorDstAddr'))
                 throw $util.ProtocolError("missing required 'ValidatorDstAddr'", { instance: message });
-            if (!message.hasOwnProperty("SharesAmount"))
-                throw $util.ProtocolError("missing required 'SharesAmount'", { instance: message });
+            if (!message.hasOwnProperty('Amount')) throw $util.ProtocolError("missing required 'Amount'", { instance: message });
             return message;
         };
 
@@ -1170,8 +1147,7 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgBeginRedelegate.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -1184,16 +1160,24 @@ $root.cosmos = (function() {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         MsgBeginRedelegate.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (!(message.DelegatorAddr && typeof message.DelegatorAddr.length === "number" || $util.isString(message.DelegatorAddr)))
-                return "DelegatorAddr: buffer expected";
-            if (!(message.ValidatorSrcAddr && typeof message.ValidatorSrcAddr.length === "number" || $util.isString(message.ValidatorSrcAddr)))
-                return "ValidatorSrcAddr: buffer expected";
-            if (!(message.ValidatorDstAddr && typeof message.ValidatorDstAddr.length === "number" || $util.isString(message.ValidatorDstAddr)))
-                return "ValidatorDstAddr: buffer expected";
-            if (!$util.isString(message.SharesAmount))
-                return "SharesAmount: string expected";
+            if (typeof message !== 'object' || message === null) return 'object expected';
+            if (!((message.DelegatorAddr && typeof message.DelegatorAddr.length === 'number') || $util.isString(message.DelegatorAddr)))
+                return 'DelegatorAddr: buffer expected';
+            if (
+                !(
+                    (message.ValidatorSrcAddr && typeof message.ValidatorSrcAddr.length === 'number') ||
+                    $util.isString(message.ValidatorSrcAddr)
+                )
+            )
+                return 'ValidatorSrcAddr: buffer expected';
+            if (
+                !(
+                    (message.ValidatorDstAddr && typeof message.ValidatorDstAddr.length === 'number') ||
+                    $util.isString(message.ValidatorDstAddr)
+                )
+            )
+                return 'ValidatorDstAddr: buffer expected';
+            if (!$util.isString(message.Amount)) return 'Amount: string expected';
             return null;
         };
 
@@ -1206,26 +1190,33 @@ $root.cosmos = (function() {
          * @returns {cosmos.MsgBeginRedelegate} MsgBeginRedelegate
          */
         MsgBeginRedelegate.fromObject = function fromObject(object) {
-            if (object instanceof $root.cosmos.MsgBeginRedelegate)
-                return object;
+            if (object instanceof $root.cosmos.MsgBeginRedelegate) return object;
             var message = new $root.cosmos.MsgBeginRedelegate();
             if (object.DelegatorAddr != null)
-                if (typeof object.DelegatorAddr === "string")
-                    $util.base64.decode(object.DelegatorAddr, message.DelegatorAddr = $util.newBuffer($util.base64.length(object.DelegatorAddr)), 0);
-                else if (object.DelegatorAddr.length)
-                    message.DelegatorAddr = object.DelegatorAddr;
+                if (typeof object.DelegatorAddr === 'string')
+                    $util.base64.decode(
+                        object.DelegatorAddr,
+                        (message.DelegatorAddr = $util.newBuffer($util.base64.length(object.DelegatorAddr))),
+                        0
+                    );
+                else if (object.DelegatorAddr.length) message.DelegatorAddr = object.DelegatorAddr;
             if (object.ValidatorSrcAddr != null)
-                if (typeof object.ValidatorSrcAddr === "string")
-                    $util.base64.decode(object.ValidatorSrcAddr, message.ValidatorSrcAddr = $util.newBuffer($util.base64.length(object.ValidatorSrcAddr)), 0);
-                else if (object.ValidatorSrcAddr.length)
-                    message.ValidatorSrcAddr = object.ValidatorSrcAddr;
+                if (typeof object.ValidatorSrcAddr === 'string')
+                    $util.base64.decode(
+                        object.ValidatorSrcAddr,
+                        (message.ValidatorSrcAddr = $util.newBuffer($util.base64.length(object.ValidatorSrcAddr))),
+                        0
+                    );
+                else if (object.ValidatorSrcAddr.length) message.ValidatorSrcAddr = object.ValidatorSrcAddr;
             if (object.ValidatorDstAddr != null)
-                if (typeof object.ValidatorDstAddr === "string")
-                    $util.base64.decode(object.ValidatorDstAddr, message.ValidatorDstAddr = $util.newBuffer($util.base64.length(object.ValidatorDstAddr)), 0);
-                else if (object.ValidatorDstAddr.length)
-                    message.ValidatorDstAddr = object.ValidatorDstAddr;
-            if (object.SharesAmount != null)
-                message.SharesAmount = String(object.SharesAmount);
+                if (typeof object.ValidatorDstAddr === 'string')
+                    $util.base64.decode(
+                        object.ValidatorDstAddr,
+                        (message.ValidatorDstAddr = $util.newBuffer($util.base64.length(object.ValidatorDstAddr))),
+                        0
+                    );
+                else if (object.ValidatorDstAddr.length) message.ValidatorDstAddr = object.ValidatorDstAddr;
+            if (object.Amount != null) message.Amount = String(object.Amount);
             return message;
         };
 
@@ -1239,41 +1230,48 @@ $root.cosmos = (function() {
          * @returns {Object.<string,*>} Plain object
          */
         MsgBeginRedelegate.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
+            if (!options) options = {};
             var object = {};
             if (options.defaults) {
-                if (options.bytes === String)
-                    object.DelegatorAddr = "";
+                if (options.bytes === String) object.DelegatorAddr = '';
                 else {
                     object.DelegatorAddr = [];
-                    if (options.bytes !== Array)
-                        object.DelegatorAddr = $util.newBuffer(object.DelegatorAddr);
+                    if (options.bytes !== Array) object.DelegatorAddr = $util.newBuffer(object.DelegatorAddr);
                 }
-                if (options.bytes === String)
-                    object.ValidatorSrcAddr = "";
+                if (options.bytes === String) object.ValidatorSrcAddr = '';
                 else {
                     object.ValidatorSrcAddr = [];
-                    if (options.bytes !== Array)
-                        object.ValidatorSrcAddr = $util.newBuffer(object.ValidatorSrcAddr);
+                    if (options.bytes !== Array) object.ValidatorSrcAddr = $util.newBuffer(object.ValidatorSrcAddr);
                 }
-                if (options.bytes === String)
-                    object.ValidatorDstAddr = "";
+                if (options.bytes === String) object.ValidatorDstAddr = '';
                 else {
                     object.ValidatorDstAddr = [];
-                    if (options.bytes !== Array)
-                        object.ValidatorDstAddr = $util.newBuffer(object.ValidatorDstAddr);
+                    if (options.bytes !== Array) object.ValidatorDstAddr = $util.newBuffer(object.ValidatorDstAddr);
                 }
-                object.SharesAmount = "";
+                object.Amount = '';
             }
-            if (message.DelegatorAddr != null && message.hasOwnProperty("DelegatorAddr"))
-                object.DelegatorAddr = options.bytes === String ? $util.base64.encode(message.DelegatorAddr, 0, message.DelegatorAddr.length) : options.bytes === Array ? Array.prototype.slice.call(message.DelegatorAddr) : message.DelegatorAddr;
-            if (message.ValidatorSrcAddr != null && message.hasOwnProperty("ValidatorSrcAddr"))
-                object.ValidatorSrcAddr = options.bytes === String ? $util.base64.encode(message.ValidatorSrcAddr, 0, message.ValidatorSrcAddr.length) : options.bytes === Array ? Array.prototype.slice.call(message.ValidatorSrcAddr) : message.ValidatorSrcAddr;
-            if (message.ValidatorDstAddr != null && message.hasOwnProperty("ValidatorDstAddr"))
-                object.ValidatorDstAddr = options.bytes === String ? $util.base64.encode(message.ValidatorDstAddr, 0, message.ValidatorDstAddr.length) : options.bytes === Array ? Array.prototype.slice.call(message.ValidatorDstAddr) : message.ValidatorDstAddr;
-            if (message.SharesAmount != null && message.hasOwnProperty("SharesAmount"))
-                object.SharesAmount = message.SharesAmount;
+            if (message.DelegatorAddr != null && message.hasOwnProperty('DelegatorAddr'))
+                object.DelegatorAddr =
+                    options.bytes === String
+                        ? $util.base64.encode(message.DelegatorAddr, 0, message.DelegatorAddr.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.DelegatorAddr)
+                        : message.DelegatorAddr;
+            if (message.ValidatorSrcAddr != null && message.hasOwnProperty('ValidatorSrcAddr'))
+                object.ValidatorSrcAddr =
+                    options.bytes === String
+                        ? $util.base64.encode(message.ValidatorSrcAddr, 0, message.ValidatorSrcAddr.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.ValidatorSrcAddr)
+                        : message.ValidatorSrcAddr;
+            if (message.ValidatorDstAddr != null && message.hasOwnProperty('ValidatorDstAddr'))
+                object.ValidatorDstAddr =
+                    options.bytes === String
+                        ? $util.base64.encode(message.ValidatorDstAddr, 0, message.ValidatorDstAddr.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.ValidatorDstAddr)
+                        : message.ValidatorDstAddr;
+            if (message.Amount != null && message.hasOwnProperty('Amount')) object.Amount = message.Amount;
             return object;
         };
 
@@ -1292,7 +1290,6 @@ $root.cosmos = (function() {
     })();
 
     cosmos.MsgSetWithdrawAddress = (function() {
-
         /**
          * Properties of a MsgSetWithdrawAddress.
          * @memberof cosmos
@@ -1312,8 +1309,7 @@ $root.cosmos = (function() {
         function MsgSetWithdrawAddress(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -1354,10 +1350,9 @@ $root.cosmos = (function() {
          * @returns {$protobuf.Writer} Writer
          */
         MsgSetWithdrawAddress.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.DelegatorAddr);
-            writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.WithdrawAddr);
+            if (!writer) writer = $Writer.create();
+            writer.uint32(/* id 1, wireType 2 =*/ 10).bytes(message.DelegatorAddr);
+            writer.uint32(/* id 2, wireType 2 =*/ 18).bytes(message.WithdrawAddr);
             return writer;
         };
 
@@ -1386,26 +1381,26 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgSetWithdrawAddress.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos.MsgSetWithdrawAddress();
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.cosmos.MsgSetWithdrawAddress();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.DelegatorAddr = reader.bytes();
-                    break;
-                case 2:
-                    message.WithdrawAddr = reader.bytes();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+                    case 1:
+                        message.DelegatorAddr = reader.bytes();
+                        break;
+                    case 2:
+                        message.WithdrawAddr = reader.bytes();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
                 }
             }
-            if (!message.hasOwnProperty("DelegatorAddr"))
+            if (!message.hasOwnProperty('DelegatorAddr'))
                 throw $util.ProtocolError("missing required 'DelegatorAddr'", { instance: message });
-            if (!message.hasOwnProperty("WithdrawAddr"))
+            if (!message.hasOwnProperty('WithdrawAddr'))
                 throw $util.ProtocolError("missing required 'WithdrawAddr'", { instance: message });
             return message;
         };
@@ -1421,8 +1416,7 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgSetWithdrawAddress.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -1435,12 +1429,11 @@ $root.cosmos = (function() {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         MsgSetWithdrawAddress.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (!(message.DelegatorAddr && typeof message.DelegatorAddr.length === "number" || $util.isString(message.DelegatorAddr)))
-                return "DelegatorAddr: buffer expected";
-            if (!(message.WithdrawAddr && typeof message.WithdrawAddr.length === "number" || $util.isString(message.WithdrawAddr)))
-                return "WithdrawAddr: buffer expected";
+            if (typeof message !== 'object' || message === null) return 'object expected';
+            if (!((message.DelegatorAddr && typeof message.DelegatorAddr.length === 'number') || $util.isString(message.DelegatorAddr)))
+                return 'DelegatorAddr: buffer expected';
+            if (!((message.WithdrawAddr && typeof message.WithdrawAddr.length === 'number') || $util.isString(message.WithdrawAddr)))
+                return 'WithdrawAddr: buffer expected';
             return null;
         };
 
@@ -1453,19 +1446,24 @@ $root.cosmos = (function() {
          * @returns {cosmos.MsgSetWithdrawAddress} MsgSetWithdrawAddress
          */
         MsgSetWithdrawAddress.fromObject = function fromObject(object) {
-            if (object instanceof $root.cosmos.MsgSetWithdrawAddress)
-                return object;
+            if (object instanceof $root.cosmos.MsgSetWithdrawAddress) return object;
             var message = new $root.cosmos.MsgSetWithdrawAddress();
             if (object.DelegatorAddr != null)
-                if (typeof object.DelegatorAddr === "string")
-                    $util.base64.decode(object.DelegatorAddr, message.DelegatorAddr = $util.newBuffer($util.base64.length(object.DelegatorAddr)), 0);
-                else if (object.DelegatorAddr.length)
-                    message.DelegatorAddr = object.DelegatorAddr;
+                if (typeof object.DelegatorAddr === 'string')
+                    $util.base64.decode(
+                        object.DelegatorAddr,
+                        (message.DelegatorAddr = $util.newBuffer($util.base64.length(object.DelegatorAddr))),
+                        0
+                    );
+                else if (object.DelegatorAddr.length) message.DelegatorAddr = object.DelegatorAddr;
             if (object.WithdrawAddr != null)
-                if (typeof object.WithdrawAddr === "string")
-                    $util.base64.decode(object.WithdrawAddr, message.WithdrawAddr = $util.newBuffer($util.base64.length(object.WithdrawAddr)), 0);
-                else if (object.WithdrawAddr.length)
-                    message.WithdrawAddr = object.WithdrawAddr;
+                if (typeof object.WithdrawAddr === 'string')
+                    $util.base64.decode(
+                        object.WithdrawAddr,
+                        (message.WithdrawAddr = $util.newBuffer($util.base64.length(object.WithdrawAddr))),
+                        0
+                    );
+                else if (object.WithdrawAddr.length) message.WithdrawAddr = object.WithdrawAddr;
             return message;
         };
 
@@ -1479,29 +1477,34 @@ $root.cosmos = (function() {
          * @returns {Object.<string,*>} Plain object
          */
         MsgSetWithdrawAddress.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
+            if (!options) options = {};
             var object = {};
             if (options.defaults) {
-                if (options.bytes === String)
-                    object.DelegatorAddr = "";
+                if (options.bytes === String) object.DelegatorAddr = '';
                 else {
                     object.DelegatorAddr = [];
-                    if (options.bytes !== Array)
-                        object.DelegatorAddr = $util.newBuffer(object.DelegatorAddr);
+                    if (options.bytes !== Array) object.DelegatorAddr = $util.newBuffer(object.DelegatorAddr);
                 }
-                if (options.bytes === String)
-                    object.WithdrawAddr = "";
+                if (options.bytes === String) object.WithdrawAddr = '';
                 else {
                     object.WithdrawAddr = [];
-                    if (options.bytes !== Array)
-                        object.WithdrawAddr = $util.newBuffer(object.WithdrawAddr);
+                    if (options.bytes !== Array) object.WithdrawAddr = $util.newBuffer(object.WithdrawAddr);
                 }
             }
-            if (message.DelegatorAddr != null && message.hasOwnProperty("DelegatorAddr"))
-                object.DelegatorAddr = options.bytes === String ? $util.base64.encode(message.DelegatorAddr, 0, message.DelegatorAddr.length) : options.bytes === Array ? Array.prototype.slice.call(message.DelegatorAddr) : message.DelegatorAddr;
-            if (message.WithdrawAddr != null && message.hasOwnProperty("WithdrawAddr"))
-                object.WithdrawAddr = options.bytes === String ? $util.base64.encode(message.WithdrawAddr, 0, message.WithdrawAddr.length) : options.bytes === Array ? Array.prototype.slice.call(message.WithdrawAddr) : message.WithdrawAddr;
+            if (message.DelegatorAddr != null && message.hasOwnProperty('DelegatorAddr'))
+                object.DelegatorAddr =
+                    options.bytes === String
+                        ? $util.base64.encode(message.DelegatorAddr, 0, message.DelegatorAddr.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.DelegatorAddr)
+                        : message.DelegatorAddr;
+            if (message.WithdrawAddr != null && message.hasOwnProperty('WithdrawAddr'))
+                object.WithdrawAddr =
+                    options.bytes === String
+                        ? $util.base64.encode(message.WithdrawAddr, 0, message.WithdrawAddr.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.WithdrawAddr)
+                        : message.WithdrawAddr;
             return object;
         };
 
@@ -1520,7 +1523,6 @@ $root.cosmos = (function() {
     })();
 
     cosmos.MsgWithdrawDelegatorReward = (function() {
-
         /**
          * Properties of a MsgWithdrawDelegatorReward.
          * @memberof cosmos
@@ -1540,8 +1542,7 @@ $root.cosmos = (function() {
         function MsgWithdrawDelegatorReward(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -1582,10 +1583,9 @@ $root.cosmos = (function() {
          * @returns {$protobuf.Writer} Writer
          */
         MsgWithdrawDelegatorReward.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.DelegatorAddr);
-            writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.ValidatorAddr);
+            if (!writer) writer = $Writer.create();
+            writer.uint32(/* id 1, wireType 2 =*/ 10).bytes(message.DelegatorAddr);
+            writer.uint32(/* id 2, wireType 2 =*/ 18).bytes(message.ValidatorAddr);
             return writer;
         };
 
@@ -1614,26 +1614,26 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgWithdrawDelegatorReward.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos.MsgWithdrawDelegatorReward();
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.cosmos.MsgWithdrawDelegatorReward();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.DelegatorAddr = reader.bytes();
-                    break;
-                case 2:
-                    message.ValidatorAddr = reader.bytes();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+                    case 1:
+                        message.DelegatorAddr = reader.bytes();
+                        break;
+                    case 2:
+                        message.ValidatorAddr = reader.bytes();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
                 }
             }
-            if (!message.hasOwnProperty("DelegatorAddr"))
+            if (!message.hasOwnProperty('DelegatorAddr'))
                 throw $util.ProtocolError("missing required 'DelegatorAddr'", { instance: message });
-            if (!message.hasOwnProperty("ValidatorAddr"))
+            if (!message.hasOwnProperty('ValidatorAddr'))
                 throw $util.ProtocolError("missing required 'ValidatorAddr'", { instance: message });
             return message;
         };
@@ -1649,8 +1649,7 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgWithdrawDelegatorReward.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -1663,12 +1662,11 @@ $root.cosmos = (function() {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         MsgWithdrawDelegatorReward.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (!(message.DelegatorAddr && typeof message.DelegatorAddr.length === "number" || $util.isString(message.DelegatorAddr)))
-                return "DelegatorAddr: buffer expected";
-            if (!(message.ValidatorAddr && typeof message.ValidatorAddr.length === "number" || $util.isString(message.ValidatorAddr)))
-                return "ValidatorAddr: buffer expected";
+            if (typeof message !== 'object' || message === null) return 'object expected';
+            if (!((message.DelegatorAddr && typeof message.DelegatorAddr.length === 'number') || $util.isString(message.DelegatorAddr)))
+                return 'DelegatorAddr: buffer expected';
+            if (!((message.ValidatorAddr && typeof message.ValidatorAddr.length === 'number') || $util.isString(message.ValidatorAddr)))
+                return 'ValidatorAddr: buffer expected';
             return null;
         };
 
@@ -1681,19 +1679,24 @@ $root.cosmos = (function() {
          * @returns {cosmos.MsgWithdrawDelegatorReward} MsgWithdrawDelegatorReward
          */
         MsgWithdrawDelegatorReward.fromObject = function fromObject(object) {
-            if (object instanceof $root.cosmos.MsgWithdrawDelegatorReward)
-                return object;
+            if (object instanceof $root.cosmos.MsgWithdrawDelegatorReward) return object;
             var message = new $root.cosmos.MsgWithdrawDelegatorReward();
             if (object.DelegatorAddr != null)
-                if (typeof object.DelegatorAddr === "string")
-                    $util.base64.decode(object.DelegatorAddr, message.DelegatorAddr = $util.newBuffer($util.base64.length(object.DelegatorAddr)), 0);
-                else if (object.DelegatorAddr.length)
-                    message.DelegatorAddr = object.DelegatorAddr;
+                if (typeof object.DelegatorAddr === 'string')
+                    $util.base64.decode(
+                        object.DelegatorAddr,
+                        (message.DelegatorAddr = $util.newBuffer($util.base64.length(object.DelegatorAddr))),
+                        0
+                    );
+                else if (object.DelegatorAddr.length) message.DelegatorAddr = object.DelegatorAddr;
             if (object.ValidatorAddr != null)
-                if (typeof object.ValidatorAddr === "string")
-                    $util.base64.decode(object.ValidatorAddr, message.ValidatorAddr = $util.newBuffer($util.base64.length(object.ValidatorAddr)), 0);
-                else if (object.ValidatorAddr.length)
-                    message.ValidatorAddr = object.ValidatorAddr;
+                if (typeof object.ValidatorAddr === 'string')
+                    $util.base64.decode(
+                        object.ValidatorAddr,
+                        (message.ValidatorAddr = $util.newBuffer($util.base64.length(object.ValidatorAddr))),
+                        0
+                    );
+                else if (object.ValidatorAddr.length) message.ValidatorAddr = object.ValidatorAddr;
             return message;
         };
 
@@ -1707,29 +1710,34 @@ $root.cosmos = (function() {
          * @returns {Object.<string,*>} Plain object
          */
         MsgWithdrawDelegatorReward.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
+            if (!options) options = {};
             var object = {};
             if (options.defaults) {
-                if (options.bytes === String)
-                    object.DelegatorAddr = "";
+                if (options.bytes === String) object.DelegatorAddr = '';
                 else {
                     object.DelegatorAddr = [];
-                    if (options.bytes !== Array)
-                        object.DelegatorAddr = $util.newBuffer(object.DelegatorAddr);
+                    if (options.bytes !== Array) object.DelegatorAddr = $util.newBuffer(object.DelegatorAddr);
                 }
-                if (options.bytes === String)
-                    object.ValidatorAddr = "";
+                if (options.bytes === String) object.ValidatorAddr = '';
                 else {
                     object.ValidatorAddr = [];
-                    if (options.bytes !== Array)
-                        object.ValidatorAddr = $util.newBuffer(object.ValidatorAddr);
+                    if (options.bytes !== Array) object.ValidatorAddr = $util.newBuffer(object.ValidatorAddr);
                 }
             }
-            if (message.DelegatorAddr != null && message.hasOwnProperty("DelegatorAddr"))
-                object.DelegatorAddr = options.bytes === String ? $util.base64.encode(message.DelegatorAddr, 0, message.DelegatorAddr.length) : options.bytes === Array ? Array.prototype.slice.call(message.DelegatorAddr) : message.DelegatorAddr;
-            if (message.ValidatorAddr != null && message.hasOwnProperty("ValidatorAddr"))
-                object.ValidatorAddr = options.bytes === String ? $util.base64.encode(message.ValidatorAddr, 0, message.ValidatorAddr.length) : options.bytes === Array ? Array.prototype.slice.call(message.ValidatorAddr) : message.ValidatorAddr;
+            if (message.DelegatorAddr != null && message.hasOwnProperty('DelegatorAddr'))
+                object.DelegatorAddr =
+                    options.bytes === String
+                        ? $util.base64.encode(message.DelegatorAddr, 0, message.DelegatorAddr.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.DelegatorAddr)
+                        : message.DelegatorAddr;
+            if (message.ValidatorAddr != null && message.hasOwnProperty('ValidatorAddr'))
+                object.ValidatorAddr =
+                    options.bytes === String
+                        ? $util.base64.encode(message.ValidatorAddr, 0, message.ValidatorAddr.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.ValidatorAddr)
+                        : message.ValidatorAddr;
             return object;
         };
 
@@ -1748,7 +1756,6 @@ $root.cosmos = (function() {
     })();
 
     cosmos.MsgWithdrawValidatorCommission = (function() {
-
         /**
          * Properties of a MsgWithdrawValidatorCommission.
          * @memberof cosmos
@@ -1767,8 +1774,7 @@ $root.cosmos = (function() {
         function MsgWithdrawValidatorCommission(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -1801,9 +1807,8 @@ $root.cosmos = (function() {
          * @returns {$protobuf.Writer} Writer
          */
         MsgWithdrawValidatorCommission.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.ValidatorAddr);
+            if (!writer) writer = $Writer.create();
+            writer.uint32(/* id 1, wireType 2 =*/ 10).bytes(message.ValidatorAddr);
             return writer;
         };
 
@@ -1832,21 +1837,21 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgWithdrawValidatorCommission.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos.MsgWithdrawValidatorCommission();
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.cosmos.MsgWithdrawValidatorCommission();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.ValidatorAddr = reader.bytes();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+                    case 1:
+                        message.ValidatorAddr = reader.bytes();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
                 }
             }
-            if (!message.hasOwnProperty("ValidatorAddr"))
+            if (!message.hasOwnProperty('ValidatorAddr'))
                 throw $util.ProtocolError("missing required 'ValidatorAddr'", { instance: message });
             return message;
         };
@@ -1862,8 +1867,7 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         MsgWithdrawValidatorCommission.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -1876,10 +1880,9 @@ $root.cosmos = (function() {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         MsgWithdrawValidatorCommission.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (!(message.ValidatorAddr && typeof message.ValidatorAddr.length === "number" || $util.isString(message.ValidatorAddr)))
-                return "ValidatorAddr: buffer expected";
+            if (typeof message !== 'object' || message === null) return 'object expected';
+            if (!((message.ValidatorAddr && typeof message.ValidatorAddr.length === 'number') || $util.isString(message.ValidatorAddr)))
+                return 'ValidatorAddr: buffer expected';
             return null;
         };
 
@@ -1892,14 +1895,16 @@ $root.cosmos = (function() {
          * @returns {cosmos.MsgWithdrawValidatorCommission} MsgWithdrawValidatorCommission
          */
         MsgWithdrawValidatorCommission.fromObject = function fromObject(object) {
-            if (object instanceof $root.cosmos.MsgWithdrawValidatorCommission)
-                return object;
+            if (object instanceof $root.cosmos.MsgWithdrawValidatorCommission) return object;
             var message = new $root.cosmos.MsgWithdrawValidatorCommission();
             if (object.ValidatorAddr != null)
-                if (typeof object.ValidatorAddr === "string")
-                    $util.base64.decode(object.ValidatorAddr, message.ValidatorAddr = $util.newBuffer($util.base64.length(object.ValidatorAddr)), 0);
-                else if (object.ValidatorAddr.length)
-                    message.ValidatorAddr = object.ValidatorAddr;
+                if (typeof object.ValidatorAddr === 'string')
+                    $util.base64.decode(
+                        object.ValidatorAddr,
+                        (message.ValidatorAddr = $util.newBuffer($util.base64.length(object.ValidatorAddr))),
+                        0
+                    );
+                else if (object.ValidatorAddr.length) message.ValidatorAddr = object.ValidatorAddr;
             return message;
         };
 
@@ -1913,19 +1918,21 @@ $root.cosmos = (function() {
          * @returns {Object.<string,*>} Plain object
          */
         MsgWithdrawValidatorCommission.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
+            if (!options) options = {};
             var object = {};
             if (options.defaults)
-                if (options.bytes === String)
-                    object.ValidatorAddr = "";
+                if (options.bytes === String) object.ValidatorAddr = '';
                 else {
                     object.ValidatorAddr = [];
-                    if (options.bytes !== Array)
-                        object.ValidatorAddr = $util.newBuffer(object.ValidatorAddr);
+                    if (options.bytes !== Array) object.ValidatorAddr = $util.newBuffer(object.ValidatorAddr);
                 }
-            if (message.ValidatorAddr != null && message.hasOwnProperty("ValidatorAddr"))
-                object.ValidatorAddr = options.bytes === String ? $util.base64.encode(message.ValidatorAddr, 0, message.ValidatorAddr.length) : options.bytes === Array ? Array.prototype.slice.call(message.ValidatorAddr) : message.ValidatorAddr;
+            if (message.ValidatorAddr != null && message.hasOwnProperty('ValidatorAddr'))
+                object.ValidatorAddr =
+                    options.bytes === String
+                        ? $util.base64.encode(message.ValidatorAddr, 0, message.ValidatorAddr.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.ValidatorAddr)
+                        : message.ValidatorAddr;
             return object;
         };
 
@@ -1944,7 +1951,6 @@ $root.cosmos = (function() {
     })();
 
     cosmos.StdFee = (function() {
-
         /**
          * Properties of a StdFee.
          * @memberof cosmos
@@ -1965,8 +1971,7 @@ $root.cosmos = (function() {
             this.amount = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -1983,7 +1988,7 @@ $root.cosmos = (function() {
          * @memberof cosmos.StdFee
          * @instance
          */
-        StdFee.prototype.gas = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        StdFee.prototype.gas = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
 
         /**
          * Creates a new StdFee instance using the specified properties.
@@ -2007,12 +2012,11 @@ $root.cosmos = (function() {
          * @returns {$protobuf.Writer} Writer
          */
         StdFee.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
+            if (!writer) writer = $Writer.create();
             if (message.amount != null && message.amount.length)
                 for (var i = 0; i < message.amount.length; ++i)
-                    $root.cosmos.Coin.encode(message.amount[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
-            writer.uint32(/* id 2, wireType 0 =*/16).int64(message.gas);
+                    $root.cosmos.Coin.encode(message.amount[i], writer.uint32(/* id 1, wireType 2 =*/ 10).fork()).ldelim();
+            writer.uint32(/* id 2, wireType 0 =*/ 16).int64(message.gas);
             return writer;
         };
 
@@ -2041,27 +2045,25 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         StdFee.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos.StdFee();
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.cosmos.StdFee();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    if (!(message.amount && message.amount.length))
-                        message.amount = [];
-                    message.amount.push($root.cosmos.Coin.decode(reader, reader.uint32()));
-                    break;
-                case 2:
-                    message.gas = reader.int64();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+                    case 1:
+                        if (!(message.amount && message.amount.length)) message.amount = [];
+                        message.amount.push($root.cosmos.Coin.decode(reader, reader.uint32()));
+                        break;
+                    case 2:
+                        message.gas = reader.int64();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
                 }
             }
-            if (!message.hasOwnProperty("gas"))
-                throw $util.ProtocolError("missing required 'gas'", { instance: message });
+            if (!message.hasOwnProperty('gas')) throw $util.ProtocolError("missing required 'gas'", { instance: message });
             return message;
         };
 
@@ -2076,8 +2078,7 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         StdFee.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -2090,19 +2091,16 @@ $root.cosmos = (function() {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         StdFee.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.amount != null && message.hasOwnProperty("amount")) {
-                if (!Array.isArray(message.amount))
-                    return "amount: array expected";
+            if (typeof message !== 'object' || message === null) return 'object expected';
+            if (message.amount != null && message.hasOwnProperty('amount')) {
+                if (!Array.isArray(message.amount)) return 'amount: array expected';
                 for (var i = 0; i < message.amount.length; ++i) {
                     var error = $root.cosmos.Coin.verify(message.amount[i]);
-                    if (error)
-                        return "amount." + error;
+                    if (error) return 'amount.' + error;
                 }
             }
             if (!$util.isInteger(message.gas) && !(message.gas && $util.isInteger(message.gas.low) && $util.isInteger(message.gas.high)))
-                return "gas: integer|Long expected";
+                return 'gas: integer|Long expected';
             return null;
         };
 
@@ -2115,27 +2113,21 @@ $root.cosmos = (function() {
          * @returns {cosmos.StdFee} StdFee
          */
         StdFee.fromObject = function fromObject(object) {
-            if (object instanceof $root.cosmos.StdFee)
-                return object;
+            if (object instanceof $root.cosmos.StdFee) return object;
             var message = new $root.cosmos.StdFee();
             if (object.amount) {
-                if (!Array.isArray(object.amount))
-                    throw TypeError(".cosmos.StdFee.amount: array expected");
+                if (!Array.isArray(object.amount)) throw TypeError('.cosmos.StdFee.amount: array expected');
                 message.amount = [];
                 for (var i = 0; i < object.amount.length; ++i) {
-                    if (typeof object.amount[i] !== "object")
-                        throw TypeError(".cosmos.StdFee.amount: object expected");
+                    if (typeof object.amount[i] !== 'object') throw TypeError('.cosmos.StdFee.amount: object expected');
                     message.amount[i] = $root.cosmos.Coin.fromObject(object.amount[i]);
                 }
             }
             if (object.gas != null)
-                if ($util.Long)
-                    (message.gas = $util.Long.fromValue(object.gas)).unsigned = false;
-                else if (typeof object.gas === "string")
-                    message.gas = parseInt(object.gas, 10);
-                else if (typeof object.gas === "number")
-                    message.gas = object.gas;
-                else if (typeof object.gas === "object")
+                if ($util.Long) (message.gas = $util.Long.fromValue(object.gas)).unsigned = false;
+                else if (typeof object.gas === 'string') message.gas = parseInt(object.gas, 10);
+                else if (typeof object.gas === 'number') message.gas = object.gas;
+                else if (typeof object.gas === 'object')
                     message.gas = new $util.LongBits(object.gas.low >>> 0, object.gas.high >>> 0).toNumber();
             return message;
         };
@@ -2150,27 +2142,27 @@ $root.cosmos = (function() {
          * @returns {Object.<string,*>} Plain object
          */
         StdFee.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
+            if (!options) options = {};
             var object = {};
-            if (options.arrays || options.defaults)
-                object.amount = [];
+            if (options.arrays || options.defaults) object.amount = [];
             if (options.defaults)
                 if ($util.Long) {
                     var long = new $util.Long(0, 0, false);
                     object.gas = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.gas = options.longs === String ? "0" : 0;
+                } else object.gas = options.longs === String ? '0' : 0;
             if (message.amount && message.amount.length) {
                 object.amount = [];
-                for (var j = 0; j < message.amount.length; ++j)
-                    object.amount[j] = $root.cosmos.Coin.toObject(message.amount[j], options);
+                for (var j = 0; j < message.amount.length; ++j) object.amount[j] = $root.cosmos.Coin.toObject(message.amount[j], options);
             }
-            if (message.gas != null && message.hasOwnProperty("gas"))
-                if (typeof message.gas === "number")
-                    object.gas = options.longs === String ? String(message.gas) : message.gas;
+            if (message.gas != null && message.hasOwnProperty('gas'))
+                if (typeof message.gas === 'number') object.gas = options.longs === String ? String(message.gas) : message.gas;
                 else
-                    object.gas = options.longs === String ? $util.Long.prototype.toString.call(message.gas) : options.longs === Number ? new $util.LongBits(message.gas.low >>> 0, message.gas.high >>> 0).toNumber() : message.gas;
+                    object.gas =
+                        options.longs === String
+                            ? $util.Long.prototype.toString.call(message.gas)
+                            : options.longs === Number
+                            ? new $util.LongBits(message.gas.low >>> 0, message.gas.high >>> 0).toNumber()
+                            : message.gas;
             return object;
         };
 
@@ -2189,7 +2181,6 @@ $root.cosmos = (function() {
     })();
 
     cosmos.StdSignature = (function() {
-
         /**
          * Properties of a StdSignature.
          * @memberof cosmos
@@ -2209,8 +2200,7 @@ $root.cosmos = (function() {
         function StdSignature(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -2251,10 +2241,9 @@ $root.cosmos = (function() {
          * @returns {$protobuf.Writer} Writer
          */
         StdSignature.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.pubKey);
-            writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.signature);
+            if (!writer) writer = $Writer.create();
+            writer.uint32(/* id 1, wireType 2 =*/ 10).bytes(message.pubKey);
+            writer.uint32(/* id 2, wireType 2 =*/ 18).bytes(message.signature);
             return writer;
         };
 
@@ -2283,27 +2272,25 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         StdSignature.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos.StdSignature();
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.cosmos.StdSignature();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.pubKey = reader.bytes();
-                    break;
-                case 2:
-                    message.signature = reader.bytes();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+                    case 1:
+                        message.pubKey = reader.bytes();
+                        break;
+                    case 2:
+                        message.signature = reader.bytes();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
                 }
             }
-            if (!message.hasOwnProperty("pubKey"))
-                throw $util.ProtocolError("missing required 'pubKey'", { instance: message });
-            if (!message.hasOwnProperty("signature"))
-                throw $util.ProtocolError("missing required 'signature'", { instance: message });
+            if (!message.hasOwnProperty('pubKey')) throw $util.ProtocolError("missing required 'pubKey'", { instance: message });
+            if (!message.hasOwnProperty('signature')) throw $util.ProtocolError("missing required 'signature'", { instance: message });
             return message;
         };
 
@@ -2318,8 +2305,7 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         StdSignature.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -2332,12 +2318,11 @@ $root.cosmos = (function() {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         StdSignature.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (!(message.pubKey && typeof message.pubKey.length === "number" || $util.isString(message.pubKey)))
-                return "pubKey: buffer expected";
-            if (!(message.signature && typeof message.signature.length === "number" || $util.isString(message.signature)))
-                return "signature: buffer expected";
+            if (typeof message !== 'object' || message === null) return 'object expected';
+            if (!((message.pubKey && typeof message.pubKey.length === 'number') || $util.isString(message.pubKey)))
+                return 'pubKey: buffer expected';
+            if (!((message.signature && typeof message.signature.length === 'number') || $util.isString(message.signature)))
+                return 'signature: buffer expected';
             return null;
         };
 
@@ -2350,19 +2335,16 @@ $root.cosmos = (function() {
          * @returns {cosmos.StdSignature} StdSignature
          */
         StdSignature.fromObject = function fromObject(object) {
-            if (object instanceof $root.cosmos.StdSignature)
-                return object;
+            if (object instanceof $root.cosmos.StdSignature) return object;
             var message = new $root.cosmos.StdSignature();
             if (object.pubKey != null)
-                if (typeof object.pubKey === "string")
-                    $util.base64.decode(object.pubKey, message.pubKey = $util.newBuffer($util.base64.length(object.pubKey)), 0);
-                else if (object.pubKey.length)
-                    message.pubKey = object.pubKey;
+                if (typeof object.pubKey === 'string')
+                    $util.base64.decode(object.pubKey, (message.pubKey = $util.newBuffer($util.base64.length(object.pubKey))), 0);
+                else if (object.pubKey.length) message.pubKey = object.pubKey;
             if (object.signature != null)
-                if (typeof object.signature === "string")
-                    $util.base64.decode(object.signature, message.signature = $util.newBuffer($util.base64.length(object.signature)), 0);
-                else if (object.signature.length)
-                    message.signature = object.signature;
+                if (typeof object.signature === 'string')
+                    $util.base64.decode(object.signature, (message.signature = $util.newBuffer($util.base64.length(object.signature))), 0);
+                else if (object.signature.length) message.signature = object.signature;
             return message;
         };
 
@@ -2376,29 +2358,34 @@ $root.cosmos = (function() {
          * @returns {Object.<string,*>} Plain object
          */
         StdSignature.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
+            if (!options) options = {};
             var object = {};
             if (options.defaults) {
-                if (options.bytes === String)
-                    object.pubKey = "";
+                if (options.bytes === String) object.pubKey = '';
                 else {
                     object.pubKey = [];
-                    if (options.bytes !== Array)
-                        object.pubKey = $util.newBuffer(object.pubKey);
+                    if (options.bytes !== Array) object.pubKey = $util.newBuffer(object.pubKey);
                 }
-                if (options.bytes === String)
-                    object.signature = "";
+                if (options.bytes === String) object.signature = '';
                 else {
                     object.signature = [];
-                    if (options.bytes !== Array)
-                        object.signature = $util.newBuffer(object.signature);
+                    if (options.bytes !== Array) object.signature = $util.newBuffer(object.signature);
                 }
             }
-            if (message.pubKey != null && message.hasOwnProperty("pubKey"))
-                object.pubKey = options.bytes === String ? $util.base64.encode(message.pubKey, 0, message.pubKey.length) : options.bytes === Array ? Array.prototype.slice.call(message.pubKey) : message.pubKey;
-            if (message.signature != null && message.hasOwnProperty("signature"))
-                object.signature = options.bytes === String ? $util.base64.encode(message.signature, 0, message.signature.length) : options.bytes === Array ? Array.prototype.slice.call(message.signature) : message.signature;
+            if (message.pubKey != null && message.hasOwnProperty('pubKey'))
+                object.pubKey =
+                    options.bytes === String
+                        ? $util.base64.encode(message.pubKey, 0, message.pubKey.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.pubKey)
+                        : message.pubKey;
+            if (message.signature != null && message.hasOwnProperty('signature'))
+                object.signature =
+                    options.bytes === String
+                        ? $util.base64.encode(message.signature, 0, message.signature.length)
+                        : options.bytes === Array
+                        ? Array.prototype.slice.call(message.signature)
+                        : message.signature;
             return object;
         };
 
@@ -2417,7 +2404,6 @@ $root.cosmos = (function() {
     })();
 
     cosmos.StdTx = (function() {
-
         /**
          * Properties of a StdTx.
          * @memberof cosmos
@@ -2441,8 +2427,7 @@ $root.cosmos = (function() {
             this.signatures = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -2475,7 +2460,7 @@ $root.cosmos = (function() {
          * @memberof cosmos.StdTx
          * @instance
          */
-        StdTx.prototype.memo = "";
+        StdTx.prototype.memo = '';
 
         /**
          * Creates a new StdTx instance using the specified properties.
@@ -2499,17 +2484,15 @@ $root.cosmos = (function() {
          * @returns {$protobuf.Writer} Writer
          */
         StdTx.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
+            if (!writer) writer = $Writer.create();
             if (message.msg != null && message.msg.length)
-                for (var i = 0; i < message.msg.length; ++i)
-                    writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.msg[i]);
-            $root.cosmos.StdFee.encode(message.fee, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                for (var i = 0; i < message.msg.length; ++i) writer.uint32(/* id 1, wireType 2 =*/ 10).bytes(message.msg[i]);
+            $root.cosmos.StdFee.encode(message.fee, writer.uint32(/* id 2, wireType 2 =*/ 18).fork()).ldelim();
             if (message.signatures != null && message.signatures.length)
                 for (var i = 0; i < message.signatures.length; ++i)
-                    $root.cosmos.StdSignature.encode(message.signatures[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
-            if (message.memo != null && message.hasOwnProperty("memo") && message.memo !== "")
-                writer.uint32(/* id 4, wireType 2 =*/34).string(message.memo);
+                    $root.cosmos.StdSignature.encode(message.signatures[i], writer.uint32(/* id 3, wireType 2 =*/ 26).fork()).ldelim();
+            if (message.memo != null && message.hasOwnProperty('memo') && message.memo !== '')
+                writer.uint32(/* id 4, wireType 2 =*/ 34).string(message.memo);
             return writer;
         };
 
@@ -2538,35 +2521,32 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         StdTx.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos.StdTx();
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.cosmos.StdTx();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    if (!(message.msg && message.msg.length))
-                        message.msg = [];
-                    message.msg.push(reader.bytes());
-                    break;
-                case 2:
-                    message.fee = $root.cosmos.StdFee.decode(reader, reader.uint32());
-                    break;
-                case 3:
-                    if (!(message.signatures && message.signatures.length))
-                        message.signatures = [];
-                    message.signatures.push($root.cosmos.StdSignature.decode(reader, reader.uint32()));
-                    break;
-                case 4:
-                    message.memo = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+                    case 1:
+                        if (!(message.msg && message.msg.length)) message.msg = [];
+                        message.msg.push(reader.bytes());
+                        break;
+                    case 2:
+                        message.fee = $root.cosmos.StdFee.decode(reader, reader.uint32());
+                        break;
+                    case 3:
+                        if (!(message.signatures && message.signatures.length)) message.signatures = [];
+                        message.signatures.push($root.cosmos.StdSignature.decode(reader, reader.uint32()));
+                        break;
+                    case 4:
+                        message.memo = reader.string();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
                 }
             }
-            if (!message.hasOwnProperty("fee"))
-                throw $util.ProtocolError("missing required 'fee'", { instance: message });
+            if (!message.hasOwnProperty('fee')) throw $util.ProtocolError("missing required 'fee'", { instance: message });
             return message;
         };
 
@@ -2581,8 +2561,7 @@ $root.cosmos = (function() {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         StdTx.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -2595,32 +2574,25 @@ $root.cosmos = (function() {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         StdTx.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.msg != null && message.hasOwnProperty("msg")) {
-                if (!Array.isArray(message.msg))
-                    return "msg: array expected";
+            if (typeof message !== 'object' || message === null) return 'object expected';
+            if (message.msg != null && message.hasOwnProperty('msg')) {
+                if (!Array.isArray(message.msg)) return 'msg: array expected';
                 for (var i = 0; i < message.msg.length; ++i)
-                    if (!(message.msg[i] && typeof message.msg[i].length === "number" || $util.isString(message.msg[i])))
-                        return "msg: buffer[] expected";
+                    if (!((message.msg[i] && typeof message.msg[i].length === 'number') || $util.isString(message.msg[i])))
+                        return 'msg: buffer[] expected';
             }
             {
                 var error = $root.cosmos.StdFee.verify(message.fee);
-                if (error)
-                    return "fee." + error;
+                if (error) return 'fee.' + error;
             }
-            if (message.signatures != null && message.hasOwnProperty("signatures")) {
-                if (!Array.isArray(message.signatures))
-                    return "signatures: array expected";
+            if (message.signatures != null && message.hasOwnProperty('signatures')) {
+                if (!Array.isArray(message.signatures)) return 'signatures: array expected';
                 for (var i = 0; i < message.signatures.length; ++i) {
                     var error = $root.cosmos.StdSignature.verify(message.signatures[i]);
-                    if (error)
-                        return "signatures." + error;
+                    if (error) return 'signatures.' + error;
                 }
             }
-            if (message.memo != null && message.hasOwnProperty("memo"))
-                if (!$util.isString(message.memo))
-                    return "memo: string expected";
+            if (message.memo != null && message.hasOwnProperty('memo')) if (!$util.isString(message.memo)) return 'memo: string expected';
             return null;
         };
 
@@ -2633,36 +2605,29 @@ $root.cosmos = (function() {
          * @returns {cosmos.StdTx} StdTx
          */
         StdTx.fromObject = function fromObject(object) {
-            if (object instanceof $root.cosmos.StdTx)
-                return object;
+            if (object instanceof $root.cosmos.StdTx) return object;
             var message = new $root.cosmos.StdTx();
             if (object.msg) {
-                if (!Array.isArray(object.msg))
-                    throw TypeError(".cosmos.StdTx.msg: array expected");
+                if (!Array.isArray(object.msg)) throw TypeError('.cosmos.StdTx.msg: array expected');
                 message.msg = [];
                 for (var i = 0; i < object.msg.length; ++i)
-                    if (typeof object.msg[i] === "string")
-                        $util.base64.decode(object.msg[i], message.msg[i] = $util.newBuffer($util.base64.length(object.msg[i])), 0);
-                    else if (object.msg[i].length)
-                        message.msg[i] = object.msg[i];
+                    if (typeof object.msg[i] === 'string')
+                        $util.base64.decode(object.msg[i], (message.msg[i] = $util.newBuffer($util.base64.length(object.msg[i]))), 0);
+                    else if (object.msg[i].length) message.msg[i] = object.msg[i];
             }
             if (object.fee != null) {
-                if (typeof object.fee !== "object")
-                    throw TypeError(".cosmos.StdTx.fee: object expected");
+                if (typeof object.fee !== 'object') throw TypeError('.cosmos.StdTx.fee: object expected');
                 message.fee = $root.cosmos.StdFee.fromObject(object.fee);
             }
             if (object.signatures) {
-                if (!Array.isArray(object.signatures))
-                    throw TypeError(".cosmos.StdTx.signatures: array expected");
+                if (!Array.isArray(object.signatures)) throw TypeError('.cosmos.StdTx.signatures: array expected');
                 message.signatures = [];
                 for (var i = 0; i < object.signatures.length; ++i) {
-                    if (typeof object.signatures[i] !== "object")
-                        throw TypeError(".cosmos.StdTx.signatures: object expected");
+                    if (typeof object.signatures[i] !== 'object') throw TypeError('.cosmos.StdTx.signatures: object expected');
                     message.signatures[i] = $root.cosmos.StdSignature.fromObject(object.signatures[i]);
                 }
             }
-            if (object.memo != null)
-                message.memo = String(object.memo);
+            if (object.memo != null) message.memo = String(object.memo);
             return message;
         };
 
@@ -2676,8 +2641,7 @@ $root.cosmos = (function() {
          * @returns {Object.<string,*>} Plain object
          */
         StdTx.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
+            if (!options) options = {};
             var object = {};
             if (options.arrays || options.defaults) {
                 object.msg = [];
@@ -2685,22 +2649,25 @@ $root.cosmos = (function() {
             }
             if (options.defaults) {
                 object.fee = null;
-                object.memo = "";
+                object.memo = '';
             }
             if (message.msg && message.msg.length) {
                 object.msg = [];
                 for (var j = 0; j < message.msg.length; ++j)
-                    object.msg[j] = options.bytes === String ? $util.base64.encode(message.msg[j], 0, message.msg[j].length) : options.bytes === Array ? Array.prototype.slice.call(message.msg[j]) : message.msg[j];
+                    object.msg[j] =
+                        options.bytes === String
+                            ? $util.base64.encode(message.msg[j], 0, message.msg[j].length)
+                            : options.bytes === Array
+                            ? Array.prototype.slice.call(message.msg[j])
+                            : message.msg[j];
             }
-            if (message.fee != null && message.hasOwnProperty("fee"))
-                object.fee = $root.cosmos.StdFee.toObject(message.fee, options);
+            if (message.fee != null && message.hasOwnProperty('fee')) object.fee = $root.cosmos.StdFee.toObject(message.fee, options);
             if (message.signatures && message.signatures.length) {
                 object.signatures = [];
                 for (var j = 0; j < message.signatures.length; ++j)
                     object.signatures[j] = $root.cosmos.StdSignature.toObject(message.signatures[j], options);
             }
-            if (message.memo != null && message.hasOwnProperty("memo"))
-                object.memo = message.memo;
+            if (message.memo != null && message.hasOwnProperty('memo')) object.memo = message.memo;
             return object;
         };
 

@@ -76,10 +76,7 @@
             class="empty"
             v-if="txs.length === 0"
           >{{$t('main.empty')}}</div>
-          <TransactionList
-            :load="load"
-            :list="txs"
-          />
+          <TransactionList :list="txs" />
           <p v-if="txs.length > 0"><a
               target="_blank"
               :href="`${domain}address/${keyStore.address}`"
@@ -114,7 +111,6 @@ export default {
       icon1,
       icon2,
       icon3,
-      load: false,
       domain: gardplorerDomain
     };
   },
@@ -136,13 +132,12 @@ export default {
     isEmpty,
     onTabChange(tab) {
       this.$router.push(`/main?tab=${tab}`);
-      this.fetchData();
-    },
-    fetchData: async function() {
-      this.load = true;
-      await this.$store.dispatch("account/fetchBalance");
-      await this.$store.dispatch("transactions/fetchTxs", this.keyStore);
-      this.load = false;
+      if (tab === "assets") {
+        this.$store.dispatch("account/fetchBalance");
+      }
+      if (tab === "txs") {
+        this.$store.dispatch("transactions/fetchTxs", this.keyStore);
+      }
     },
     onCopy() {
       this.$message({
@@ -157,7 +152,7 @@ export default {
     }
   },
   mounted() {
-    this.fetchData();
+    this.onTabChange(this.$route.query.tab);
   }
 };
 </script>
@@ -204,6 +199,7 @@ export default {
       .top-btn {
         flex-grow: 1;
         line-height: 32px;
+        padding: $padding-large 0;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -226,6 +222,7 @@ export default {
     margin-left: -24px;
     .asset-item {
       margin-left: 24px;
+      margin-bottom: 16px;
     }
   }
   .txs {
@@ -241,10 +238,6 @@ export default {
       text-align: center;
     }
   }
-}
-.line {
-  border-top: $border;
-  margin: $padding-basic;
 }
 
 @include responsive($sm) {

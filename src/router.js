@@ -23,6 +23,15 @@ import SendConfirm from '@/components/Send/SendConfirm.vue';
 import SendFinish from '@/components/Send/SendFinish.vue';
 import Receive from './views/Receive.vue';
 
+import StakingMain from './views/StakingMain.vue';
+import Staking from './views/Staking.vue';
+import DelegateForm from '@/components/Staking/DelegateForm.vue';
+import ValidatorList from '@/components/Staking/ValidatorList.vue';
+import DelegateConfirm from '@/components/Staking/Confirm.vue';
+import DelegateDetail from '@/components/Staking/DelegateDetail.vue';
+import UnbindForm from '@/components/Staking/UnbindForm.vue';
+import RedelegateForm from '@/components/Staking/RedelegateForm.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -120,6 +129,41 @@ export default new Router({
         {
           path: 'finish',
           component: SendFinish
+        }
+      ]
+    },
+    {
+      path: '/staking',
+      component: StakingMain
+    },
+    {
+      path: '/staking',
+      name: 'staking',
+      component: Staking,
+      children: [
+        {
+          path: 'delegate',
+          component: DelegateForm
+        },
+        {
+          path: 'validator',
+          component: ValidatorList
+        },
+        {
+          path: 'confirm',
+          component: DelegateConfirm
+        },
+        {
+          path: 'detail/:validator',
+          component: DelegateDetail
+        },
+        {
+          path: 'unbind',
+          component: UnbindForm
+        },
+        {
+          path: 'redelegate',
+          component: RedelegateForm
         }
       ]
     },

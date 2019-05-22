@@ -32,14 +32,22 @@
         {{$i18n.locale === 'en' ? '中文':'English'}}
       </span>
 
-      <span
-        v-if="$route.path === '/home'"
-        class="account"
-        @click="useAccount"
+      <el-dropdown
+        class="dropdown-menu"
+        trigger="click"
+        @command="getStarted"
       >
-        <i class="el-icon-account"></i>
-        {{$t('home.account')}}
-      </span>
+        <i class="el-icon-more"></i>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="account">
+            {{$t('home.account')}}
+          </el-dropdown-item>
+          <el-dropdown-item command="staking">
+            {{$t('home.staking')}}
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+
     </div>
   </div>
 </template>
@@ -73,21 +81,21 @@ export default {
       this.$i18n.locale = target;
       localStorage.setItem("lang", target);
     },
-    useAccount() {
+    getStarted(page) {
+      const uris = {
+        account: "/main?tab=assets",
+        staking: "/staking?tab=delegations"
+      };
       const agree = localStorage.getItem("gard_wallet_agree");
       if (!agree) {
         this.$router.push("/agree");
         return;
       }
       if (this.userName) {
-        this.$router.push("/main?tab=assets");
+        this.$router.push(uris[page]);
         return;
       }
       this.$router.push("/passport");
-    },
-    handleCommand(type) {
-      const commands = { backup: this.backup, logout: this.logout };
-      commands[type]();
     },
     handleScroll(e) {
       if (window.scrollY > 20) {
@@ -150,9 +158,10 @@ export default {
       transform: rotate(90deg);
     }
   }
-  .account {
+  .dropdown-menu {
     margin-left: $padding-basic;
     cursor: pointer;
+    font-size: 24px;
   }
 }
 
@@ -163,7 +172,7 @@ export default {
     .lang-change {
       margin-left: 12px;
     }
-    .account {
+    .dropdown-menu {
       margin-left: 12px;
     }
   }

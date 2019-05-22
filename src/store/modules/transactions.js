@@ -1,6 +1,7 @@
 import webc from '@/utils/webc';
 import ajax from '@/utils/ajax.js';
 import { get, set, isEmpty } from 'lodash';
+import { sendTx } from '@/utils/helpers';
 
 export default {
   namespaced: true,
@@ -12,7 +13,7 @@ export default {
     blocks: {},
     txInfo: {},
     form: {
-      denom: 'gard',
+      denom: 'agard',
       fee: 0
     },
     result: {}
@@ -141,54 +142,13 @@ export default {
       const {
         form: { denom, address }
       } = context.state;
-      const { keyStore } = context.rootState.account;
-      const from = keyStore.address;
-      // 1. get account state (account_number & sequence)
-      let accState = {
-        account_number: '0',
-        sequence: '0'
+      const msg = {
+        to: address,
+        coins: [{ denom, amount }]
       };
-      try {
-        const { data } = await ajax.get(`/auth/accounts/${from}`);
-        accState = data.value;
-      } catch (e) {
-        console.log(e);
-      }
-      // 2. get privateKey from keyStore
-      let account = {};
-      try {
-        account = webc.account.fromV3KeyStore(keyStore, pass);
-      } catch (e) {
-        return Promise.resolve('passError');
-      }
-      // 3. build tx and sign
-      const para = {
-        chain_id: context.state.nodeInfo.network,
-        from,
-        account_number: accState.account_number,
-        sequence: accState.sequence,
-        fees: { denom: 'gard', amount: '0' },
-        gas: 200000,
-        type: 'transfer',
-        msg: {
-          to: address,
-          coins: [
-            {
-              denom,
-              amount
-            }
-          ]
-        }
-      };
-      const req = webc.tx.buildAndSignTx(para, account.privateKey).GetData();
-      // 4. post to lcd api
-      const res = await ajax.post(`/txs`, req);
-      // 5. get block info when tx success
-      if (res.data) {
-        const blockData = await context.dispatch('fetchBlock', res.data.height);
-        res.data.block = blockData.block;
-      }
-      return Promise.resolve(res.data);
+
+      const { data } = await sendTx(context, pass, 'transfer', msg);
+      return Promise.resolve(data);
     }
   }
 };

@@ -8,7 +8,7 @@
       v-else
       class="logo-none"
     ></div>
-    <div class="denom">
+    <div class="name">
       {{ viewToken.denom }}
     </div>
     <div class="amount">
@@ -38,6 +38,7 @@ export default {
 <style lang="scss" scoped>
 .balance-container {
   flex-basis: 200px;
+  height: 180px;
   text-align: center;
   background: white;
   color: rgba(0, 0, 0, 0.75);
@@ -64,7 +65,7 @@ export default {
     background: #eee;
     border-radius: 24px;
   }
-  .denom {
+  .name {
     font-size: 18px;
     margin-bottom: 16px;
   }

@@ -78,7 +78,7 @@ class Builder {
                 });
             }
             let memo = tx.memo ? tx.memo : '';
-            return new Request(tx.chain_id, tx.from, tx.account_number, tx.sequence, fees, tx.gas, memo, tx.type, tx.msg);
+            return new Request(tx.chain_id, tx.from, tx.account_number, tx.sequence, fees, tx.gas, memo, tx.type, tx.msg, tx.msgs);
         };
 
         return convert(tx);
@@ -86,7 +86,7 @@ class Builder {
 }
 
 class Request {
-    constructor(chain_id, from, account_number, sequence, fees, gas, memo, type, msg) {
+    constructor(chain_id, from, account_number, sequence, fees, gas, memo, type, msg, msgs) {
         if (Utils.isEmpty(chain_id)) {
             throw new Error('chain_id is empty');
         }
@@ -115,6 +115,7 @@ class Request {
         this.memo = memo;
         this.type = type;
         this.msg = msg;
+        this.msgs = msgs;
     }
 }
 

@@ -8,6 +8,7 @@ a {
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
   transition: color 0.3s ease 0s;
+  cursor: pointer;
 }
 a:link,
 a:visited,
@@ -137,6 +138,7 @@ a:active {
     }
   }
 }
+.staking-container .el-tabs--card,
 .main-container .el-tabs--card {
   & > .el-tabs__header {
     margin-bottom: 1px;

@@ -20,13 +20,13 @@ StdFee.prototype.GetSignBytes = function() {
 };
 
 class StdSignMsg extends Builder.Msg {
-    constructor(chainID, accnum, sequence, fee, msg, memo, msgType) {
+    constructor(chainID, accnum, sequence, fee, msgs, memo, msgType) {
         super(msgType);
         this.chain_id = chainID;
         this.account_number = accnum;
         this.sequence = sequence;
         this.fee = fee;
-        this.msgs = [msg];
+        this.msgs = msgs;
         this.memo = memo;
     }
 
@@ -136,7 +136,7 @@ class StdTx {
                 signatures: signatures,
                 memo: this.memo
             },
-            return: 'block'
+            mode: 'block'
         };
     }
 
@@ -167,12 +167,12 @@ class StdTx {
 }
 
 module.exports = class Bank {
-    static create(req, msg) {
+    static create(req, msgs) {
         let fee = new StdFee({
             amount: req.fees,
             gas: req.gas
         });
-        let stdMsg = new StdSignMsg(req.chain_id, req.account_number, req.sequence, fee, msg, req.memo, req.type);
+        let stdMsg = new StdSignMsg(req.chain_id, req.account_number, req.sequence, fee, msgs, req.memo, req.type);
         stdMsg.ValidateBasic();
         return new StdTx(stdMsg);
     }

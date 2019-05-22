@@ -5,7 +5,7 @@ import { gardplorerDomain } from '@/constants';
 
 export const upper = s => s.toUpperCase();
 
-export const gardAddr = s => s.slice(0, 8) + '......' + s.slice(s.length - 8);
+export const gardAddr = s => s && s.slice(0, 8) + '......' + s.slice(s.length - 8);
 
 export const amountGard = tx => {
   const coins = get(tx, 'tx.value.msg.0.value.amount');
@@ -20,4 +20,4 @@ export const explorerUrl = s => `${gardplorerDomain}${s}`;
 
 export const formatTime = time => moment(time).format('YYYY-MM-DD HH:mm:ss');
 
-export const formatNumber = v => numeral(v.toString()).format('0,0.[00]');
+export const formatNumber = v => (v ? numeral(v.toString()).format('0,0.[00]') : 0);
