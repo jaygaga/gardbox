@@ -1,7 +1,7 @@
 import webc from '@/utils/webc';
 import ajax from '@/utils/ajax.js';
 import { get, set, isEmpty } from 'lodash';
-import { sendTx } from '@/utils/helpers';
+import { getCurrentAddress, sendTx } from '@/utils/helpers';
 
 export default {
   namespaced: true,
@@ -80,7 +80,7 @@ export default {
     },
     fetchTxs: async function(context, keyStore) {
       const limit = 10;
-      const { address } = keyStore;
+      const address = getCurrentAddress(context.rootState.account);
       const params = {
         limit,
         action: 'send',

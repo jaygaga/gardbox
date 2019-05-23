@@ -61,23 +61,20 @@
 
     <s-card
       class="passport-card"
-      :title="userName || !isEmpty(mathAccount) ? '' : $t('passport.title')"
+      :title="userName || mathPlugin ? '' : $t('passport.title')"
     >
-
       <s-btn-card
         :title="$t('passport.create')"
         :src="icon1"
         :breif="$t('passport.createBreif')"
         link="create/pass"
       />
-
       <s-btn-card
         :title="$t('passport.recover')"
         :src="icon2"
         :breif="$t('passport.recoverBreif')"
         link="recover/key/text"
       />
-
     </s-card>
   </s-page>
 </template>
@@ -107,7 +104,7 @@ export default {
       );
     },
     mathPlugin() {
-      return !isEmpty(mathExtension);
+      return !isEmpty(window.mathExtension);
     }
   },
   methods: {
@@ -115,7 +112,7 @@ export default {
     changeAccount: async function(e, name) {
       await this.$store.dispatch("account/change", name);
       // logout mathwallet
-      if (mathExtension) {
+      if (window.mathExtension) {
         await this.$store.dispatch("account/resetMathIdentity");
       }
       this.$router.push("main?tab=assets");
@@ -129,7 +126,7 @@ export default {
         blockchain: "cosmos",
         chainId: "cosmoshub-2"
       };
-      mathExtension.forgetIdentity();
+      window.mathExtension.forgetIdentity();
     }
   }
 };

@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { isEmpty } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import webc from '@/utils/webc';
 import ajax from '@/utils/ajax.js';
 
@@ -35,6 +35,14 @@ export const getViewToken = (coin, tokenMap) => {
     }
   }
   return token;
+};
+
+export const getCurrentAddress = ({ mathAccount, keyStore }) => {
+  if (!isEmpty(mathAccount)) {
+    return get(mathAccount, 'account');
+  } else {
+    return get(keyStore, 'address');
+  }
 };
 
 export const sendTx = async function(context, pass, type, msg, msgs) {

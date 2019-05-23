@@ -4,7 +4,7 @@
       <div class="top-balance">
         <div class="name"><img :src="icon" />{{userName}}</div>
         <s-address
-          :address="keyStore.address"
+          :address="address"
           :ellipsis="true"
         />
       </div>
@@ -79,7 +79,7 @@
           <TransactionList :list="txs" />
           <p v-if="txs.length > 0"><a
               target="_blank"
-              :href="`${domain}address/${keyStore.address}`"
+              :href="`${domain}address/${address}`"
             >{{$t('main.allTxs')}}</a></p>
         </div>
       </el-tab-pane>
@@ -102,6 +102,8 @@ import AvatarPanel from "@/components/Panel/AvatarPanel.vue";
 import BalancePanel from "@/components/Panel/BalancePanel";
 import TransactionList from "@/components/TransactionList";
 
+import { getCurrentAddress } from "@/utils/helpers";
+
 export default {
   name: "Main",
   components: { AvatarPanel, BalancePanel, TransactionList },
@@ -118,11 +120,18 @@ export default {
     ...mapState("account", [
       "userName",
       "keyStore",
+      "mathAccount",
       "balance",
       "txs",
       "loading"
     ]),
     ...mapState("transactions", { txLoading: "loading", txs: "txs" }),
+    address() {
+      return getCurrentAddress({
+        keyStore: this.keyStore,
+        mathAccount: this.mathAccount
+      });
+    },
     gardBalance() {
       const gard = { amount: "0", denom: "gard" };
       return this.balance.find(i => i.denom === "gard") || gard;
