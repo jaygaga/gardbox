@@ -2,7 +2,7 @@
   <div class="item-content">
     <div>
       <div class="name"><img :src="icon" />{{user}}</div>
-      <p>{{userMap[user].address}}</p>
+      <p>{{userMap[user].address | gardAddr}}</p>
     </div>
 
     <el-dropdown @command="v => handleCommand(user, v)">

@@ -54,7 +54,9 @@ const en = {
     deleteWarn:
       'All user data, including imported or generated private keys, will be deleted. The only way to restore a deleted wallet is to use your backup phrase.',
     recover: 'Import Wallet',
-    recoverBreif: 'Recover your wallet in this browser if you already have one from other place.'
+    recoverBreif: 'Recover your wallet in this browser if you already have one from other place.',
+    math: 'Math Wallet',
+    useMath: 'Use Math Wallet'
   },
   create: {
     warn1: 'Your password allows you to access and transfer your funds. Keep it safe!!!',

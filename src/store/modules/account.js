@@ -16,6 +16,7 @@ export default {
     loading: false,
     userName: wallet_username,
     account: {},
+    mathAccount: {},
     keyStore: keyStore,
     userMap: JSON.parse(wallet_users),
     balance: [],
@@ -33,6 +34,9 @@ export default {
     },
     setAccount: function(state, account) {
       state.account = account;
+    },
+    setMathAccount: function(state, mathAccount) {
+      state.mathAccount = mathAccount;
     },
     setKeyStore: function(state, keyStore) {
       state.keyStore = keyStore;
@@ -169,6 +173,30 @@ export default {
         await context.dispatch('change', Object.keys(userMap)[0]);
       }
       return Promise.resolve(account);
+    },
+    getMathIdentity: async function(context) {
+      // config network
+      const network = {
+        blockchain: 'cosmos',
+        chainId: 'cosmoshub-2'
+      };
+      // login math account
+      const identity = await mathExtension.getIdentity(network);
+      context.commit('setMathAccount', identity);
+      // clear local account
+      context.commit('setUserName', '');
+      context.commit('setKeyStore', {});
+      localStorage.setItem('gard_wallet_username', '');
+
+      return Promise.resolve(identity);
+    },
+    resetMathIdentity: async function(context) {
+      // logout
+      const res = await mathExtension.forgetIdentity();
+      if (res) {
+        context.commit('setMathAccount', {});
+      }
+      return Promise.resolve(res);
     },
     fetchBalance: async function(context) {
       const { address } = context.state.keyStore;
