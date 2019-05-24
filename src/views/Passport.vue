@@ -118,8 +118,10 @@ export default {
       this.$router.push("main?tab=assets");
     },
     loginMath: async function() {
-      await this.$store.dispatch("account/getMathIdentity");
-      this.$router.push("main?tab=assets");
+      const res = await this.$store.dispatch("account/getMathIdentity");
+      if (!isEmpty(res)) {
+        this.$router.push("main?tab=assets");
+      }
     },
     logoutMath: async function() {
       const network = {

@@ -185,19 +185,28 @@ export default {
         chainId: 'cosmoshub-2'
       };
       // login math account
-      const identity = await mathExtension.getIdentity(network);
-      context.commit('setMathAccount', identity);
-      // clear local account
-      context.commit('setUserName', '');
-      context.commit('setKeyStore', {});
-      localStorage.setItem('gard_wallet_username', '');
-      localStorage.setItem('gard_wallet_math_account', JSON.stringify(identity));
-
+      let identity = {};
+      try {
+        identity = await mathExtension.getIdentity(network);
+        context.commit('setMathAccount', identity);
+        // clear local account
+        context.commit('setUserName', '');
+        context.commit('setKeyStore', {});
+        localStorage.setItem('gard_wallet_username', '');
+        localStorage.setItem('gard_wallet_math_account', JSON.stringify(identity));
+      } catch (e) {
+        console.log(e);
+      }
       return Promise.resolve(identity);
     },
     resetMathIdentity: async function(context) {
       // logout
-      const res = await mathExtension.forgetIdentity();
+      let res = true;
+      try {
+        res = await mathExtension.forgetIdentity();
+      } catch (e) {
+        console.log(e);
+      }
       if (res) {
         context.commit('setMathAccount', {});
         localStorage.setItem('gard_wallet_math_account', '{}');
