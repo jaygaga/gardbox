@@ -51,12 +51,7 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
     account: { keyStore, mathAccount },
     transactions: { nodeInfo }
   } = context.rootState;
-  let from = '';
-  if (!isEmpty(mathAccount)) {
-    from = mathAccount.account;
-  } else {
-    from = keyStore.address;
-  }
+  const from = getCurrentAddress(context.rootState.account);
   // 1. get account state (account_number & sequence)
   let accState = {
     account_number: '0',

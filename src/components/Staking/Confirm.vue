@@ -55,6 +55,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("account", ["mathAccount"]),
     ...mapState("staking", ["form", "toValidator", "fromValidator"])
   },
   methods: {
@@ -62,10 +63,16 @@ export default {
     isEmpty,
     numeral,
     onSubmit: async function() {
+      // use math wallet
+      if (!isEmpty(this.mathAccount)) {
+        this.onSend(true);
+        return;
+      }
+      // else use local wallet
       this.dialogVisible = true;
     },
-    onSend: async function() {
-      if (!this.pass) {
+    onSend: async function(useMathWallet) {
+      if (!useMathWallet && !this.pass) {
         this.$message({
           type: "error",
           message: $t("global.required", { name: $t("create.pass") }),

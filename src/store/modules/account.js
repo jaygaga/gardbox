@@ -182,7 +182,7 @@ export default {
       // config network
       const network = {
         blockchain: 'cosmos',
-        chainId: 'cosmoshub-2'
+        chainId: 'dev'
       };
       // login math account
       let identity = {};
