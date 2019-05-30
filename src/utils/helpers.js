@@ -67,6 +67,7 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
     accState = data.value;
   } catch (e) {
     console.log(e);
+    return Promise.resolve({ data: 'netError' });
   }
   // 2. build cosmos stdTx
   const para = getTxPara(from, type, accState, nodeInfo, msg, msgs);
@@ -78,18 +79,17 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
     await context.dispatch('account/getMathIdentity', null, { root: true });
     try {
       const signatureHex = await window.mathExtension.getArbitrarySignature(from, stdTx.GetSignBytes(), type);
-      console.log(signatureHex);
       const signature = {
-        pub_key: Codec.Hex.hexToBytes('publicKey'),
-        signature: Codec.Hex.hexToBytes(signatureHex)
+        pub_key: Codec.Hex.hexToBytes(signatureHex.publicKey),
+        signature: Codec.Hex.hexToBytes(signatureHex.signature)
       };
-      console.log(signature);
       stdTx.SetSignature(signature);
       req = stdTx.GetData();
-      console.log(req);
     } catch (e) {
       console.log(e);
-      return Promise.resolve('passError');
+      if (e.code === 1000010) {
+        return Promise.resolve({ data: 'reject' });
+      }
     }
   } else {
     // 3.1. get privateKey from keyStore
@@ -101,10 +101,8 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
     }
     // 3.2. sign with local wallet
     const signature = webc.tx.sign(stdTx.GetSignBytes(), account.privateKey);
-    console.log(signature);
     stdTx.SetSignature(signature);
     req = stdTx.GetData();
-    console.log(req);
   }
   // 3. post to lcd api
   const res = await ajax.post(`/txs`, req);

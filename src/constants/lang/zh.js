@@ -97,6 +97,8 @@ const zh = {
     form: '转 账',
     confirm: '确认交易信息',
     passError: '密码错误',
+    reject: '交易签名被拒绝',
+    netError: '网络错误',
     finish: '转账结果',
     denom: '转账币种',
     amount: '数量',

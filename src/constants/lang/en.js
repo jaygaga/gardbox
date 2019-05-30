@@ -102,6 +102,8 @@ const en = {
     form: 'Transfer',
     confirm: 'Confirm Transaction',
     passError: 'Wrong Password!',
+    reject: 'Signature Rejected',
+    netError: 'Network Error',
     finish: 'Transaction Result',
     denom: 'Currency',
     amount: 'Amount',
