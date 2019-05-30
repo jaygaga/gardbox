@@ -3,7 +3,7 @@
     <div class="user-select">
       <div
         v-if="mathPlugin && !isEmpty(mathAccount)"
-        @click="() => $router.push('main?tab=assets')"
+        @click="loginMath"
         class="user-item math is-checked"
       >
         <div class="math-top">
@@ -112,7 +112,7 @@ export default {
     changeAccount: async function(e, name) {
       await this.$store.dispatch("account/change", name);
       // logout mathwallet
-      if (window.mathExtension) {
+      if (!isEmpty(this.mathAccount)) {
         await this.$store.dispatch("account/resetMathIdentity");
       }
       this.$router.push("main?tab=assets");
