@@ -4,10 +4,14 @@ import { get, set, isEmpty } from 'lodash';
 
 import { Message } from 'element-ui';
 
+import { getCurrentAddress } from '@/utils/helpers';
+
 const wallet_users = localStorage.getItem('gard_wallet_users') || '{}';
 const wallet_username = localStorage.getItem('gard_wallet_username') || '';
+const wallet_math_account = localStorage.getItem('gard_wallet_math_account') || '{}';
 const userMap = JSON.parse(wallet_users) || {};
 const keyStore = userMap[wallet_username] || {};
+const mathAccount = JSON.parse(wallet_math_account) || {};
 
 export default {
   namespaced: true,
@@ -16,8 +20,9 @@ export default {
     loading: false,
     userName: wallet_username,
     account: {},
+    mathAccount: { ...mathAccount },
     keyStore: keyStore,
-    userMap: JSON.parse(wallet_users),
+    userMap: { ...userMap },
     balance: [],
     tokenMap: {}
   },
@@ -33,6 +38,9 @@ export default {
     },
     setAccount: function(state, account) {
       state.account = account;
+    },
+    setMathAccount: function(state, mathAccount) {
+      state.mathAccount = mathAccount;
     },
     setKeyStore: function(state, keyStore) {
       state.keyStore = keyStore;
@@ -170,8 +178,43 @@ export default {
       }
       return Promise.resolve(account);
     },
+    getMathIdentity: async function(context) {
+      // config network
+      const network = {
+        blockchain: 'cosmos',
+        chainId: 'dev'
+      };
+      // login math account
+      let identity = {};
+      try {
+        identity = await mathExtension.getIdentity(network);
+        context.commit('setMathAccount', identity);
+        // clear local account
+        context.commit('setUserName', '');
+        context.commit('setKeyStore', {});
+        localStorage.setItem('gard_wallet_username', '');
+        localStorage.setItem('gard_wallet_math_account', JSON.stringify(identity));
+      } catch (e) {
+        console.log(e);
+      }
+      return Promise.resolve(identity);
+    },
+    resetMathIdentity: async function(context) {
+      // logout
+      let res = true;
+      try {
+        res = await mathExtension.forgetIdentity();
+      } catch (e) {
+        console.log(e);
+      }
+      if (res) {
+        context.commit('setMathAccount', {});
+        localStorage.setItem('gard_wallet_math_account', '{}');
+      }
+      return Promise.resolve(res);
+    },
     fetchBalance: async function(context) {
-      const { address } = context.state.keyStore;
+      const address = getCurrentAddress(context.state);
       context.commit('setLoading', true);
       const { data } = await ajax.get(`bank/balances/${address}`);
       if (!isEmpty(data)) {

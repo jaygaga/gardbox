@@ -1,10 +1,35 @@
 <template>
   <div class="main-container">
     <div class="main-top">
-      <div class="top-balance">
+      <div
+        v-if="isEmpty(mathAccount)"
+        class="top-balance"
+      >
         <div class="name"><img :src="icon" />{{userName}}</div>
         <s-address
-          :address="keyStore.address"
+          :address="address"
+          :ellipsis="true"
+        />
+      </div>
+      <div
+        v-else
+        class="top-balance"
+      >
+        <div class="name">
+          <div class="math-logo">
+            <img
+              v-if="$i18n.locale === 'zh'"
+              :src="`https://medishares-cn.oss-cn-hangzhou.aliyuncs.com/mathwallet/images/mathlabs/wallet_cn_logo_white.png`"
+            >
+            <img
+              v-else
+              :src="`https://medishares-cn.oss-cn-hangzhou.aliyuncs.com/mathwallet/images/mathlabs/wallet_en_logo_white.png`"
+            >
+          </div>
+          {{ $t('passport.math') }}
+        </div>
+        <s-address
+          :address="address"
           :ellipsis="true"
         />
       </div>
@@ -79,7 +104,7 @@
           <TransactionList :list="txs" />
           <p v-if="txs.length > 0"><a
               target="_blank"
-              :href="`${domain}address/${keyStore.address}`"
+              :href="`${domain}address/${address}`"
             >{{$t('main.allTxs')}}</a></p>
         </div>
       </el-tab-pane>
@@ -102,6 +127,8 @@ import AvatarPanel from "@/components/Panel/AvatarPanel.vue";
 import BalancePanel from "@/components/Panel/BalancePanel";
 import TransactionList from "@/components/TransactionList";
 
+import { getCurrentAddress } from "@/utils/helpers";
+
 export default {
   name: "Main",
   components: { AvatarPanel, BalancePanel, TransactionList },
@@ -118,11 +145,18 @@ export default {
     ...mapState("account", [
       "userName",
       "keyStore",
+      "mathAccount",
       "balance",
       "txs",
       "loading"
     ]),
     ...mapState("transactions", { txLoading: "loading", txs: "txs" }),
+    address() {
+      return getCurrentAddress({
+        keyStore: this.keyStore,
+        mathAccount: this.mathAccount
+      });
+    },
     gardBalance() {
       const gard = { amount: "0", denom: "gard" };
       return this.balance.find(i => i.denom === "gard") || gard;
@@ -147,7 +181,7 @@ export default {
     }
   },
   beforeMount() {
-    if (!this.userName) {
+    if (!this.userName && isEmpty(this.mathAccount)) {
       this.$router.push("/passport");
     }
   },
@@ -183,6 +217,11 @@ export default {
         img {
           height: 24px;
           margin-right: 8px;
+        }
+        .math-logo {
+          width: 32px;
+          overflow: hidden;
+          margin-bottom: -2px;
         }
       }
     }

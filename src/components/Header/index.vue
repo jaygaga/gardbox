@@ -54,6 +54,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { isEmpty } from "lodash";
 
 export default {
   data() {
@@ -67,7 +68,7 @@ export default {
     netName: String
   },
   computed: {
-    ...mapState("account", ["userName"]),
+    ...mapState("account", ["userName", "mathAccount"]),
     ...mapState("transactions", ["nodeInfo"])
   },
   methods: {
@@ -91,7 +92,7 @@ export default {
         this.$router.push("/agree");
         return;
       }
-      if (this.userName) {
+      if (this.userName || !isEmpty(this.mathAccount)) {
         this.$router.push(uris[page]);
         return;
       }

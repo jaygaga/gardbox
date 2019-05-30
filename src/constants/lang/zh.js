@@ -50,7 +50,9 @@ const zh = {
     delete: '删除钱包',
     deleteWarn: '钱包的所有信息都会被删除，只能用该钱包的助记词或 KeyStore 恢复钱包，请确保您已做好备份。',
     recover: '导入钱包',
-    recoverBreif: '使用私钥或助记词恢复来恢复 GARD 钱包。'
+    recoverBreif: '使用私钥或助记词恢复来恢复 GARD 钱包。',
+    math: '麦子钱包',
+    useMath: '使用麦子钱包'
   },
   create: {
     warn1: '请认真保存当前账户密码，该密码用于操作您钱包的资产，如转账等。',
@@ -95,6 +97,8 @@ const zh = {
     form: '转 账',
     confirm: '确认交易信息',
     passError: '密码错误',
+    reject: '交易签名被拒绝',
+    netError: '网络错误',
     finish: '转账结果',
     denom: '转账币种',
     amount: '数量',

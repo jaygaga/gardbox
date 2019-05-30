@@ -36,7 +36,7 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import BigNumber from "bignumber.js";
-import { get } from "lodash";
+import { get, isEmpty } from "lodash";
 
 export default {
   name: "Confirm",
@@ -48,7 +48,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("account", ["tokenMap"]),
+    ...mapState("account", ["tokenMap", "mathAccount"]),
     ...mapState("transactions", ["form"]),
     token() {
       const { denom } = this.form;
@@ -69,11 +69,17 @@ export default {
   },
   methods: {
     onSubmit: async function() {
+      // use math wallet
+      if (!isEmpty(this.mathAccount)) {
+        this.onSend(true);
+        return;
+      }
+      // else use local wallet
       this.pass = "";
       this.dialogVisible = true;
     },
-    onSend: async function() {
-      if (!this.pass) {
+    onSend: async function(useMathWallet) {
+      if (!useMathWallet && !this.pass) {
         this.$message({
           type: "error",
           message: $t("global.required", { name: $t("create.pass") }),
