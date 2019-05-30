@@ -37,8 +37,8 @@ export default {
 
 <style lang="scss" scoped>
 .balance-container {
-  flex-basis: 200px;
-  height: 180px;
+  flex-basis: 216px;
+  height: 188px;
   text-align: center;
   background: white;
   color: rgba(0, 0, 0, 0.75);
@@ -51,6 +51,7 @@ export default {
   img {
     width: 40px;
     height: 40px;
+    margin-top: 8px;
     margin-bottom: 16px;
     position: relative;
     top: 2px;
@@ -58,7 +59,7 @@ export default {
   .logo-none {
     width: 48px;
     height: 48px;
-    margin-top: -4px;
+    margin-top: 4px;
     margin-bottom: 12px;
     position: relative;
     top: 2px;
