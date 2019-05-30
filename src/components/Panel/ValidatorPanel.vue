@@ -69,6 +69,8 @@ export default {
     }
     .name {
       flex-grow: 1;
+      width: 160px;
+      overflow: hidden;
     }
   }
   p {
