@@ -3,6 +3,7 @@ const zh = {
     app: 'GardBox',
     next: '下一步',
     back: '返 回',
+    search: '搜 索',
     confirm: '确 认',
     finish: '完 成',
     ok: '确 认',
@@ -21,7 +22,8 @@ const zh = {
     itemTitle3: '可靠 权威',
     itemText3: '由Hashgard官方团队打造，为您提供专业的可靠的资产管理工具。',
     account: '钱包账户',
-    staking: '委托抵押'
+    staking: '委托抵押',
+    issue: 'Token发行'
   },
   agree: {
     title: '服务条款',
@@ -150,6 +152,15 @@ const zh = {
     redelegateAll: '转移全部',
     unbinding: '解锁中',
     delegated: '已委托'
+  },
+  issue: {
+    tokens: '我发行的Token',
+    create: '发行新Token',
+    symbol: 'Token符号',
+    name: '名称',
+    id: 'ID',
+    time: '发行时间',
+    supply: '发行总量'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'

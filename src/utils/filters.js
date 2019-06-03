@@ -18,6 +18,7 @@ export const amountGard = tx => {
 
 export const explorerUrl = s => `${gardplorerDomain}${s}`;
 
-export const formatTime = time => moment(time).format('YYYY-MM-DD HH:mm:ss');
+export const formatTime = time =>
+  time.match(/\d{10}/) ? moment.unix(time).format('YYYY-MM-DD HH:mm:ss') : moment(time).format('YYYY-MM-DD HH:mm:ss');
 
 export const formatNumber = v => (v ? numeral(v.toString()).format('0,0.[00]') : 0);

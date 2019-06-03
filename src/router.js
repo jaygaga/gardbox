@@ -32,6 +32,8 @@ import DelegateDetail from '@/components/Staking/DelegateDetail.vue';
 import UnbindForm from '@/components/Staking/UnbindForm.vue';
 import RedelegateForm from '@/components/Staking/RedelegateForm.vue';
 
+import IssueMain from './views/IssueMain.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -133,6 +135,11 @@ export default new Router({
       ]
     },
     {
+      path: '/receive',
+      name: 'receive',
+      component: Receive
+    },
+    {
       path: '/staking',
       component: StakingMain
     },
@@ -168,9 +175,8 @@ export default new Router({
       ]
     },
     {
-      path: '/receive',
-      name: 'receive',
-      component: Receive
+      path: '/issue',
+      component: IssueMain
     },
     {
       path: '*',

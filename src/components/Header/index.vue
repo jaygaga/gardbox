@@ -45,6 +45,9 @@
           <el-dropdown-item command="staking">
             {{$t('home.staking')}}
           </el-dropdown-item>
+          <el-dropdown-item command="issue">
+            {{$t('home.issue')}}
+          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
 
@@ -85,7 +88,8 @@ export default {
     getStarted(page) {
       const uris = {
         account: "/main?tab=assets",
-        staking: "/staking?tab=delegations"
+        staking: "/staking?tab=delegations",
+        issue: "/issue"
       };
       const agree = localStorage.getItem("gard_wallet_agree");
       if (!agree) {

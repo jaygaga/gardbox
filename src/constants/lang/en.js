@@ -3,6 +3,7 @@ const en = {
     app: 'GardBox',
     next: 'Next',
     back: 'Back',
+    search: 'Search',
     confirm: 'Confirm',
     finish: 'Finish',
     ok: 'Ok',
@@ -21,7 +22,8 @@ const en = {
     itemTitle3: 'Easy to use, Reliable',
     itemText3: 'Made by Hashgard official team. We’ve done the complicated stuff so you won’t have to.',
     account: 'Wallet Account',
-    staking: 'Staking Delegation'
+    staking: 'Staking Delegation',
+    issue: 'Token Issuances'
   },
   agree: {
     title: 'Terms & Conditions',
@@ -155,6 +157,15 @@ const en = {
     redelegateAll: 'Redelegate All',
     unbinding: 'Unbindings',
     delegated: 'Delegated'
+  },
+  issue: {
+    tokens: 'My Token Issuances',
+    create: 'Issue New Token',
+    symbol: 'Symbol',
+    name: 'Name',
+    id: 'ID',
+    time: 'Issuance Time',
+    supply: 'Total Supply'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'
