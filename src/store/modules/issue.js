@@ -40,7 +40,6 @@ export default {
       return Promise.resolve(data);
     },
     fetchToken: async function(context, id) {
-      const address = getCurrentAddress(context.rootState.account);
       const { data } = await ajax.get(`/issue/${id}`);
       if (!isEmpty(data)) {
         context.commit('setTokenMap', { [id]: data });
@@ -51,21 +50,34 @@ export default {
       context.commit('setForm', form);
       return Promise.resolve();
     },
-    create: async function(context, { pass }) {
-      const {
-        form: { amount },
-        toValidator: { operator_address }
-      } = context.state;
+    create: async function(context, { pass, form }) {
+      const address = getCurrentAddress(context.rootState.account);
+      const describ = {
+        organization: form.organization,
+        website: form.website,
+        logo: form.logo,
+        description: form.description
+      };
       const msg = {
-        validator_addr: operator_address,
-        delegation: {
-          denom: 'agard',
-          amount: BigNumber(amount)
-            .times(BigNumber(10).pow(18))
-            .toFixed()
+        CoinIssueInfo: {
+          issuer: address,
+          owner: address,
+          name: form.name,
+          symbol: form.symbol,
+          total_supply: BigNumber(form.amount)
+            .times(BigNumber(10).pow(form.decimals))
+            .toFixed(),
+          decimals: form.decimals,
+          description: JSON.stringify(describ),
+          burn_owner_disabled: !form.burn,
+          burn_holder_disabled: !form.burnHolder,
+          burn_from_disabled: !form.burnAny,
+          freeze_disabled: !form.freeze,
+          minting_finished: !form.mint
         }
       };
-      const { data } = await sendTx(context, pass, 'delegate', msg);
+
+      const { data } = await sendTx(context, pass, 'issue', msg);
       return Promise.resolve(data);
     }
   }

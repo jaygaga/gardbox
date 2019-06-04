@@ -2,7 +2,7 @@
   <div class="issue-container">
     <s-card :title="$t('issue.tokens')">
       <div class="tools">
-        <el-button>{{$t('issue.create')}}</el-button>
+        <el-button @click="() => $router.push('/issue/create')">{{$t('issue.create')}}</el-button>
         <el-input
           :placeholder="$t('global.search')"
           suffix-icon="el-icon-search"

@@ -33,6 +33,8 @@ import UnbindForm from '@/components/Staking/UnbindForm.vue';
 import RedelegateForm from '@/components/Staking/RedelegateForm.vue';
 
 import IssueMain from './views/IssueMain.vue';
+import Issue from './views/Issue.vue';
+import IssueCreate from './components/Issue/Create.vue';
 
 Vue.use(Router);
 
@@ -177,6 +179,21 @@ export default new Router({
     {
       path: '/issue',
       component: IssueMain
+    },
+    {
+      path: '/issue',
+      name: 'Issue',
+      component: Issue,
+      children: [
+        {
+          path: 'create',
+          component: IssueCreate
+        }
+        // {
+        //   path: 'detail/:id',
+        //   component: ValidatorList
+        // },
+      ]
     },
     {
       path: '*',
