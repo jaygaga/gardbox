@@ -167,8 +167,8 @@ const zh = {
     nameEg: '如：Hashgard',
     symbolEg: '如：GARD',
     supplyEg: '如：21000000',
-    describ: '描述信息',
-    describBrif: '非必填，可以后期修改',
+    describe: '描述信息',
+    describeBrif: '非必填，可以后期修改',
     organization: '组织机构名称',
     website: '网站地址',
     logo: 'Token 图标',
@@ -182,7 +182,10 @@ const zh = {
     freeze: '管理员可冻结',
     burn: '管理员可销毁',
     burnHolder: '普通用户可销毁',
-    burnAny: '管理员可强制销毁其他用户Token'
+    burnAny: '管理员可强制销毁其他用户Token',
+    detail: 'Token详情',
+    modify: '修改Token描述信息',
+    switchWarn: '该功能一旦关闭将不可再次打开!'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'

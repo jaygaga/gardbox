@@ -39,9 +39,9 @@ export default {
       return Promise.resolve(data);
     },
     fetchToken: async function(context, id) {
-      const { data } = await ajax.get(`/issue/${id}`);
+      const { data } = await ajax.get(`/issue/query/${id}`);
       if (!isEmpty(data)) {
-        context.commit('setTokenMap', { [id]: data });
+        context.commit('setTokenMap', { [id]: data.value });
       }
       return Promise.resolve(data);
     },

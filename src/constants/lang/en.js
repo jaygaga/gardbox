@@ -172,8 +172,8 @@ const en = {
     nameEg: 'E.g. Hashgard',
     symbolEg: 'E.g. GARD',
     supplyEg: 'E.g. 21000000',
-    describ: 'Description Info',
-    describBrif: 'Not Required, Can Be Modified After Issuance',
+    describe: 'Description Info',
+    describeBrif: 'Not Required, Can Be Modified After Issuance',
     organization: 'Organization',
     website: 'Website',
     logo: 'Token Logo',
@@ -187,7 +187,10 @@ const en = {
     freeze: 'Freezing By Owner',
     burn: 'Burning By Owner',
     burnHolder: 'Burning By Holder',
-    burnAny: 'Burning Any By Owner'
+    burnAny: 'Burning Any By Owner',
+    detail: 'Token Detail',
+    modify: 'Modify Token Description',
+    switchWarn: 'Token settings CAN NOT be open again once closed!'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'

@@ -3,7 +3,6 @@
     :title="$t('issue.create')"
     class="issue-create-card"
   >
-
     <el-form
       ref="form"
       label-position="top"
@@ -62,14 +61,14 @@
         </el-select>
       </el-form-item>
 
-      <p class="sub-title">{{ $t('issue.describ') }}</p>
-      <p class="sub-info">{{ $t('issue.describBrif') }}</p>
+      <p class="sub-title">{{ $t('issue.describe') }}</p>
+      <p class="sub-info">{{ $t('issue.describeBrif') }}</p>
       <el-form-item
         prop="organization"
         :label="$t('issue.organization')"
       >
         <el-input
-          v-model="describ.organization"
+          v-model="describe.organization"
           :placeholder="$t('issue.organizationEg')"
           clearable
         ></el-input>
@@ -79,7 +78,7 @@
         :label="$t('issue.website')"
       >
         <el-input
-          v-model="describ.website"
+          v-model="describe.website"
           :placeholder="$t('issue.websiteEg')"
           clearable
         ></el-input>
@@ -89,7 +88,7 @@
         :label="$t('issue.logo')"
       >
         <el-input
-          v-model="describ.logo"
+          v-model="describe.logo"
           :placeholder="$t('issue.logoEg')"
           clearable
         ></el-input>
@@ -99,7 +98,7 @@
         :label="$t('issue.description')"
       >
         <el-input
-          v-model="describ.description"
+          v-model="describe.description"
           :placeholder="$t('issue.description')"
           clearable
         ></el-input>
@@ -231,7 +230,7 @@ export default {
         burnHolder: true,
         burnAny: true
       },
-      describ: {
+      describe: {
         organization: "",
         website: "",
         logo: "",
@@ -279,7 +278,7 @@ export default {
         res = await this.$store.dispatch(`issue/create`, {
           pass: this.pass,
           form: this.form,
-          describ: this.describ
+          describe: this.describe
         });
       } catch (e) {
         this.$message({

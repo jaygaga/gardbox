@@ -35,6 +35,8 @@ import RedelegateForm from '@/components/Staking/RedelegateForm.vue';
 import IssueMain from './views/IssueMain.vue';
 import Issue from './views/Issue.vue';
 import IssueCreate from './components/Issue/Create.vue';
+import IssueDetail from './components/Issue/Detail.vue';
+import IssueModify from './components/Issue/Describe.vue';
 
 Vue.use(Router);
 
@@ -188,11 +190,15 @@ export default new Router({
         {
           path: 'create',
           component: IssueCreate
+        },
+        {
+          path: 'detail/:id',
+          component: IssueDetail
+        },
+        {
+          path: 'modify/:id',
+          component: IssueModify
         }
-        // {
-        //   path: 'detail/:id',
-        //   component: ValidatorList
-        // },
       ]
     },
     {

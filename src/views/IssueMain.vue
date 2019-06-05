@@ -24,6 +24,7 @@
         <div
           v-for="i in ls"
           :key="i.issue_id"
+          @click="() => $router.push(`/issue/detail/${i.issue_id}`)"
           class="th tr"
         >
           <span class="icon">icon</span>
