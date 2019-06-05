@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { get, isEmpty } from 'lodash';
 import Codec from '@/utils/webc/util/codec';
-import webc from '@/utils/webc';
+import webc from '@/utils/webc.js';
 import ajax from '@/utils/ajax.js';
 
 import gardLogo from '@/assets/gard-logo.svg';

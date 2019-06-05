@@ -28,8 +28,7 @@ export default {
 
   actions: {
     fetchTokens: async function(context) {
-      // const address = getCurrentAddress(context.rootState.account);
-      const address = 'gard1766cdjeumc0nzqnk6tt9l80n2fslm05pz40jld';
+      const address = getCurrentAddress(context.rootState.account);
       const { data } = await ajax.get(`/issue/list?address=${address}`);
       if (!isEmpty(data)) {
         context.commit('setTokens', data);
@@ -50,25 +49,25 @@ export default {
       context.commit('setForm', form);
       return Promise.resolve();
     },
-    create: async function(context, { pass, form }) {
+    create: async function(context, { pass, form, describ }) {
       const address = getCurrentAddress(context.rootState.account);
-      const describ = {
-        organization: form.organization,
-        website: form.website,
-        logo: form.logo,
-        description: form.description
-      };
+      const description = {};
+      Object.keys(describ).forEach(k => {
+        if (describ[k]) description[k] = describ[k];
+      });
       const msg = {
         CoinIssueInfo: {
+          issue_id: '',
           issuer: address,
           owner: address,
+          issue_time: '0',
           name: form.name,
           symbol: form.symbol,
           total_supply: BigNumber(form.amount)
             .times(BigNumber(10).pow(form.decimals))
             .toFixed(),
           decimals: form.decimals,
-          description: JSON.stringify(describ),
+          description: isEmpty(description) ? '' : JSON.stringify(description),
           burn_owner_disabled: !form.burn,
           burn_holder_disabled: !form.burnHolder,
           burn_from_disabled: !form.burnAny,
@@ -76,7 +75,6 @@ export default {
           minting_finished: !form.mint
         }
       };
-
       const { data } = await sendTx(context, pass, 'issue', msg);
       return Promise.resolve(data);
     }

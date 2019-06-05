@@ -69,7 +69,7 @@
         :label="$t('issue.organization')"
       >
         <el-input
-          v-model="form.organization"
+          v-model="describ.organization"
           :placeholder="$t('issue.organizationEg')"
           clearable
         ></el-input>
@@ -79,7 +79,7 @@
         :label="$t('issue.website')"
       >
         <el-input
-          v-model="form.website"
+          v-model="describ.website"
           :placeholder="$t('issue.websiteEg')"
           clearable
         ></el-input>
@@ -89,7 +89,7 @@
         :label="$t('issue.logo')"
       >
         <el-input
-          v-model="form.logo"
+          v-model="describ.logo"
           :placeholder="$t('issue.logoEg')"
           clearable
         ></el-input>
@@ -99,7 +99,7 @@
         :label="$t('issue.description')"
       >
         <el-input
-          v-model="form.description"
+          v-model="describ.description"
           :placeholder="$t('issue.description')"
           clearable
         ></el-input>
@@ -225,15 +225,17 @@ export default {
         symbol: "",
         amount: "",
         decimals: "18",
-        organization: "",
-        website: "",
-        logo: "",
-        description: "",
         mint: true,
         freeze: true,
         burn: true,
         burnHolder: true,
         burnAny: true
+      },
+      describ: {
+        organization: "",
+        website: "",
+        logo: "",
+        description: ""
       },
       rules: {
         name: [{ validator: validateName, trigger: "blur" }],
@@ -252,7 +254,6 @@ export default {
       e.preventDefault();
       this.$refs["form"].validate(valid => {
         if (!valid) return false;
-        console.log(this.form);
         // use math wallet
         if (!isEmpty(this.mathAccount)) {
           this.onSend(true);
@@ -277,7 +278,8 @@ export default {
       try {
         res = await this.$store.dispatch(`issue/create`, {
           pass: this.pass,
-          form: this.form
+          form: this.form,
+          describ: this.describ
         });
       } catch (e) {
         this.$message({
