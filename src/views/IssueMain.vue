@@ -12,27 +12,29 @@
         />
       </div>
 
-      <div class="th">
-        <span class="icon"></span>
-        <span>{{$t('issue.symbol')}}</span>
-        <span>{{$t('issue.name')}}</span>
-        <span>{{$t('issue.id')}}</span>
-        <span class="supply">{{$t('issue.supply')}}</span>
-        <span>{{$t('issue.time')}}</span>
-      </div>
-      <div class="tb">
-        <div
-          v-for="i in ls"
-          :key="i.issue_id"
-          @click="() => $router.push(`/issue/detail/${i.issue_id}`)"
-          class="th tr"
-        >
-          <span class="icon">icon</span>
-          <span>{{ i.symbol }}</span>
-          <span>{{ i.name }}</span>
-          <span>{{ i.issue_id }}</span>
-          <span>{{ BigNumber(i.total_supply).dividedBy(Math.pow(10, i.decimals)).toFixed() | formatNumber }}</span>
-          <span>{{ i.issue_time | formatTime }}</span>
+      <div class="tb-container">
+        <div class="tb">
+          <div class="th">
+            <span class="icon"></span>
+            <span>{{$t('issue.symbol')}}</span>
+            <span>{{$t('issue.name')}}</span>
+            <span>{{$t('issue.id')}}</span>
+            <span class="supply">{{$t('issue.supply')}}</span>
+            <span>{{$t('issue.time')}}</span>
+          </div>
+          <div
+            v-for="i in ls"
+            :key="i.issue_id"
+            @click="() => $router.push(`/issue/detail/${i.issue_id}?tab=setting`)"
+            class="th tr"
+          >
+            <span class="icon">icon</span>
+            <span>{{ i.symbol }}</span>
+            <span>{{ i.name }}</span>
+            <span>{{ i.issue_id }}</span>
+            <span>{{ BigNumber(i.total_supply).dividedBy(Math.pow(10, i.decimals)).toFixed() | formatNumber }}</span>
+            <span>{{ i.issue_time | formatTime }}</span>
+          </div>
         </div>
       </div>
     </s-card>
@@ -90,9 +92,19 @@ export default {
     }
   }
 
+  .tb-container {
+    overflow: hidden;
+    .tb {
+      overflow-x: scroll;
+      padding-bottom: 24px;
+      margin-bottom: -24px;
+    }
+  }
+
   .th {
     display: flex;
     justify-content: space-between;
+    min-width: 900px;
     margin-top: 16px;
     padding: 16px $padding-basic;
     background: $color-background-card;

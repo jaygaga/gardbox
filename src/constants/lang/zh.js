@@ -185,7 +185,11 @@ const zh = {
     burnAny: '管理员可强制销毁其他用户Token',
     detail: 'Token详情',
     modify: '修改Token描述信息',
-    switchWarn: '该功能一旦关闭将不可再次打开!'
+    switchWarn: '该功能一旦关闭将不可再次打开!',
+    tab1: '基础设置',
+    tab2: '增发/销毁',
+    tab3: '冻结/解冻',
+    tab4: '转移所有权'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'

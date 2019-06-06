@@ -190,7 +190,11 @@ const en = {
     burnAny: 'Burning Any By Owner',
     detail: 'Token Detail',
     modify: 'Modify Token Description',
-    switchWarn: 'Token settings CAN NOT be open again once closed!'
+    switchWarn: 'Token settings CAN NOT be open again once closed!',
+    tab1: 'Basic Settings',
+    tab2: 'Mint / Burn',
+    tab3: 'Freeze / Unfreeze',
+    tab4: 'Ownership Transfer'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'
