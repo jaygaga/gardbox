@@ -214,8 +214,8 @@ export default {
       callback();
     };
     const decimalList = [];
-    for (let i = 0; i < 18; i++) {
-      decimalList[decimalList.length] = i + 1;
+    for (let i = 0; i < 19; i++) {
+      decimalList[decimalList.length] = i;
     }
     return {
       decimalList,
@@ -289,7 +289,7 @@ export default {
       }
       if (res.txhash) {
         this.dialogVisible = false;
-        this.$router.push(`/staking/detail/${res.issue_id}`);
+        this.$router.push(`/issue/detail/${get(res, "tags.2.value")}`);
       } else {
         this.$message({
           type: "error",

@@ -53,7 +53,7 @@ class CosmosBuilder extends Builder {
                 msgs[msgs.length] = Distribution.CreateMsgWithdrawValidatorCommission(req);
                 break;
             }
-            case Config.cosmos.tx.issue.type: {
+            case 'issue': {
                 msgs[msgs.length] = Issue.CreateMsgIssue(req);
                 break;
             }

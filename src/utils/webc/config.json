@@ -33,10 +33,6 @@
         "type": "withdraw_validator_commission",
         "prefix": "cosmos-sdk/MsgWithdrawValidatorCommission"
       },
-      "issue": {
-        "type": "issue",
-        "prefix": "issue/MsgIssue"
-      },
       "stdTx": {
         "type": "stdTx",
         "prefix": "auth/StdTx"

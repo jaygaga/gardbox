@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { isEmpty, get } from 'lodash';
+import Base64 from 'base64-node';
 import ajax from '@/utils/ajax.js';
 import { getCurrentAddress, sendTx } from '@/utils/helpers';
 
@@ -49,13 +50,14 @@ export default {
       context.commit('setForm', form);
       return Promise.resolve();
     },
-    create: async function(context, { pass, form, describ }) {
+    create: async function(context, { pass, form, describe }) {
       const address = getCurrentAddress(context.rootState.account);
       const description = {};
-      Object.keys(describ).forEach(k => {
-        if (describ[k]) description[k] = describ[k];
+      Object.keys(describe).forEach(k => {
+        if (describe[k]) description[k] = describe[k];
       });
       const msg = {
+        type: 'issue/MsgIssue',
         CoinIssueInfo: {
           issue_id: '',
           issuer: address,
@@ -74,6 +76,21 @@ export default {
           freeze_disabled: !form.freeze,
           minting_finished: !form.mint
         }
+      };
+      const { data } = await sendTx(context, pass, 'issue', msg);
+      return Promise.resolve(data);
+    },
+    modify: async function(context, { pass, describe, id }) {
+      const address = getCurrentAddress(context.rootState.account);
+      const description = {};
+      Object.keys(describe).forEach(k => {
+        if (describe[k]) description[k] = describe[k];
+      });
+      const msg = {
+        type: 'issue/MsgIssueDescription',
+        issue_id: id,
+        sender: address,
+        description: isEmpty(description) ? '' : Base64.encode(JSON.stringify(description))
       };
       const { data } = await sendTx(context, pass, 'issue', msg);
       return Promise.resolve(data);

@@ -13,7 +13,7 @@
       </div>
       <div class="pad">
         <p class="sub-title">{{ $t('issue.describe') }}</p>
-        <s-item :label="$t('issue.organization')">{{ get(describe, 'name') || '-' }}</s-item>
+        <s-item :label="$t('issue.organization')">{{ get(describe, 'organization') || '-' }}</s-item>
         <s-item :label="$t('issue.website')">{{ get(describe, 'website') || '-' }}</s-item>
         <s-item :label="$t('issue.logo')">{{ get(describe, 'logo') || '-' }}</s-item>
         <s-item :label="$t('issue.description')">{{ get(describe, 'description') || '-' }}</s-item>
@@ -58,7 +58,7 @@ import webc from "@/utils/webc";
 import TabSetting from "@/components/Issue/TabSetting";
 
 export default {
-  name: "IssueCreate",
+  name: "IssueDetail",
   components: { TabSetting },
   data() {
     return {
@@ -89,9 +89,6 @@ export default {
     get,
     fetchData: async function() {
       await this.$store.dispatch("issue/fetchToken", this.$route.params.id);
-      if (this.detail.description) {
-        this.describe = { ...JSON.parse(this.detail.description) };
-      }
       this.setting = {
         mint: !this.detail.minting_finished,
         freeze: !this.detail.freeze_disabled,

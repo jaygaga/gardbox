@@ -80,7 +80,6 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-import BigNumber from "bignumber.js";
 import { get, isEmpty } from "lodash";
 
 import { getViewToken } from "@/utils/helpers";
@@ -137,7 +136,8 @@ export default {
       try {
         res = await this.$store.dispatch(`issue/modify`, {
           pass: this.pass,
-          describe: this.describe
+          describe: this.describe,
+          id: this.$route.params.id
         });
       } catch (e) {
         this.$message({
