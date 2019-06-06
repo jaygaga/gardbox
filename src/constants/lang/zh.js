@@ -189,7 +189,8 @@ const zh = {
     tab1: '基础设置',
     tab2: '增发/销毁',
     tab3: '冻结/解冻',
-    tab4: '转移所有权'
+    tab4: '转移所有权',
+    closeOk: 'Token功能关闭成功!'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'

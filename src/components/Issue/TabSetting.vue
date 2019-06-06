@@ -7,7 +7,7 @@
         active-color="#13ce66"
         :active-text="$t('issue.mint')"
         :disabled="!setting.mint"
-        @change="v => onClose(v, 'minting_finished')"
+        @change="v => onClose(v, 'minting')"
       ></el-switch>
     </div>
     <div class="switch">
@@ -16,7 +16,7 @@
         active-color="#13ce66"
         :active-text="$t('issue.freeze')"
         :disabled="!setting.freeze"
-        @change="v => onClose(v, 'freeze_disabled')"
+        @change="v => onClose(v, 'freeze')"
       ></el-switch>
     </div>
     <div class="switch">
@@ -25,7 +25,7 @@
         active-color="#13ce66"
         :active-text="$t('issue.burn')"
         :disabled="!setting.burn"
-        @change="v => onClose(v, 'burn_owner_disabled')"
+        @change="v => onClose(v, 'burn-owner')"
       ></el-switch>
     </div>
     <div class="switch">
@@ -34,7 +34,7 @@
         active-color="#13ce66"
         :active-text="$t('issue.burnAny')"
         :disabled="!setting.burnAny"
-        @change="v => onClose(v, 'burn_from_disabled')"
+        @change="v => onClose(v, 'burn-from')"
       ></el-switch>
     </div>
     <div class="switch">
@@ -43,7 +43,7 @@
         active-color="#13ce66"
         :active-text="$t('issue.burnHolder')"
         :disabled="!setting.burnHolder"
-        @change="v => onClose(v, 'burn_holder_disabled')"
+        @change="v => onClose(v, 'burn-holder')"
       ></el-switch>
     </div>
     <el-button
@@ -132,7 +132,8 @@ export default {
       try {
         res = await this.$store.dispatch(`issue/setting`, {
           pass: this.pass,
-          setting: this.switch
+          setting: this.switch,
+          id: this.$route.params.id
         });
       } catch (e) {
         this.$message({
@@ -143,7 +144,12 @@ export default {
       }
       if (res.txhash) {
         this.dialogVisible = false;
-        this.fetchData();
+        this.$emit("refresh");
+        this.$message({
+          type: "success",
+          message: this.$t(`issue.closeOk`),
+          center: true
+        });
       } else {
         this.$message({
           type: "error",

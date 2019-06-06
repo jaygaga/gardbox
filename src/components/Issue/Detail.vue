@@ -29,7 +29,10 @@
         :label="$t('issue.tab1')"
         name="setting"
       >
-        <TabSetting :setting="setting" />
+        <TabSetting
+          :setting="setting"
+          @refresh="fetchData"
+        />
       </el-tab-pane>
       <el-tab-pane
         :label="$t('issue.tab2')"

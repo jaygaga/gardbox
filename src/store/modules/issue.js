@@ -94,6 +94,17 @@ export default {
       };
       const { data } = await sendTx(context, pass, 'issue', msg);
       return Promise.resolve(data);
+    },
+    setting: async function(context, { pass, setting, id }) {
+      const address = getCurrentAddress(context.rootState.account);
+      const msg = {
+        type: 'issue/MsgIssueDisableFeature',
+        issue_id: id,
+        sender: address,
+        feature: setting
+      };
+      const { data } = await sendTx(context, pass, 'issue', msg);
+      return Promise.resolve(data);
     }
   }
 };

@@ -194,7 +194,8 @@ const en = {
     tab1: 'Basic Settings',
     tab2: 'Mint / Burn',
     tab3: 'Freeze / Unfreeze',
-    tab4: 'Ownership Transfer'
+    tab4: 'Ownership Transfer',
+    closeOk: 'Token Feature Closed Successfully!'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'
