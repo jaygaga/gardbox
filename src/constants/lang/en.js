@@ -197,6 +197,12 @@ const en = {
     tab4: 'Ownership Transfer',
     closeOk: 'Token Feature Closed Successfully!'
   },
+  mint: {
+    mint: 'Mint',
+    burn: 'Burn',
+    address: 'Target Address',
+    action: 'Action'
+  },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'
   }

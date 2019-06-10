@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import { isEmpty, get } from 'lodash';
 import Base64 from 'base64-node';
 import ajax from '@/utils/ajax.js';
-import { getCurrentAddress, sendTx } from '@/utils/helpers';
+import { sendTx } from '@/utils/helpers';
 
 export default {
   namespaced: true,
@@ -10,7 +10,7 @@ export default {
   state: {
     tokens: [],
     tokenMap: {},
-    form: {}
+    txs: []
   },
 
   getters: {},
@@ -22,14 +22,14 @@ export default {
     setTokenMap: function(state, data) {
       state.tokenMap = Object.assign({}, state.delegationMap, data);
     },
-    setForm: function(state, data) {
-      state.form = data;
+    setTxList: function(state, txs) {
+      state.txs = txs;
     }
   },
 
   actions: {
     fetchTokens: async function(context) {
-      const address = getCurrentAddress(context.rootState.account);
+      const address = context.rootGetters['account/currentAddress'];
       const { data } = await ajax.get(`/issue/list?address=${address}`);
       if (!isEmpty(data)) {
         context.commit('setTokens', data);
@@ -46,12 +46,8 @@ export default {
       }
       return Promise.resolve(data);
     },
-    setForm: async function(context, form) {
-      context.commit('setForm', form);
-      return Promise.resolve();
-    },
     create: async function(context, { pass, form, describe }) {
-      const address = getCurrentAddress(context.rootState.account);
+      const address = context.rootGetters['account/currentAddress'];
       const description = {};
       Object.keys(describe).forEach(k => {
         if (describe[k]) description[k] = describe[k];
@@ -81,7 +77,7 @@ export default {
       return Promise.resolve(data);
     },
     modify: async function(context, { pass, describe, id }) {
-      const address = getCurrentAddress(context.rootState.account);
+      const address = context.rootGetters['account/currentAddress'];
       const description = {};
       Object.keys(describe).forEach(k => {
         if (describe[k]) description[k] = describe[k];
@@ -96,7 +92,7 @@ export default {
       return Promise.resolve(data);
     },
     setting: async function(context, { pass, setting, id }) {
-      const address = getCurrentAddress(context.rootState.account);
+      const address = context.rootGetters['account/currentAddress'];
       const msg = {
         type: 'issue/MsgIssueDisableFeature',
         issue_id: id,
@@ -105,6 +101,54 @@ export default {
       };
       const { data } = await sendTx(context, pass, 'issue', msg);
       return Promise.resolve(data);
+    },
+    mint: async function(context, { pass, form, id, action }) {
+      const address = context.rootGetters['account/currentAddress'];
+      const { decimals } = context.state.tokenMap[id];
+      const msg = {
+        type: 'issue/MsgIssueMint',
+        issue_id: id,
+        sender: address,
+        to: form.address,
+        amount: BigNumber(form.amount)
+          .times(BigNumber(10).pow(decimals))
+          .toFixed(),
+        decimals
+      };
+      if (action === 'burn') {
+        delete msg.to;
+        delete msg.decimals;
+        if (form.address === address) {
+          msg.type = 'issue/MsgIssueBurnOwner';
+        } else {
+          msg.type = 'issue/MsgIssueBurnFrom';
+          msg.holder = form.address;
+        }
+      }
+      const { data } = await sendTx(context, pass, 'issue', msg);
+      return Promise.resolve(data);
+    },
+    fetchTxs: async function(context, { id, actions }) {
+      const limit = 10;
+      const address = context.rootGetters['account/currentAddress'];
+      let list = [];
+      const results = await Promise.all(
+        actions.map(action => {
+          const params = {
+            limit,
+            action,
+            'issue-id': id,
+            sender: address
+          };
+          return context.dispatch('transactions/fetchTxsLatest', params, { root: true });
+        })
+      );
+      results.forEach(res => {
+        list = list.concat(res);
+      });
+      list.sort((a, b) => b.height - a.height);
+      context.commit('setTxList', list);
+      return Promise.resolve(list);
     }
   }
 };

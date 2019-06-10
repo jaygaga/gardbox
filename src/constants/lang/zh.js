@@ -192,6 +192,12 @@ const zh = {
     tab4: '转移所有权',
     closeOk: 'Token功能关闭成功!'
   },
+  mint: {
+    mint: '增 发',
+    burn: '销 毁',
+    address: '目标地址',
+    action: '操作类型'
+  },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'
   }

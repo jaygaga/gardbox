@@ -37,7 +37,9 @@
       <el-tab-pane
         :label="$t('issue.tab2')"
         name="mint"
-      >mint</el-tab-pane>
+      >
+        <TabMint :setting="setting" />
+      </el-tab-pane>
       <el-tab-pane
         :label="$t('issue.tab3')"
         name="freeze"
@@ -59,10 +61,11 @@ import { getViewToken } from "@/utils/helpers";
 import webc from "@/utils/webc";
 
 import TabSetting from "@/components/Issue/TabSetting";
+import TabMint from "@/components/Issue/TabMint";
 
 export default {
   name: "IssueDetail",
-  components: { TabSetting },
+  components: { TabSetting, TabMint },
   data() {
     return {
       setting: {}
@@ -102,10 +105,17 @@ export default {
     },
     onTabChange(tab) {
       this.$router.push(`${this.$route.path}?tab=${tab}`);
+      if (tab === "mint") {
+        this.$store.dispatch("issue/fetchTxs", {
+          id: this.$route.params.id,
+          actions: ["issue_mint", "issue_burn_owner", "issue_burn_from"]
+        });
+      }
     }
   },
   mounted() {
     this.fetchData();
+    this.onTabChange(this.$route.query.tab);
   }
 };
 </script>

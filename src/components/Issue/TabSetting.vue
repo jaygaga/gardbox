@@ -77,10 +77,8 @@ import { get, isEmpty } from "lodash";
 
 import { getViewToken } from "@/utils/helpers";
 import webc from "@/utils/webc";
-import PassDialog from "@/components/TxPassDialog";
 export default {
-  name: "IssueCreate",
-  components: { PassDialog },
+  name: "TabSetting",
   props: {
     setting: Object
   },
