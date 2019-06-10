@@ -101,11 +101,6 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
   }
   // 3. post to lcd api
   const res = await ajax.post(`/txs`, req);
-  // 4. get block info when tx success
-  if (res.data) {
-    const blockData = await context.dispatch('transactions/fetchBlock', res.data.height, { root: true });
-    res.data.block = blockData.block;
-  }
   return Promise.resolve(res);
 };
 const getTxPara = (from, type, accState, nodeInfo, msg, msgs) => {
