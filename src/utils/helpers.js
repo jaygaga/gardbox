@@ -38,20 +38,12 @@ export const getViewToken = (coin, tokenMap) => {
   return token;
 };
 
-export const getCurrentAddress = ({ mathAccount, keyStore }) => {
-  if (!isEmpty(mathAccount)) {
-    return get(mathAccount, 'account');
-  } else {
-    return get(keyStore, 'address');
-  }
-};
-
 export const sendTx = async function(context, pass, type, msg, msgs) {
   const {
     account: { keyStore, mathAccount },
     transactions: { nodeInfo }
   } = context.rootState;
-  const from = getCurrentAddress(context.rootState.account);
+  const from = context.rootGetters['account/currentAddress'];
   // 1. get account state (account_number & sequence)
   let accState = {
     account_number: '0',

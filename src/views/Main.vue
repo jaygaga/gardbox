@@ -127,8 +127,6 @@ import AvatarPanel from "@/components/Panel/AvatarPanel.vue";
 import BalancePanel from "@/components/Panel/BalancePanel";
 import TransactionList from "@/components/TransactionList";
 
-import { getCurrentAddress } from "@/utils/helpers";
-
 export default {
   name: "Main",
   components: { AvatarPanel, BalancePanel, TransactionList },
@@ -151,12 +149,7 @@ export default {
       "loading"
     ]),
     ...mapState("transactions", { txLoading: "loading", txs: "txs" }),
-    address() {
-      return getCurrentAddress({
-        keyStore: this.keyStore,
-        mathAccount: this.mathAccount
-      });
-    },
+    ...mapGetters("account", { address: "currentAddress" }),
     gardBalance() {
       const gard = { amount: "0", denom: "gard" };
       return this.balance.find(i => i.denom === "gard") || gard;

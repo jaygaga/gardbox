@@ -4,8 +4,6 @@ import { get, set, isEmpty } from 'lodash';
 
 import { Message } from 'element-ui';
 
-import { getCurrentAddress } from '@/utils/helpers';
-
 const wallet_users = localStorage.getItem('gard_wallet_users') || '{}';
 const wallet_username = localStorage.getItem('gard_wallet_username') || '';
 const wallet_math_account = localStorage.getItem('gard_wallet_math_account') || '{}';
@@ -27,7 +25,15 @@ export default {
     tokenMap: {}
   },
 
-  getters: {},
+  getters: {
+    currentAddress: function(state) {
+      if (!isEmpty(state.mathAccount)) {
+        return get(state.mathAccount, 'account');
+      } else {
+        return get(state.keyStore, 'address');
+      }
+    }
+  },
 
   mutations: {
     setLoading: function(state, loading) {
@@ -214,7 +220,7 @@ export default {
       return Promise.resolve(res);
     },
     fetchBalance: async function(context) {
-      const address = getCurrentAddress(context.state);
+      const address = context.getters.currentAddress;
       context.commit('setLoading', true);
       const { data } = await ajax.get(`bank/balances/${address}`);
       if (!isEmpty(data)) {
