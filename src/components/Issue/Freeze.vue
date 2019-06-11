@@ -1,7 +1,7 @@
 <template>
   <s-card
-    :title="$t(`mint.${$route.query.action}`) + ' ' + detail.symbol + ' (' + detail.name + ')'"
-    class="issue-mint-card"
+    :title="$t(`freeze.${$route.query.action}`) + ' ' + detail.symbol + ' (' + detail.name + ') ' + $t('send.form')"
+    class="issue-freeze-card"
   >
     <el-form
       ref="form"
@@ -11,24 +11,59 @@
       @submit="onSubmit"
     >
       <el-form-item
-        prop="amount"
-        :label="$t('send.amount')"
-      >
-        <el-input
-          v-model="form.amount"
-          :placeholder="$t('send.amount')"
-          clearable
-        ></el-input>
-      </el-form-item>
-      <el-form-item
         prop="address"
         :label="$t('mint.address')"
       >
         <el-input
+          v-if="$route.query.action === 'freeze'"
           v-model="form.address"
           :placeholder="$t('mint.address')"
           clearable
         ></el-input>
+
+        <el-select
+          v-else
+          style="width: 100%"
+          v-model="form.address"
+          :placeholder="$t('mint.address')"
+        >
+          <el-option
+            v-for="i in freezeList"
+            :key="i.denom"
+            :label="i.label"
+            :value="i.denom"
+          ></el-option>
+          <el-option
+            v-if="!freezeList.length"
+            :label="$t('freeze.none')"
+            value=""
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item
+        prop="type"
+        :label="$t('freeze.type')"
+      >
+        <el-radio-group v-model="form.type">
+          <!-- TODO: 根据所选的地址冻结状态禁用解冻类型 -->
+          <el-radio label="in">{{ $t('freeze.in') }}</el-radio>
+          <el-radio label="out">{{ $t('freeze.out') }}</el-radio>
+          <el-radio label="in-out">{{ $t('freeze.all') }}</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item
+        v-if="$route.query.action === 'freeze'"
+        prop="end"
+        :label="$t('freeze.end')"
+      >
+        <el-date-picker
+          v-model="form.end"
+          type="datetime"
+          :placeholder="$t('freeze.end')"
+          default-time="24:00:00"
+          style="width: 100%"
+        >
+        </el-date-picker>
       </el-form-item>
 
       <div class="fee"><span>{{$t('send.fee')}}</span>0 GARD</div>
@@ -36,7 +71,7 @@
         class="btn-send"
         native-type=“submit”
         @click="onSubmit"
-      >{{$t(`mint.${$route.query.action}`)}}</el-button>
+      >{{$t(`freeze.${$route.query.action}`)}}</el-button>
     </el-form>
 
     <el-dialog
@@ -83,31 +118,22 @@ export default {
       }
       callback();
     };
-    const validateAmount = (rule, value, callback) => {
-      const input = value - 0;
-      if (input <= 0) {
-        callback(new Error(this.$t("send.amountWarnPositive")));
-        return;
-      }
-      const decimal = BigNumber(0.1).pow(this.detail.decimals);
-      if (
-        BigNumber(input)
-          .modulo(decimal)
-          .toNumber() !== 0
-      ) {
-        callback(new Error(this.$t("send.amountWarnInvalid")));
+    const validateTime = (rule, value, callback) => {
+      if (this.$route.query.action === "freeze" && !value) {
+        callback(requireError(this.$t("freeze.end")));
         return;
       }
       callback();
     };
     return {
       form: {
-        amount: "",
-        address: ""
+        address: "",
+        type: "out",
+        end: ""
       },
       rules: {
         address: [{ validator: validateAddr, trigger: "blur" }],
-        amount: [{ validator: validateAmount, trigger: "blur" }]
+        end: [{ validator: validateTime, trigger: "blur" }]
       },
       dialogVisible: false,
       loading: false,
@@ -115,8 +141,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("issue", ["tokenMap"]),
-    ...mapGetters("account", ["currentAddress"]),
+    ...mapState("issue", ["tokenMap", "freezeList"]),
     detail() {
       return this.tokenMap[this.$route.params.id] || {};
     }
@@ -149,7 +174,7 @@ export default {
       this.loading = true;
       let res = "";
       try {
-        res = await this.$store.dispatch(`issue/mint`, {
+        res = await this.$store.dispatch(`issue/freeze`, {
           pass: this.pass,
           form: this.form,
           id: this.$route.params.id,
@@ -167,7 +192,7 @@ export default {
         this.$message({
           type: "success",
           message: this.$t("global.success", {
-            name: this.$t(`mint.${$route.query.action}`)
+            name: this.$t(`freeze.${$route.query.action}`)
           }),
           center: true
         });
@@ -183,8 +208,8 @@ export default {
     }
   },
   mounted() {
-    this.form.address = this.currentAddress;
     this.$store.dispatch("issue/fetchToken", this.$route.params.id);
+    this.$store.dispatch("issue/fetchFreezed", this.$route.params.id);
   }
 };
 </script>

@@ -98,6 +98,13 @@ export default {
       }
       if (res.txhash) {
         this.dialogVisible = false;
+        this.$message({
+          type: "success",
+          message: this.$t("global.success", {
+            name: this.$route.query.action
+          }),
+          center: true
+        });
         if (this.$route.query.action === "unbind") {
           this.$router.push(
             `/staking/detail/${this.fromValidator.operator_address}`

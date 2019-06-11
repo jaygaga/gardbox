@@ -207,3 +207,30 @@ a:active {
 .issue-detail-card .el-switch__label.is-active {
   color: white;
 }
+
+.el-picker-panel {
+  color: rgba(0, 0, 0, 0.8);
+  .el-date-picker__header-label,
+  .el-date-table th,
+  .el-month-table td .cell,
+  .el-year-table td .cell {
+    color: rgba(0, 0, 0, 0.8);
+    &:hover {
+      color: $color-primary;
+    }
+  }
+  .el-time-spinner__item {
+    color: rgba(0, 0, 0, 0.6);
+    &.active:not(.disabled) {
+      color: rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  .el-input__inner {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+.el-date-table td.next-month,
+.el-date-table td.prev-month {
+  color: rgba(0, 0, 0, 0.35);
+}

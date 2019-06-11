@@ -1,17 +1,17 @@
 <template>
-  <div class="tab-mint">
+  <div class="tab-freeze">
     <div class="tools">
       <div>
         <el-button
           class="btn"
           :disabled="!setting.mint"
-          @click="() => this.$router.push(`/issue/mint/${$route.params.id}?action=mint`)"
-        >{{$t('mint.mint')}}</el-button>
+          @click="() => this.$router.push(`/issue/freeze/${$route.params.id}?action=freeze`)"
+        >{{$t('freeze.freeze')}}</el-button>
         <el-button
           class="btn"
           :disabled="!setting.burn && !setting.burnAny"
-          @click="() => this.$router.push(`/issue/mint/${$route.params.id}?action=burn`)"
-        >{{$t('mint.burn')}}</el-button>
+          @click="() => this.$router.push(`/issue/freeze/${$route.params.id}?action=unfreeze`)"
+        >{{$t('freeze.unfreeze')}}</el-button>
       </div>
       <el-input
         :placeholder="$t('global.search')"
@@ -26,9 +26,9 @@
       <div class="tb">
         <div class="th">
           <span class="action">{{$t('mint.action')}}</span>
-          <span>{{$t('send.amount')}}</span>
+          <span>{{$t('freeze.type')}}</span>
           <span>{{$t('mint.address')}}</span>
-          <span>{{$t('send.txHash')}}</span>
+          <span>{{$t('freeze.end')}}</span>
           <span>{{$t('send.time')}}</span>
         </div>
         <div
@@ -36,10 +36,10 @@
           :key="i.txhash"
           class="th tr"
         >
-          <span class="action">{{ get(i, 'tags.0.value') === 'issue_mint' ? $t('mint.mint') : $t('mint.burn') }}</span>
-          <span>{{ getViewToken({ denom: get(i, 'tags.2.value'), amount: get(i, 'tx.value.msg.0.value.amount') }, tokenMap).amount | formatNumber }}</span>
-          <span>{{ get(i, 'tx.value.msg.0.value.to') || get(i, 'tx.value.msg.0.value.holder') || get(i, 'tx.value.msg.0.value.sender') | gardAddr }}</span>
-          <span>{{ i.txhash | gardAddr }}</span>
+          <span class="action">{{ get(i, 'tags.0.value') === 'issue_freeze' ? $t('freeze.freeze') : $t('freeze.unfreeze') }}</span>
+          <span>{{ get(i, 'tags.4.value') }}</span>
+          <span>{{ get(i, 'tx.value.msg.0.value.accAddress') | gardAddr }}</span>
+          <span>{{ get(i, 'tx.value.msg.0.value.end_time') | formatTime }}</span>
           <span>{{ i.timestamp | formatTime }}</span>
         </div>
       </div>
@@ -55,7 +55,7 @@ import { get, isEmpty } from "lodash";
 import { getViewToken } from "@/utils/helpers";
 import webc from "@/utils/webc";
 export default {
-  name: "TabMint",
+  name: "TabFreeze",
   props: {
     setting: Object
   },
@@ -71,8 +71,7 @@ export default {
         const filter = this.filter.toLowerCase();
         return this.txs.filter(i => {
           const target =
-            get(i, "tx.value.msg.0.value.to") ||
-            get(i, "tx.value.msg.0.value.holder") ||
+            get(i, "tx.value.msg.0.value.accAddress") ||
             get(i, "tx.value.msg.0.value.sender");
           return target.match(filter);
         });
@@ -91,7 +90,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tab-mint {
+.tab-freeze {
   margin-top: $padding-basic;
 
   .tools {
@@ -141,7 +140,7 @@ export default {
 }
 
 @include responsive($sm) {
-  .tab-mint {
+  .tab-freeze {
     .tools {
       flex-wrap: wrap;
       .search {

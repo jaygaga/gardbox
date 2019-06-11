@@ -10,7 +10,8 @@ export default {
   state: {
     tokens: [],
     tokenMap: {},
-    txs: []
+    txs: [],
+    freezeList: []
   },
 
   getters: {},
@@ -24,6 +25,9 @@ export default {
     },
     setTxList: function(state, txs) {
       state.txs = txs;
+    },
+    setFreezeList: function(state, ls) {
+      state.freezeList = ls;
     }
   },
 
@@ -128,6 +132,24 @@ export default {
       const { data } = await sendTx(context, pass, 'issue', msg);
       return Promise.resolve(data);
     },
+    freeze: async function(context, { pass, form, id, action }) {
+      const address = context.rootGetters['account/currentAddress'];
+      const msg = {
+        type: action === 'freeze' ? 'issue/MsgIssueFreeze' : 'issue/MsgIssueUnfreeze',
+        issue_id: id,
+        sender: address,
+        accAddress: form.address,
+        freeze_type: form.type
+      };
+      if (action === 'freeze') {
+        msg.end_time = form.end
+          .getTime()
+          .toString()
+          .slice(0, 10);
+      }
+      const { data } = await sendTx(context, pass, 'issue', msg);
+      return Promise.resolve(data);
+    },
     fetchTxs: async function(context, { id, actions }) {
       const limit = 10;
       const address = context.rootGetters['account/currentAddress'];
@@ -149,6 +171,12 @@ export default {
       list.sort((a, b) => b.height - a.height);
       context.commit('setTxList', list);
       return Promise.resolve(list);
+    },
+    fetchFreezed: async function(context, id) {
+      // const { data } = await ajax.get(`/issue/freezes/${id}`);
+      // context.commit('setFreezeList', data);
+      const data = [];
+      return Promise.resolve(data);
     }
   }
 };

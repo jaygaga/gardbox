@@ -198,6 +198,16 @@ const zh = {
     address: '目标地址',
     action: '操作类型'
   },
+  freeze: {
+    freeze: '冻 结',
+    unfreeze: '解 冻',
+    type: '冻结类型',
+    in: 'Token 转入',
+    out: 'Token 转出',
+    all: '转入 + 转出',
+    end: '到期时间',
+    none: '没有地址冻结'
+  },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'
   }

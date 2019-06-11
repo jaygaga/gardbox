@@ -38,6 +38,7 @@ import IssueCreate from './components/Issue/Create.vue';
 import IssueDetail from './components/Issue/Detail.vue';
 import IssueModify from './components/Issue/Describe.vue';
 import IssueMint from './components/Issue/Mint.vue';
+import IssueFreeze from './components/Issue/Freeze.vue';
 
 Vue.use(Router);
 
@@ -203,6 +204,10 @@ export default new Router({
         {
           path: 'mint/:id',
           component: IssueMint
+        },
+        {
+          path: 'freeze/:id',
+          component: IssueFreeze
         }
       ]
     },

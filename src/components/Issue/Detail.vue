@@ -43,7 +43,9 @@
       <el-tab-pane
         :label="$t('issue.tab3')"
         name="freeze"
-      >freeze</el-tab-pane>
+      >
+        <TabFreeze :setting="setting" />
+      </el-tab-pane>
       <el-tab-pane
         :label="$t('issue.tab4')"
         name="transfer"
@@ -62,10 +64,11 @@ import webc from "@/utils/webc";
 
 import TabSetting from "@/components/Issue/TabSetting";
 import TabMint from "@/components/Issue/TabMint";
+import TabFreeze from "@/components/Issue/TabFreeze";
 
 export default {
   name: "IssueDetail",
-  components: { TabSetting, TabMint },
+  components: { TabSetting, TabMint, TabFreeze },
   data() {
     return {
       setting: {}
@@ -109,6 +112,12 @@ export default {
         this.$store.dispatch("issue/fetchTxs", {
           id: this.$route.params.id,
           actions: ["issue_mint", "issue_burn_owner", "issue_burn_from"]
+        });
+      }
+      if (tab === "freeze") {
+        this.$store.dispatch("issue/fetchTxs", {
+          id: this.$route.params.id,
+          actions: ["issue_freeze", "issue_unfreeze"]
         });
       }
     }

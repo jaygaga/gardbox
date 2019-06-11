@@ -203,6 +203,16 @@ const en = {
     address: 'Target Address',
     action: 'Action'
   },
+  freeze: {
+    freeze: 'Freeze',
+    unfreeze: 'Unfreeze',
+    type: 'Freeze Type',
+    in: 'Transfer In',
+    out: 'Transfer Out',
+    all: 'In and Out',
+    end: 'End Time',
+    none: 'No Freezed Address'
+  },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'
   }
