@@ -4,12 +4,12 @@
       <div>
         <el-button
           class="btn"
-          :disabled="!setting.mint"
+          :disabled="!setting.freeze"
           @click="() => this.$router.push(`/issue/freeze/${$route.params.id}?action=freeze`)"
         >{{$t('freeze.freeze')}}</el-button>
         <el-button
           class="btn"
-          :disabled="!setting.burn && !setting.burnAny"
+          :disabled="!setting.freeze"
           @click="() => this.$router.push(`/issue/freeze/${$route.params.id}?action=unfreeze`)"
         >{{$t('freeze.unfreeze')}}</el-button>
       </div>

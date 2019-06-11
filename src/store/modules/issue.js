@@ -150,6 +150,17 @@ export default {
       const { data } = await sendTx(context, pass, 'issue', msg);
       return Promise.resolve(data);
     },
+    owner: async function(context, { pass, form, id }) {
+      const address = context.rootGetters['account/currentAddress'];
+      const msg = {
+        type: 'issue/MsgIssueTransferOwnership',
+        issue_id: id,
+        sender: address,
+        to: form.address
+      };
+      const { data } = await sendTx(context, pass, 'issue', msg);
+      return Promise.resolve(data);
+    },
     fetchTxs: async function(context, { id, actions }) {
       const limit = 10;
       const address = context.rootGetters['account/currentAddress'];

@@ -49,7 +49,9 @@
       <el-tab-pane
         :label="$t('issue.tab4')"
         name="transfer"
-      >transfer</el-tab-pane>
+      >
+        <TabOwner :setting="setting" />
+      </el-tab-pane>
     </el-tabs>
   </s-card>
 </template>
@@ -65,10 +67,11 @@ import webc from "@/utils/webc";
 import TabSetting from "@/components/Issue/TabSetting";
 import TabMint from "@/components/Issue/TabMint";
 import TabFreeze from "@/components/Issue/TabFreeze";
+import TabOwner from "@/components/Issue/TabOwner";
 
 export default {
   name: "IssueDetail",
-  components: { TabSetting, TabMint, TabFreeze },
+  components: { TabSetting, TabMint, TabFreeze, TabOwner },
   data() {
     return {
       setting: {}

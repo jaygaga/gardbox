@@ -108,7 +108,7 @@ const zh = {
     amountWarnPositive: '数量必须大于零',
     amountWarnInvalid: '小数位数不支持',
     address: '收款地址',
-    addressWarn: '地址格式有误',
+    addressWarn: '地址不可用',
     sender: '转出地址',
     txHash: 'TxHash',
     all: '全部转出',
@@ -207,6 +207,10 @@ const zh = {
     all: '转入 + 转出',
     end: '到期时间',
     none: '没有地址冻结'
+  },
+  owner: {
+    brif: '转移管理员权限是【非常危险】的操作，一旦转给其他地址，该Token将从你的【Token发行列表】中移除！',
+    from: 'Token 所有者'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'

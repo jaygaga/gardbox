@@ -113,7 +113,7 @@ const en = {
     amountWarnPositive: 'A Positive Number is required',
     amountWarnInvalid: 'Invalid Amount',
     address: 'Address',
-    addressWarn: 'Wrong Address Format!',
+    addressWarn: 'Invalid Address!',
     sender: 'Sender',
     txHash: 'TxHash',
     all: 'Send All',
@@ -212,6 +212,10 @@ const en = {
     all: 'In and Out',
     end: 'End Time',
     none: 'No Freezed Address'
+  },
+  owner: {
+    brif: 'Transfer ownership to other address is DANGEROUS！You will see no more this Token in your Token Issuance List once transfered!',
+    from: 'Token Owner'
   },
   footer: {
     copyright: '© 2019 Hashgard Foundation Ltd. All Rights Reserved.'
