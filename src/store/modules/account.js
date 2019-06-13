@@ -187,8 +187,8 @@ export default {
     getMathIdentity: async function(context) {
       // config network
       const network = {
-        blockchain: 'cosmos',
-        chainId: 'dev'
+        blockchain: 'hashgard',
+        chainId: context.rootState.transactions.nodeInfo.network
       };
       // login math account
       let identity = {};

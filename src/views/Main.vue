@@ -250,6 +250,7 @@ export default {
   .assets {
     display: flex;
     align-items: flex-start;
+    flex-wrap: wrap;
     padding: $padding-basic 0;
     margin-left: -24px;
     .asset-item {

@@ -35,7 +35,7 @@
           :showDelete="user !== userName"
         />
       </div>
-      <!-- <div
+      <div
         v-if="mathPlugin && isEmpty(mathAccount)"
         @click="loginMath"
         class="user-item math"
@@ -56,7 +56,7 @@
           <span>{{ $t('passport.math') }}</span>
         </div>
         <p>{{$t('passport.useMath')}}</p>
-      </div> -->
+      </div>
     </div>
 
     <s-card

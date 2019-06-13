@@ -78,7 +78,6 @@
       :title="$t('create.pass')"
       :visible.sync="dialogVisible"
       width="360px"
-      v-loading="loading"
       :close-on-click-modal="false"
     >
       <el-input
@@ -136,11 +135,11 @@ export default {
         end: [{ validator: validateTime, trigger: "blur" }]
       },
       dialogVisible: false,
-      loading: false,
       pass: ""
     };
   },
   computed: {
+    ...mapState("account", ["mathAccount"]),
     ...mapState("issue", ["tokenMap", "freezeList"]),
     detail() {
       return this.tokenMap[this.$route.params.id] || {};
@@ -171,7 +170,12 @@ export default {
         });
         return false;
       }
-      this.loading = true;
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)"
+      });
       let res = "";
       try {
         res = await this.$store.dispatch(`issue/freeze`, {
@@ -204,7 +208,7 @@ export default {
           center: true
         });
       }
-      this.loading = false;
+      loading.close();
     }
   },
   mounted() {

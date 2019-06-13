@@ -74,7 +74,7 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
       req = stdTx.GetData();
     } catch (e) {
       console.log(e);
-      if (e.code === 1000010) {
+      if (e.code === 1000010 || e.code === 100003) {
         return Promise.resolve({ data: 'reject' });
       }
     }
