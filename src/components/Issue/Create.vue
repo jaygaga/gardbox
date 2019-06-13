@@ -64,12 +64,12 @@
       <p class="sub-title">{{ $t('issue.describe') }}</p>
       <p class="sub-info">{{ $t('issue.describeBrif') }}</p>
       <el-form-item
-        prop="organization"
-        :label="$t('issue.organization')"
+        prop="org"
+        :label="$t('issue.org')"
       >
         <el-input
-          v-model="describe.organization"
-          :placeholder="$t('issue.organizationEg')"
+          v-model="describe.org"
+          :placeholder="$t('issue.orgEg')"
           clearable
         ></el-input>
       </el-form-item>
@@ -94,12 +94,14 @@
         ></el-input>
       </el-form-item>
       <el-form-item
-        prop="description"
-        :label="$t('issue.description')"
+        prop="intro"
+        :label="$t('issue.intro')"
       >
         <el-input
-          v-model="describe.description"
-          :placeholder="$t('issue.description')"
+          type="textarea"
+          :rows="3"
+          v-model="describe.intro"
+          :placeholder="$t('issue.intro')"
           clearable
         ></el-input>
       </el-form-item>
@@ -174,7 +176,7 @@ import { mapState, mapGetters } from "vuex";
 import BigNumber from "bignumber.js";
 import { get, isEmpty } from "lodash";
 
-import { getViewToken } from "@/utils/helpers";
+import { getViewToken, getStringLength } from "@/utils/helpers";
 import webc from "@/utils/webc";
 
 export default {
@@ -187,11 +189,21 @@ export default {
         callback(requireError(this.$t("issue.name")));
         return;
       }
+      const len = getStringLength(value);
+      if (len < 3 || len > 32) {
+        callback(new Error(this.$t("issue.nameInvalid")));
+        return;
+      }
       callback();
     };
     const validateSymbol = (rule, value, callback) => {
       if (isEmpty(value)) {
         callback(requireError(this.$t("issue.symbol")));
+        return;
+      }
+      const len = getStringLength(value);
+      if (len < 2 || len > 8) {
+        callback(new Error(this.$t("issue.symbolInvalid")));
         return;
       }
       callback();
@@ -208,6 +220,10 @@ export default {
           .toNumber() !== 0
       ) {
         callback(new Error(this.$t("send.amountWarnInvalid")));
+        return;
+      }
+      if (input > Math.pow(2, 64) - 1) {
+        callback(new Error(this.$t("send.supplyInvalid")));
         return;
       }
       callback();
@@ -230,10 +246,10 @@ export default {
         burnAny: true
       },
       describe: {
-        organization: "",
+        org: "",
         website: "",
         logo: "",
-        description: ""
+        intro: ""
       },
       rules: {
         name: [{ validator: validateName, trigger: "blur" }],

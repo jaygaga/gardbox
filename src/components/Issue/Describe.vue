@@ -10,12 +10,12 @@
       @submit="onSubmit"
     >
       <el-form-item
-        prop="organization"
-        :label="$t('issue.organization')"
+        prop="org"
+        :label="$t('issue.org')"
       >
         <el-input
-          v-model="describe.organization"
-          :placeholder="$t('issue.organizationEg')"
+          v-model="describe.org"
+          :placeholder="$t('issue.orgEg')"
           clearable
         ></el-input>
       </el-form-item>
@@ -40,12 +40,14 @@
         ></el-input>
       </el-form-item>
       <el-form-item
-        prop="description"
-        :label="$t('issue.description')"
+        prop="intro"
+        :label="$t('issue.intro')"
       >
         <el-input
-          v-model="describe.description"
-          :placeholder="$t('issue.description')"
+          type="textarea"
+          :rows="3"
+          v-model="describe.intro"
+          :placeholder="$t('issue.intro')"
           clearable
         ></el-input>
       </el-form-item>
@@ -89,10 +91,10 @@ export default {
   data() {
     return {
       describe: {
-        organization: "",
+        org: "",
         website: "",
         logo: "",
-        description: ""
+        intro: ""
       },
       dialogVisible: false,
       pass: ""

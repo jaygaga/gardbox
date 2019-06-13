@@ -13,10 +13,10 @@
       </div>
       <div class="pad">
         <p class="sub-title">{{ $t('issue.describe') }}</p>
-        <s-item :label="$t('issue.organization')">{{ get(describe, 'organization') || '-' }}</s-item>
+        <s-item :label="$t('issue.org')">{{ get(describe, 'org') || '-' }}</s-item>
         <s-item :label="$t('issue.website')">{{ get(describe, 'website') || '-' }}</s-item>
         <s-item :label="$t('issue.logo')">{{ get(describe, 'logo') || '-' }}</s-item>
-        <s-item :label="$t('issue.description')">{{ get(describe, 'description') || '-' }}</s-item>
+        <s-item :label="$t('issue.intro')">{{ get(describe, 'intro') || '-' }}</s-item>
       </div>
     </div>
 
