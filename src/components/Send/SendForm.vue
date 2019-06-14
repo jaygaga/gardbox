@@ -34,7 +34,7 @@
         ></el-input>
       </el-form-item>
       <div class="row-balance">
-        Balance: {{ selectedBalance.amount | formatNumber }}
+        {{ $t('send.balance') }}: {{ selectedBalance.amount | formatNumber }}
         <a @click="setAmountAll">{{$t('send.all')}}</a>
       </div>
       <el-form-item prop="amount">

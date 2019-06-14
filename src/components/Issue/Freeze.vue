@@ -30,8 +30,8 @@
           <el-option
             v-for="i in freezeList"
             :key="i.denom"
-            :label="i.label"
-            :value="i.denom"
+            :label="i.address"
+            :value="i.address"
           ></el-option>
           <el-option
             v-if="!freezeList.length"
@@ -41,13 +41,32 @@
         </el-select>
       </el-form-item>
       <el-form-item
+        v-if="!isEmpty(selectedAddr)"
+        :label="$t('freeze.status')"
+      >
+        <s-item
+          :label="$t('freeze.in')"
+          class="status"
+        >{{ selectedAddr.in_end_time | formatTime }}</s-item>
+        <s-item
+          :label="$t('freeze.out')"
+          class="status"
+        >{{ selectedAddr.out_end_time | formatTime }}</s-item>
+      </el-form-item>
+      <el-form-item
         prop="type"
         :label="$t('freeze.type')"
       >
         <el-radio-group v-model="form.type">
           <!-- TODO: 根据所选的地址冻结状态禁用解冻类型 -->
-          <el-radio label="in">{{ $t('freeze.in') }}</el-radio>
-          <el-radio label="out">{{ $t('freeze.out') }}</el-radio>
+          <el-radio
+            label="in"
+            :disabled="selectedAddr.in_end_time === '0'"
+          >{{ $t('freeze.in') }}</el-radio>
+          <el-radio
+            label="out"
+            :disabled="selectedAddr.out_end_time === '0'"
+          >{{ $t('freeze.out') }}</el-radio>
           <el-radio label="in-out">{{ $t('freeze.all') }}</el-radio>
         </el-radio-group>
       </el-form-item>
@@ -143,10 +162,14 @@ export default {
     ...mapState("issue", ["tokenMap", "freezeList"]),
     detail() {
       return this.tokenMap[this.$route.params.id] || {};
+    },
+    selectedAddr() {
+      return this.freezeList.find(i => i.address === this.form.address) || {};
     }
   },
   methods: {
     get,
+    isEmpty,
     onSubmit(e) {
       e.preventDefault();
       this.$refs["form"].validate(valid => {
@@ -196,7 +219,7 @@ export default {
         this.$message({
           type: "success",
           message: this.$t("global.success", {
-            name: this.$t(`freeze.${$route.query.action}`)
+            name: this.$t(`freeze.${this.$route.query.action}`)
           }),
           center: true
         });
@@ -211,9 +234,17 @@ export default {
       loading.close();
     }
   },
-  mounted() {
+  mounted: async function() {
     this.$store.dispatch("issue/fetchToken", this.$route.params.id);
-    this.$store.dispatch("issue/fetchFreezed", this.$route.params.id);
+    if (this.$route.query.action !== "freeze") {
+      const ls = await this.$store.dispatch(
+        "issue/fetchFreezed",
+        this.$route.params.id
+      );
+      if (ls.length) {
+        this.form.address = ls[0].address;
+      }
+    }
   }
 };
 </script>
@@ -241,7 +272,11 @@ export default {
     margin-bottom: 16px;
   }
 }
-
+.issue-freeze-card {
+  .status {
+    margin: 8px 0 0;
+  }
+}
 .fee {
   span {
     margin-right: 16px;

@@ -58,11 +58,8 @@ export default {
       });
       const msg = {
         type: 'issue/MsgIssue',
-        CoinIssueInfo: {
-          issue_id: '',
-          issuer: address,
-          owner: address,
-          issue_time: '0',
+        sender: address,
+        params: {
           name: form.name,
           symbol: form.symbol,
           total_supply: BigNumber(form.amount)
@@ -73,7 +70,7 @@ export default {
           burn_owner_disabled: !form.burn,
           burn_holder_disabled: !form.burnHolder,
           burn_from_disabled: !form.burnAny,
-          freeze_disabled: !form.freeze,
+          // freeze_disabled: !form.freeze,
           minting_finished: !form.mint
         }
       };
@@ -135,7 +132,7 @@ export default {
     freeze: async function(context, { pass, form, id, action }) {
       const address = context.rootGetters['account/currentAddress'];
       const msg = {
-        type: action === 'freeze' ? 'issue/MsgIssueFreeze' : 'issue/MsgIssueUnfreeze',
+        type: action === 'freeze' ? 'issue/MsgIssueFreeze' : 'issue/MsgIssueUnFreeze',
         issue_id: id,
         sender: address,
         accAddress: form.address,
@@ -170,8 +167,8 @@ export default {
           const params = {
             limit,
             action,
-            'issue-id': id,
-            sender: address
+            'issue-id': id
+            // sender: address
           };
           return context.dispatch('transactions/fetchTxsLatest', params, { root: true });
         })
@@ -184,10 +181,10 @@ export default {
       return Promise.resolve(list);
     },
     fetchFreezed: async function(context, id) {
-      // const { data } = await ajax.get(`/issue/freezes/${id}`);
-      // context.commit('setFreezeList', data);
-      const data = [];
-      return Promise.resolve(data);
+      const { data } = await ajax.get(`/issue/freezes/${id}`);
+      const res = data.filter(i => i.in_end_time !== '0' && i.out_end_time !== '0');
+      context.commit('setFreezeList', res);
+      return Promise.resolve(res);
     }
   }
 };

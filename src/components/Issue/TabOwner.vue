@@ -92,7 +92,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("account", ["currentAddress", "mathAccount"])
+    ...mapGetters("account", ["currentAddress"]),
+    ...mapState("account", ["mathAccount"])
   },
   methods: {
     get,

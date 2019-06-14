@@ -170,7 +170,7 @@ export default {
         this.$message({
           type: "success",
           message: this.$t("global.success", {
-            name: this.$t(`mint.${$route.query.action}`)
+            name: this.$t(`mint.${this.$route.query.action}`)
           }),
           center: true
         });

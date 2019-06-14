@@ -144,7 +144,11 @@
         ></el-switch>
       </el-form-item>
 
-      <div class="fee"><span>{{$t('send.fee')}}</span>0 GARD</div>
+      <div class="fee">{{$t('issue.fee')}} ( <span>{{$t('send.balance')}}: </span>{{ gardBalance.amount | formatNumber}} )</div>
+      <el-form-item prop="fee">
+        <el-input value="20000"></el-input>
+      </el-form-item>
+      <div class="gas"><span>{{$t('send.fee')}}</span>0 GARD</div>
       <el-button
         class="btn-send"
         native-type=“submit”
@@ -228,6 +232,13 @@ export default {
       }
       callback();
     };
+    const validateFee = (rule, value, callback) => {
+      if (this.gardBalance.amount < 20000) {
+        callback(new Error(this.$t("issue.feeInsuf")));
+        return;
+      }
+      callback();
+    };
     const decimalList = [];
     for (let i = 0; i < 19; i++) {
       decimalList[decimalList.length] = i;
@@ -252,6 +263,7 @@ export default {
         intro: ""
       },
       rules: {
+        fee: [{ validator: validateFee, trigger: "blur" }],
         name: [{ validator: validateName, trigger: "blur" }],
         symbol: [{ validator: validateSymbol, trigger: "blur" }],
         amount: [{ validator: validateAmount, trigger: "blur" }]
@@ -261,7 +273,17 @@ export default {
     };
   },
   computed: {
-    ...mapState("account", ["mathAccount"])
+    ...mapState("account", ["mathAccount", "balance"]),
+    gardBalance() {
+      const gard = this.balance.find(i => i.denom === "agard") || {
+        amount: "0",
+        denom: "agard"
+      };
+      gard.amount = BigNumber(gard.amount)
+        .dividedBy(Math.pow(10, 18))
+        .toString();
+      return gard;
+    }
   },
   methods: {
     get,
@@ -323,7 +345,9 @@ export default {
       loading.close();
     }
   },
-  mounted: async function() {}
+  mounted() {
+    this.$store.dispatch("account/fetchBalance");
+  }
 };
 </script>
 
@@ -352,6 +376,10 @@ export default {
 }
 
 .fee {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.gas {
   span {
     margin-right: 16px;
   }

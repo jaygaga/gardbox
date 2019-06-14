@@ -39,7 +39,8 @@
           <span class="action">{{ get(i, 'tags.0.value') === 'issue_freeze' ? $t('freeze.freeze') : $t('freeze.unfreeze') }}</span>
           <span>{{ get(i, 'tags.4.value') }}</span>
           <span>{{ get(i, 'tx.value.msg.0.value.accAddress') | gardAddr }}</span>
-          <span>{{ get(i, 'tx.value.msg.0.value.end_time') | formatTime }}</span>
+          <span v-if="get(i, 'tx.value.msg.0.value.end_time')">{{ get(i, 'tx.value.msg.0.value.end_time') | formatTime }}</span>
+          <span v-else>-</span>
           <span>{{ i.timestamp | formatTime }}</span>
         </div>
       </div>
