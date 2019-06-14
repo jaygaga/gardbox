@@ -37,7 +37,20 @@
         trigger="click"
         @command="getStarted"
       >
-        <i class="el-icon-more"></i>
+        <div class="dropdown-menu-btn">
+          <div class="avatar">
+            <img
+              v-if="isEmpty(mathAccount)"
+              :src="walletIcon"
+            />
+            <img
+              v-else
+              src="https://medishares-cn.oss-cn-hangzhou.aliyuncs.com/mathwallet/images/mathlabs/wallet_cn_logo_white.png"
+            />
+          </div>
+          <span>{{ userName }}</span>
+          <i class="el-icon-arrow-down"></i>
+        </div>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="account">
             {{$t('home.account')}}
@@ -59,12 +72,15 @@
 import { mapState } from "vuex";
 import { isEmpty } from "lodash";
 
+import walletIcon from "@/assets/icon-wallet.svg";
+
 export default {
   data() {
     return {
       langs: ["zh", "en"],
       lang: this.$i18n.locale,
-      bgColor: ""
+      bgColor: "",
+      walletIcon
     };
   },
   props: {
@@ -75,6 +91,7 @@ export default {
     ...mapState("transactions", ["nodeInfo"])
   },
   methods: {
+    isEmpty,
     changeLang() {
       let target = "en";
       if (this.$i18n.locale === "en") {
@@ -166,7 +183,35 @@ export default {
   .dropdown-menu {
     margin-left: $padding-basic;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    .dropdown-menu-btn {
+      display: flex;
+      align-items: center;
+      i {
+        margin-left: 4px;
+        margin-top: 2px;
+      }
+    }
+    .avatar {
+      height: 28px;
+      width: 28px;
+      background: rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+      border-radius: 14px;
+      padding: 3px;
+      margin-right: 6px;
+      img {
+        height: 18px;
+        margin: 2px;
+      }
+    }
+    &:hover {
+      color: white;
+      .avatar {
+        background: rgba(255, 255, 255, 0.3);
+      }
+    }
   }
 }
 

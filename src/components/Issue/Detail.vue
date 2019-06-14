@@ -15,7 +15,14 @@
         <p class="sub-title">{{ $t('issue.describe') }}</p>
         <s-item :label="$t('issue.org')">{{ get(describe, 'org') || '-' }}</s-item>
         <s-item :label="$t('issue.website')">{{ get(describe, 'website') || '-' }}</s-item>
-        <s-item :label="$t('issue.logo')">{{ get(describe, 'logo') || '-' }}</s-item>
+        <s-item :label="$t('issue.logo')">
+          <img
+            v-if="get(describe, 'logo')"
+            :src="get(describe, 'logo')"
+            class="logo"
+          />
+          <span v-else>-</span>
+        </s-item>
         <s-item :label="$t('issue.intro')">{{ get(describe, 'intro') || '-' }}</s-item>
       </div>
     </div>
@@ -145,6 +152,10 @@ export default {
     background: $color-background-card;
     padding: 0 24px;
     margin-bottom: $padding-basic;
+    .logo {
+      height: 32px;
+      margin: -16px 0;
+    }
   }
 }
 .sub-title {
