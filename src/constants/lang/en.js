@@ -49,6 +49,7 @@ const en = {
     loginBreif: 'Use wallet with your password if you already have one in this browser.',
     logout: 'Log Out',
     backup: 'Export KeyStore',
+    privateKey: 'Export PrivateKey',
     backupCopy: 'Copy KeyStore to clipboard',
     backupFile: 'download KeyStore file',
     edit: 'Edit Name',

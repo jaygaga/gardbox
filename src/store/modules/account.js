@@ -166,7 +166,7 @@ export default {
       const { userMap } = context.state;
       const keyStore = userMap[user];
       const account = webc.account.fromV3KeyStore(keyStore, pass);
-      return Promise.resolve(JSON.stringify(keyStore));
+      return Promise.resolve(account);
     },
     delete: async function(context, { user, pass }) {
       const { userMap, userName } = context.state;

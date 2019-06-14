@@ -48,7 +48,8 @@
               src="https://medishares-cn.oss-cn-hangzhou.aliyuncs.com/mathwallet/images/mathlabs/wallet_cn_logo_white.png"
             />
           </div>
-          <span>{{ userName }}</span>
+          <span v-if="isEmpty(mathAccount)">{{ userName}}</span>
+          <span v-else>MathWallet</span>
           <i class="el-icon-arrow-down"></i>
         </div>
         <el-dropdown-menu slot="dropdown">

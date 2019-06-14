@@ -46,6 +46,7 @@ const zh = {
     loginBreif: '直接输入密码使用本地已经存在的 GARD 钱包。',
     logout: '注 销',
     backup: '导出 KeyStore',
+    privateKey: '导出私钥',
     backupCopy: '复制 KeyStore 到剪贴板',
     backupFile: '下载 KeyStore 文件',
     edit: '编辑名称',
