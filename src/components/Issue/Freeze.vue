@@ -85,7 +85,11 @@
         </el-date-picker>
       </el-form-item>
 
-      <div class="fee"><span>{{$t('send.fee')}}</span>0 GARD</div>
+      <div class="fee">{{$t('issue.fee')}} ( <span>{{$t('send.balance')}}: </span>{{ gardBalance.amount | formatNumber}} GARD )</div>
+      <el-form-item prop="fee">
+        <el-input :value="serviceFee"></el-input>
+      </el-form-item>
+      <div class="gas"><span>{{$t('send.fee')}}</span>0 GARD</div>
       <el-button
         class="btn-send"
         native-type=“submit”
@@ -120,6 +124,8 @@ import { get, isEmpty } from "lodash";
 import { getViewToken } from "@/utils/helpers";
 import webc from "@/utils/webc";
 
+const serviceFee = 20000;
+
 export default {
   name: "IssueMint",
   data() {
@@ -143,13 +149,22 @@ export default {
       }
       callback();
     };
+    const validateFee = (rule, value, callback) => {
+      if (this.gardBalance.amount < serviceFee) {
+        callback(new Error(this.$t("issue.feeInsuf")));
+        return;
+      }
+      callback();
+    };
     return {
+      serviceFee,
       form: {
         address: "",
         type: "out",
         end: ""
       },
       rules: {
+        fee: [{ validator: validateFee, trigger: "blur" }],
         address: [{ validator: validateAddr, trigger: "blur" }],
         end: [{ validator: validateTime, trigger: "blur" }]
       },
@@ -160,6 +175,7 @@ export default {
   computed: {
     ...mapState("account", ["mathAccount"]),
     ...mapState("issue", ["tokenMap", "freezeList"]),
+    ...mapGetters("account", ["gardBalance"]),
     detail() {
       return this.tokenMap[this.$route.params.id] || {};
     },
@@ -235,6 +251,7 @@ export default {
     }
   },
   mounted: async function() {
+    this.$store.dispatch("account/fetchBalance");
     this.$store.dispatch("issue/fetchToken", this.$route.params.id);
     if (this.$route.query.action !== "freeze") {
       const ls = await this.$store.dispatch(
@@ -277,7 +294,13 @@ export default {
     margin: 8px 0 0;
   }
 }
+
 .fee {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.gas {
+  font-size: 14px;
   span {
     margin-right: 16px;
   }

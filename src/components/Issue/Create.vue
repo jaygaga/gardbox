@@ -144,9 +144,9 @@
         ></el-switch>
       </el-form-item>
 
-      <div class="fee">{{$t('issue.fee')}} ( <span>{{$t('send.balance')}}: </span>{{ gardBalance.amount | formatNumber}} )</div>
+      <div class="fee">{{$t('issue.fee')}} ( <span>{{$t('send.balance')}}: </span>{{ gardBalance.amount | formatNumber}} GARD )</div>
       <el-form-item prop="fee">
-        <el-input value="20000"></el-input>
+        <el-input :value="serviceFee"></el-input>
       </el-form-item>
       <div class="gas"><span>{{$t('send.fee')}}</span>0 GARD</div>
       <el-button
@@ -182,6 +182,8 @@ import { get, isEmpty } from "lodash";
 
 import { getViewToken, getStringLength } from "@/utils/helpers";
 import webc from "@/utils/webc";
+
+const serviceFee = 20000;
 
 export default {
   name: "IssueCreate",
@@ -233,7 +235,7 @@ export default {
       callback();
     };
     const validateFee = (rule, value, callback) => {
-      if (this.gardBalance.amount < 20000) {
+      if (this.gardBalance.amount < serviceFee) {
         callback(new Error(this.$t("issue.feeInsuf")));
         return;
       }
@@ -244,6 +246,7 @@ export default {
       decimalList[decimalList.length] = i;
     }
     return {
+      serviceFee,
       decimalList,
       form: {
         name: "",
@@ -273,17 +276,8 @@ export default {
     };
   },
   computed: {
-    ...mapState("account", ["mathAccount", "balance"]),
-    gardBalance() {
-      const gard = this.balance.find(i => i.denom === "agard") || {
-        amount: "0",
-        denom: "agard"
-      };
-      gard.amount = BigNumber(gard.amount)
-        .dividedBy(Math.pow(10, 18))
-        .toString();
-      return gard;
-    }
+    ...mapState("account", ["mathAccount"]),
+    ...mapGetters("account", ["gardBalance"])
   },
   methods: {
     get,
@@ -380,6 +374,7 @@ export default {
   margin-bottom: 8px;
 }
 .gas {
+  font-size: 14px;
   span {
     margin-right: 16px;
   }

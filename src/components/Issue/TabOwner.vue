@@ -23,6 +23,12 @@
           clearable
         ></el-input>
       </el-form-item>
+
+      <div class="fee">{{$t('issue.fee')}} ( <span>{{$t('send.balance')}}: </span>{{ gardBalance.amount | formatNumber}} GARD )</div>
+      <el-form-item prop="fee">
+        <el-input :value="serviceFee"></el-input>
+      </el-form-item>
+      <div class="gas"><span>{{$t('send.fee')}}</span>0 GARD</div>
     </el-form>
 
     <el-button
@@ -57,10 +63,14 @@ import { get, isEmpty } from "lodash";
 
 import { getViewToken } from "@/utils/helpers";
 import webc from "@/utils/webc";
+
+const serviceFee = 20000;
+
 export default {
   name: "TabOwner",
   props: {
-    setting: Object
+    setting: Object,
+    gardBalance: Object
   },
   data() {
     const requireError = name =>
@@ -79,11 +89,20 @@ export default {
       }
       callback();
     };
+    const validateFee = (rule, value, callback) => {
+      if (this.gardBalance.amount < serviceFee) {
+        callback(new Error(this.$t("issue.feeInsuf")));
+        return;
+      }
+      callback();
+    };
     return {
+      serviceFee,
       form: {
         address: ""
       },
       rules: {
+        fee: [{ validator: validateFee, trigger: "blur" }],
         address: [{ validator: validateAddr, trigger: "submit" }]
       },
 
@@ -189,9 +208,21 @@ export default {
 .btn {
   width: $xs;
   padding: 16px;
+  margin-top: $padding-basic;
 }
 .switch {
   margin-bottom: 24px;
+}
+
+.fee {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.gas {
+  font-size: 14px;
+  span {
+    margin-right: 16px;
+  }
 }
 </style>
 

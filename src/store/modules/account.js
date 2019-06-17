@@ -1,5 +1,6 @@
 import webc from '@/utils/webc';
 import ajax from '@/utils/ajax.js';
+import BigNumber from 'bignumber.js';
 import { get, set, isEmpty } from 'lodash';
 
 import { Message } from 'element-ui';
@@ -32,6 +33,17 @@ export default {
       } else {
         return get(state.keyStore, 'address');
       }
+    },
+    gardBalance: function(state) {
+      const gard = state.balance.find(i => i.denom === 'agard') || {
+        amount: '0',
+        denom: 'agard'
+      };
+      gard.amount = BigNumber(gard.amount)
+        .dividedBy(Math.pow(10, 18))
+        .toString();
+      gard.label = 'GARD';
+      return gard;
     }
   },
 

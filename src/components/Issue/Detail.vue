@@ -57,7 +57,10 @@
         :label="$t('issue.tab4')"
         name="transfer"
       >
-        <TabOwner :setting="setting" />
+        <TabOwner
+          :setting="setting"
+          :gardBalance="gardBalance"
+        />
       </el-tab-pane>
     </el-tabs>
   </s-card>
@@ -86,6 +89,7 @@ export default {
   },
   computed: {
     ...mapState("issue", ["tokenMap"]),
+    ...mapGetters("account", ["gardBalance"]),
     detail() {
       return this.tokenMap[this.$route.params.id] || {};
     },
@@ -107,6 +111,7 @@ export default {
   methods: {
     get,
     fetchData: async function() {
+      this.$store.dispatch("account/fetchBalance");
       await this.$store.dispatch("issue/fetchToken", this.$route.params.id);
       this.setting = {
         mint: !this.detail.minting_finished,

@@ -31,7 +31,11 @@
         ></el-input>
       </el-form-item>
 
-      <div class="fee"><span>{{$t('send.fee')}}</span>0 GARD</div>
+      <div class="fee">{{$t('issue.fee')}} ( <span>{{$t('send.balance')}}: </span>{{ gardBalance.amount | formatNumber}} GARD )</div>
+      <el-form-item prop="fee">
+        <el-input :value="serviceFee"></el-input>
+      </el-form-item>
+      <div class="gas"><span>{{$t('send.fee')}}</span>0 GARD</div>
       <el-button
         class="btn-send"
         native-type=“submit”
@@ -66,6 +70,8 @@ import { get, isEmpty } from "lodash";
 import { getViewToken } from "@/utils/helpers";
 import webc from "@/utils/webc";
 
+const serviceFee = 10000;
+
 export default {
   name: "IssueMint",
   data() {
@@ -99,12 +105,21 @@ export default {
       }
       callback();
     };
+    const validateFee = (rule, value, callback) => {
+      if (this.gardBalance.amount < serviceFee) {
+        callback(new Error(this.$t("issue.feeInsuf")));
+        return;
+      }
+      callback();
+    };
     return {
+      serviceFee,
       form: {
         amount: "",
         address: ""
       },
       rules: {
+        fee: [{ validator: validateFee, trigger: "blur" }],
         address: [{ validator: validateAddr, trigger: "blur" }],
         amount: [{ validator: validateAmount, trigger: "blur" }]
       },
@@ -114,7 +129,8 @@ export default {
   },
   computed: {
     ...mapState("issue", ["tokenMap"]),
-    ...mapGetters("account", ["currentAddress", "mathAccount"]),
+    ...mapState("account", ["mathAccount"]),
+    ...mapGetters("account", ["currentAddress", "gardBalance"]),
     detail() {
       return this.tokenMap[this.$route.params.id] || {};
     }
@@ -188,6 +204,7 @@ export default {
   mounted() {
     this.form.address = this.currentAddress;
     this.$store.dispatch("issue/fetchToken", this.$route.params.id);
+    this.$store.dispatch("account/fetchBalance");
   }
 };
 </script>
@@ -217,6 +234,11 @@ export default {
 }
 
 .fee {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.gas {
+  font-size: 14px;
   span {
     margin-right: 16px;
   }
