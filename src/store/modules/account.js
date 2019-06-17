@@ -39,11 +39,12 @@ export default {
         amount: '0',
         denom: 'agard'
       };
-      gard.amount = BigNumber(gard.amount)
+      const res = { ...gard };
+      res.amount = BigNumber(gard.amount)
         .dividedBy(Math.pow(10, 18))
         .toString();
-      gard.label = 'GARD';
-      return gard;
+      res.label = 'GARD';
+      return res;
     }
   },
 

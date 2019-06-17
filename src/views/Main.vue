@@ -151,8 +151,8 @@ export default {
     ...mapState("transactions", { txLoading: "loading", txs: "txs" }),
     ...mapGetters("account", { address: "currentAddress" }),
     gardBalance() {
-      const gard = { amount: "0", denom: "gard" };
-      return this.balance.find(i => i.denom === "gard") || gard;
+      const gard = { amount: "0", denom: "agard" };
+      return this.balance.find(i => i.denom === "agard") || gard;
     }
   },
   methods: {
