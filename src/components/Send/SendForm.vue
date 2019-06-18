@@ -119,7 +119,9 @@ export default {
     ...mapState("account", ["balance", "tokenMap"]),
     ...mapState("transactions", ["form"]),
     viewBalance() {
-      const coins = this.balance.filter(i => !i.denom.match(/^box.{11}$/));
+      const coins = this.balance.filter(
+        i => !i.denom.match(/^box.{11}$/) && !i.denom.match(/^box.{13}$/)
+      );
       return coins.map(i => {
         const token = { ...i };
         if (token.denom.match(/^coin.{10}$/)) {

@@ -70,7 +70,7 @@ export default {
           burn_owner_disabled: !form.burn,
           burn_holder_disabled: !form.burnHolder,
           burn_from_disabled: !form.burnAny,
-          // freeze_disabled: !form.freeze,
+          freeze_disabled: !form.freeze,
           minting_finished: !form.mint
         }
       };

@@ -77,12 +77,12 @@
         >
           <BalancePanel
             class="asset-item"
-            v-if="isEmpty(balance)"
+            v-if="isEmpty(viewBalance)"
             :token="gardBalance"
           />
           <BalancePanel
             class="asset-item"
-            v-for="token in balance"
+            v-for="token in viewBalance"
             :key="token.denom"
             :token="token"
           />
@@ -153,6 +153,11 @@ export default {
     gardBalance() {
       const gard = { amount: "0", denom: "agard" };
       return this.balance.find(i => i.denom === "agard") || gard;
+    },
+    viewBalance() {
+      return this.balance.filter(
+        i => !i.denom.match(/^box.{11}$/) && !i.denom.match(/^box.{13}$/)
+      );
     }
   },
   methods: {
