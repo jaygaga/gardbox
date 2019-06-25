@@ -68,7 +68,7 @@
         :label="$t('issue.org')"
       >
         <el-input
-          v-model="describe.org"
+          v-model="form.org"
           :placeholder="$t('issue.orgEg')"
           clearable
         ></el-input>
@@ -78,7 +78,7 @@
         :label="$t('issue.website')"
       >
         <el-input
-          v-model="describe.website"
+          v-model="form.website"
           :placeholder="$t('issue.websiteEg')"
           clearable
         ></el-input>
@@ -88,7 +88,7 @@
         :label="$t('issue.logo')"
       >
         <el-input
-          v-model="describe.logo"
+          v-model="form.logo"
           :placeholder="$t('issue.logoEg')"
           clearable
         ></el-input>
@@ -100,7 +100,7 @@
         <el-input
           type="textarea"
           :rows="3"
-          v-model="describe.intro"
+          v-model="form.intro"
           :placeholder="$t('issue.intro')"
           clearable
         ></el-input>
@@ -241,6 +241,13 @@ export default {
       }
       callback();
     };
+    const validateDescribe = (value, callback, length) => {
+      const len = getStringLength(value);
+      if (len > length) {
+        callback(new Error(this.$t("issue.lengthInvalid")));
+      }
+      callback();
+    };
     const decimalList = [];
     for (let i = 0; i < 19; i++) {
       decimalList[decimalList.length] = i;
@@ -257,9 +264,9 @@ export default {
         freeze: true,
         burn: true,
         burnHolder: true,
-        burnAny: true
-      },
-      describe: {
+        burnAny: true,
+
+        // describe
         org: "",
         website: "",
         logo: "",
@@ -269,7 +276,31 @@ export default {
         fee: [{ validator: validateFee, trigger: "blur" }],
         name: [{ validator: validateName, trigger: "blur" }],
         symbol: [{ validator: validateSymbol, trigger: "blur" }],
-        amount: [{ validator: validateAmount, trigger: "blur" }]
+        amount: [{ validator: validateAmount, trigger: "blur" }],
+        org: [
+          {
+            validator: (r, v, cb) => validateDescribe(v, cb, 124),
+            trigger: "blur"
+          }
+        ],
+        website: [
+          {
+            validator: (r, v, cb) => validateDescribe(v, cb, 64),
+            trigger: "blur"
+          }
+        ],
+        logo: [
+          {
+            validator: (r, v, cb) => validateDescribe(v, cb, 124),
+            trigger: "blur"
+          }
+        ],
+        intro: [
+          {
+            validator: (r, v, cb) => validateDescribe(v, cb, 712),
+            trigger: "blur"
+          }
+        ]
       },
       dialogVisible: false,
       pass: ""
@@ -312,10 +343,17 @@ export default {
       });
       let res = "";
       try {
+        const form = { ...this.form };
+        const describe = {};
+        const describeKeys = ["org", "website", "logo", "intro"];
+        describeKeys.forEach(i => {
+          describe[i] = form[i];
+          delete form[i];
+        });
         res = await this.$store.dispatch(`issue/create`, {
           pass: this.pass,
-          form: this.form,
-          describe: this.describe
+          form,
+          describe
         });
       } catch (e) {
         this.$message({

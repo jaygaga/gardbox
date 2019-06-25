@@ -88,7 +88,7 @@
 import { mapState, mapGetters } from "vuex";
 import { get, isEmpty } from "lodash";
 
-import { getViewToken } from "@/utils/helpers";
+import { getViewToken, getStringLength } from "@/utils/helpers";
 import webc from "@/utils/webc";
 
 const serviceFee = 4000;
@@ -96,6 +96,13 @@ const serviceFee = 4000;
 export default {
   name: "IssueModify",
   data() {
+    const validateDescribe = (value, callback, length) => {
+      const len = getStringLength(value);
+      if (len > length) {
+        callback(new Error(this.$t("issue.lengthInvalid")));
+      }
+      callback();
+    };
     const validateFee = (rule, value, callback) => {
       if (this.gardBalance.amount < serviceFee) {
         callback(new Error(this.$t("issue.feeInsuf")));
@@ -112,6 +119,30 @@ export default {
         intro: ""
       },
       rules: {
+        org: [
+          {
+            validator: (r, v, cb) => validateDescribe(v, cb, 124),
+            trigger: "blur"
+          }
+        ],
+        website: [
+          {
+            validator: (r, v, cb) => validateDescribe(v, cb, 64),
+            trigger: "blur"
+          }
+        ],
+        logo: [
+          {
+            validator: (r, v, cb) => validateDescribe(v, cb, 124),
+            trigger: "blur"
+          }
+        ],
+        intro: [
+          {
+            validator: (r, v, cb) => validateDescribe(v, cb, 712),
+            trigger: "blur"
+          }
+        ],
         fee: [{ validator: validateFee, trigger: "blur" }]
       },
       dialogVisible: false,
