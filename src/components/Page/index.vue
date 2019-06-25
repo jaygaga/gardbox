@@ -3,7 +3,7 @@
     <div class="header">
       <a
         href="javascript:;"
-        @click="$router.back()"
+        @click="link ? $router.push(link) : $router.back()"
       >
         <i class="el-icon-back"></i>
       </a>
@@ -18,8 +18,6 @@
 export default {
   name: "Page",
   props: {
-    title: String,
-    linkName: String,
     link: String
   }
 };

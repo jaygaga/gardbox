@@ -32,6 +32,14 @@ import DelegateDetail from '@/components/Staking/DelegateDetail.vue';
 import UnbindForm from '@/components/Staking/UnbindForm.vue';
 import RedelegateForm from '@/components/Staking/RedelegateForm.vue';
 
+import IssueMain from './views/IssueMain.vue';
+import Issue from './views/Issue.vue';
+import IssueCreate from './components/Issue/Create.vue';
+import IssueDetail from './components/Issue/Detail.vue';
+import IssueModify from './components/Issue/Describe.vue';
+import IssueMint from './components/Issue/Mint.vue';
+import IssueFreeze from './components/Issue/Freeze.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -133,6 +141,11 @@ export default new Router({
       ]
     },
     {
+      path: '/receive',
+      name: 'receive',
+      component: Receive
+    },
+    {
       path: '/staking',
       component: StakingMain
     },
@@ -168,9 +181,35 @@ export default new Router({
       ]
     },
     {
-      path: '/receive',
-      name: 'receive',
-      component: Receive
+      path: '/issue',
+      component: IssueMain
+    },
+    {
+      path: '/issue',
+      name: 'Issue',
+      component: Issue,
+      children: [
+        {
+          path: 'create',
+          component: IssueCreate
+        },
+        {
+          path: 'detail/:id',
+          component: IssueDetail
+        },
+        {
+          path: 'modify/:id',
+          component: IssueModify
+        },
+        {
+          path: 'mint/:id',
+          component: IssueMint
+        },
+        {
+          path: 'freeze/:id',
+          component: IssueFreeze
+        }
+      ]
     },
     {
       path: '*',

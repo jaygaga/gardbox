@@ -1,5 +1,5 @@
 /* 改变主题色变量 */
-$--color-primary: #4c4afe;
+$--color-primary: #021b79;
 
 /// color|[主要文字颜色,primary text color,primary text color]|FontColor|2
 $--color-text-primary: white;
@@ -9,6 +9,9 @@ $--color-text-regular: rgba(255, 255, 255, 0.85);
 $--color-text-secondary: rgba(255, 255, 255, 0.7);
 /// color|[占位文字颜色,placeholder text color,placeholder text color]|FontColor|2
 $--color-text-placeholder: rgba(255, 255, 255, 0.55);
+
+$--color-text-regular-default: #606266;
+$--color-text-placeholder-default: #c0c4cc;
 
 /* input */
 $--input-height: 48px;
@@ -25,6 +28,7 @@ $--checkbox-input-width: 20px;
 $--checkbox-input-fill: transparent;
 
 $--radio-input-background-color: transparent;
+$--radio-disabled-input-fill: transparent;
 $--radio-checked-input-border-color: white;
 $--radio-checked-icon-color: white;
 $--radio-checked-font-color: white;
@@ -35,6 +39,12 @@ $--button-disabled-background-color: rgba(255, 255, 255, 0.25);
 
 /* dialog */
 $--dialog-background-color: #2c2ade;
+
+/* datepicker */
+$--datepicker-color: $--color-text-regular-default;
+$--datepicker-off-color: $--color-text-placeholder-default;
+$--datepicker-header-color: $--color-text-regular-default;
+$--datepicker-icon-color: rgba(0, 0, 0, 0.85);
 
 /* 改变 icon 字体路径变量，必需 */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';

@@ -1,10 +1,9 @@
 import webc from '@/utils/webc';
 import ajax from '@/utils/ajax.js';
+import BigNumber from 'bignumber.js';
 import { get, set, isEmpty } from 'lodash';
 
 import { Message } from 'element-ui';
-
-import { getCurrentAddress } from '@/utils/helpers';
 
 const wallet_users = localStorage.getItem('gard_wallet_users') || '{}';
 const wallet_username = localStorage.getItem('gard_wallet_username') || '';
@@ -27,7 +26,27 @@ export default {
     tokenMap: {}
   },
 
-  getters: {},
+  getters: {
+    currentAddress: function(state) {
+      if (!isEmpty(state.mathAccount)) {
+        return get(state.mathAccount, 'account');
+      } else {
+        return get(state.keyStore, 'address');
+      }
+    },
+    gardBalance: function(state) {
+      const gard = state.balance.find(i => i.denom === 'agard') || {
+        amount: '0',
+        denom: 'agard'
+      };
+      const res = { ...gard };
+      res.amount = BigNumber(gard.amount)
+        .dividedBy(Math.pow(10, 18))
+        .toString();
+      res.label = 'GARD';
+      return res;
+    }
+  },
 
   mutations: {
     setLoading: function(state, loading) {
@@ -160,7 +179,7 @@ export default {
       const { userMap } = context.state;
       const keyStore = userMap[user];
       const account = webc.account.fromV3KeyStore(keyStore, pass);
-      return Promise.resolve(JSON.stringify(keyStore));
+      return Promise.resolve(account);
     },
     delete: async function(context, { user, pass }) {
       const { userMap, userName } = context.state;
@@ -181,8 +200,8 @@ export default {
     getMathIdentity: async function(context) {
       // config network
       const network = {
-        blockchain: 'cosmos',
-        chainId: 'dev'
+        blockchain: 'hashgard',
+        chainId: context.rootState.transactions.nodeInfo.network
       };
       // login math account
       let identity = {};
@@ -214,7 +233,7 @@ export default {
       return Promise.resolve(res);
     },
     fetchBalance: async function(context) {
-      const address = getCurrentAddress(context.state);
+      const address = context.getters.currentAddress;
       context.commit('setLoading', true);
       const { data } = await ajax.get(`bank/balances/${address}`);
       if (!isEmpty(data)) {

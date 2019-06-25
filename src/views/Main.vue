@@ -77,12 +77,12 @@
         >
           <BalancePanel
             class="asset-item"
-            v-if="isEmpty(balance)"
+            v-if="isEmpty(viewBalance)"
             :token="gardBalance"
           />
           <BalancePanel
             class="asset-item"
-            v-for="token in balance"
+            v-for="token in viewBalance"
             :key="token.denom"
             :token="token"
           />
@@ -127,8 +127,6 @@ import AvatarPanel from "@/components/Panel/AvatarPanel.vue";
 import BalancePanel from "@/components/Panel/BalancePanel";
 import TransactionList from "@/components/TransactionList";
 
-import { getCurrentAddress } from "@/utils/helpers";
-
 export default {
   name: "Main",
   components: { AvatarPanel, BalancePanel, TransactionList },
@@ -151,15 +149,15 @@ export default {
       "loading"
     ]),
     ...mapState("transactions", { txLoading: "loading", txs: "txs" }),
-    address() {
-      return getCurrentAddress({
-        keyStore: this.keyStore,
-        mathAccount: this.mathAccount
-      });
-    },
+    ...mapGetters("account", { address: "currentAddress" }),
     gardBalance() {
-      const gard = { amount: "0", denom: "gard" };
-      return this.balance.find(i => i.denom === "gard") || gard;
+      const gard = { amount: "0", denom: "agard" };
+      return this.balance.find(i => i.denom === "agard") || gard;
+    },
+    viewBalance() {
+      return this.balance.filter(
+        i => !i.denom.match(/^box.{11}$/) && !i.denom.match(/^box.{13}$/)
+      );
     }
   },
   methods: {
@@ -257,6 +255,7 @@ export default {
   .assets {
     display: flex;
     align-items: flex-start;
+    flex-wrap: wrap;
     padding: $padding-basic 0;
     margin-left: -24px;
     .asset-item {

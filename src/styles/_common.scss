@@ -1,7 +1,7 @@
 $input-background: rgba(0, 0, 0, 0.08);
 $card-background: rgba(255, 255, 255, 0.2);
 $color-gray: rgba(255, 255, 255, 0.6);
-$color-primary: #4c4afe;
+$color-primary: #021b79;
 $color-primary-dark: #2c2ade;
 
 a {
@@ -138,6 +138,7 @@ a:active {
     }
   }
 }
+.issue-detail-card .el-tabs--card,
 .staking-container .el-tabs--card,
 .main-container .el-tabs--card {
   & > .el-tabs__header {
@@ -190,4 +191,46 @@ a:active {
 }
 .create-container .phrase-container .el-input__inner {
   height: 40px;
+}
+
+.issue-create-card {
+  .el-form-item {
+    margin-bottom: 12px;
+  }
+  .el-form--label-top .el-form-item__label {
+    padding: 0;
+  }
+  .el-switch__label.is-active {
+    color: white;
+  }
+}
+.issue-detail-card .el-switch__label.is-active {
+  color: white;
+}
+
+.el-picker-panel {
+  color: rgba(0, 0, 0, 0.8);
+  .el-date-picker__header-label,
+  .el-date-table th,
+  .el-month-table td .cell,
+  .el-year-table td .cell {
+    color: rgba(0, 0, 0, 0.8);
+    &:hover {
+      color: $color-primary;
+    }
+  }
+  .el-time-spinner__item {
+    color: rgba(0, 0, 0, 0.6);
+    &.active:not(.disabled) {
+      color: rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  .el-input__inner {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+.el-date-table td.next-month,
+.el-date-table td.prev-month {
+  color: rgba(0, 0, 0, 0.35);
 }

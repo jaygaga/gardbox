@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { get, isEmpty } from 'lodash';
 import Codec from '@/utils/webc/util/codec';
-import webc from '@/utils/webc';
+import webc from '@/utils/webc.js';
 import ajax from '@/utils/ajax.js';
 
 import gardLogo from '@/assets/gard-logo.svg';
@@ -38,12 +38,18 @@ export const getViewToken = (coin, tokenMap) => {
   return token;
 };
 
-export const getCurrentAddress = ({ mathAccount, keyStore }) => {
-  if (!isEmpty(mathAccount)) {
-    return get(mathAccount, 'account');
-  } else {
-    return get(keyStore, 'address');
+export const getStringLength = val => {
+  const str = new String(val);
+  let bytesCount = 0;
+  for (let i = 0, n = str.length; i < n; i++) {
+    let c = str.charCodeAt(i);
+    if ((c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f)) {
+      bytesCount += 1;
+    } else {
+      bytesCount += 2;
+    }
   }
+  return bytesCount;
 };
 
 export const sendTx = async function(context, pass, type, msg, msgs) {
@@ -51,7 +57,7 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
     account: { keyStore, mathAccount },
     transactions: { nodeInfo }
   } = context.rootState;
-  const from = getCurrentAddress(context.rootState.account);
+  const from = context.rootGetters['account/currentAddress'];
   // 1. get account state (account_number & sequence)
   let accState = {
     account_number: '0',
@@ -82,7 +88,7 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
       req = stdTx.GetData();
     } catch (e) {
       console.log(e);
-      if (e.code === 1000010) {
+      if (e.code === 1000010 || e.code === 100003) {
         return Promise.resolve({ data: 'reject' });
       }
     }
@@ -101,11 +107,6 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
   }
   // 3. post to lcd api
   const res = await ajax.post(`/txs`, req);
-  // 4. get block info when tx success
-  if (res.data) {
-    const blockData = await context.dispatch('transactions/fetchBlock', res.data.height, { root: true });
-    res.data.block = blockData.block;
-  }
   return Promise.resolve(res);
 };
 const getTxPara = (from, type, accState, nodeInfo, msg, msgs) => {

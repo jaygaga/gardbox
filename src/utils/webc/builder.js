@@ -99,7 +99,7 @@ class Request {
         if (sequence < 0) {
             throw new Error('sequence is empty');
         }
-        if (Utils.isEmpty(fees)) {
+        if (!fees) {
             throw new Error('fees is empty');
         }
         if (Utils.isEmpty(type)) {

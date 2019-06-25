@@ -6,7 +6,7 @@
     <s-item :label="$t('send.fee')">{{form.fee}} GARD</s-item>
     <s-item :label="$t('send.txHash')">{{get(result, 'txhash')}}</s-item>
     <s-item :label="$t('send.block')">{{get(result, 'height')}}</s-item>
-    <s-item :label="$t('send.time')">{{get(result, 'block.header.time') | formatTime}}</s-item>
+    <s-item :label="$t('send.time')">{{get(result, 'timestamp') | formatTime}}</s-item>
 
     <div class="btns">
       <router-link
