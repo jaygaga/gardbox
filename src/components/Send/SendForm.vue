@@ -146,7 +146,7 @@ export default {
       });
     },
     selectedBalance() {
-      const gard = { amount: "0", denom: "agard" };
+      const gard = { amount: "0", denom: "agard", label: "GARD" };
       return this.viewBalance.find(i => i.denom === this.form.denom) || gard;
     }
   },
@@ -163,8 +163,15 @@ export default {
       });
     }
   },
-  mounted() {
-    this.$store.dispatch("account/fetchBalance");
+  mounted: async function() {
+    const balance = await this.$store.dispatch("account/fetchBalance");
+    if (isEmpty(balance)) {
+      this.form.denom = "";
+    } else {
+      if (!balance.find(i => i.denom === this.form.denom)) {
+        this.form.denom = balance[0].denom;
+      }
+    }
   }
 };
 </script>
