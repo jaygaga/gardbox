@@ -14,7 +14,7 @@
       <s-item :label="$t('send.fee')">{{get(tx, 'tx.value.fee.amount.0.amount') || '0'}} GARD</s-item>
       <s-item :label="$t('send.txHash')">{{get(tx, 'txhash')}}</s-item>
       <s-item :label="$t('send.block')">{{get(tx, 'height')}}</s-item>
-      <s-item :label="$t('send.time')">{{get(blocks, `${get(tx, 'height')}.block.header.time`) | formatTime}}</s-item>
+      <s-item :label="$t('send.time')">{{get(tx, `timestamp`) | formatTime}}</s-item>
     </s-card>
   </s-page>
 </template>
@@ -28,7 +28,7 @@ import { getViewToken } from "@/utils/helpers";
 export default {
   name: "TxInfo",
   computed: {
-    ...mapState("transactions", ["blocks", "txInfo"]),
+    ...mapState("transactions", ["txInfo"]),
     ...mapState("account", ["tokenMap"]),
     tx() {
       return this.txInfo[this.$route.params.id];

@@ -2,7 +2,7 @@
   <div class="item-content">
     <div>
       <div class="name"><img :src="icon" />{{user}}</div>
-      <p>{{userMap[user].address}}</p>
+      <p>{{userMap[user].address | gardAddr}}</p>
     </div>
 
     <el-dropdown @command="v => handleCommand(user, v)">
@@ -15,6 +15,7 @@
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="edit">{{$t('passport.edit')}}</el-dropdown-item>
         <el-dropdown-item command="backup">{{$t('passport.backup')}}</el-dropdown-item>
+        <el-dropdown-item command="privateKey">{{$t('passport.privateKey')}}</el-dropdown-item>
         <el-dropdown-item
           command="delete"
           class="btn-delete"
@@ -64,6 +65,7 @@ export default {
       const cmds = {
         edit: this.edit,
         backup: this.backup,
+        privateKey: this.privateKey,
         delete: this.delete
       };
       cmds[cmd](user);
@@ -119,6 +121,45 @@ export default {
             })
             .then(key => {
               this.dialogVisible = true;
+            })
+            .catch(e => {
+              console.log(e);
+              this.$message.error(
+                `${this.$t("create.pass")} ${this.$t("global.error")}`
+              );
+            });
+        })
+        .catch(() => {});
+    },
+    privateKey(user) {
+      this.$prompt(
+        this.$t("create.pass"),
+        `${this.$t("passport.privateKey")} ${user}`,
+        {
+          confirmButtonText: this.$t("global.ok"),
+          cancelButtonText: this.$t("global.cancel"),
+          inputType: "password",
+          inputValidator: v =>
+            v.trim().length > 0
+              ? true
+              : this.$t("global.required", { name: this.$t("create.pass") })
+        }
+      )
+        .then(({ value }) => {
+          this.$store
+            .dispatch("account/backup", {
+              user,
+              pass: value
+            })
+            .then(acc => {
+              this.$copyText(acc.privateKey).then(
+                e => {
+                  this.onCopy();
+                },
+                e => {
+                  console.log(e);
+                }
+              );
             })
             .catch(e => {
               console.log(e);

@@ -14,7 +14,6 @@
       :title="$t('create.pass')"
       :visible.sync="dialogVisible"
       width="360px"
-      v-loading="loading"
       :close-on-click-modal="false"
     >
       <el-input
@@ -36,19 +35,18 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import BigNumber from "bignumber.js";
-import { get } from "lodash";
+import { get, isEmpty } from "lodash";
 
 export default {
   name: "Confirm",
   data() {
     return {
       dialogVisible: false,
-      loading: false,
       pass: ""
     };
   },
   computed: {
-    ...mapState("account", ["tokenMap"]),
+    ...mapState("account", ["tokenMap", "mathAccount"]),
     ...mapState("transactions", ["form"]),
     token() {
       const { denom } = this.form;
@@ -69,11 +67,17 @@ export default {
   },
   methods: {
     onSubmit: async function() {
+      // use math wallet
+      if (!isEmpty(this.mathAccount)) {
+        this.onSend(true);
+        return;
+      }
+      // else use local wallet
       this.pass = "";
       this.dialogVisible = true;
     },
-    onSend: async function() {
-      if (!this.pass) {
+    onSend: async function(useMathWallet) {
+      if (!useMathWallet && !this.pass) {
         this.$message({
           type: "error",
           message: $t("global.required", { name: $t("create.pass") }),
@@ -81,7 +85,12 @@ export default {
         });
         return false;
       }
-      this.loading = true;
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)"
+      });
       const params = { ...this.form, pass: this.pass };
       // fix token amount by token decimals
       if (this.token) {
@@ -117,7 +126,7 @@ export default {
           center: true
         });
       }
-      this.loading = false;
+      loading.close();
     }
   },
   beforeMount() {

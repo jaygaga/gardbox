@@ -292,6 +292,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     padding: $padding-basic 0;
+    margin: 0 -1%;
   }
 }
 @include responsive($sm) {

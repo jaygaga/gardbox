@@ -10,7 +10,7 @@
       <div class="txhash">
         <div class="ellipsis">{{item.txhash}}</div>
         <div>
-          {{ get(blocks, [item.height, 'block', 'header', 'time']) | formatTime }}
+          {{ get(item, 'timestamp') | formatTime }}
         </div>
       </div>
       <div :class="`amount ${get(item, 'tags.0.value')}`">
@@ -56,7 +56,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("account", ["blocks", "tokenMap"])
+    ...mapState("account", ["tokenMap"])
   },
   watch: {
     list: function() {
@@ -64,10 +64,7 @@ export default {
         return false;
       }
       this.list.forEach(item => {
-        // 1. fetch block detail for tx time
-        this.$store.dispatch("transactions/fetchBlock", get(item, "height"));
-
-        // 2. fetch token detail
+        // fetch token detail
         const coins = get(item, "tx.value.msg.0.value.amount");
         coins.forEach(i => {
           if (i.denom.match(/^coin.{10}$/)) {

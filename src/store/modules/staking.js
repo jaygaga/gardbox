@@ -64,7 +64,7 @@ export default {
 
   actions: {
     fetchDelegations: async function(context) {
-      const { address } = context.rootState.account.keyStore;
+      const address = context.rootGetters['account/currentAddress'];
       const { data } = await ajax.get(`/staking/delegators/${address}/delegations`);
       if (!isEmpty(data)) {
         context.commit('setDelegations', data);
@@ -75,7 +75,7 @@ export default {
       return Promise.resolve(data);
     },
     fetchDelegation: async function(context, validator_addr) {
-      const { address } = context.rootState.account.keyStore;
+      const address = context.rootGetters['account/currentAddress'];
       const { data } = await ajax.get(`/staking/delegators/${address}/delegations/${validator_addr}`);
       if (!isEmpty(data)) {
         context.commit('setDelegationMap', { [validator_addr]: data });
@@ -83,7 +83,7 @@ export default {
       return Promise.resolve(data);
     },
     fetchRewards: async function(context) {
-      const { address } = context.rootState.account.keyStore;
+      const address = context.rootGetters['account/currentAddress'];
       const { data } = await ajax.get(`/distribution/delegators/${address}/rewards`);
       if (!isEmpty(data)) {
         context.commit('setRewards', data);
@@ -94,7 +94,7 @@ export default {
       return Promise.resolve(data);
     },
     fetchReward: async function(context, validator_addr) {
-      const { address } = context.rootState.account.keyStore;
+      const address = context.rootGetters['account/currentAddress'];
       const { data } = await ajax.get(`/distribution/delegators/${address}/rewards/${validator_addr}`);
       if (!isEmpty(data)) {
         context.commit('setRewardMap', { [validator_addr]: data });
@@ -102,7 +102,7 @@ export default {
       return Promise.resolve(data);
     },
     fetchUnbindings: async function(context) {
-      const { address } = context.rootState.account.keyStore;
+      const address = context.rootGetters['account/currentAddress'];
       const { data } = await ajax.get(`/staking/delegators/${address}/unbonding_delegations`);
       if (!isEmpty(data)) {
         context.commit('setUnbindings', data);
@@ -113,7 +113,7 @@ export default {
       return Promise.resolve(data);
     },
     fetchUnbinding: async function(context, validator_addr) {
-      const { address } = context.rootState.account.keyStore;
+      const address = context.rootGetters['account/currentAddress'];
       const { data } = await ajax.get(`/staking/delegators/${address}/unbonding_delegations/${validator_addr}`);
       if (!isEmpty(data)) {
         context.commit('setUnbindingMap', { [validator_addr]: data });

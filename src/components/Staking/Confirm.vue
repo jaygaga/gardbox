@@ -24,7 +24,6 @@
       :title="$t('create.pass')"
       :visible.sync="dialogVisible"
       width="360px"
-      v-loading="loading"
       :close-on-click-modal="false"
     >
       <el-input
@@ -50,11 +49,11 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      loading: false,
       pass: ""
     };
   },
   computed: {
+    ...mapState("account", ["mathAccount"]),
     ...mapState("staking", ["form", "toValidator", "fromValidator"])
   },
   methods: {
@@ -62,10 +61,16 @@ export default {
     isEmpty,
     numeral,
     onSubmit: async function() {
+      // use math wallet
+      if (!isEmpty(this.mathAccount)) {
+        this.onSend(true);
+        return;
+      }
+      // else use local wallet
       this.dialogVisible = true;
     },
-    onSend: async function() {
-      if (!this.pass) {
+    onSend: async function(useMathWallet) {
+      if (!useMathWallet && !this.pass) {
         this.$message({
           type: "error",
           message: $t("global.required", { name: $t("create.pass") }),
@@ -73,7 +78,12 @@ export default {
         });
         return false;
       }
-      this.loading = true;
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)"
+      });
       let res = "";
       try {
         res = await this.$store.dispatch(
@@ -91,6 +101,13 @@ export default {
       }
       if (res.txhash) {
         this.dialogVisible = false;
+        this.$message({
+          type: "success",
+          message: this.$t("global.success", {
+            name: this.$route.query.action
+          }),
+          center: true
+        });
         if (this.$route.query.action === "unbind") {
           this.$router.push(
             `/staking/detail/${this.fromValidator.operator_address}`
@@ -107,7 +124,7 @@ export default {
           center: true
         });
       }
-      this.loading = false;
+      loading.close();
     }
   },
   beforeMount() {

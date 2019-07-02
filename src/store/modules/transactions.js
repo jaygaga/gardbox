@@ -10,7 +10,6 @@ export default {
     loading: false,
     nodeInfo: {},
     txs: [],
-    blocks: {},
     txInfo: {},
     form: {
       denom: 'agard',
@@ -30,9 +29,6 @@ export default {
     },
     setTxList: function(state, txs) {
       state.txs = txs;
-    },
-    setBlocks: function(state, data) {
-      state.blocks = Object.assign({}, data, state.blocks);
     },
     setTxInfo: function(state, txInfo) {
       state.txInfo = Object.assign({}, txInfo, state.txInfo);
@@ -80,7 +76,7 @@ export default {
     },
     fetchTxs: async function(context, keyStore) {
       const limit = 10;
-      const { address } = keyStore;
+      const address = context.rootGetters['account/currentAddress'];
       const params = {
         limit,
         action: 'send',
@@ -107,16 +103,6 @@ export default {
       context.commit('setLoading', false);
       return Promise.resolve(list);
     },
-    fetchBlock: async function(context, height) {
-      if (!isEmpty(context.state.blocks[height])) {
-        return Promise.resolve(context.state.blocks[height]);
-      }
-      const { data } = await ajax.get(`/blocks/${height}`);
-      if (!isEmpty(data)) {
-        context.commit('setBlocks', { [height]: data });
-      }
-      return Promise.resolve(data);
-    },
     fetchTxInfo: async function(context, txhash) {
       if (!isEmpty(context.state.txInfo[txhash])) {
         return Promise.resolve(context.state.txInfo[txhash]);
@@ -124,9 +110,6 @@ export default {
       const { data } = await ajax.get(`/txs/${txhash}`);
       if (!isEmpty(data)) {
         context.commit('setTxInfo', { [txhash]: data });
-        if (!context.state.blocks[data.height]) {
-          context.dispatch('fetchBlock', data.height);
-        }
       }
       return Promise.resolve(data);
     },

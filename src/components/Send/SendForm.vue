@@ -34,7 +34,7 @@
         ></el-input>
       </el-form-item>
       <div class="row-balance">
-        Balance: {{ selectedBalance.amount | formatNumber }}
+        {{ $t('send.balance') }}: {{ selectedBalance.amount | formatNumber }}
         <a @click="setAmountAll">{{$t('send.all')}}</a>
       </div>
       <el-form-item prop="amount">
@@ -119,7 +119,10 @@ export default {
     ...mapState("account", ["balance", "tokenMap"]),
     ...mapState("transactions", ["form"]),
     viewBalance() {
-      return this.balance.map(i => {
+      const coins = this.balance.filter(
+        i => !i.denom.match(/^box.{11}$/) && !i.denom.match(/^box.{13}$/)
+      );
+      return coins.map(i => {
         const token = { ...i };
         if (token.denom.match(/^coin.{10}$/)) {
           const detail = this.tokenMap[token.denom];
@@ -143,7 +146,7 @@ export default {
       });
     },
     selectedBalance() {
-      const gard = { amount: "0", denom: "agard" };
+      const gard = { amount: "0", denom: "agard", label: "GARD" };
       return this.viewBalance.find(i => i.denom === this.form.denom) || gard;
     }
   },
@@ -160,8 +163,15 @@ export default {
       });
     }
   },
-  mounted() {
-    this.$store.dispatch("account/fetchBalance");
+  mounted: async function() {
+    const balance = await this.$store.dispatch("account/fetchBalance");
+    if (isEmpty(balance)) {
+      this.form.denom = "";
+    } else {
+      if (!balance.find(i => i.denom === this.form.denom)) {
+        this.form.denom = balance[0].denom;
+      }
+    }
   }
 };
 </script>

@@ -1,5 +1,8 @@
 <template>
-  <s-page class="staking-container">
+  <s-page
+    :link="link"
+    class="staking-container"
+  >
     <router-view />
   </s-page>
 </template>
@@ -7,6 +10,13 @@
 <script>
 export default {
   name: "Staking",
+  computed: {
+    link() {
+      return this.$route.path.match("/staking/detail")
+        ? "/staking?tab=delegations"
+        : null;
+    }
+  },
   beforeDestroy() {
     this.$store.dispatch("staking/setToValidator", {});
     this.$store.dispatch("staking/setFromValidator", {});
