@@ -31,7 +31,7 @@
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="switchWallet">{{$t('passport.switchWallet')}}</el-dropdown-item>
-              <el-dropdown-item command="logOut" style="color: red;">{{$t('passport.logout')}}</el-dropdown-item>
+              <el-dropdown-item command="logout" style="color: red;">{{$t('passport.logout')}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -100,7 +100,6 @@ import AccountSelect from "@/components/AccountSelect";
 
 import icon1 from "@/assets/icon-create.svg";
 import icon2 from "@/assets/icon-import.svg";
-import { async } from 'q';
 
 export default {
   components: { AccountSelect },
@@ -139,8 +138,8 @@ export default {
     },
     clickMathAction (val) {
       switch (val) {
-        case 'logOut':
-          this.logOut()
+        case 'logout':
+          this.logout()
           break;
         case 'switchWallet':
           this.switchWallet()
@@ -148,7 +147,7 @@ export default {
 
       }
     },
-    logOut: async function() {
+    logout: async function() {
       await this.$store.dispatch("account/change", this.nameList[0]);
       // logout mathwallet
       this.$store.dispatch('account/resetMathIdentity')
@@ -156,7 +155,6 @@ export default {
     },
     switchWallet: async function() {
       const res = await this.$store.dispatch('account/resetMathIdentity')
-      console.log(res)
       if (res) {
         const response = await this.$store.dispatch('account/getMathIdentity')
         if (!isEmpty(response)) {
