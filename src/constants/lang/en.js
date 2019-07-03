@@ -59,7 +59,8 @@ const en = {
     recover: 'Import Wallet',
     recoverBreif: 'Recover your wallet in this browser if you already have one from other place.',
     math: 'Math Wallet',
-    useMath: 'Use Math Wallet'
+    useMath: 'Use Math Wallet',
+    switchWallet: 'Switch Wallet'
   },
   create: {
     warn1: 'Your password allows you to access and transfer your funds. Keep it safe!!!',

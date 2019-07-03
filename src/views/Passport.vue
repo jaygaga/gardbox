@@ -4,24 +4,37 @@
       <div
         v-if="mathPlugin && !isEmpty(mathAccount)"
         @click="loginMath"
-        class="user-item math is-checked"
+        class="user-item math math1 is-checked"
       >
-        <div class="math-top">
-          <div class="math-logo">
-            <img
-              v-if="$i18n.locale === 'zh'"
-              :src="`https://medishares-cn.oss-cn-hangzhou.aliyuncs.com/mathwallet/images/mathlabs/wallet_cn_logo_white.png`"
-              style="height: 28px;"
-            >
-            <img
-              v-else
-              :src="`https://medishares-cn.oss-cn-hangzhou.aliyuncs.com/mathwallet/images/mathlabs/wallet_en_logo_white.png`"
-              style="height: 28px;"
-            >
+        <div class="math-container">
+          <div class="math-top">
+            <div class="math-logo">
+              <img
+                v-if="$i18n.locale === 'zh'"
+                :src="`https://medishares-cn.oss-cn-hangzhou.aliyuncs.com/mathwallet/images/mathlabs/wallet_cn_logo_white.png`"
+                style="height: 28px;"
+              >
+              <img
+                v-else
+                :src="`https://medishares-cn.oss-cn-hangzhou.aliyuncs.com/mathwallet/images/mathlabs/wallet_en_logo_white.png`"
+                style="height: 28px;"
+              >
+            </div>
+            <span>{{ $t('passport.math') }}</span>
           </div>
-          <span>{{ $t('passport.math') }}</span>
+          <p>{{ mathAccount.account | gardAddr }}</p>
         </div>
-        <p>{{ mathAccount.account | gardAddr }}</p>
+        <div class="dropdown-div">
+          <el-dropdown @command="clickMathAction">
+            <span class="el-dropdown-link">
+              <i class="el-icon-more" style="font-size:24px;"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="switchWallet">{{$t('passport.switchWallet')}}</el-dropdown-item>
+              <el-dropdown-item command="logout" style="color: red;">{{$t('passport.logout')}}</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
       </div>
       <div
         v-for="user in nameList"
@@ -123,12 +136,31 @@ export default {
         this.$router.push("main?tab=assets");
       }
     },
-    logoutMath: async function() {
-      const network = {
-        blockchain: "cosmos",
-        chainId: "cosmoshub-2"
-      };
-      window.mathExtension.forgetIdentity();
+    clickMathAction (val) {
+      switch (val) {
+        case 'logout':
+          this.logout()
+          break;
+        case 'switchWallet':
+          this.switchWallet()
+          break;
+
+      }
+    },
+    logout: async function() {
+      await this.$store.dispatch("account/change", this.nameList[0]);
+      // logout mathwallet
+      this.$store.dispatch('account/resetMathIdentity')
+      // this.$router.push("main?tab=assets");
+    },
+    switchWallet: async function() {
+      const res = await this.$store.dispatch('account/resetMathIdentity')
+      if (res) {
+        const response = await this.$store.dispatch('account/getMathIdentity')
+        if (!isEmpty(response)) {
+          this.$router.push("main?tab=assets");
+        }
+      }
     }
   }
 };
@@ -154,7 +186,6 @@ export default {
       &:hover {
         background: rgba(250, 250, 255, 0.4);
       }
-
       &.math {
         display: block;
         .math-top {
@@ -172,6 +203,10 @@ export default {
         p {
           margin-top: 2px;
         }
+      }
+      &.math1 {
+        display: flex;
+        justify-content: space-between;
       }
     }
   }
