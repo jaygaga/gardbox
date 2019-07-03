@@ -55,7 +55,8 @@ const zh = {
     recover: '导入钱包',
     recoverBreif: '使用私钥或助记词恢复来恢复 GARD 钱包。',
     math: '麦子钱包',
-    useMath: '使用麦子钱包'
+    useMath: '使用麦子钱包',
+    switchWallet: '切换钱包'
   },
   create: {
     warn1: '请认真保存当前账户密码，该密码用于操作您钱包的资产，如转账等。',

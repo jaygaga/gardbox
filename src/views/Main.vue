@@ -158,6 +158,9 @@ export default {
       return this.balance.filter(
         i => !i.denom.match(/^box.{11}$/) && !i.denom.match(/^box.{13}$/)
       );
+    },
+    mathPlugin() {
+      return !isEmpty(window.mathExtension);
     }
   },
   methods: {
