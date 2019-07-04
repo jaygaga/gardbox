@@ -134,7 +134,7 @@ export default {
       return getViewToken({ denom: "agard", amount: res.toFixed() });
     },
     reward() {
-      return this.rewards.find(i => i.denom === "gard") || {};
+      return getViewToken(this.rewards[0] || {})
     },
     viewDelegations() {
       return this.delegations.map(i => {
