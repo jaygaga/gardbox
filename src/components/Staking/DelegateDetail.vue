@@ -58,9 +58,9 @@
     >
       <s-item
         v-if="!isEmpty(v.delegation)"
-        :label="$t('staking.unpaidIncome')"
+        :label="$t('staking.unpaidReward')"
         class="item"
-      >{{numeral(unpaidIncome.amount).format('0,0.[0000]')}}</s-item>
+      >{{numeral(reward.amount).format('0,0.[0000]')}}</s-item>
       <s-item
         v-if="!isEmpty(v.delegation)"
         :label="$t('staking.delegated')"
@@ -110,13 +110,13 @@ import { getViewToken } from "@/utils/helpers";
 
 export default {
   name: "ValidatorList",
-  data() {
-    return {
-      unpaidIncome: ''
-    }
-  },
   computed: {
-    ...mapState("staking", ["validatorMap", "delegationMap", "unbindingMap"]),
+    ...mapState("staking", [
+      "validatorMap",
+      "delegationMap",
+      "unbindingMap",
+      "rewardMap"
+    ]),
     v() {
       const address = this.$route.params.validator;
       const validator = get(this.validatorMap, address) || {};
@@ -143,9 +143,17 @@ export default {
     myDelegation() {
       const t = {
         denom: "agard",
-        amount: this.v.tokens * get(this.delegationMap, [this.v.operator_address, "shares"]) / this.v.delegator_shares
+        amount:
+          (this.v.tokens *
+            get(this.delegationMap, [this.v.operator_address, "shares"])) /
+          this.v.delegator_shares
       };
       return getViewToken(t);
+    },
+    reward() {
+      return getViewToken(
+        get(this.rewardMap, [this.$route.params.validator, 0])
+      );
     }
   },
   methods: {
@@ -164,10 +172,6 @@ export default {
     toRedelegate() {
       const { validator } = this.$route.params;
       this.$router.push(`/staking/redelegate?from=${validator}`);
-    },
-    getUnpaidIncome: async function(validator) {
-      var data = await this.$store.dispatch("staking/fetchReward", validator)
-      this.unpaidIncome = getViewToken(data[0])
     }
   },
   mounted() {
@@ -180,7 +184,7 @@ export default {
     // so we fetch list api
     this.$store.dispatch("staking/fetchDelegations");
     this.$store.dispatch("staking/fetchUnbindings");
-    this.getUnpaidIncome(validator)
+    this.$store.dispatch("staking/fetchReward", validator);
   }
 };
 </script>

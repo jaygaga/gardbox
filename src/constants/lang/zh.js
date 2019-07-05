@@ -155,7 +155,7 @@ const zh = {
     redelegateAll: '转移全部',
     unbinding: '解锁中',
     delegated: '已委托',
-    unpaidIncome: '未领取收益'
+    unpaidReward: '未领取收益'
   },
   issue: {
     tokens: '我发行的Token',
