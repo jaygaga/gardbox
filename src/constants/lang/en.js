@@ -159,7 +159,8 @@ const en = {
     redelegate: 'Redelegate',
     redelegateAll: 'Redelegate All',
     unbinding: 'Unbindings',
-    delegated: 'Delegated'
+    delegated: 'Delegated',
+    unpaidIncome: 'Unpaid Income'
   },
   issue: {
     tokens: 'My Token Issuances',

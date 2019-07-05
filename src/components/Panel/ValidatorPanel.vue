@@ -14,8 +14,8 @@
     <p><span>{{ $t('staking.address') }}</span>{{ v.operator_address | gardAddr }}</p>
     <p><span>{{ $t('staking.tokens') }}</span>{{ viewToken.amount | formatNumber }} GARD</p>
     <p><span>{{ $t('staking.commission') }}</span>{{ numeral(get(v, 'commission.rate')).format('(0.[00]%)') }}</p>
-    <p><span>{{ $t('staking.max') }}</span>{{ numeral(get(v, 'commission.max_rate')).format('(0.[00]%)') }}</p>
-
+    <!-- <p><span>{{ $t('staking.max') }}</span>{{ numeral(get(v, 'commission.max_rate')).format('(0.[00]%)') }}</p> -->
+    <p v-if="get(delegation, 'shares')"><span>{{ $t('staking.unpaidIncome') }}</span>{{numeral(unpaidIncome.amount).format('0,0.[0000]')}}</p>
     <p v-if="get(delegation, 'shares')">
       <span>{{ $t('staking.delegations') }}</span>
       {{ numeral(getViewToken({denom: 'agard', amount: get(delegation, 'shares')}).amount).format('0,0') }} GARD
@@ -28,15 +28,20 @@ import { mapState } from "vuex";
 import numeral from "numeral";
 import { get, isEmpty } from "lodash";
 import { getViewToken } from "@/utils/helpers";
-
 export default {
   name: "ValidatorPanel",
+  data() {
+    return {
+      unpaidIncome: ''
+    }
+  },
   props: {
     delegation: Object,
     v: { type: Object, required: true }
   },
   computed: {
     ...mapState("account", ["tokenMap"]),
+    ...mapState("staking", ["rewardMap"]),
     viewToken() {
       const token = { denom: "agard", amount: this.v.tokens };
       return getViewToken(token, this.tokenMap);
@@ -45,7 +50,14 @@ export default {
   methods: {
     get,
     numeral,
-    getViewToken
+    getViewToken,
+    getUnpaidIncome: async function() {
+      var data = await this.$store.dispatch("staking/fetchReward", this.delegation.validator_address)
+      this.unpaidIncome = getViewToken(data[0])
+    }
+  },
+  mounted() {
+    this.getUnpaidIncome()
   }
 };
 </script>
