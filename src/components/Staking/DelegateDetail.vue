@@ -107,7 +107,7 @@ import { mapState, mapGetters } from "vuex";
 import numeral from "numeral";
 import { get, isEmpty } from "lodash";
 import { getViewToken } from "@/utils/helpers";
-
+import BigNumber from "bignumber";
 export default {
   name: "ValidatorList",
   computed: {
@@ -143,10 +143,9 @@ export default {
     myDelegation() {
       const t = {
         denom: "agard",
-        amount:
-          (this.v.tokens *
-            get(this.delegationMap, [this.v.operator_address, "shares"])) /
-          this.v.delegator_shares
+        amount: BigNumber(this.v.tokens)
+          .times(get(this.delegationMap, [this.v.operator_address, "shares"]))
+          .dividedBy(this.v.delegator_shares)
       };
       return getViewToken(t);
     },
@@ -184,7 +183,9 @@ export default {
     // so we fetch list api
     this.$store.dispatch("staking/fetchDelegations");
     this.$store.dispatch("staking/fetchUnbindings");
-    this.$store.dispatch("staking/fetchReward", validator);
+    if (this.isDelegating) {
+      this.$store.dispatch("staking/fetchReward", validator);
+    }
   }
 };
 </script>

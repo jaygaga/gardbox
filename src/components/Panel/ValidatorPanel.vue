@@ -27,6 +27,7 @@ import { mapState } from "vuex";
 import numeral from "numeral";
 import { get, isEmpty } from "lodash";
 import { getViewToken } from "@/utils/helpers";
+import BigNumber from "bignumber.js";
 export default {
   name: "ValidatorPanel",
   props: {
@@ -50,7 +51,10 @@ export default {
       // myShares
       const myShares = get(this.delegation, "shares");
       // myToken/myGard
-      const myToken = (this.v.tokens * myShares) / this.v.delegator_shares;
+      const myToken = BigNumber(this.v.tokens)
+        .times(myShares)
+        .dividedBy(this.v.delegator_shares)
+        .toString();
       return getViewToken({ denom: "agard", amount: myToken }).amount;
     }
   },

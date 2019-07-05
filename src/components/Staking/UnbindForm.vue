@@ -42,17 +42,15 @@
 import { mapState, mapGetters } from "vuex";
 import BigNumber from "bignumber.js";
 import { get, isEmpty } from "lodash";
-
 import { getViewToken } from "@/utils/helpers";
 import webc from "@/utils/webc";
-
 export default {
   name: "UnbindForm",
   data() {
     const requireError = name =>
       new Error(this.$t("global.required", { name }));
     const validateAmount = (rule, value, callback) => {
-      if (!value || value.trim() === "") {
+      if (!value || value.toString().trim() === "") {
         callback(requireError(this.$t("send.amount")));
         return;
       }
@@ -86,11 +84,31 @@ export default {
     ...mapState("staking", [
       "validatorMap",
       "delegationMap",
+      "unbindingMap",
       "form",
       "fromValidator"
     ]),
+    v() {
+      const address = this.$route.query.from;
+      const validator = get(this.validatorMap, address) || {};
+      const unbinding = get(this.unbindingMap, address);
+      const unbindingList = [];
+      if (!isEmpty(unbinding)) {
+        unbinding.entries.forEach(i => {
+          unbindingList[unbindingList.length] = i;
+        });
+      }
+      return {
+        ...validator,
+        delegation: get(this.delegationMap, address),
+        unbinding: unbindingList
+      };
+    },
     viewBalance() {
-      const total = get(this.delegationMap, [this.$route.query.from, "shares"]);
+      console.log(this.$route.query.from);
+      const total = BigNumber(this.v.tokens)
+        .times(get(this.delegationMap, [this.$route.query.from, "shares"]))
+        .dividedBy(this.v.delegator_shares);
       const gard = { denom: "agard", amount: total || "0" };
       return getViewToken(gard);
     }

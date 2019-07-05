@@ -27,11 +27,17 @@
         <div class="dropdown-div">
           <el-dropdown @command="clickMathAction">
             <span class="el-dropdown-link">
-              <i class="el-icon-more" style="font-size:24px;"></i>
+              <i
+                class="el-icon-more"
+                style="font-size:24px;"
+              ></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="switchWallet">{{$t('passport.switchWallet')}}</el-dropdown-item>
-              <el-dropdown-item command="logout" style="color: red;">{{$t('passport.logout')}}</el-dropdown-item>
+              <el-dropdown-item
+                command="logout"
+                style="color: red;"
+              >{{$t('passport.logout')}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -136,27 +142,24 @@ export default {
         this.$router.push("main?tab=assets");
       }
     },
-    clickMathAction (val) {
+    clickMathAction(val) {
       switch (val) {
-        case 'logout':
-          this.logout()
+        case "logout":
+          this.logout();
           break;
-        case 'switchWallet':
-          this.switchWallet()
+        case "switchWallet":
+          this.switchWallet();
           break;
-
       }
     },
-    logout: async function() {
-      await this.$store.dispatch("account/change", this.nameList[0]);
-      // logout mathwallet
-      this.$store.dispatch('account/resetMathIdentity')
-      // this.$router.push("main?tab=assets");
+    logout() {
+      this.$store.dispatch("account/change", this.nameList[0]);
+      this.$store.dispatch("account/resetMathIdentity");
     },
     switchWallet: async function() {
-      const res = await this.$store.dispatch('account/resetMathIdentity')
+      const res = await this.$store.dispatch("account/resetMathIdentity");
       if (res) {
-        const response = await this.$store.dispatch('account/getMathIdentity')
+        const response = await this.$store.dispatch("account/getMathIdentity");
         if (!isEmpty(response)) {
           this.$router.push("main?tab=assets");
         }
