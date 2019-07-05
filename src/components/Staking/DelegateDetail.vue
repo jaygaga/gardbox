@@ -143,7 +143,7 @@ export default {
     myDelegation() {
       const t = {
         denom: "agard",
-        amount: get(this.delegationMap, [this.v.operator_address, "shares"])
+        amount: this.v.tokens * get(this.delegationMap, [this.v.operator_address, "shares"]) / this.v.delegator_shares
       };
       return getViewToken(t);
     }

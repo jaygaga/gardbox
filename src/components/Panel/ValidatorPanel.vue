@@ -18,7 +18,8 @@
     <p v-if="get(delegation, 'shares')"><span>{{ $t('staking.unpaidIncome') }}</span>{{numeral(unpaidIncome.amount).format('0,0.[0000]')}}</p>
     <p v-if="get(delegation, 'shares')">
       <span>{{ $t('staking.delegations') }}</span>
-      {{ numeral(getViewToken({denom: 'agard', amount: get(delegation, 'shares')}).amount).format('0,0') }} GARD
+      <!-- {{ numeral(getViewToken({denom: 'agard', amount: get(delegation, 'shares')}).amount).format('0,0') }} GARD -->
+      {{myToken}} GARD
     </p>
   </router-link>
 </template>
@@ -32,7 +33,8 @@ export default {
   name: "ValidatorPanel",
   data() {
     return {
-      unpaidIncome: ''
+      unpaidIncome: '',
+      myToken:''
     }
   },
   props: {
@@ -53,6 +55,11 @@ export default {
     getViewToken,
     getUnpaidIncome: async function() {
       var data = await this.$store.dispatch("staking/fetchReward", this.delegation.validator_address)
+      // myShares
+      const myShares = get(this.delegation, 'shares')
+      // myToken/myGard
+      const myToken = this.v.tokens * myShares / this.v.delegator_shares
+      this.myToken = getViewToken({denom: 'agard', amount: myToken}).amount
       this.unpaidIncome = getViewToken(data[0])
     }
   },
