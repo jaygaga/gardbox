@@ -58,6 +58,11 @@
     >
       <s-item
         v-if="!isEmpty(v.delegation)"
+        :label="$t('staking.unpaidReward')"
+        class="item"
+      >{{numeral(reward.amount).format('0,0.[0000]')}}</s-item>
+      <s-item
+        v-if="!isEmpty(v.delegation)"
         :label="$t('staking.delegated')"
         class="item"
       >{{ numeral(myDelegation.amount).format('0,0') }} GARD</s-item>
@@ -106,7 +111,12 @@ import { getViewToken } from "@/utils/helpers";
 export default {
   name: "ValidatorList",
   computed: {
-    ...mapState("staking", ["validatorMap", "delegationMap", "unbindingMap"]),
+    ...mapState("staking", [
+      "validatorMap",
+      "delegationMap",
+      "unbindingMap",
+      "rewardMap"
+    ]),
     v() {
       const address = this.$route.params.validator;
       const validator = get(this.validatorMap, address) || {};
@@ -133,9 +143,17 @@ export default {
     myDelegation() {
       const t = {
         denom: "agard",
-        amount: get(this.delegationMap, [this.v.operator_address, "shares"])
+        amount:
+          (this.v.tokens *
+            get(this.delegationMap, [this.v.operator_address, "shares"])) /
+          this.v.delegator_shares
       };
       return getViewToken(t);
+    },
+    reward() {
+      return getViewToken(
+        get(this.rewardMap, [this.$route.params.validator, 0])
+      );
     }
   },
   methods: {
@@ -166,6 +184,7 @@ export default {
     // so we fetch list api
     this.$store.dispatch("staking/fetchDelegations");
     this.$store.dispatch("staking/fetchUnbindings");
+    this.$store.dispatch("staking/fetchReward", validator);
   }
 };
 </script>

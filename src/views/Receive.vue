@@ -7,7 +7,7 @@
         <h4>{{$t('send.address')}}</h4>
         <s-address
           class="addr"
-          :address="keyStore.address || ''"
+          :address="address || ''"
           :brightBackground="true"
         />
       </div>
@@ -22,11 +22,22 @@ import QRCode from "@/utils/qrcode";
 
 export default {
   name: "Receive",
+  data() {
+    return {
+      address: ""
+    }
+  },
   computed: {
-    ...mapState("account", ["keyStore"])
+    ...mapState("account", ["keyStore", "mathAccount"])
   },
   mounted() {
-    new QRCode(document.getElementById("qrcode"), this.keyStore.address);
+    if (isEmpty(this.keyStore)) {
+      new QRCode(document.getElementById("qrcode"), this.mathAccount.account);
+      this.address = this.mathAccount.account
+    } else {
+      new QRCode(document.getElementById("qrcode"), this.keyStore.address);
+      this.address = this.keyStore.address
+    }
   }
 };
 </script>

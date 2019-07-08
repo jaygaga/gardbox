@@ -14,11 +14,10 @@
     <p><span>{{ $t('staking.address') }}</span>{{ v.operator_address | gardAddr }}</p>
     <p><span>{{ $t('staking.tokens') }}</span>{{ viewToken.amount | formatNumber }} GARD</p>
     <p><span>{{ $t('staking.commission') }}</span>{{ numeral(get(v, 'commission.rate')).format('(0.[00]%)') }}</p>
-    <p><span>{{ $t('staking.max') }}</span>{{ numeral(get(v, 'commission.max_rate')).format('(0.[00]%)') }}</p>
-
+    <p v-if="get(delegation, 'shares')"><span>{{ $t('staking.unpaidReward') }}</span>{{numeral(reward.amount).format('0,0.[0000]')}}</p>
     <p v-if="get(delegation, 'shares')">
       <span>{{ $t('staking.delegations') }}</span>
-      {{ numeral(getViewToken({denom: 'agard', amount: get(delegation, 'shares')}).amount).format('0,0') }} GARD
+      {{myToken}} GARD
     </p>
   </router-link>
 </template>
@@ -28,7 +27,6 @@ import { mapState } from "vuex";
 import numeral from "numeral";
 import { get, isEmpty } from "lodash";
 import { getViewToken } from "@/utils/helpers";
-
 export default {
   name: "ValidatorPanel",
   props: {
@@ -37,15 +35,35 @@ export default {
   },
   computed: {
     ...mapState("account", ["tokenMap"]),
+    ...mapState("staking", ["rewardMap"]),
     viewToken() {
       const token = { denom: "agard", amount: this.v.tokens };
       return getViewToken(token, this.tokenMap);
+    },
+    reward() {
+      console.log(this.delegation);
+      return getViewToken(
+        get(this.rewardMap, [get(this.delegation, "validator_address"), 0])
+      );
+    },
+    myToken() {
+      // myShares
+      const myShares = get(this.delegation, "shares");
+      // myToken/myGard
+      const myToken = (this.v.tokens * myShares) / this.v.delegator_shares;
+      return getViewToken({ denom: "agard", amount: myToken }).amount;
     }
   },
   methods: {
     get,
     numeral,
     getViewToken
+  },
+  mounted() {
+    const validator = get(this.delegation, "validator_address");
+    if (!isEmpty(validator)) {
+      this.$store.dispatch("staking/fetchReward", validator);
+    }
   }
 };
 </script>

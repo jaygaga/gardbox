@@ -7,7 +7,10 @@ import ajax from '@/utils/ajax.js';
 import gardLogo from '@/assets/gard-logo.svg';
 
 export const getViewToken = (coin, tokenMap) => {
-  const token = { ...coin };
+  const token = { ...coin }
+  if (isEmpty(token)) {
+    return {}
+  }
   if (token.denom.match(/^coin.{10}$/)) {
     const detail = tokenMap[token.denom];
     if (!isEmpty(detail)) {
