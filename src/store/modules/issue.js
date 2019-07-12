@@ -1,8 +1,13 @@
 import BigNumber from 'bignumber.js';
-import { isEmpty, get } from 'lodash';
+import {
+  isEmpty,
+  get
+} from 'lodash';
 import Base64 from 'base64-node';
 import ajax from '@/utils/ajax.js';
-import { sendTx } from '@/utils/helpers';
+import {
+  sendTx
+} from '@/utils/helpers';
 
 export default {
   namespaced: true,
@@ -17,40 +22,52 @@ export default {
   getters: {},
 
   mutations: {
-    setTokens: function(state, data) {
+    setTokens: function (state, data) {
       state.tokens = data;
     },
-    setTokenMap: function(state, data) {
+    setTokenMap: function (state, data) {
       state.tokenMap = Object.assign({}, state.delegationMap, data);
     },
-    setTxList: function(state, txs) {
+    setTxList: function (state, txs) {
       state.txs = txs;
     },
-    setFreezeList: function(state, ls) {
+    setFreezeList: function (state, ls) {
       state.freezeList = ls;
     }
   },
 
   actions: {
-    fetchTokens: async function(context) {
+    fetchTokens: async function (context) {
       const address = context.rootGetters['account/currentAddress'];
-      const { data } = await ajax.get(`/issue/list?address=${address}`);
+      const {
+        data
+      } = await ajax.get(`/issue/list?address=${address}`);
       if (!isEmpty(data)) {
         context.commit('setTokens', data);
         data.forEach(i => {
-          context.commit('setTokenMap', { [i.validator_address]: i });
+          context.commit('setTokenMap', {
+            [i.validator_address]: i
+          });
         });
       }
       return Promise.resolve(data);
     },
-    fetchToken: async function(context, id) {
-      const { data } = await ajax.get(`/issue/query/${id}`);
+    fetchToken: async function (context, id) {
+      const {
+        data
+      } = await ajax.get(`/issue/query/${id}`);
       if (!isEmpty(data)) {
-        context.commit('setTokenMap', { [id]: data.value });
+        context.commit('setTokenMap', {
+          [id]: data.value
+        });
       }
       return Promise.resolve(data);
     },
-    create: async function(context, { pass, form, describe }) {
+    create: async function (context, {
+      pass,
+      form,
+      describe
+    }) {
       const address = context.rootGetters['account/currentAddress'];
       const description = {};
       Object.keys(describe).forEach(k => {
@@ -74,10 +91,16 @@ export default {
           minting_finished: !form.mint
         }
       };
-      const { data } = await sendTx(context, pass, 'issue', msg);
+      const {
+        data
+      } = await sendTx(context, pass, 'hg-custom', msg);
       return Promise.resolve(data);
     },
-    modify: async function(context, { pass, describe, id }) {
+    modify: async function (context, {
+      pass,
+      describe,
+      id
+    }) {
       const address = context.rootGetters['account/currentAddress'];
       const description = {};
       Object.keys(describe).forEach(k => {
@@ -89,10 +112,16 @@ export default {
         sender: address,
         description: isEmpty(description) ? '' : Base64.encode(JSON.stringify(description))
       };
-      const { data } = await sendTx(context, pass, 'issue', msg);
+      const {
+        data
+      } = await sendTx(context, pass, 'hg-custom', msg);
       return Promise.resolve(data);
     },
-    setting: async function(context, { pass, setting, id }) {
+    setting: async function (context, {
+      pass,
+      setting,
+      id
+    }) {
       const address = context.rootGetters['account/currentAddress'];
       const msg = {
         type: 'issue/MsgIssueDisableFeature',
@@ -100,12 +129,21 @@ export default {
         sender: address,
         feature: setting
       };
-      const { data } = await sendTx(context, pass, 'issue', msg);
+      const {
+        data
+      } = await sendTx(context, pass, 'hg-custom', msg);
       return Promise.resolve(data);
     },
-    mint: async function(context, { pass, form, id, action }) {
+    mint: async function (context, {
+      pass,
+      form,
+      id,
+      action
+    }) {
       const address = context.rootGetters['account/currentAddress'];
-      const { decimals } = context.state.tokenMap[id];
+      const {
+        decimals
+      } = context.state.tokenMap[id];
       const msg = {
         type: 'issue/MsgIssueMint',
         issue_id: id,
@@ -126,10 +164,17 @@ export default {
           msg.holder = form.address;
         }
       }
-      const { data } = await sendTx(context, pass, 'issue', msg);
+      const {
+        data
+      } = await sendTx(context, pass, 'hg-custom', msg);
       return Promise.resolve(data);
     },
-    freeze: async function(context, { pass, form, id, action }) {
+    freeze: async function (context, {
+      pass,
+      form,
+      id,
+      action
+    }) {
       const address = context.rootGetters['account/currentAddress'];
       const msg = {
         type: action === 'freeze' ? 'issue/MsgIssueFreeze' : 'issue/MsgIssueUnFreeze',
@@ -144,10 +189,16 @@ export default {
           .toString()
           .slice(0, 10);
       }
-      const { data } = await sendTx(context, pass, 'issue', msg);
+      const {
+        data
+      } = await sendTx(context, pass, 'hg-custom', msg);
       return Promise.resolve(data);
     },
-    owner: async function(context, { pass, form, id }) {
+    owner: async function (context, {
+      pass,
+      form,
+      id
+    }) {
       const address = context.rootGetters['account/currentAddress'];
       const msg = {
         type: 'issue/MsgIssueTransferOwnership',
@@ -155,10 +206,15 @@ export default {
         sender: address,
         to: form.address
       };
-      const { data } = await sendTx(context, pass, 'issue', msg);
+      const {
+        data
+      } = await sendTx(context, pass, 'hg-custom', msg);
       return Promise.resolve(data);
     },
-    fetchTxs: async function(context, { id, actions }) {
+    fetchTxs: async function (context, {
+      id,
+      actions
+    }) {
       const limit = 10;
       const address = context.rootGetters['account/currentAddress'];
       let list = [];
@@ -170,7 +226,9 @@ export default {
             'issue-id': id
             // sender: address
           };
-          return context.dispatch('transactions/fetchTxsLatest', params, { root: true });
+          return context.dispatch('transactions/fetchTxsLatest', params, {
+            root: true
+          });
         })
       );
       results.forEach(res => {
@@ -180,8 +238,10 @@ export default {
       context.commit('setTxList', list);
       return Promise.resolve(list);
     },
-    fetchFreezed: async function(context, id) {
-      const { data } = await ajax.get(`/issue/freezes/${id}`);
+    fetchFreezed: async function (context, id) {
+      const {
+        data
+      } = await ajax.get(`/issue/freezes/${id}`);
       const res = data.filter(i => i.in_end_time !== '0' && i.out_end_time !== '0');
       context.commit('setFreezeList', res);
       return Promise.resolve(res);

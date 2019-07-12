@@ -9,8 +9,8 @@
           >{{token.amount}} {{token.denom}}</p>
         </div>
       </s-item>
-      <s-item :label="$t('send.sender')">{{get(tx, 'tags.1.value')}}</s-item>
-      <s-item :label="$t('send.address')">{{get(tx, 'tags.2.value')}}</s-item>
+      <s-item :label="$t('send.sender')">{{get(tx, 'tags.2.value')}}</s-item>
+      <s-item :label="$t('send.address')">{{get(tx, 'tags.3.value')}}</s-item>
       <s-item :label="$t('send.fee')">{{get(tx, 'tx.value.fee.amount.0.amount') || '0'}} GARD</s-item>
       <s-item :label="$t('send.txHash')">{{get(tx, 'txhash')}}</s-item>
       <s-item :label="$t('send.block')">{{get(tx, 'height')}}</s-item>

@@ -1,16 +1,18 @@
 import BigNumber from 'bignumber.js';
-import { get, isEmpty } from 'lodash';
+import {
+  get,
+  isEmpty
+} from 'lodash';
 import Codec from '@/utils/webc/util/codec';
 import webc from '@/utils/webc.js';
 import ajax from '@/utils/ajax.js';
 
 import gardLogo from '@/assets/gard-logo.svg';
 
-export const getViewToken = (coin, tokenMap) => {
-  const token = { ...coin }
-  if (isEmpty(token)) {
-    return {}
-  }
+export const getViewToken = (coin = {}, tokenMap) => {
+  const token = {
+    ...coin
+  };
   if (token.denom.match(/^coin.{10}$/)) {
     const detail = tokenMap[token.denom];
     if (!isEmpty(detail)) {
@@ -55,10 +57,15 @@ export const getStringLength = val => {
   return bytesCount;
 };
 
-export const sendTx = async function(context, pass, type, msg, msgs) {
+export const sendTx = async function (context, pass, type, msg, msgs) {
   const {
-    account: { keyStore, mathAccount },
-    transactions: { nodeInfo }
+    account: {
+      keyStore,
+      mathAccount
+    },
+    transactions: {
+      nodeInfo
+    }
   } = context.rootState;
   const from = context.rootGetters['account/currentAddress'];
   // 1. get account state (account_number & sequence)
@@ -67,11 +74,15 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
     sequence: '0'
   };
   try {
-    const { data } = await ajax.get(`/auth/accounts/${from}`);
+    const {
+      data
+    } = await ajax.get(`/auth/accounts/${from}`);
     accState = data.value;
   } catch (e) {
     console.log(e);
-    return Promise.resolve({ data: 'netError' });
+    return Promise.resolve({
+      data: 'netError'
+    });
   }
   // 2. build cosmos stdTx
   const para = getTxPara(from, type, accState, nodeInfo, msg, msgs);
@@ -80,7 +91,9 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
   let req = {};
   if (!isEmpty(mathAccount)) {
     // 3.1. sign with math wallet
-    await context.dispatch('account/getMathIdentity', null, { root: true });
+    await context.dispatch('account/getMathIdentity', null, {
+      root: true
+    });
     try {
       const signatureHex = await window.mathExtension.getArbitrarySignature(from, stdTx.GetSignBytes(), type);
       const signature = {
@@ -92,7 +105,9 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
     } catch (e) {
       console.log(e);
       if (e.code === 1000010 || e.code === 100003) {
-        return Promise.resolve({ data: 'reject' });
+        return Promise.resolve({
+          data: 'reject'
+        });
       }
     }
   } else {
@@ -101,14 +116,16 @@ export const sendTx = async function(context, pass, type, msg, msgs) {
     try {
       account = webc.account.fromV3KeyStore(keyStore, pass);
     } catch (e) {
-      return Promise.resolve({ data: 'passError' });
+      return Promise.resolve({
+        data: 'passError'
+      });
     }
     // 3.2. sign with local wallet
     const signature = webc.tx.sign(stdTx.GetSignBytes(), account.privateKey);
     stdTx.SetSignature(signature);
     req = stdTx.GetData();
   }
-  // 3. post to lcd api
+  // 4. post to lcd api
   const res = await ajax.post(`/txs`, req);
   return Promise.resolve(res);
 };
@@ -119,7 +136,10 @@ const getTxPara = (from, type, accState, nodeInfo, msg, msgs) => {
     account_number: accState.account_number,
     sequence: accState.sequence,
     memo: '',
-    fees: { denom: 'agard', amount: '0' },
+    fees: {
+      denom: 'agard',
+      amount: '0'
+    },
     gas: 200000,
     type,
     msg,

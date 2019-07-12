@@ -95,7 +95,8 @@ const en = {
     txInfo: 'Transaction Detail',
     allTxs: 'Expolor All Txs',
     empty: 'No Data',
-    keyWarn: 'KeyStore is an encrypted JSON file with your privateKey and password, you can get your privateKey with your password from it.'
+    keyWarn: 'KeyStore is an encrypted JSON file with your privateKey and password, you can get your privateKey with your password from it.',
+    receiveVoucher: 'Receive Voucher'
   },
   send: {
     form: 'Transfer',
@@ -218,6 +219,29 @@ const en = {
     all: 'In and Out',
     end: 'End Time',
     none: 'No Freezed Address'
+  },
+  singleTokenAssets: {
+    available: 'Available',
+    lock: 'Lock'
+  },
+  receiveVoucher: {
+    extract: 'Extract'
+  },
+  lockInput: {
+    boxName: 'Box Name',
+    currency: 'Currency',
+    lockTime: 'Lock Time',
+    allOut: 'All Out',
+    currentBalance: 'Current Balance',
+    lock: 'LOCK',
+    lockInfo: 'LOCK INFO',
+    lockCurrency: 'Lock Currency',
+    lockAddress: 'Lock Address',
+    lockNumber: 'Lock Number',
+    status: 'Status',
+    all: 'All',
+    locked: 'Locked',
+    unlocked: 'Unlocked'
   },
   owner: {
     brif: 'Transfer ownership to other address is DANGEROUS！You will see no more this Token in your Token Issuance List once transfered!',

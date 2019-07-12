@@ -108,6 +108,24 @@
             >{{$t('main.allTxs')}}</a></p>
         </div>
       </el-tab-pane>
+      <el-tab-pane
+        :label="$t('main.receiveVoucher')"
+        name="receiveVoucher"
+      >
+        <div
+          v-loading="loading"
+          element-loading-background="rgba(255, 255, 255, 0)"
+          class="assets"
+          @click="goReceiveVoucher"
+        >
+          <BalancePanel
+            class="asset-item"
+            v-for="token in viewBalance"
+            :key="token.denom"
+            :token="token"
+          />
+        </div>
+      </el-tab-pane>
     </el-tabs>
 
   </div>
@@ -176,6 +194,9 @@ export default {
         type: "success",
         message: this.$t("home.copy")
       });
+    },
+    goReceiveVoucher() {
+      this.$router.push({ name: "ReceiveVoucher" });
     }
   },
   beforeMount() {

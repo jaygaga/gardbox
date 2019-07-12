@@ -5,7 +5,16 @@ import staking from './modules/staking.js';
 import issue from './modules/issue.js';
 
 import basic from './modules/basic.js';
+import lock from './modules/lock.js'
 
 export default {
-  modules: { account, recover, transactions, staking, issue, basic }
+  modules: {
+    account,
+    recover,
+    transactions,
+    staking,
+    issue,
+    basic,
+    lock
+  }
 };

@@ -95,7 +95,8 @@ const zh = {
     txInfo: '交易详情',
     allTxs: '查看全部',
     empty: '暂无交易记录',
-    keyWarn: 'KeyStore 是用你的私钥和密码加密后的 JSON 文件, 您可以用密码从 KeyStore 中取回私钥，请妥善保管。'
+    keyWarn: 'KeyStore 是用你的私钥和密码加密后的 JSON 文件, 您可以用密码从 KeyStore 中取回私钥，请妥善保管。',
+    receiveVoucher: '收款凭证'
   },
   send: {
     form: '转 账',
@@ -218,6 +219,29 @@ const zh = {
     all: '转入 + 转出',
     end: '到期时间',
     none: '没有地址冻结'
+  },
+  singleTokenAssets: {
+    available: '可 用',
+    lock: '锁 定'
+  },
+  receiveVoucher: {
+    extract: '提 取'
+  },
+  lockInput: {
+    boxName: '盒子名称',
+    currency: '币 种',
+    lockTime: '锁定时间',
+    allOut: '全部转出',
+    currentBalance: '当前余额',
+    lock: '锁 定',
+    lockInfo: '锁定信息',
+    lockCurrency: '锁定币种',
+    lockAddress: '锁定地址',
+    lockNumber: '锁定数量',
+    status: '状态',
+    all: '全部',
+    locked: '锁定中',
+    unlocked: '已解锁'
   },
   owner: {
     brif: '转移管理员权限是【非常危险】的操作，一旦转给其他地址，该Token将从你的【Token发行列表】中移除！',

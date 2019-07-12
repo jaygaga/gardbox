@@ -22,6 +22,8 @@ import SendForm from '@/components/Send/SendForm.vue';
 import SendConfirm from '@/components/Send/SendConfirm.vue';
 import SendFinish from '@/components/Send/SendFinish.vue';
 import Receive from './views/Receive.vue';
+import SingleTokenAssets from './views/SingleTokenAssets.vue';
+import ReceiveVoucher from './views/ReceiveVoucher.vue';
 
 import StakingMain from './views/StakingMain.vue';
 import Staking from './views/Staking.vue';
@@ -40,13 +42,17 @@ import IssueModify from './components/Issue/Describe.vue';
 import IssueMint from './components/Issue/Mint.vue';
 import IssueFreeze from './components/Issue/Freeze.vue';
 
+import Lock from './views/Lock/index.vue';
+import LockInput from './views/Lock/LockInput.vue';
+import LockList from './views/Lock/LockList.vue';
+import LockDetail from './views/Lock/LockDetail.vue'
+
 Vue.use(Router);
 
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
-    {
+  routes: [{
       path: '/',
       redirect: '/home'
     },
@@ -69,8 +75,7 @@ export default new Router({
       path: '/create',
       name: 'create',
       component: Create,
-      children: [
-        {
+      children: [{
           path: 'pass',
           component: CreatePass
         },
@@ -88,8 +93,7 @@ export default new Router({
       path: '/recover',
       name: 'recover',
       component: Recover,
-      children: [
-        {
+      children: [{
           path: 'key/text',
           component: RecoverKeyText
         },
@@ -117,6 +121,16 @@ export default new Router({
       component: Main
     },
     {
+      path: '/SingleTokenAssets',
+      name: 'SingleTokenAssets',
+      component: SingleTokenAssets
+    },
+    {
+      path: '/ReceiveVoucher',
+      name: 'ReceiveVoucher',
+      component: ReceiveVoucher
+    },
+    {
       path: '/tx/:id',
       name: 'tx',
       component: TxInfo
@@ -125,8 +139,7 @@ export default new Router({
       path: '/send',
       name: 'send',
       component: Send,
-      children: [
-        {
+      children: [{
           path: 'form',
           component: SendForm
         },
@@ -153,8 +166,7 @@ export default new Router({
       path: '/staking',
       name: 'staking',
       component: Staking,
-      children: [
-        {
+      children: [{
           path: 'delegate',
           component: DelegateForm
         },
@@ -188,8 +200,7 @@ export default new Router({
       path: '/issue',
       name: 'Issue',
       component: Issue,
-      children: [
-        {
+      children: [{
           path: 'create',
           component: IssueCreate
         },
@@ -208,6 +219,24 @@ export default new Router({
         {
           path: 'freeze/:id',
           component: IssueFreeze
+        }
+      ]
+    },
+    {
+      path: '/Lock',
+      name: 'Lock',
+      component: Lock,
+      children: [{
+          path: 'LockInput',
+          component: LockInput
+        },
+        {
+          path: 'LockList',
+          component: LockList
+        },
+        {
+          path: 'LockDetail/:id',
+          component: LockDetail
         }
       ]
     },

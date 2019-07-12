@@ -1,5 +1,8 @@
 <template>
-  <div class="balance-container">
+  <div
+    class="balance-container"
+    @click="goSingleToken"
+  >
     <img
       v-if="viewToken.img"
       :src="viewToken.img"
@@ -31,6 +34,14 @@ export default {
     viewToken() {
       return getViewToken(this.token, this.tokenMap);
     }
+  },
+  methods: {
+    goSingleToken() {
+      sessionStorage.setItem("token", JSON.stringify(this.token));
+      this.$router.push({
+        name: "SingleTokenAssets"
+      });
+    }
   }
 };
 </script>
@@ -47,7 +58,7 @@ export default {
   align-items: center;
   padding: $padding-basic;
   border-radius: 4px;
-
+  cursor: pointer;
   img {
     width: 40px;
     height: 40px;

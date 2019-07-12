@@ -80,12 +80,12 @@ export default {
 <style lang="scss" scoped>
 .list-container {
   .tx-row {
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.6);
     display: flex;
     align-items: center;
     padding: 16px;
     margin: 8px 0;
-    background: white;
+    background: $color-primary-light;
     border-radius: 4px;
     cursor: pointer;
 
@@ -94,7 +94,7 @@ export default {
     }
 
     .ellipsis {
-      color: rgba(0, 0, 0, 0.75);
+      color: rgb(255, 255, 255);
     }
 
     img {
@@ -112,7 +112,7 @@ export default {
         color: $color-error;
       }
       &.receive {
-        color: $color-primary;
+        color: #fff;
       }
     }
   }
